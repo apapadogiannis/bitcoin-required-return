@@ -1,7 +1,9 @@
 # Bitcoin's Required Return
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24003938.svg)](https://doi.org/10.5281/zenodo.24003938)
+
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
-Paper: `paper/manuscript.pdf` (SSRN link to be added).
+Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; v0.1 is 10.5281/zenodo.24003939).
 
 ## What this is
 
@@ -72,8 +74,8 @@ dates. Full per-death audit table: paper Appendix A; machine-readable flags in
 
 ## Citation
 
-> Papadogiannis, A. (2026). "Bitcoin's Required Return: The Graveyard, the Holders,
-> and the End of the Age Rule." Working paper.
+> Papadogiannis, A. (2026). "Bitcoin's Required Return." Working paper.
+> https://doi.org/10.5281/zenodo.24003938
 
 ## Disclaimer
 

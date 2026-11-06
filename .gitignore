@@ -1,0 +1,6 @@
+data/
+__pycache__/
+# *.pkl intermediates kept in outputs/
+*.aux
+*.log
+*.out

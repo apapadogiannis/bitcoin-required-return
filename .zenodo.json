@@ -1,0 +1,20 @@
+{
+  "title": "Bitcoin's Required Return: paper and replication package",
+  "upload_type": "software",
+  "description": "Working paper and full replication package. Survival analysis of 1,815 cryptoassets with 520 curated deaths (mortality curves, Lindy test, elite jump hazard); Bitcoin's required return bounded via Merton's (1987) limited-participation condition with measured inputs (surveyed holder portfolio weights, option-implied bounds); required-plus-wedge decomposition of realized returns; committed 2026-2031 forecast. Includes all scripts, curated data tables, figures, and an audit script that re-checks every number quoted in the paper.",
+  "creators": [
+    {
+      "name": "Papadogiannis, Agisilaos",
+      "orcid": "0009-0002-7753-7052"
+    }
+  ],
+  "keywords": ["Bitcoin", "cryptoassets", "required return", "expected return", "survival analysis", "mortality", "limited participation", "marginal holder", "Lindy effect", "household finance"],
+  "license": "MIT",
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/apapadogiannis/bitcoin-required-return",
+      "scheme": "url"
+    }
+  ]
+}

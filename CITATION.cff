@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this paper or replication package, please cite it as below."
+title: "Bitcoin's Required Return"
+authors:
+  - family-names: Papadogiannis
+    given-names: Agisilaos
+    orcid: "https://orcid.org/0009-0002-7753-7052"
+date-released: 2026-11-06
+version: "0.1"
+repository-code: "https://github.com/apapadogiannis/bitcoin-required-return"
+preferred-citation:
+  type: article
+  title: "Bitcoin's Required Return"
+  authors:
+    - family-names: Papadogiannis
+      given-names: Agisilaos
+  year: 2026
+  notes: "Working paper"

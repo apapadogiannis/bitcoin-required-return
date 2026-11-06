@@ -1,4 +1,4 @@
-# Bitcoin's Required Return: The Graveyard, the Holders, and the End of the Age Rule
+# Bitcoin's Required Return
 
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
 Paper: `paper/manuscript.pdf` (SSRN link to be added).

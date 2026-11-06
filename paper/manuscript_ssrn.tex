@@ -11,19 +11,27 @@
 \captionsetup{font=small,labelfont=bf}
 \setstretch{1.15}
 \usepackage{titlesec}
-\titleformat{\section}{\large\bfseries\scshape}{\thesection.}{0.6em}{}
+\titleformat{\section}{\normalsize\bfseries}{\thesection.}{0.5em}{\MakeUppercase}
 \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
 
-\title{\textbf{Bitcoin's Required Return}}
-\author{Agisilaos Papadogiannis\thanks{Independent Researcher (PhD, MBA). Correspondence: apapadogiannis@gmail.com. ORCID: 0009-0002-7753-7052.}}
-\date{Working draft v0.1, November 5, 2026}
+\title{Bitcoin's Required Return}
+\author{Agisilaos Papadogiannis\thanks{Independent Researcher (PhD, MBA). \emph{Correspondence:} apapadogiannis@gmail.com. \emph{ORCID:} 0009-0002-7753-7052. Data, code and replication files: \url{https://github.com/apapadogiannis/bitcoin-required-return}.}}
+\date{}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\noindent Bitcoin's literature offers three numbers that cannot all be its expected return: a backtested drift of about 32\% a year (the age rule), a CAPM required return of 6--18\%, and the 14--22\% its holders say they expect. We reconcile them by a path that is neither a factor model nor a consumption-based one: Merton's (1987) limited-participation pricing, in which the price is set by the asset's marginal holder, whose portfolio first-order condition (the marginal-holder condition: expected return equals the risk-free rate, plus a small beta term, plus risk aversion times variance times her own portfolio weight, plus a jump-mortality term) we evaluate from direct measurement rather than estimation. First, from a panel of 1,815 cryptoassets and 520 deaths, we estimate the first mortality curves for the asset class built for pricing: with curated death types, dates, and recovery fractions. The hazard of death \emph{rises} with age through at least the first decade, the opposite of the Lindy effect the age rule would need, and the catastrophic-death hazard of a top-20 asset is 0.3\% a year (LUNA, UST, FTT), capping the mortality premium at a few points, not twenty-seven. Second, from household surveys and option prices, we bound the required return of Bitcoin's actual marginal holder, an undiversified investor; her condition is consistent with holders' stated expectations in both 2021 (22\%) and 2025 (13.8\%) at ordinary levels of risk aversion. Realized returns then decompose into this required return plus a wedge that was on the order of 100 points a year early, near zero by 2019, and negative after 2021. The age rule is the smooth curve through that decaying sum; its engine is spent. We commit to the implication: Bitcoin's expected return for 2026--2031 is 9--22\% a year, not 32\%.
+\noindent Bitcoin carries three incompatible ``expected returns'': a backtested drift of about 32\% a year (the age rule), a CAPM required return of 6--18\%, and the 14--22\% its holders say they expect. We reconcile them through Merton's (1987) limited-participation pricing, with every input measured rather than estimated. From a panel of 1,815 cryptoassets with 520 curated deaths, we estimate the first pricing-oriented mortality curves for the asset class: the hazard of death rises with age, rejecting the Lindy effect, and the catastrophic-death hazard of a top-20 asset is 0.3\% a year (LUNA, UST, FTT), capping the mortality premium at a few points. From household surveys and option prices we bound the required return of Bitcoin's marginal holder; realized returns then decompose into that required return plus an adoption wedge that was enormous early, zero by 2019, and negative after 2021. The age rule tracked the decaying sum, and its engine is spent. Expected return for 2026--2031: 9--22\% a year.
 \end{abstract}
+
+\medskip\noindent\textbf{\large Highlights}\par\nopagebreak
+\begin{itemize}
+\item From 1,815 cryptoassets and 520 curated deaths, the first mortality curves for the asset class built for pricing: the hazard of death rises with age, and the Lindy hypothesis behind maturity-premium stories is rejected.
+\item Catastrophic death at the top is rare: among the 219 assets that ever reached the top twenty, the jump-collapse hazard is 0.30\% a year, so survival risk prices at a few points of expected return, not twenty-seven.
+\item Bitcoin's required return from Merton's limited-participation condition with measured inputs (holders' surveyed 19\% portfolio weight, option-implied bounds) is 9--22\% a year today, and holders' stated expectations are consistent with the condition in both survey waves.
+\item Realized returns decompose into required return plus an adoption wedge that turned negative after 2021; the age rule's 32\% tracked the wedge, and the paper commits to its downward break: 9--22\% a year (about 0--13\% compounded) for September 2026--2031.
+\end{itemize}
 
 \medskip
 \noindent\textbf{JEL classification:} G12, G11, G17, G41.\\

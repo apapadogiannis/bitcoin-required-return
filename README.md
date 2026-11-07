@@ -5,6 +5,8 @@
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
 Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; v0.1 is 10.5281/zenodo.24003939).
 
+Companion paper: [Bitcoin's Expected Return: An Age Rule That Beats Current Practice](https://github.com/apapadogiannis/bitcoin-age-rule) ([doi:10.5281/zenodo.24004326](https://doi.org/10.5281/zenodo.24004326)).
+
 ## What this is
 
 Two measurements and one pricing condition:

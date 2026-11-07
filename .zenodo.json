@@ -8,13 +8,29 @@
       "orcid": "0009-0002-7753-7052"
     }
   ],
-  "keywords": ["Bitcoin", "cryptoassets", "required return", "expected return", "survival analysis", "mortality", "limited participation", "marginal holder", "Lindy effect", "household finance"],
+  "keywords": [
+    "Bitcoin",
+    "cryptoassets",
+    "required return",
+    "expected return",
+    "survival analysis",
+    "mortality",
+    "limited participation",
+    "marginal holder",
+    "Lindy effect",
+    "household finance"
+  ],
   "license": "MIT",
   "related_identifiers": [
     {
       "relation": "isSupplementTo",
       "identifier": "https://github.com/apapadogiannis/bitcoin-required-return",
       "scheme": "url"
+    },
+    {
+      "relation": "isRelatedTo",
+      "identifier": "10.5281/zenodo.24004326",
+      "scheme": "doi"
     }
   ]
 }

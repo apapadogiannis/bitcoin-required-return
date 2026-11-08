@@ -1,0 +1,55 @@
+name: replication
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 6 1 * *"   # first of each month: catches upstream breakage
+
+jobs:
+  replicate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-lock.txt
+
+      - name: Cache the Coin Metrics snapshot
+        uses: actions/cache@v4
+        with:
+          path: data/cmdata
+          key: coinmetrics-f1a36afb962731c387bb03982758ab0103063da5
+
+      - name: Fetch data and regenerate every table and figure
+        run: ./run_all.sh | tee run.log
+
+      - name: Verify every audit line is PASS
+        run: |
+          grep -c "^PASS" run.log
+          if grep -q "^CHECK" run.log; then echo "Audit mismatches:"; grep "^CHECK" run.log; exit 1; fi
+
+      - name: Verify tables match the committed results
+        # Figures embed timestamps; every CSV in outputs/ must be identical.
+        run: |
+          git diff --exit-code --stat -- 'outputs/*.csv'
+          echo "All result tables reproduce byte-for-byte."
+
+      - name: Upload regenerated outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regenerated-outputs
+          path: |
+            outputs/*.csv
+            figures/
+            run.log
+          retention-days: 30

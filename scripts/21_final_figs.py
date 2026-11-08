@@ -1,5 +1,6 @@
-"""Saturday figures: (1) fig_wedge rebuilt with ETF marker, serif style, vector;
-(2) Ether compression mini-exhibit (vol paths + forward 3y CAGR)."""
+"""Required return versus realized drift versus the age rule (paper Section 6):
+(1) fig_wedge, the full monthly series; (2) wedge_table.csv, Table 6.1, the same
+series at two-year intervals; (3) fig6_eth, the Ether compression exhibit."""
 import os
 import numpy as np, pandas as pd
 import matplotlib
@@ -78,6 +79,19 @@ ax.legend(fontsize=7.5, loc="upper right")
 fig.tight_layout()
 fig.savefig(f"{OUT}/fig_wedge.pdf"); fig.savefig(f"{OUT}/fig_wedge.png", dpi=200)
 print("fig_wedge rebuilt with ETF marker")
+
+# Table 6.1 of the paper: the same series at two-year intervals.
+rows = []
+for yr in [2013, 2015, 2017, 2019, 2021, 2023, 2026]:
+    i = px.index.get_indexer([pd.Timestamp(f"{yr}-06-30")], method="nearest")[0]
+    rows.append(dict(year=yr, sigma=f"{np.sqrt(sig2.iloc[i]):.0%}", wbar=f"{wbar.iloc[i]:.0%}",
+        required=f"{foc_lo.iloc[i]:.0%}–{req_hi.iloc[i]:.0%}",
+        realized=(f"{fwd5.iloc[i]:.0%}" if np.isfinite(fwd5.iloc[i]) else "—"),
+        wedge=(f"{fwd5.iloc[i]-req_mid.iloc[i]:+.0%}" if np.isfinite(fwd5.iloc[i]) else "—"),
+        age_rule=f"{age_rule.iloc[i]:.0%}"))
+T = pd.DataFrame(rows); print(T.to_string(index=False))
+T.to_csv(f"{OUT}/wedge_table.csv", index=False)
+
 
 # ---- Ether compression ----
 epx = eth["px"]; elr = np.log(epx).diff()

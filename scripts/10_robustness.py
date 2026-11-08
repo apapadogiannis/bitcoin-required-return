@@ -3,11 +3,12 @@ Lindy regression; (b) parametric Weibull and log-logistic survival fits.
 Age+cohort+period are collinear (age = period - cohort), so we report the two
 two-way specifications side by side.
 """
+import os
 import numpy as np, pandas as pd
 import statsmodels.api as sm, statsmodels.formula.api as smf
 from lifelines import WeibullFitter, LogLogisticFitter, KaplanMeierFitter
 
-OUT = "/home/claude/graveyard"; YR = 365.25
+OUT = os.environ.get("OUT_DIR","outputs"); YR = 365.25
 panel = pd.read_csv(f"{OUT}/panel_v3.csv",
                     parse_dates=["birth", "last", "death_cur_date"])
 core = panel[~panel["stable2"] & ~panel["tokstock"] & ~panel["wrapped_like"]].copy()

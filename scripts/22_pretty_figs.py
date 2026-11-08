@@ -28,7 +28,9 @@ def finish(fig,ax_list,path):
     fig.savefig(f"{path}.pdf"); fig.savefig(f"{path}.png",dpi=200)
     print("saved",os.path.basename(path))
 
-GY="/home/claude/graveyard"; MD="/home/claude/model"; CSV="/tmp/cmdata/csv"; YR=365.25
+import os
+GY=os.environ.get("OUT_DIR","outputs"); MD=os.environ.get("FIG_DIR","figures"); CSV=os.environ.get("CM_CSV_DIR","data/cmdata/csv"); YR=365.25
+os.makedirs(MD,exist_ok=True)
 
 # ============ FIG 1: hazard vs age ============
 hb=pd.read_csv(f"{GY}/hazard_buckets_curated.csv"); hb=hb[hb["deaths"]>0]

@@ -12,16 +12,17 @@ Model (survival-conditioned drift of the marginal-holder equilibrium):
 Outputs: calibration table, money figure (model band vs age rule vs realized
 forward 5y CAGR), component decomposition figure.
 """
+import os
 import numpy as np, pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 plt.rcParams.update({"font.size":9,"axes.titlesize":10,"figure.dpi":160})
-OUT=os.environ.get("OUT_DIR","outputs")
-import os; os.makedirs(OUT,exist_ok=True)
+OUT=os.environ.get("OUT_DIR","outputs"); os.makedirs(OUT,exist_ok=True)
+CSV=os.environ.get("CM_CSV_DIR","data/cmdata/csv")
 
 # ---------- BTC data ----------
-btc=pd.read_csv("data/cmdata/csv/btc.csv",parse_dates=["time"],
+btc=pd.read_csv(f"{CSV}/btc.csv",parse_dates=["time"],
     usecols=["time","PriceUSD","CapMrktCurUSD","AdrBalCnt"])
 btc=btc.set_index("time")
 px=btc["PriceUSD"].dropna().resample("ME").last()

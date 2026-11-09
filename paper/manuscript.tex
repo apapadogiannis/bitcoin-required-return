@@ -66,7 +66,7 @@ In these terms, the age rule is an estimate of the expected return, the CAPM fig
 
 \textbf{Whose hurdle?} Here is the step most discussions skip. An asset has as many required returns as it has potential investors, but only one of them is reflected in the price: the hurdle of the \emph{marginal holder}, the investor who is just indifferent between holding a little more and a little less. If a pension fund would be happy to hold Bitcoin at an expected 8\%, but pension funds are not allowed to hold it, their 8\% is irrelevant to the price. The price is set by whoever actually clears the market.
 
-\textbf{The marginal holder's arithmetic.} Take an investor with ordinary constant relative risk aversion, denoted $\gamma$ (empirically, $\gamma$ between 1 and 4 describes most people; 2--3 is the workhorse range). Suppose she holds a fraction $w$ of her wealth in an asset whose annual return volatility is $\sigma$, and whose return is essentially uncorrelated with the rest of her portfolio, a good description of Bitcoin, whose correlation with equities has lived below 0.2 for most of its life (Liu and Tsyvinski 2021). Her portfolio is optimal only if the asset's expected excess return equals the marginal risk it adds. That requirement is the central equation of the paper, which we call the \textbf{marginal-holder condition}:
+\textbf{The marginal holder's arithmetic.} Take an investor with ordinary constant relative risk aversion, denoted $\gamma$. This is the Arrow--Pratt coefficient, a dimensionless number with a concrete meaning: an investor with risk aversion $\gamma$ would pay about $\gamma/2$ times the variance of a fair gamble, as a share of her wealth, to avoid it. So $\gamma = 2$ means paying roughly 1\% of wealth to avoid a coin flip over $\pm$10\% of wealth; $\gamma = 1$ (log utility) pays 0.5\%, and $\gamma = 4$ pays 2\%. In equation~(\ref{eq:foc}) below it plays the same role: it is the price the holder charges, in expected return, per unit of variance she must bear. The range 1 to 4 is not a convention but where estimates keep landing: about 2 from US household asset holdings (Friend and Blume 1975), below roughly 2 from labor-supply behavior (Chetty 2006), about 1.7--2 from Italian household panels, which also support the constant-relative form (Chiappori and Paiella 2011), and small single digits in the macro calibrations that followed Mehra and Prescott (1985); 2--3 is the workhorse range. Suppose she holds a fraction $w$ of her wealth in an asset whose annual return volatility is $\sigma$, and whose return is essentially uncorrelated with the rest of her portfolio, a good description of Bitcoin, whose correlation with equities has lived below 0.2 for most of its life (Liu and Tsyvinski 2021). Her portfolio is optimal only if the asset's expected excess return equals the marginal risk it adds. That requirement is the central equation of the paper, which we call the \textbf{marginal-holder condition}:
 \begin{equation}
 \boxed{\;\mu - r_f \;=\; \underbrace{\beta\,\mathrm{ERP}}_{\text{market risk}} \;+\; \underbrace{\gamma\,\sigma^2\,w}_{\text{concentration}} \;+\; \underbrace{\lambda\,(1-\delta)}_{\text{mortality}}\;}
 \label{eq:foc}
@@ -455,6 +455,8 @@ The concentration quantity enters with the \emph{wrong sign} as a predictor (mar
 \item Brown, S., W. Goetzmann, and S. Ross. 1995. ``Survival.'' \emph{Journal of Finance} 50(3): 853--873.
 \item Burger, H. C. 2019. ``Bitcoin's Natural Long-Term Power-Law Corridor of Growth.'' Coinmonks (Medium).
 \item Candia, B., O. Coibion, Y. Gorodnichenko, and M. Weber. 2026. ``Do You Even Crypto, Bro? Cryptocurrencies in Household Finance.'' Federal Reserve Bank of Cleveland Working Paper 26-16.
+\item Chetty, R. 2006. ``A New Method of Estimating Risk Aversion.'' \emph{American Economic Review} 96(5): 1821--1834.
+\item Chiappori, P.-A., and M. Paiella. 2011. ``Relative Risk Aversion Is Constant: Evidence from Panel Data.'' \emph{Journal of the European Economic Association} 9(6): 1021--1052.
 \item Cochrane, J. H. 2011. ``Presidential Address: Discount Rates.'' \emph{Journal of Finance} 66(4): 1047--1108.
 \item Coin Metrics. 2026. ``Community Network Data.'' GitHub repository coinmetrics/data. Accessed November 2026.
 \item Cong, L. W., Y. Li, and N. Wang. 2021. ``Tokenomics: Dynamic Adoption and Valuation.'' \emph{Review of Financial Studies} 34(3): 1105--1155.
@@ -464,6 +466,7 @@ The concentration quantity enters with the \emph{wrong sign} as a predictor (mar
 \item Fama, E. F., and K. R. French. 2004. ``The Capital Asset Pricing Model: Theory and Evidence.'' \emph{Journal of Economic Perspectives} 18(3): 25--46.
 \item Feder, A., N. Gandal, J. T. Hamrick, and T. Moore. 2018. ``The Rise and Fall of Cryptocurrency Coins and Tokens.'' \emph{Decisions in Economics and Finance} 41: 195--222.
 \item Federal Reserve Board. 2022--2024. \emph{Survey of Household Economics and Decisionmaking (SHED)}, crypto-holding items; Federal Reserve Banks of Boston/Atlanta/San Francisco, \emph{Survey and Diary of Consumer Payment Choice}, bitcoin-ownership items.
+\item Friend, I., and M. E. Blume. 1975. ``The Demand for Risky Assets.'' \emph{American Economic Review} 65(5): 900--922.
 \item Giglio, S., M. Maggiori, J. Stroebel, and S. Utkus. 2021. ``Five Facts about Beliefs and Portfolios.'' \emph{American Economic Review} 111(5): 1481--1522.
 \item Greenwood, R., and A. Shleifer. 2014. ``Expectations of Returns and Expected Returns.'' \emph{Review of Financial Studies} 27(3): 714--746.
 \item Grobys, K., and N. Sapkota. 2020. ``Predicting Cryptocurrency Defaults.'' \emph{Applied Economics} 52(46): 5060--5076.
@@ -473,6 +476,7 @@ The concentration quantity enters with the \emph{wrong sign} as a predictor (mar
 \item Liu, Y., and A. Tsyvinski. 2021. ``Risks and Returns of Cryptocurrency.'' \emph{Review of Financial Studies} 34(6): 2689--2727.
 \item Makarov, I., and A. Schoar. 2020. ``Trading and Arbitrage in Cryptocurrency Markets.'' \emph{Journal of Financial Economics} 135(2): 293--319.
 \item Martin, I. 2017. ``What Is the Expected Return on the Market?'' \emph{Quarterly Journal of Economics} 132(1): 367--433.
+\item Mehra, R., and E. C. Prescott. 1985. ``The Equity Premium: A Puzzle.'' \emph{Journal of Monetary Economics} 15(2): 145--161.
 \item Merton, R. C. 1969. ``Lifetime Portfolio Selection under Uncertainty: The Continuous-Time Case.'' \emph{Review of Economics and Statistics} 51(3): 247--257.
 \item Merton, R. C. 1976. ``Option Pricing When Underlying Stock Returns Are Discontinuous.'' \emph{Journal of Financial Economics} 3(1--2): 125--144.
 \item Merton, R. C. 1987. ``A Simple Model of Capital Market Equilibrium with Incomplete Information.'' \emph{Journal of Finance} 42(3): 483--510.

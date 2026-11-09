@@ -68,7 +68,7 @@ for a in axes:
     sec.spines["top"].set_visible(False)
 fig.suptitle("Equation (1), term by term: concentration carried the early requirement; the floor terms carry today's",
              x=0.013,y=0.985,ha="left",fontsize=11,fontweight="bold")
-fig.text(0.013,0.925,"mid-band decomposition of the monthly required return; beta and mortality terms held constant at the midpoints of their stated ranges (dashed), concentration as the remainder",
+fig.text(0.013,0.925,"mid-band decomposition of the monthly required return; dashed terms held constant at the midpoints of their stated ranges; concentration is the remainder",
          fontsize=8.5,color=INK2)
 fig.tight_layout(rect=(0,0,0.97,0.925))
 fig.savefig(f"{MD}/fig_terms.pdf"); fig.savefig(f"{MD}/fig_terms.png",dpi=200)

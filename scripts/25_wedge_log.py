@@ -46,6 +46,6 @@ ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.025,4.8); ax.set_xlim(3,18.5)
 ax.set_xlabel("Bitcoin age (years)"); ax.set_ylabel("% per year (log scale)")
 ax.set_title("The age rule tracks the decaying wedge, not a risk premium")
-ax.text(0,1.018,"monthly series, 2012–2026; logarithmic vertical scale, so equal distances are equal ratios",
+ax.text(0,1.018,"monthly series from age 3 (January 2012); logarithmic vertical scale, so equal distances are equal ratios",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
 finish(fig,[ax],f"{MD}/fig_wedge")

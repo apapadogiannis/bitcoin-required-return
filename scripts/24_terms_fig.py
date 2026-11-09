@@ -52,7 +52,7 @@ ax=axes[1]
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_xlabel("Bitcoin age (years)")
 ax.set_xlim(3,17.5); ax.set_ylim(0,100)
-ax.set_title("Weights: who gets paid for what")
+ax.set_title("Shares of the total: a constant term grows as the total shrinks")
 def share_at(y):
     return int(np.argmin(np.abs(A-(y-2009.0))))
 i26=share_at(2026.3); i13=share_at(2013.5)

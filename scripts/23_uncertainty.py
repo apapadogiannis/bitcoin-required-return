@@ -34,3 +34,12 @@ def run_gold(label, beta_rng, sig, wlo, whi, mlo, mhi):
     print(f"{label:28s} median {q[1]:5.1%}  90% {q[0]:5.1%}-{q[2]:5.1%}  envelope {x.min():5.1%}-{x.max():5.1%}")
 run_gold("Gold (beta -0.1..0.1)", (-0.1, 0.1), (0.13, 0.20), 0.02, 0.10, 0.0, 0.003)
 run_gold("BTC at gold sigma and w", (0.33, 1.05), 0.15, 0.02, 0.10, 0.003, 0.03)
+
+# holders' revealed risk aversion (Table 3): gamma in [1.2, 1.8]
+gam_h = rng.uniform(1.2, 1.8, N)
+def run_h(label, sig, wlo, whi, mlo, mhi):
+    x = rf + beta + gam_h*sig**2*rng.uniform(wlo, whi, N) + rng.uniform(mlo, mhi, N)
+    q = np.percentile(x, [5, 50, 95])
+    print(f"{label:28s} median {q[1]:5.1%}  90% {q[0]:5.1%}-{q[2]:5.1%}  envelope {x.min():5.1%}-{x.max():5.1%}")
+run_h("Bitcoin, holders' gamma", 0.42, 0.08, 0.19, 0.003, 0.03)
+run_h("Ether, holders' gamma", 0.64, 0.08, 0.19, 0.003, 0.03)

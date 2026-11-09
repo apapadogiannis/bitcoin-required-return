@@ -7,3 +7,5 @@ Large altcoin  median 38.0%  90% 24.7%-55.1%  envelope 18.6%-65.3%
 Small coin     median 81.7%  90% 53.7%-123.8%  envelope 39.9%-163.3%
 Gold (beta -0.1..0.1)        median  5.5%  90%  5.0%- 6.0%  envelope  4.7%- 6.7%
 BTC at gold sigma and w      median  9.7%  90%  7.8%-11.6%  envelope  6.7%-12.7%
+Bitcoin, holders' gamma      median 13.0%  90% 10.6%-15.5%  envelope  8.4%-18.0%
+Ether, holders' gamma        median 17.6%  90% 13.8%-21.9%  envelope 10.8%-25.8%

@@ -13,3 +13,14 @@ def report(x, label):
 report(rf + beta + gam*s2*w + mort, "stated ranges              ")
 report(rf + beta + gam*s2*w + rng.uniform(0.003, 0.015, N), "mortality 0.3-1.5 pts      ")
 report(rf + beta + gam*s2*rng.uniform(0.12, 0.19, N) + rng.uniform(0.003, 0.015, N), "w 0.12-0.19, mort 0.3-1.5  ")
+
+# Table 5: per-asset propagation
+def run(label, sig, wlo, whi, mlo, mhi):
+    s = sig if np.isscalar(sig) else rng.uniform(*sig, N)
+    x = rf + beta + gam*s**2*rng.uniform(wlo, whi, N) + rng.uniform(mlo, mhi, N)
+    q = np.percentile(x, [5, 50, 95])
+    print(f"{label:14s} median {q[1]:5.1%}  90% {q[0]:5.1%}-{q[2]:5.1%}  envelope {x.min():5.1%}-{x.max():5.1%}")
+run("Bitcoin", 0.42, 0.08, 0.19, 0.003, 0.03)
+run("Ether", 0.64, 0.08, 0.19, 0.003, 0.03)
+run("Large altcoin", 0.80, 0.10, 0.30, 0.01, 0.03)
+run("Small coin", (1.0, 1.3), 0.10, 0.30, 0.157, 0.174)

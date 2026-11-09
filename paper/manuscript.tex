@@ -22,19 +22,13 @@
 \maketitle
 
 \begin{abstract}
-\noindent What return does Bitcoin's risk justify, and is that what investors should expect to earn? The two questions have different answers, and using one word for both produces a three-way disagreement: about 32\% a year from Bitcoin's price history (the age rule), 6--18\% from the CAPM, and the 14--22\% that holders said they expected in two survey waves. These are three different quantities: an expected return, a property of the price process; a normative required return, what a diversified investor ought to demand; and what the people who actually hold Bitcoin require. We measure the last, using Merton's (1987) pricing under limited participation: an asset paying no income must be expected to rise by enough to compensate its holders for its volatility, for the share of their wealth they keep in it (from household surveys), and for the risk that it dies (from the first mortality tables for cryptoassets, 1,815 coins and 520 deaths). Bitcoin's required return is about 15\% a year, with a 90\% range of 12--18\%. Its realized return ran far above what holders required until 2019 and has fallen short of it since 2021 (about 13\% a year against a 22--58\% requirement); the excess was adoption news and survivor selection, not a payment for risk. Expected and required return coincide only if Bitcoin is now priced in equilibrium by its holders, with no systematic underpricing left; on that hypothesis it will earn about 15\% a year over 2026--2031, and the age rule, which extrapolates the old excess, will fail. The same pricing extends to Ether and to smaller coins, whose death risk alone demands more than they have delivered.
+\noindent What return should Bitcoin be expected to earn? Its history says about 32\% a year, standard asset pricing 6--18\%, its holders 14--22\%. We show these are three different quantities and measure the one that sets the price: what the people who hold Bitcoin require for its volatility, for the share of their wealth they keep in it, and for the risk that it dies, from the first cryptoasset mortality tables. That return is about 15\% a year (90\% range 12--18\%). Bitcoin's past excess over it was adoption news and survivor selection, not payment for risk, and it has gone.
 \end{abstract}
 
-\medskip\noindent\textbf{\large Highlights}\par\nopagebreak
-\begin{itemize}
-\item Bitcoin's \emph{required} return is derived from the investors who actually hold it: the price must rise enough to pay them for the asset's volatility, for the share of their wealth they keep in it, and for the risk that it dies. Each of the three is measured, not estimated. The required return is what the risk justifies; the expected return is what the price will do; the paper keeps them apart.
-\item The death-risk input comes from the first mortality tables for cryptoassets (1,815 coins, 520 deaths). Assets that reached the top twenty die suddenly at 0.30\% a year, worth a few points of return, and the hazard of death rises with age, so Bitcoin's long survival does not lower its risk.
-\item Bitcoin's required return is about 15\% a year (90\% range 12--18\%), against the 32\% its history extrapolates; the excess of realized over required return was adoption news and survivor selection, not a payment for risk, and it turned negative after 2021. If Bitcoin is now priced in equilibrium by its holders, that is also its expected return, and the age rule breaks. The same pricing gives Ether a higher required return, and for small coins the death risk alone demands more than they have delivered.
-\end{itemize}
+
 
 \medskip
-\noindent\textbf{JEL classification:} G12, G11, G17, G41.\\
-\textbf{Keywords:} Bitcoin, cryptoassets, required return, expected return, survival analysis, mortality, limited participation, marginal holder, Lindy effect, household finance.
+\noindent\textbf{Keywords:} Bitcoin; cryptoassets; required return; expected return; survival analysis; limited participation; marginal holder; portfolio construction.
 
 \section{Introduction}
 
@@ -51,6 +45,8 @@ This paper answers by measuring the two things the time series cannot identify. 
 \textbf{Second, we bound the return Bitcoin's actual owners require, from their own portfolios.} The investor whose willingness to hold sets Bitcoin's price is not the diversified investor of the CAPM. The average crypto-owning household held 19\% of its financial assets in crypto in 2021; option prices from the same era imply the marginal trader was closer to all-in. For such an investor, elementary portfolio mathematics ties the return Bitcoin must promise to three observable quantities: volatility, portfolio weight, and risk aversion. We call the resulting formula the marginal-holder condition (Section 2, equation~\ref{eq:foc}): risk aversion times variance times portfolio weight, plus small market and mortality terms. The route is Merton's (1987) limited-participation pricing with every input measured, not a factor regression and not a consumption-based model, neither of which can see the investor who actually clears this market. It is consistent with what holders said they expected in 2021 \emph{and} in 2025 at ordinary levels of risk aversion (1.7 and 2.8). The required return was enormous when Bitcoin's volatility was 120\% and its holders were concentrated, and it has fallen, term by measurable term, to about 15\% today (90\% range 12--18\%).
 
 With both measurements in hand, Bitcoin's history reads differently. Realized returns decompose into the required return of the marginal holder plus a \emph{wedge}: the part the holder was not promised and could not have demanded. The wedge was on the order of 100 points a year in 2012--2015, near zero by 2019, and negative after late 2021, when holders required 22--58\% and received about 13\%. The age rule, we show, is the smooth one-over-age curve drawn through required-plus-wedge; it backtested as unbiased because the two components happened to decay together over the sample, and it has drifted high since 2020 (a drift its own out-of-sample record already shows) because the wedge has run out and changed sign.
+
+\textbf{What this means in practice.} In plain terms, the findings are these. Bitcoin's price has to rise by about 15\% a year to keep its current holders willing to hold it; that is the return its risk justifies today, and it has fallen from well over 100\% a year when Bitcoin was volatile and held by a few concentrated enthusiasts. The much higher returns of Bitcoin's past were not a reward for risk but the market catching up with adoption it had not foreseen, and that catch-up ended around 2021. For an allocator, three things follow. Extrapolating Bitcoin's history (the 32\%) overstates its prospective return by about half. A diversified investor who holds a small position collects a premium of roughly 4--7 points a year that exists only because Bitcoin's holder base is still concentrated, and that premium will shrink as the holder base broadens. And the position size the evidence supports for an investor who accepts the 15\% is on the order of 10\% of financial wealth for a moderately risk-averse investor, far below what Bitcoin's history would suggest; for smaller cryptoassets the same arithmetic says their holders have never been paid for the risks they carry.
 
 The paper's contributions, in order: (i) mortality curves for cryptoassets built for pricing, with the Lindy hypothesis tested and rejected and the top-asset hazard measured; (ii) a required-return estimate for Bitcoin built on Merton's (1987) limited-participation condition from its holders' measured portfolios, their stated expectations, and option-implied bounds: three sources, one equation; (iii) a decomposition of Bitcoin's realized drift that explains both why the age rule worked and why it has begun to fail; and (iv) a dated, falsifiable forecast: about 15\% a year, with a 90\% range of 12--18\%, for September 2026--2031, against the age rule's 32\%. As checks, the same condition is applied to Ether, to smaller cryptoassets, and to gold, where it reproduces a known result.
 
@@ -342,7 +338,7 @@ Worked example: an investor with $\gamma = 3$ who believes our central forecast,
 
 \textbf{Against equities, standing alone.} Standing alone, Bitcoin is not a better bet than equities, and the comparison can be made with the paper's own inputs. Take the S\&P 500, the index against which Bitcoin's beta is measured. Its expected excess return is the equity premium used throughout, 4\% (6\% in the high case); its volatility is 16--20\% a year over the long historical record (Dimson, Marsh, and Staunton 2002) and 16.5\% in the current J.P. Morgan assumptions (J.P. Morgan Asset Management 2026). The ratio of excess return to volatility, the Sharpe ratio (Sharpe 1994), is therefore about 0.20--0.25 (4\% over 16--20\%) and up to about 0.35 in the high case. Bitcoin at a 15\% arithmetic required return, a 5\% risk-free rate, and 42\% volatility gives $(15-5)/42 \approx 0.24$, and about 0.22 once the mortality term, which is compensation for a loss and not a return, is taken out. The two sit within rounding of each other, and the choice of index does not change the conclusion: a growth index such as the Nasdaq 100 carries a similar premium at higher volatility, and a global all-cap index (FTSE Global All Cap or MSCI ACWI IMI, some 10,000 stocks across developed and emerging markets) nearly the same figures, since the J.P. Morgan assumptions give world equity an arithmetic return of 8.3\% at 16.8\% volatility, a ratio of about 0.20 over the 5\% risk-free rate, against 0.18 for US large cap (7.9\% at 16.5\%) on the same basis. A reader who prefers the historical US premium of 7--8 points over bills (the familiar 10\% nominal return of the last century, which includes a dividend yield of 4\% rather than today's 1\%, higher inflation, and a tripling of valuation multiples) should raise both sides: equities' ratio rises to about 0.45, and Bitcoin's beta term rises with the same premium, taking its required return to 17--19\% and its ratio to about 0.30. On the historical premium equities win the standalone comparison; on the forward-looking premium used here they tie; neither changes the allocator's case, which rests on correlation. What Bitcoin adds to a portfolio is a correlation with equities below 0.2 (Liu and Tsyvinski 2021), and that is the entire source of its value as a holding; if integration eventually raises the correlation toward equity-like levels, the case shrinks with it. What this paper removes is not the case for a small Bitcoin position but the case built on 32\%: the belief that Bitcoin offers an equity-like reward-to-risk ratio at triple the return. At a central 15\% arithmetic, about 6\% compounded, it is a reasonable diversifier and nothing more.
 
-\textbf{Gold, as a check on the equation.} Gold is the natural comparison, both because Bitcoin is so often called digital gold and because gold is the one other large asset that pays no income, so the whole of its return must come from price. Equation~(\ref{eq:foc}) prices it with the same four inputs, every one of which sits at the opposite end of the range from Bitcoin's. Market risk: gold's correlation with equities is close to zero over long samples (Erb and Harvey 2013), so the beta term is a few tenths of a point either way ($\beta \in [-0.1, 0.1]$). Concentration: gold is the most widely held asset on earth, about 224,000 tonnes above ground, of which 44\% is jewellery, 18\% central-bank reserves, and 23\% private bars, coins, and ETFs (World Gold Council 2026), worth about \$29 trillion at today's price, some 6\% of global household wealth; its marginal holder is a diversified investor with a few percent in it, not an enthusiast with a fifth. With volatility of 13--20\% (13.1\% over 1836--2011 in Barro and Misra 2016; higher in the last two years), a holder weight of 2--10\%, and $\gamma \in [1.7, 2.8]$, the concentration term is 0.1--1.1 points, median 0.3. Mortality: gold has no failure mode that destroys the asset; the closest analogues are sovereign restrictions, such as the United States' compulsory purchase of private gold in 1933 at the old official price before the dollar was devalued, which are jurisdiction risks to a holder rather than deaths of the asset, and we allow 0--0.3 points. The condition returns a required return for gold of about 5.5\% a year (90\% interval 5.0--6.0\%; envelope 4.7--6.8\%; Appendix B.5): the risk-free rate plus half a point, a Sharpe ratio near zero. This is a reproduced result, and that is its value here: Barro and Misra (2016) find that gold's real price appreciation averaged 1.1\% a year over 175 years, with a covariance with consumption indistinguishable from zero, and conclude that its expected return should sit close to the risk-free rate; the equation reaches the same place from observable portfolios rather than from a consumption model. Gold's recent history then reads as Bitcoin's did in Section 6. From the end of 2023 to November 2026 gold compounded at about 27\% a year (from about \$2,060 to about \$4,040 an ounce, with a gain of some 65\% in 2025 alone and a flat twelve months since; LBMA 2026), roughly twenty points a year above anything its holders could have required. That excess is a wedge of the same kind as Bitcoin's: central-bank purchases, fiscal and geopolitical news, and ETF inflows the market had not priced, not a payment for risk. In equilibrium the equation puts gold's expected return from here back at 5--6\% nominal; extrapolating 2024--25 would be the gold version of the age rule.
+\textbf{Gold, as a check on the equation.} Gold is the natural comparison, both because Bitcoin is so often called digital gold and because gold is the one other large asset that pays no income, so the whole of its return must come from price. Equation~(\ref{eq:foc}) prices it with the same four inputs, every one of which sits at the opposite end of the range from Bitcoin's. Market risk: gold's correlation with equities is close to zero over long samples (Erb and Harvey 2013), so the beta term is a few tenths of a point either way ($\beta \in [-0.1, 0.1]$). Concentration: gold is the most widely held asset on earth, about 224,000 tonnes above ground, of which 44\% is jewelry, 18\% central-bank reserves, and 23\% private bars, coins, and ETFs (World Gold Council 2026), worth about \$29 trillion at today's price, some 6\% of global household wealth; its marginal holder is a diversified investor with a few percent in it, not an enthusiast with a fifth. With volatility of 13--20\% (13.1\% over 1836--2011 in Barro and Misra 2016; higher in the last two years), a holder weight of 2--10\%, and $\gamma \in [1.7, 2.8]$, the concentration term is 0.1--1.1 points, median 0.3. Mortality: gold has no failure mode that destroys the asset; the closest analogues are sovereign restrictions, such as the United States' compulsory purchase of private gold in 1933 at the old official price before the dollar was devalued, which are jurisdiction risks to a holder rather than deaths of the asset, and we allow 0--0.3 points. The condition returns a required return for gold of about 5.5\% a year (90\% interval 5.0--6.0\%; envelope 4.7--6.8\%; Appendix B.5): the risk-free rate plus half a point, a Sharpe ratio near zero. This is a reproduced result, and that is its value here: Barro and Misra (2016) find that gold's real price appreciation averaged 1.1\% a year over 175 years, with a covariance with consumption indistinguishable from zero, and conclude that its expected return should sit close to the risk-free rate; the equation reaches the same place from observable portfolios rather than from a consumption model. Gold's recent history then reads as Bitcoin's did in Section 6. From the end of 2023 to November 2026 gold compounded at about 27\% a year (from about \$2,060 to about \$4,040 an ounce, with a gain of some 65\% in 2025 alone and a flat twelve months since; LBMA 2026), roughly twenty points a year above anything its holders could have required. That excess is a wedge of the same kind as Bitcoin's: central-bank purchases, fiscal and geopolitical news, and ETF inflows the market had not priced, not a payment for risk. In equilibrium the equation puts gold's expected return from here back at 5--6\% nominal; extrapolating 2024--25 would be the gold version of the age rule.
 
 \textbf{What ``digital gold'' would mean.} The comparison also fixes the phrase in return terms. If Bitcoin's volatility fell to gold's 15\% and its holder base diluted to gold's few percent per holder, the concentration term would all but vanish, as gold's has, and what remained would be the two terms gold does not carry: a beta of 0.33--1.05 and a mortality term of 0.3--3 points. The condition then gives about 10\% a year (90\% interval 8--12\%; Appendix B.5). Only if those two also converged to gold's, with Bitcoin as uncorrelated with equities as gold and as immune to failure, would its required return reach gold's 5--6\%. Digital gold, in other words, names a required return near the risk-free rate, the end state of the compression this paper documents, and the opposite of a 32\% asset.
 
@@ -364,6 +360,80 @@ This is a measurement paper, so its limits are measurement limits; we list them 
 The riddle was that Bitcoin seemed to carry three expected returns at once: 32\% from its own tested history, 6--18\% from the CAPM, 14--22\% from its holders' mouths. The resolution begins with classification. Only the first was ever an expected return, a property of the price process. The CAPM range is a normative required return, the hurdle of an investor who does not hold Bitcoin. The holders' numbers are the market's required return, the compensation demanded by the investor who does, and they move, wave by wave, in the direction and magnitude the marginal-holder condition, Merton's (1987) limited-participation pricing with measured inputs, says they should: with her volatility and her portfolio weight, at ordinary levels of risk aversion. And the 32\% is the smooth curve through a history equal to that required return plus a wedge of unanticipated adoption and winner-selection. The graveyard shows the wedge was never mortality compensation (hazard rises with age; the top-20 jump hazard is 0.3\% a year); the cross-section shows it was never available to the typical asset (the median coin lost money); and Bitcoin's own record shows it turned negative after 2021.
 
 What remains, if the asset is now priced in equilibrium, is a required return built from observable things: 40-some percent volatility, a holder base diluting toward market weight, a small and datable mortality risk, and a risk-free rate. Those ingredients say about 15\% a year for 2026--2031, with a 90\% range of 12--18\%; the same condition, fed gold's inputs, returns the risk-free rate plus half a point, which is what ``digital gold'' would mean if Bitcoin ever got there. If Bitcoin instead repeats its age-rule 32\%, then either it was still underpriced, or a risk we measured as small was large, and the framework here says exactly which observables separate the two. Either way, the question that opened the companion paper (compensation for risks that never came, or an asset the market underpriced?) now has an evidence-based answer: on either reading of the early marginal holder, mostly the second, for a decade; neither, anymore.
+
+\textbf{For practitioners.} Four takeaways. Use 15\% a year (12--18\%) as Bitcoin's expected return in capital-market assumptions, not the 32\% its history extrapolates, and about 6\% in compound terms; at 42\% volatility this is an equity-like reward per unit of risk, not a superior one. Treat the 4--7 point gap between that figure and a diversified investor's 8--11\% hurdle as a limited-participation premium that is available to small, diversified positions and will shrink as ETFs broaden the holder base. Size the position with the condition inverted (equation~3): about 13\% of financial wealth for an investor with risk aversion of 3 who accepts the central forecast, and proportionally less for higher risk aversion or a lower view. And charge for mortality explicitly, 0.3--3 points, with option-implied crash intensity as the running check on whether the market has begun to price a larger hazard. The measurement agenda of Section 10, above all a measured path for the holder weight, is where the estimate can be sharpened; the forecast itself is graded in September 2031.
+
+\section*{Acknowledgments}
+\noindent The author thanks the maintainers of the Coin Metrics community dataset, on which the asset panel is built. All errors are the author's.
+
+\section*{Funding}
+\noindent No funding was obtained for the reported work.
+
+\section*{Disclosure statement}
+\noindent No potential conflict of interest was reported by the author.
+
+\section*{Declaration of generative AI use}
+\noindent Generative AI (Anthropic's Claude) was used under the author's direction to write and test the code in the replication package, to produce the figures from that code, and to draft and edit text. The research design, the curation of the death classifications, all interpretations and conclusions, and the final text are the author's, who has verified the outputs and takes full responsibility for the content. Generative AI was not used to generate or alter data.
+
+\section*{References}
+\begin{list}{}{\setlength{\itemindent}{-1.5em}\setlength{\leftmargin}{1.5em}\setlength{\itemsep}{2pt}\setlength{\parsep}{0pt}}
+\item Almeida, C., M. Grith, R. Miftachov, and Z. Wang. 2024. ``Risk Premia in the Bitcoin Market.'' arXiv:2410.15195 (revised 2025).
+\item Barberis, N., and M. Huang. 2008. ``Stocks as Lotteries: The Implications of Probability Weighting for Security Prices.'' \emph{American Economic Review} 98(5): 2066--2100.
+\item Barro, R. J. 2006. ``Rare Disasters and Asset Markets in the Twentieth Century.'' \emph{Quarterly Journal of Economics} 121(3): 823--866.
+\item Barro, R. J., and S. Misra. 2016. ``Gold Returns.'' \emph{Economic Journal} 126(594): 1293--1317.
+\item Bekaert, G., and C. R. Harvey. 2000. ``Foreign Speculators and Emerging Equity Markets.'' \emph{Journal of Finance} 55(2): 565--613.
+\item Biais, B., C. Bisi\`ere, M. Bouvard, C. Casamatta, and A. J. Menkveld. 2023. ``Equilibrium Bitcoin Pricing.'' \emph{Journal of Finance} 78(2): 967--1014.
+\item Black, F., and R. Litterman. 1992. ``Global Portfolio Optimization.'' \emph{Financial Analysts Journal} 48(5): 28--43.
+\item Brown, S., W. Goetzmann, and S. Ross. 1995. ``Survival.'' \emph{Journal of Finance} 50(3): 853--873.
+\item Burger, H. C. 2019. ``Bitcoin's Natural Long-Term Power-Law Corridor of Growth.'' Coinmonks (Medium).
+\item Candia, B., O. Coibion, Y. Gorodnichenko, and M. Weber. 2026. ``Do You Even Crypto, Bro? Cryptocurrencies in Household Finance.'' Federal Reserve Bank of Cleveland Working Paper 26-16.
+\item Chetty, R. 2006. ``A New Method of Estimating Risk Aversion.'' \emph{American Economic Review} 96(5): 1821--1834.
+\item Chiappori, P.-A., and M. Paiella. 2011. ``Relative Risk Aversion Is Constant: Evidence from Panel Data.'' \emph{Journal of the European Economic Association} 9(6): 1021--1052.
+\item Cochrane, J. H. 2011. ``Presidential Address: Discount Rates.'' \emph{Journal of Finance} 66(4): 1047--1108.
+\item Coin Metrics. 2026. ``Community Network Data.'' GitHub repository coinmetrics/data. Accessed November 2026.
+\item Cong, L. W., Y. Li, and N. Wang. 2021. ``Tokenomics: Dynamic Adoption and Valuation.'' \emph{Review of Financial Studies} 34(3): 1105--1155.
+\item Das, S. R., and R. Uppal. 2004. ``Systemic Risk and International Portfolio Choice.'' \emph{Journal of Finance} 59(6): 2809--2834.
+\item Deloitte. 2019. ``Quantum Computers and the Bitcoin Blockchain.'' Deloitte Netherlands analysis by I. Barmes and B. Bosch, updated periodically (standing estimate of quantum-vulnerable supply).
+\item Deribit. DVOL implied-volatility index readings as reported January 2026 (level 40; one-year average 55).
+\item Dimson, E., P. Marsh, and M. Staunton. 2002. \emph{Triumph of the Optimists: 101 Years of Global Investment Returns.} Princeton: Princeton University Press.
+\item Elton, E. J. 1999. ``Expected Return, Realized Return, and Asset Pricing Tests.'' \emph{Journal of Finance} 54(4): 1199--1220.
+\item Erb, C. B., and C. R. Harvey. 2013. ``The Golden Dilemma.'' \emph{Financial Analysts Journal} 69(4): 10--42.
+\item Fama, E. F., and K. R. French. 2004. ``The Capital Asset Pricing Model: Theory and Evidence.'' \emph{Journal of Economic Perspectives} 18(3): 25--46.
+\item Feder, A., N. Gandal, J. T. Hamrick, and T. Moore. 2018. ``The Rise and Fall of Cryptocurrency Coins and Tokens.'' \emph{Decisions in Economics and Finance} 41: 195--222.
+\item Federal Reserve Board. 2022--2024. \emph{Survey of Household Economics and Decisionmaking (SHED)}, crypto-holding items; Federal Reserve Banks of Boston/Atlanta/San Francisco, \emph{Survey and Diary of Consumer Payment Choice}, bitcoin-ownership items.
+\item Friend, I., and M. E. Blume. 1975. ``The Demand for Risky Assets.'' \emph{American Economic Review} 65(5): 900--922.
+\item Giglio, S., M. Maggiori, J. Stroebel, and S. Utkus. 2021. ``Five Facts about Beliefs and Portfolios.'' \emph{American Economic Review} 111(5): 1481--1522.
+\item Greenwood, R., and A. Shleifer. 2014. ``Expectations of Returns and Expected Returns.'' \emph{Review of Financial Studies} 27(3): 714--746.
+\item Grobys, K., and N. Sapkota. 2020. ``Predicting Cryptocurrency Defaults.'' \emph{Applied Economics} 52(46): 5060--5076.
+\item Henry, P. B. 2000. ``Stock Market Liberalization, Economic Growth, and the Cost of Capital.'' \emph{Journal of Finance} 55(2): 529--564.
+\item J.P. Morgan Asset Management. 2026. \emph{Long-Term Capital Market Assumptions}, 30th edition.
+\item LBMA. 2026. Gold Price PM, daily series (London Bullion Market Association); levels quoted for end-2023, end-2024, end-2025, and November 6, 2026.
+\item Lewellen, J., and J. Shanken. 2002. ``Learning, Asset-Pricing Tests, and Market Efficiency.'' \emph{Journal of Finance} 57(3): 1113--1145.
+\item Lintner, J. 1965. ``The Valuation of Risk Assets and the Selection of Risky Investments in Stock Portfolios and Capital Budgets.'' \emph{Review of Economics and Statistics} 47(1): 13--37.
+\item Liu, J., F. A. Longstaff, and J. Pan. 2003. ``Dynamic Asset Allocation with Event Risk.'' \emph{Journal of Finance} 58(1): 231--259.
+\item Liu, Y., and A. Tsyvinski. 2021. ``Risks and Returns of Cryptocurrency.'' \emph{Review of Financial Studies} 34(6): 2689--2727.
+\item Makarov, I., and A. Schoar. 2020. ``Trading and Arbitrage in Cryptocurrency Markets.'' \emph{Journal of Financial Economics} 135(2): 293--319.
+\item Martin, I. 2017. ``What Is the Expected Return on the Market?'' \emph{Quarterly Journal of Economics} 132(1): 367--433.
+\item Mehra, R., and E. C. Prescott. 1985. ``The Equity Premium: A Puzzle.'' \emph{Journal of Monetary Economics} 15(2): 145--161.
+\item Merton, R. C. 1969. ``Lifetime Portfolio Selection under Uncertainty: The Continuous-Time Case.'' \emph{Review of Economics and Statistics} 51(3): 247--257.
+\item Merton, R. C. 1976. ``Option Pricing When Underlying Stock Returns Are Discontinuous.'' \emph{Journal of Financial Economics} 3(1--2): 125--144.
+\item Merton, R. C. 1987. ``A Simple Model of Capital Market Equilibrium with Incomplete Information.'' \emph{Journal of Finance} 42(3): 483--510.
+\item OeNB (Oesterreichische Nationalbank). 2025. ``Crypto Assets in Austria: Evidence from HFCS Wave 5.'' \emph{OeNB Bulletin} Q4/25.
+\item Pagnotta, E. S. 2022. ``Decentralizing Money: Bitcoin Prices and Blockchain Security.'' \emph{Review of Financial Studies} 35(2): 866--907.
+\item Papadogiannis, A. 2025. ``Economic Scarcity as Value: A Universal Framework for Blockchain and Beyond.'' Working paper, under revision at \emph{IET Blockchain}.
+\item Papadogiannis, A. 2026a. ``A Dual-Risk Theory of Valuation Separating Market-Based Discounting from Expectational Distortion.'' \emph{Discover Analytics} 4(1): 19.
+\item Papadogiannis, A. 2026b. ``From Unified Discounting to Dual-Risk: A New Lens on DCF Valuation.'' \emph{Finance Research Open} 2: 100096.
+\item Papadogiannis, A. 2026c. ``Bitcoin's Expected Return: An Age Rule That Beats Current Practice.'' Working paper, submitted to the \emph{Journal of Alternative Investments}.
+\item P\'astor, \v{L}., and P. Veronesi. 2009. ``Learning in Financial Markets.'' \emph{Annual Review of Financial Economics} 1: 361--381.
+\item Pew Research Center. 2021--2024. Shares of US adults who have invested in, traded, or used cryptocurrency.
+\item Sharpe, W. F. 1964. ``Capital Asset Prices: A Theory of Market Equilibrium under Conditions of Risk.'' \emph{Journal of Finance} 19(3): 425--442.
+\item Sharpe, W. F. 1994. ``The Sharpe Ratio.'' \emph{Journal of Portfolio Management} 21(1): 49--58.
+\item UBS. Annual. \emph{Global Wealth Report} (global household wealth aggregates).
+\item World Gold Council. 2026. ``Above-Ground Stocks.'' Goldhub data, end of Q3 2026.
+\end{list}
+
+\vspace{1em}
+\noindent\textbf{Data and code availability:} the full replication package (panel-construction and survival scripts, the curated asset-level panel, all result tables, and every exhibit) is maintained at \url{https://github.com/apapadogiannis/bitcoin-required-return}. The pipeline ends with an audit script that recomputes and checks every quantitative claim in this paper. Underlying market data are the public Coin Metrics community dataset (snapshot ending May 24, 2026), which the package downloads from its source rather than redistributing.
 
 \appendix
 
@@ -430,15 +500,16 @@ SUSHI (SushiSwap) & 2026-03 & \textbf{contested} & n/a & protocol operating; $>$
 \toprule
 Death definition & Deaths & $\gamma_{\text{age}}$, no FE & $\gamma_{\text{age}}$, year FE \\
 \midrule
-Strict (feed termination) & 234 & $+0.56$ (0.07) & $+0.44$ (0.06) \\
-Broad (feed + price) & 263 & $+0.69$ (0.07) & $+0.56$ (0.07) \\
-Abandonment (all mechanical) & 588 & -- & $+0.51$ (0.04) \\
-\textbf{Curated (final)} & \textbf{520} & -- & $\boldsymbol{+0.42}$ \textbf{(0.04)} \\
-Curated, 2025 feed-wall removed & -- & -- & $+0.65$ (0.08) \\
-Curated, birth-cohort FE in place of year FE & 520 & -- & $+1.62$ (0.10) \\
-Elite (ever top-20) subsample & 36 & -- & $+0.68$ (0.21) \\
+Strict (feed termination) & 234 & $+0.56$** (0.07) & $+0.44$** (0.06) \\
+Broad (feed + price) & 263 & $+0.69$** (0.07) & $+0.56$** (0.07) \\
+Abandonment (all mechanical) & 588 & -- & $+0.51$** (0.04) \\
+\textbf{Curated (final)} & \textbf{520} & -- & $\boldsymbol{+0.42}$** \textbf{(0.04)} \\
+Curated, 2025 feed-wall removed & -- & -- & $+0.65$** (0.08) \\
+Curated, birth-cohort FE in place of year FE & 520 & -- & $+1.62$** (0.10) \\
+Elite (ever top-20) subsample & 36 & -- & $+0.68$** (0.21) \\
 \bottomrule
 \end{tabular}
+\par\smallskip\parbox{0.9\textwidth}{\footnotesize Standard errors in parentheses, clustered by asset. ** significant at the 1\% level; * at the 5\% level. Every coefficient differs from the Lindy value of $-1$ at the 1\% level.}
 \end{table}
 
 The log-survival--log-age slope over ages 1--10 runs from $-0.21$ (strict) to $-0.49$ (curated), i.e.\ a cumulative Pareto constant $\hat{k} \approx 0.2$--$0.5$ across definitions, an order of magnitude below the 5.6 the age rule would require. Two further robustness checks address the standard identification worry that an age effect might be a disguised cohort effect (age, cohort, and period are collinear, so only two can enter at once): replacing calendar-period fixed effects with birth-cohort fixed effects \emph{raises} the age elasticity to $+1.62$ (s.e.\ 0.10), so the rejection of Lindy is not an artifact of the period controls, and the period-FE $+0.42$ is the conservative figure. Parametrically, a Weibull fit to the curated durations gives shape $\rho = 1.57$ (95\% CI 1.47--1.67), where $\rho > 1$ means a hazard rising with age and Lindy requires $\rho < 1$; a log-logistic fit (slightly preferred by AIC, 3,342 vs 3,371) implies a hump-shaped hazard that rises through the first decade of life. The implied median lifetime of a core-universe cryptoasset is 6.4 years under both the Weibull and the Kaplan--Meier estimates.
@@ -466,67 +537,5 @@ The concentration quantity enters with the \emph{wrong sign} as a predictor (mar
 
 \textbf{B.6 Death-definition sensitivities.} Volume-collapse deaths require an absolute floor (\$250k/day trailing volume) in addition to the 1\%-of-peak rule; without the floor, 2021-mania base effects falsely kill operating mid-caps. The elite hazard is 3.54\% with all curated deaths, 3.15\% excluding the four contested zombies, and 2.36\% (CI 1.51--3.51\%) treating all twelve 2025 deaths as censoring; the Lindy rejection holds under every variant (B.1).
 
-\section*{References}
-\begin{list}{}{\setlength{\itemindent}{-1.5em}\setlength{\leftmargin}{1.5em}\setlength{\itemsep}{2pt}\setlength{\parsep}{0pt}}
-\item Almeida, C., M. Grith, R. Miftachov, and Z. Wang. 2024. ``Risk Premia in the Bitcoin Market.'' arXiv:2410.15195 (revised 2025).
-\item Barberis, N., and M. Huang. 2008. ``Stocks as Lotteries: The Implications of Probability Weighting for Security Prices.'' \emph{American Economic Review} 98(5): 2066--2100.
-\item Barro, R. J. 2006. ``Rare Disasters and Asset Markets in the Twentieth Century.'' \emph{Quarterly Journal of Economics} 121(3): 823--866.
-\item Barro, R. J., and S. Misra. 2016. ``Gold Returns.'' \emph{Economic Journal} 126(594): 1293--1317.
-\item Bekaert, G., and C. R. Harvey. 2000. ``Foreign Speculators and Emerging Equity Markets.'' \emph{Journal of Finance} 55(2): 565--613.
-\item Biais, B., C. Bisi\`ere, M. Bouvard, C. Casamatta, and A. J. Menkveld. 2023. ``Equilibrium Bitcoin Pricing.'' \emph{Journal of Finance} 78(2): 967--1014.
-\item Black, F., and R. Litterman. 1992. ``Global Portfolio Optimization.'' \emph{Financial Analysts Journal} 48(5): 28--43.
-\item Brown, S., W. Goetzmann, and S. Ross. 1995. ``Survival.'' \emph{Journal of Finance} 50(3): 853--873.
-\item Burger, H. C. 2019. ``Bitcoin's Natural Long-Term Power-Law Corridor of Growth.'' Coinmonks (Medium).
-\item Candia, B., O. Coibion, Y. Gorodnichenko, and M. Weber. 2026. ``Do You Even Crypto, Bro? Cryptocurrencies in Household Finance.'' Federal Reserve Bank of Cleveland Working Paper 26-16.
-\item Chetty, R. 2006. ``A New Method of Estimating Risk Aversion.'' \emph{American Economic Review} 96(5): 1821--1834.
-\item Chiappori, P.-A., and M. Paiella. 2011. ``Relative Risk Aversion Is Constant: Evidence from Panel Data.'' \emph{Journal of the European Economic Association} 9(6): 1021--1052.
-\item Cochrane, J. H. 2011. ``Presidential Address: Discount Rates.'' \emph{Journal of Finance} 66(4): 1047--1108.
-\item Coin Metrics. 2026. ``Community Network Data.'' GitHub repository coinmetrics/data. Accessed November 2026.
-\item Cong, L. W., Y. Li, and N. Wang. 2021. ``Tokenomics: Dynamic Adoption and Valuation.'' \emph{Review of Financial Studies} 34(3): 1105--1155.
-\item Das, S. R., and R. Uppal. 2004. ``Systemic Risk and International Portfolio Choice.'' \emph{Journal of Finance} 59(6): 2809--2834.
-\item Deloitte. 2019. ``Quantum Computers and the Bitcoin Blockchain.'' Deloitte Netherlands analysis by I. Barmes and B. Bosch, updated periodically (standing estimate of quantum-vulnerable supply).
-\item Deribit. DVOL implied-volatility index readings as reported January 2026 (level 40; one-year average 55).
-\item Dimson, E., P. Marsh, and M. Staunton. 2002. \emph{Triumph of the Optimists: 101 Years of Global Investment Returns.} Princeton: Princeton University Press.
-\item Elton, E. J. 1999. ``Expected Return, Realized Return, and Asset Pricing Tests.'' \emph{Journal of Finance} 54(4): 1199--1220.
-\item Erb, C. B., and C. R. Harvey. 2013. ``The Golden Dilemma.'' \emph{Financial Analysts Journal} 69(4): 10--42.
-\item Fama, E. F., and K. R. French. 2004. ``The Capital Asset Pricing Model: Theory and Evidence.'' \emph{Journal of Economic Perspectives} 18(3): 25--46.
-\item Feder, A., N. Gandal, J. T. Hamrick, and T. Moore. 2018. ``The Rise and Fall of Cryptocurrency Coins and Tokens.'' \emph{Decisions in Economics and Finance} 41: 195--222.
-\item Federal Reserve Board. 2022--2024. \emph{Survey of Household Economics and Decisionmaking (SHED)}, crypto-holding items; Federal Reserve Banks of Boston/Atlanta/San Francisco, \emph{Survey and Diary of Consumer Payment Choice}, bitcoin-ownership items.
-\item Friend, I., and M. E. Blume. 1975. ``The Demand for Risky Assets.'' \emph{American Economic Review} 65(5): 900--922.
-\item Giglio, S., M. Maggiori, J. Stroebel, and S. Utkus. 2021. ``Five Facts about Beliefs and Portfolios.'' \emph{American Economic Review} 111(5): 1481--1522.
-\item Greenwood, R., and A. Shleifer. 2014. ``Expectations of Returns and Expected Returns.'' \emph{Review of Financial Studies} 27(3): 714--746.
-\item Grobys, K., and N. Sapkota. 2020. ``Predicting Cryptocurrency Defaults.'' \emph{Applied Economics} 52(46): 5060--5076.
-\item Henry, P. B. 2000. ``Stock Market Liberalization, Economic Growth, and the Cost of Capital.'' \emph{Journal of Finance} 55(2): 529--564.
-\item J.P. Morgan Asset Management. 2026. \emph{Long-Term Capital Market Assumptions}, 30th edition.
-\item LBMA. 2026. Gold Price PM, daily series (London Bullion Market Association); levels quoted for end-2023, end-2024, end-2025, and November 6, 2026.
-\item Lewellen, J., and J. Shanken. 2002. ``Learning, Asset-Pricing Tests, and Market Efficiency.'' \emph{Journal of Finance} 57(3): 1113--1145.
-\item Lintner, J. 1965. ``The Valuation of Risk Assets and the Selection of Risky Investments in Stock Portfolios and Capital Budgets.'' \emph{Review of Economics and Statistics} 47(1): 13--37.
-\item Liu, J., F. A. Longstaff, and J. Pan. 2003. ``Dynamic Asset Allocation with Event Risk.'' \emph{Journal of Finance} 58(1): 231--259.
-\item Liu, Y., and A. Tsyvinski. 2021. ``Risks and Returns of Cryptocurrency.'' \emph{Review of Financial Studies} 34(6): 2689--2727.
-\item Makarov, I., and A. Schoar. 2020. ``Trading and Arbitrage in Cryptocurrency Markets.'' \emph{Journal of Financial Economics} 135(2): 293--319.
-\item Martin, I. 2017. ``What Is the Expected Return on the Market?'' \emph{Quarterly Journal of Economics} 132(1): 367--433.
-\item Mehra, R., and E. C. Prescott. 1985. ``The Equity Premium: A Puzzle.'' \emph{Journal of Monetary Economics} 15(2): 145--161.
-\item Merton, R. C. 1969. ``Lifetime Portfolio Selection under Uncertainty: The Continuous-Time Case.'' \emph{Review of Economics and Statistics} 51(3): 247--257.
-\item Merton, R. C. 1976. ``Option Pricing When Underlying Stock Returns Are Discontinuous.'' \emph{Journal of Financial Economics} 3(1--2): 125--144.
-\item Merton, R. C. 1987. ``A Simple Model of Capital Market Equilibrium with Incomplete Information.'' \emph{Journal of Finance} 42(3): 483--510.
-\item OeNB (Oesterreichische Nationalbank). 2025. ``Crypto Assets in Austria: Evidence from HFCS Wave 5.'' \emph{OeNB Bulletin} Q4/25.
-\item Pagnotta, E. S. 2022. ``Decentralizing Money: Bitcoin Prices and Blockchain Security.'' \emph{Review of Financial Studies} 35(2): 866--907.
-\item Papadogiannis, A. 2025. ``Economic Scarcity as Value: A Universal Framework for Blockchain and Beyond.'' Working paper, under revision at \emph{IET Blockchain}.
-\item Papadogiannis, A. 2026a. ``A Dual-Risk Theory of Valuation Separating Market-Based Discounting from Expectational Distortion.'' \emph{Discover Analytics} 4(1): 19.
-\item Papadogiannis, A. 2026b. ``From Unified Discounting to Dual-Risk: A New Lens on DCF Valuation.'' \emph{Finance Research Open} 2: 100096.
-\item Papadogiannis, A. 2026c. ``Bitcoin's Expected Return: An Age Rule That Beats Current Practice.'' Working paper, submitted to the \emph{Journal of Alternative Investments}.
-\item P\'astor, \v{L}., and P. Veronesi. 2009. ``Learning in Financial Markets.'' \emph{Annual Review of Financial Economics} 1: 361--381.
-\item Pew Research Center. 2021--2024. Shares of US adults who have invested in, traded, or used cryptocurrency.
-\item Sharpe, W. F. 1964. ``Capital Asset Prices: A Theory of Market Equilibrium under Conditions of Risk.'' \emph{Journal of Finance} 19(3): 425--442.
-\item Sharpe, W. F. 1994. ``The Sharpe Ratio.'' \emph{Journal of Portfolio Management} 21(1): 49--58.
-\item UBS. Annual. \emph{Global Wealth Report} (global household wealth aggregates).
-\item World Gold Council. 2026. ``Above-Ground Stocks.'' Goldhub data, end of Q3 2026.
-\end{list}
-
-\vspace{1em}
-\noindent\textbf{Data and code availability:} the full replication package (panel-construction and survival scripts, the curated asset-level panel, all result tables, and every exhibit) is maintained at \url{https://github.com/apapadogiannis/bitcoin-required-return}. The pipeline ends with an audit script that recomputes and checks every quantitative claim in this paper. Underlying market data are the public Coin Metrics community dataset (snapshot ending May 24, 2026), which the package downloads from its source rather than redistributing.
-
-\vspace{1em}
-\noindent\textit{Disclaimer: This research was conducted independently and without funding, review, or endorsement. The views expressed are solely those of the author and do not represent any institutional position. This paper is for informational and academic purposes only and does not constitute financial, investment, tax, or legal advice, nor a recommendation to buy or sell any financial instrument.}
 
 \end{document}

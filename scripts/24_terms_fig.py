@@ -33,10 +33,25 @@ tot=sum(parts); shares=[p/tot for p in parts]
 plt.rcParams["axes.titlepad"]=8
 fig,axes=plt.subplots(1,2,figsize=(8.6,5.0),gridspec_kw={"width_ratios":[1,1.12]})
 ax=axes[0]
-ax.stackplot(A,*parts,colors=cols,alpha=0.92,lw=0)
-ax.set_ylabel("% per year"); ax.set_xlabel("Bitcoin age (years)")
-ax.set_xlim(3,17.5); ax.set_ylim(0,215)
-ax.set_title("Levels: the required return and its parts")
+ax.set_yscale("log")
+tot_pct=100*(rf[m].values+beta_t[m].values+conc_t[m].values+mort_t[m].values)
+ax.plot(A,tot_pct,color=INK,lw=2.0,zorder=5)
+ax.plot(A,parts[2],color=ORANGE,lw=1.8,zorder=4)
+ax.plot(A,parts[0],color=BASE,lw=1.8,zorder=3)
+ax.plot(A,parts[1],color=BLUE,lw=1.8,zorder=3)
+ax.plot(A,parts[3],color=AQUA,lw=1.8,zorder=3)
+from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
+tk=[1,2,5,10,20,50,100,200]
+ax.yaxis.set_major_locator(FixedLocator(tk)); ax.yaxis.set_major_formatter(FixedFormatter([f"{t}%" for t in tk])); ax.yaxis.set_minor_locator(NullLocator())
+ax.set_ylim(0.9,300)
+ax.set_ylabel("% per year (log scale)"); ax.set_xlabel("Bitcoin age (years)")
+ax.set_xlim(3,17.5)
+ax.set_title("Levels: each term of the requirement")
+ax.text(6.4,88,"total required return",color=INK,fontsize=8.3,ha="left",weight="bold")
+ax.text(10.1,11.5,"concentration γσ²w",color=ORANGE,fontsize=8.3,ha="left",weight="bold")
+ax.text(13.4,1.12,"risk-free rate",color=INK2,fontsize=8.3,ha="left",weight="bold")
+ax.text(3.2,3.05,"market risk β·ERP",color=BLUE,fontsize=8.3,ha="left",weight="bold")
+ax.text(3.2,1.32,"mortality λ(1−δ)",color=AQUA,fontsize=8.3,ha="left",weight="bold")
 ax=axes[1]
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_xlabel("Bitcoin age (years)")
@@ -51,9 +66,6 @@ for s,lab,c in zip(shares,labels,cols):
     ax.text(17.7,mid[i26],f"{lab}\n{100*s[i26]:.0f}% in 2026",fontsize=8.3,va="center",ha="left",color=c if c!=BASE else INK2,weight="bold")
     cum=cum+100*s
 ax.spines["right"].set_visible(False)
-axes[0].text(6.3,150,"2013: concentration is\n%d%% of a %d%% requirement"%(round(100*shares[2][i13]),round(tot[i13])),fontsize=8.3,color=INK2)
-axes[0].annotate("2026: %.0f%% (band midpoint)"%tot[i26],xy=(A[i26],tot[i26]),xytext=(12.2,62),fontsize=8.3,color=INK2,
-                 arrowprops=dict(arrowstyle="-",lw=0.6,color=MUT))
 for a in axes:
     sec=a.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
     sec.set_xticks([2013,2016,2019,2022,2025]); sec.tick_params(labelsize=8,colors=MUT,length=2)

@@ -28,9 +28,7 @@ def finish(fig,ax_list,path):
     fig.savefig(f"{path}.pdf"); fig.savefig(f"{path}.png",dpi=200)
     print("saved",os.path.basename(path))
 
-import os
-GY=os.environ.get("OUT_DIR","outputs"); MD=os.environ.get("FIG_DIR","figures"); CSV=os.environ.get("CM_CSV_DIR","data/cmdata/csv"); YR=365.25
-os.makedirs(MD,exist_ok=True)
+GY="/home/claude/graveyard"; MD="/home/claude/model"; CSV="/tmp/cmdata/csv"; YR=365.25
 
 # ============ FIG 1: hazard vs age ============
 hb=pd.read_csv(f"{GY}/hazard_buckets_curated.csv"); hb=hb[hb["deaths"]>0]
@@ -154,15 +152,29 @@ adr=btcf["AdrBalCnt"].dropna().resample("ME").mean().reindex(px.index).interpola
 lr=np.log(px).diff(); sig2=lr.pow(2).ewm(halflife=9).mean()*12
 GEN=pd.Timestamp("2009-01-03"); age=pd.Series((px.index-GEN).days/365.25,index=px.index)
 i21=px.index.get_indexer([pd.Timestamp("2021-09-30")],method="nearest")[0]
-q=adr*(0.11/adr.iloc[i21])
+# participation share of US adults: log-linear through the survey anchors (Fed SHED/SCPC, Pew; Candia et al. 2026),
+# address counts carry the shape only before the first survey point (2014)
+_pts={pd.Timestamp("2014-06-30"):0.004,pd.Timestamp("2018-06-30"):0.012,pd.Timestamp("2021-09-30"):0.11,
+      pd.Timestamp("2023-06-30"):0.12,pd.Timestamp("2025-06-30"):0.13}
+_t=np.array([(d-GEN).days/365.25 for d in _pts]); _v=np.log(np.array(list(_pts.values())))
+q=pd.Series(np.exp(np.interp(age,_t,_v)),index=px.index)
+_i14=px.index.get_indexer([pd.Timestamp("2014-06-30")],method="nearest")[0]
+q[age<_t[0]]=0.004*adr[age<_t[0]]/adr.iloc[_i14]
+q_addr=adr*(0.11/adr.iloc[i21])   # the address-scaled alternative, kept for Appendix D
 def interp(d):
     xs=[(pd.Timestamp(f"{y}-06-30")-GEN).days/365.25 for y in sorted(d)]
     return pd.Series(np.interp(age,xs,[d[y] for y in sorted(d)]),index=px.index)
 rf=interp({2012:.018,2014:.025,2016:.018,2018:.029,2020:.009,2022:.030,2024:.043,2026:.050})
 Wp=cap.iloc[i21]/0.19*(q/q.iloc[i21])*(interp({2012:0.25,2021:1.0,2026:1.4}))
-wbar=(cap.reindex(px.index)/Wp).clip(upper=0.9)
-foc_lo=rf+0.0132+1.7*sig2*wbar+0.003
-foc_hi=rf+0.042+2.8*sig2*wbar+0.03
+# institutional channel (spot ETFs + public-company treasuries, BTC held; mid-year anchors from issuer and filing data),
+# whose investors are not 'crypto owners' in household surveys and hold small weights (1.5% assumed for the lower edge)
+inst_btc=interp({2019:0.0,2020:0.1e6,2021:0.3e6,2023:0.4e6,2024:1.15e6,2025:2.1e6,2026:2.5e6})
+inst_val=inst_btc*px.reindex(px.index)
+w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # survey-holder back-cast, institutional channel not counted
+w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # institutional channel counted at 1.5% weights
+wbar=w_hi
+foc_lo=rf+0.0132+1.7*sig2*w_lo+0.003
+foc_hi=rf+0.042+2.8*sig2*w_hi+0.03
 seg=interp({2012:1.0,2020:1.0,2022:0.6,2025:0.15,2026:0.10})
 req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
 BETA=5.62; age_rule=(1+5/age)**(BETA/5)-1

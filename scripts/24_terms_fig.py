@@ -5,23 +5,8 @@ the gamma*sigma^2*w term and the all-in option bound of the band's upper edge.""
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])  # style block only
-btcf=pd.read_csv(f"{CSV}/btc.csv",parse_dates=["time"],usecols=["time","PriceUSD","CapMrktCurUSD","AdrBalCnt"]).set_index("time")
-px=btcf["PriceUSD"].dropna().resample("ME").last(); cap=btcf["CapMrktCurUSD"].dropna().resample("ME").last()
-adr=btcf["AdrBalCnt"].dropna().resample("ME").mean().reindex(px.index).interpolate()
-lr=np.log(px).diff(); sig2=lr.pow(2).ewm(halflife=9).mean()*12
-GEN=pd.Timestamp("2009-01-03"); age=pd.Series((px.index-GEN).days/365.25,index=px.index)
-i21=px.index.get_indexer([pd.Timestamp("2021-09-30")],method="nearest")[0]
-q=adr*(0.11/adr.iloc[i21])
-def interp(d):
-    xs=[(pd.Timestamp(f"{y}-06-30")-GEN).days/365.25 for y in sorted(d)]
-    return pd.Series(np.interp(age,xs,[d[y] for y in sorted(d)]),index=px.index)
-rf=interp({2012:.018,2014:.025,2016:.018,2018:.029,2020:.009,2022:.030,2024:.043,2026:.050})
-Wp=cap.iloc[i21]/0.19*(q/q.iloc[i21])*(interp({2012:0.25,2021:1.0,2026:1.4}))
-wbar=(cap.reindex(px.index)/Wp).clip(upper=0.9)
-foc_lo=rf+0.0132+1.7*sig2*wbar+0.003
-foc_hi=rf+0.042+2.8*sig2*wbar+0.03
-seg=interp({2012:1.0,2020:1.0,2022:0.6,2025:0.15,2026:0.10})
-req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
+src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])  # shared band construction
 beta_t=pd.Series(0.5*(0.0132+0.042),index=px.index); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)
 m=(age>=3.0)&(age<=17.45)

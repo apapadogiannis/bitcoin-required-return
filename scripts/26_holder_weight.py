@@ -60,7 +60,7 @@ ax.plot(A,100*w_lo[m],color=ORANGE,lw=1.6,ls=(0,(3,2)),label="back-cast with ETF
 ax.plot(A,100*w_retail[m],color=BLUE,lw=2.0,label="back-cast average weight (survey holders)")
 ax.scatter([12.75],[19],color=INK,zorder=5,s=34,label="2021Q3 survey: 19%")
 ax.plot([14.5,14.5],[10,25],color=AQUA,lw=3,alpha=0.8,label="Austria 2023: mostly under 20%")
-ax.plot([A.iloc[-1],A.iloc[-1]],[100*w26_lo,19],color=INK,lw=3,alpha=0.9,label=f"2026 range used in Section 5: {100*w26_lo:.0f}–19%")
+ax.plot([A.iloc[-1],A.iloc[-1]],[100*w26_lo,19],color=INK,lw=3,alpha=0.9,label=f"2026 range used in Section 4: {100*w26_lo:.0f}–19%")
 tk=[1,2,5,10,20,50,90]; ax.yaxis.set_major_locator(FixedLocator(tk)); ax.yaxis.set_major_formatter(FixedFormatter([f"{t}%" for t in tk])); ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.8,100); ax.set_xlim(3,17.5); ax.set_title("(c) Holder weight w"); ax.set_xlabel("Bitcoin age (years)"); ax.set_ylabel("share of financial wealth (log)")
 ax.legend(fontsize=8,loc="center left",bbox_to_anchor=(1.01,0.5),frameon=False)

@@ -1,4 +1,5 @@
-data/
+data/*
+!data/*_monthly.csv
 __pycache__/
 # *.pkl intermediates kept in outputs/
 *.aux

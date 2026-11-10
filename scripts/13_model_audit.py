@@ -84,6 +84,10 @@ chk("band width 2012-14",298-47,250,2); chk("band width 2024-26",37-17,20,0.5)
 _pv=np.sqrt((0.95*0.165)**2+(0.05*0.42)**2+2*0.95*0.05*0.5*0.165*0.42)
 chk("rebalanced 5%: added return",0.05*(19-9),0.5,0.01); chk("rebalanced 5%: portfolio vol",100*_pv,16.8,0.06); chk("rebalanced 5%: extra drag",100*(_pv**2-0.165**2)/2,0.05,0.01)
 chk("equity compound",9-100*0.165**2/2,8,0.5); chk("BTC compound",19-100*0.42**2/2,10,0.3); chk("vol ratio",42/16.5,2.5,0.06)
+_lb=np.log(px).diff()
+for _c in ["eth","xrp","bnb","ada","doge","ltc"]:
+    _p=pd.read_csv(f"/tmp/cmdata/csv/{_c}.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
+    _x=pd.DataFrame({"b":_lb,"a":np.log(_p).diff()}).dropna()["2018":]; chk(f"beta to BTC since 2018: {_c}",_x.cov().iloc[0,1]/_x.b.var(),1.0,0.155)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

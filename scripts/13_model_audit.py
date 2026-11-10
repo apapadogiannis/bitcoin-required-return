@@ -109,6 +109,7 @@ chk("D.6 2026 band lo",100*_fl.iloc[-1],14,0.6); chk("D.6 2026 band hi",100*_rh.
 _rng=np.random.default_rng(1); _N=400000
 _x=0.05+_rng.uniform(1.5,2.0,_N)*0.04+_rng.uniform(1.7,2.8,_N)*0.42**2*_rng.uniform(float(_wl.iloc[-1]),float(_wh.iloc[-1]),_N)+_rng.uniform(0.003,0.03,_N)
 _q=np.percentile(_x,[5,50,95]); chk("D.6 forecast median",100*_q[1],17.9,0.1); chk("D.6 forecast 5%",100*_q[0],15.7,0.1); chk("D.6 forecast 95%",100*_q[2],20.2,0.1)
+chk("fn: all-in at 120% vol",100*1.2**2,144,0.1); chk("fn: conc term lo",100*1.7*0.42**2*0.08,2,0.5); chk("fn: conc term hi",100*2.8*0.42**2*0.19,9,0.5)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

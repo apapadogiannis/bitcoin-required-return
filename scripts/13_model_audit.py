@@ -128,6 +128,7 @@ _us=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e12
 _whu=(cap.reindex(px.index)/_Wus).clip(upper=0.9); _wlu=(cap.reindex(px.index)/(_Wus+inst_val/0.015)).clip(upper=0.9); _lou=rf+0.85*beta_term+G_LO*sig2*_wlu+0.003; _hiu=np.maximum(rf+1.15*beta_term+G_HI*sig2*_whu+0.03,rf+seg*sig2); _miu=0.5*(_lou+_hiu)
 chk("D.5 2013 lo",100*_lou.iloc[at("2013-06-30")],18,0.6); chk("D.5 2026 hi",100*_hiu.iloc[-1],29,0.6); chk("D.5 2026 lo",100*_lou.iloc[-1],13,0.6); chk("D.5 5y gap",100*(fwd_mu-_miu)[mm].mean(),12,0.6)
 _Du=pd.DataFrame({"r":_r,"m":_mo(_miu)}).dropna(); _Du=_Du[_Du.index>="2012-01-01"]; chk("D.5 monthly gap",1200*(_Du.r-_Du.m).mean(),51,0.6)
+chk("BTC share of global household wealth (about $510T) is well under 1%",float(100*cap.iloc[-1]/510e12<0.6),1,0); chk("conc term at a 0.5% weight is under 0.2 points",float(100*1.9*0.42**2*0.005<0.2),1,0); chk("mortality example: 20% less 2.9",20-0.03*95,17,0.2)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),88,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.21,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

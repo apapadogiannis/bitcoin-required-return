@@ -18,6 +18,10 @@ l_age,=ax.plot(age[m],G(age_rule[m]),color=RED,lw=1.6,zorder=4)
 etf_age=(pd.Timestamp("2024-01-11")-GEN).days/365.25
 ax.axvline(etf_age,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=1)
 ax.text(etf_age+0.12,0.031,"spot ETFs approved\n(Jan 2024)",fontsize=8.0,color=INK2,va="bottom")
+for hd in ["2012-11-28","2016-07-09","2020-05-11","2024-04-20"]:
+    ha=(pd.Timestamp(hd)-GEN).days/365.25
+    l_halv=ax.axvline(ha,color=BASE,lw=0.9,zorder=1)
+    ax.plot([ha],[4.45],marker="v",color=MUT,ms=5,ls="none",zorder=6,clip_on=False)
 pts=[(2021.75,0.22,"22%",12.2,0.125),(2025.4,0.138,"13.8%",15.3,0.105)]
 for (yr,val,lab,tx,ty) in pts:
     A=yr-2009.0
@@ -29,11 +33,13 @@ ax.annotate("forecast 19%\n(90% range 16–22%)",xy=(17.4,0.19),xytext=(16.2,0.0
             arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,
             arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
-handles=[l_real,l_cagr,l_req,Patch(facecolor=SEQ[100],alpha=0.8,label="required-return band"),l_age,l_surv]
+from matplotlib.lines import Line2D
+h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
+handles=[l_real,l_cagr,l_req,Patch(facecolor=SEQ[100],alpha=0.8,label="required-return band"),l_age,l_surv,h_halv]
 labels=["realized average return over the next 5 years\n(arithmetic drift: same units as the required return)","realized compound return over the next 5 years\n(CAGR, for reference)",
         "required return of the marginal holder\n(midpoint of the band)",
         "required-return band: holder condition (γ 1.7–2.8) up to\nthe option-implied all-in bound",
-        "age rule forecast","holders' surveyed expectations (2021, 2025)"]
+        "age rule forecast","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"]
 leg=ax.legend(handles,labels,loc="upper center",bbox_to_anchor=(0.5,-0.13),ncol=2,fontsize=8.0,frameon=True,
               framealpha=1.0,edgecolor=GRID,borderpad=0.8,labelspacing=0.5,handlelength=1.8,columnspacing=1.6)
 ticks=[0.03,0.05,0.10,0.20,0.50,1.0,2.0,4.0]

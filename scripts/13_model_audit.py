@@ -81,6 +81,9 @@ chk("ex-2013 gap lo",1200*(_x.r-_x.lo).mean(),41,0.6); chk("ex-2013 gap hi",1200
 chk("monthly corr with mid",np.corrcoef(_D.r,_D.mid)[0,1],-0.02,0.01); chk("monthly corr with age rule",np.corrcoef(_D.r,_D.age)[0,1],0.17,0.01)
 _x=_D[:"2021-05"]; chk("monthly gap mid over the 5y-window months",1200*(_x.r-_x.mid).mean(),69,0.6); chk("n those months",len(_x),113,0)
 chk("band width 2012-14",298-47,250,2); chk("band width 2024-26",37-17,20,0.5)
+_pv=np.sqrt((0.95*0.165)**2+(0.05*0.42)**2+2*0.95*0.05*0.5*0.165*0.42)
+chk("rebalanced 5%: added return",0.05*(19-9),0.5,0.01); chk("rebalanced 5%: portfolio vol",100*_pv,16.8,0.06); chk("rebalanced 5%: extra drag",100*(_pv**2-0.165**2)/2,0.05,0.01)
+chk("equity compound",9-100*0.165**2/2,8,0.5); chk("BTC compound",19-100*0.42**2/2,10,0.3); chk("vol ratio",42/16.5,2.5,0.06)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

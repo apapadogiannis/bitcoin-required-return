@@ -7,7 +7,7 @@ matplotlib.use("Agg"); import matplotlib.pyplot as plt
 exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])  # style block only
 src=open("/home/claude/model/22_pretty_figs.py").read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])  # shared band construction
-beta_t=pd.Series(0.5*(0.0132+0.042),index=px.index); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)
+beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)
 m=(age>=3.0)&(age<=17.45)
 A=age[m].values; parts=[100*rf[m].values,100*beta_t[m].values,100*conc_t[m].values,100*mort_t[m].values]
@@ -23,7 +23,7 @@ tot_pct=100*(rf[m].values+beta_t[m].values+conc_t[m].values+mort_t[m].values)
 l_tot,=ax.plot(A,tot_pct,color=INK,lw=2.0,zorder=5)
 l_conc,=ax.plot(A,parts[2],color=ORANGE,lw=1.8,zorder=4)
 l_rf,=ax.plot(A,parts[0],color=BASE,lw=1.8,zorder=3)
-l_beta,=ax.plot(A,parts[1],color=BLUE,lw=1.8,ls=(0,(4,2)),zorder=3)
+l_beta,=ax.plot(A,parts[1],color=BLUE,lw=1.8,zorder=3)
 l_mort,=ax.plot(A,parts[3],color=AQUA,lw=1.8,ls=(0,(4,2)),zorder=3)
 from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
 tk=[1,2,5,10,20,50,100,200]
@@ -32,7 +32,7 @@ ax.set_ylim(0.9,300)
 ax.set_ylabel("% per year (log scale)"); ax.set_xlabel("Bitcoin age (years)")
 ax.set_xlim(3,17.5)
 ax.set_title("Levels: each term of the requirement")
-ax.legend([l_tot,l_conc,l_rf,l_beta,l_mort],["total required return","concentration  γσ²w","risk-free rate","market risk  β·ERP (held at 2.7 pts)","mortality  λ(1−δ) (held at 1.65 pts)"],loc="lower left",bbox_to_anchor=(0.01,0.22),fontsize=8,frameon=True,framealpha=0.95,edgecolor=GRID,handlelength=1.6,labelspacing=0.4,borderpad=0.6)
+ax.legend([l_tot,l_conc,l_rf,l_beta,l_mort],["total required return","concentration  γσ²w","risk-free rate","market risk  β·ERP (rolling 4-yr beta)","mortality  λ(1−δ) (held at 1.65 pts)"],loc="upper right",bbox_to_anchor=(1.0,1.0),fontsize=8,frameon=True,framealpha=0.95,edgecolor=GRID,handlelength=1.6,labelspacing=0.4,borderpad=0.6)
 ax=axes[1]
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_xlabel("Bitcoin age (years)")
@@ -51,9 +51,9 @@ for a in axes:
     sec=a.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
     sec.set_xticks([2013,2016,2019,2022,2025]); sec.tick_params(labelsize=8,colors=MUT,length=2)
     sec.spines["top"].set_visible(False)
-fig.suptitle("Equation (1), term by term: concentration carried the early requirement; the floor terms carry today's",
+fig.suptitle("Equation (1), term by term: concentration carried the early requirement; market risk and the risk-free rate carry today's",
              x=0.013,y=0.985,ha="left",fontsize=11,fontweight="bold")
-fig.text(0.013,0.925,"mid-band decomposition of the monthly required return; dashed terms held constant at the midpoints of their stated ranges; concentration is the remainder",
+fig.text(0.013,0.925,"mid-band decomposition of the monthly required return; mortality held constant at the midpoint of its range (dashed); concentration is the remainder",
          fontsize=8.5,color=INK2)
 fig.tight_layout(rect=(0,0,0.97,0.925))
 fig.savefig(f"{MD}/fig_terms.pdf"); fig.savefig(f"{MD}/fig_terms.png",dpi=200)

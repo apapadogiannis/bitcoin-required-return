@@ -173,12 +173,25 @@ inst_val=inst_btc*px.reindex(px.index)
 w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # survey-holder back-cast, institutional channel not counted
 w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # institutional channel counted at 1.5% weights
 wbar=w_hi
-foc_lo=rf+0.0132+1.7*sig2*w_lo+0.003
-foc_hi=rf+0.042+2.8*sig2*w_hi+0.03
+# market-risk term: rolling 48-month beta on the S&P 500 (VOO total return, month-end), expanding window before 48 months exist
+_v=pd.read_csv("/home/claude/model/extdata/voo_monthly.csv",parse_dates=["Date"]).set_index("Date").sort_index(); _v.index=_v.index+pd.offsets.MonthEnd(0)
+_d=pd.DataFrame({"b":np.log(px).diff(),"s":np.log(_v["AdjClose"]).diff()}).dropna()
+def _beta(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
+beta_roll=pd.Series({_d.index[i]:_beta(_d.iloc[max(0,i-47):i+1]) for i in range(17,len(_d))}).reindex(px.index).bfill().ffill().clip(0,3)
+corr_roll=pd.Series({_d.index[i]:_d.iloc[max(0,i-47):i+1].corr().iloc[0,1] for i in range(17,len(_d))}).reindex(px.index).bfill().ffill()
+ERP=0.04
+beta_term=beta_roll*ERP
+foc_lo=rf+0.85*beta_term+1.7*sig2*w_lo+0.003
+foc_hi=rf+1.15*beta_term+2.8*sig2*w_hi+0.03
 seg=interp({2012:1.0,2020:1.0,2022:0.6,2025:0.15,2026:0.10})
 req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
 BETA=5.62; age_rule=(1+5/age)**(BETA/5)-1
 fwd5=(px.shift(-60)/px)**(1/5)-1
+# realized forward drift in the units of equation (1): mean log return plus half the realized variance, next 60 months
+_lr=np.log(px).diff()
+fwd_g=_lr.shift(-1).rolling(60).mean().shift(-59)*12
+fwd_v=_lr.shift(-1).rolling(60).var().shift(-59)*12
+fwd_mu=fwd_g+0.5*fwd_v
 m=age>=3.0
 fig,ax=plt.subplots(figsize=(7.6,4.9))
 ax.fill_between(age[m],100*foc_lo[m],100*req_hi[m],color=SEQ[100],alpha=0.65,zorder=1)

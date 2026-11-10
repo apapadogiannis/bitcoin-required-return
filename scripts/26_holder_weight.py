@@ -22,16 +22,16 @@ for y in [2013,2015,2017,2019,2021,2023,2026]:
     i=px.index.get_indexer([pd.Timestamp(f"{y}-06-30" if y<2026 else "2026-05-31")],method="nearest")[0]
     print(f"Table4 {y}: q={100*q.iloc[i]:.1f}% w_hi={w_hi.iloc[i]:.3f} w_lo={w_lo.iloc[i]:.3f} band {100*foc_lo.iloc[i]:.0f}-{100*req_hi.iloc[i]:.0f}% mid {100*req_mid.iloc[i]:.0f}% sigma {100*np.sqrt(sig2.iloc[i]):.0f}%")
 # B.3 forecast metric: survey-anchored lower edge and midpoint as 5-yr forecasts over 2012-2021 windows
-mm=(age>=3.0)&fwd5.notna()
+mm=(age>=3.0)&fwd_mu.notna()
 for lab,path in [("lower edge",foc_lo),("midpoint",req_mid)]:
-    err=(fwd5-path)[mm]; beaten=(np.abs(fwd5-age_rule)<np.abs(fwd5-path))[mm].mean()
+    err=(fwd_mu-path)[mm]; beaten=(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-path))[mm].mean()
     print(f"B.3 {lab}: mean realized-minus-required {100*err.mean():.0f} pts; age rule closer in {100*beaten:.0f}% of windows")
 # B.4 pairing: wealth per participant from US household net worth per adult (Z.1: ~$80T 2013 -> ~$170T 2026) instead of the judgment ramp
 us_nw=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e12,2026:170e12})
 ramp_us=us_nw/us_nw.iloc[i21]
 Wp_us=cap.iloc[i21]/0.19*(q/q.iloc[i21])*ramp_us
 whi_us=(cap.reindex(px.index)/Wp_us).clip(upper=0.9); wlo_us=(cap.reindex(px.index)/(Wp_us+inst_val/0.015)).clip(upper=0.9)
-lo_us=rf+0.0132+1.7*sig2*wlo_us+0.003; hi_us=np.maximum(rf+0.042+2.8*sig2*whi_us+0.03, rf+seg*sig2)
+lo_us=rf+0.85*beta_term+1.7*sig2*wlo_us+0.003; hi_us=np.maximum(rf+1.15*beta_term+2.8*sig2*whi_us+0.03, rf+seg*sig2)
 for y in [2013,2017,2021,2026]:
     i=px.index.get_indexer([pd.Timestamp(f"{y}-06-30" if y<2026 else "2026-05-31")],method="nearest")[0]
     print(f"B.4 {y}: band with US-wealth ramp {100*lo_us.iloc[i]:.0f}-{100*hi_us.iloc[i]:.0f}% (baseline {100*foc_lo.iloc[i]:.0f}-{100*req_hi.iloc[i]:.0f}%)")

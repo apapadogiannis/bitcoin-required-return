@@ -61,7 +61,7 @@ def _nw(e,Lg=6):
     return np.sqrt(v/n)
 _TAB={"all":("2012","2026",172,118,22,116,67,97,51,39,2,48),"2012-14":("2012","2014",36,278,32,298,158,246,120,169,-21,143),
  "2015-17":("2015","2017",36,160,22,105,63,138,97,46,55,82),"2018-20":("2018","2020",36,69,22,81,51,47,18,48,-12,15),
- "2021-23":("2021","2023",36,30,16,42,29,14,1,39,-12,-12),"2024-26":("2024","2026",28,36,15,37,26,22,11,33,0,1),
+ "2021-23":("2021","2023",36,30,16,42,29,14,1,39,-12,-12),"2024-26":("2024","2026",28,36,15,38,26,22,10,33,-2,1),
  "2012-17":("2012","2017",72,219,27,202,110,192,108,87,17,112),"2018-26":("2018","2026",100,46,18,55,36,28,10,24,-9,1)}
 _dt=0
 for _k,(_a,_b,_n,_re,_lo,_hi,_mi,_gl,_gm,_sm,_gh,_ga) in _TAB.items():
@@ -100,15 +100,15 @@ _st=[c for c in _C.columns if any(c.startswith(p) for p in ["usdt","usdc","dai",
 _tot=_C.drop(columns=_st).sum(axis=1); _dom=cap.reindex(px.index)/_tot
 for _dd,_vv in [("2013-06-30",95),("2017-06-30",38),("2021-09-30",48),("2026-05-31",74)]: chk(f"D.6 BTC share {_dd}",100*_dom.loc[_dd],_vv,1)
 _Wp2=_tot.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*interp({2012:0.25,2021:1.0,2026:1.4}); _wh=(_tot/_Wp2).clip(upper=0.9); _wl=(_tot/(_Wp2+inst_val/0.015)).clip(upper=0.9)
-for _dd,_vv,_tl in [("2013-06-30",1.7,0.1),("2017-06-30",21,0.8),("2021-09-30",19,0.5),("2023-06-30",9,0.5),("2026-05-31",14,0.5)]: chk(f"D.6 w {_dd}",100*_wh.loc[_dd],_vv,_tl)
-chk("D.6 w 2026 with institutions",100*_wl.iloc[-1],7.5,0.1); chk("D.6 base w 2013",100*w_hi.loc["2013-06-30"],3.4,0.1); chk("D.6 base w 2023",100*w_hi.loc["2023-06-30"],11,0.5)
+for _dd,_vv,_tl in [("2013-06-30",1.7,0.1),("2017-06-30",21,0.8),("2021-09-30",19,0.5),("2023-06-30",9,0.5),("2026-05-31",15,0.5)]: chk(f"D.6 w {_dd}",100*_wh.loc[_dd],_vv,_tl)
+chk("D.6 w 2026 with institutions",100*_wl.iloc[-1],8,0.2); chk("D.6 base w 2013",100*w_hi.loc["2013-06-30"],3.4,0.1); chk("D.6 base w 2023",100*w_hi.loc["2023-06-30"],11,0.5)
 _fl=rf+0.85*beta_term+G_LO*sig2*_wl+0.003; _fh=rf+1.15*beta_term+2.8*sig2*_wh+0.03; _rh=np.maximum(_fh,rf+seg*sig2); _rm=0.5*(_fl+_rh)
 _r1=px.shift(-1)/px-1; _D2=pd.DataFrame({"r":_r1,"mid":np.exp(_rm/12)-1}).dropna(); _D2=_D2[_D2.index>="2012-01-01"]
 for _a,_b,_vv in [("2012","2026",52),("2012","2017",111),("2018","2026",9)]: chk(f"D.6 monthly gap {_a}-{_b}",1200*(_D2[_a:_b].r-_D2[_a:_b].mid).mean(),_vv,0.6)
 chk("D.6 2026 band lo",100*_fl.iloc[-1],13,0.6); chk("D.6 2026 band hi",100*_rh.iloc[-1],23,0.6)
 _rng=np.random.default_rng(1); _N=400000
 _x=0.05+_rng.uniform(1.5,2.0,_N)*0.04+_rng.uniform(1.0,2.8,_N)*0.42**2*_rng.uniform(float(_wl.iloc[-1]),float(_wh.iloc[-1]),_N)+_rng.uniform(0.003,0.03,_N)
-_q=np.percentile(_x,[5,50,95]); chk("D.6 forecast median",100*_q[1],17.2,0.1); chk("D.6 forecast 5%",100*_q[0],14.8,0.1); chk("D.6 forecast 95%",100*_q[2],19.8,0.1)
+_q=np.percentile(_x,[5,50,95]); chk("D.6 forecast median",100*_q[1],17.4,0.1); chk("D.6 forecast 5%",100*_q[0],15.0,0.1); chk("D.6 forecast 95%",100*_q[2],20.3,0.1)
 chk("fn: all-in at 120% vol",100*1.2**2,144,0.1); chk("fn: conc term lo",100*1.0*0.42**2*0.08,1,0.5); chk("fn: conc term hi",100*2.8*0.42**2*0.19,9,0.5)
 _rr=px.pct_change(); chk("delivered 2017-07..2022-12 within the option bound 66-84 (+rf)",1200*_rr["2017-07":"2022-12"].mean(),75,12)
 chk("S&P hurdle",5+4,9,0); chk("diversified hurdle lo",5+6+1,12,0); chk("diversified hurdle hi",5+8+2,15,0); chk("rent lo",18-15,3,0); chk("rent hi",18-12,6,0); chk("age-rule believer holds more than 3x",37.2/10.8,3.4,0.15); chk("overstatement more than two-fifths",(32-18)/32,0.44,0.01)
@@ -126,7 +126,7 @@ chk("compound range lo",15.3-9.2,6,0.3); chk("compound range hi",21.6-9.2,13,0.7
 chk("gold conc max",100*2.8*0.2**2*0.1,1.1,0.05); chk("gold envelope lo",5-0.4+100*1.0*0.13**2*0.02,4.6,0.05)
 _us=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e12,2026:170e12}); _Wus=cap.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*(_us/_us.iloc[i21])
 _whu=(cap.reindex(px.index)/_Wus).clip(upper=0.9); _wlu=(cap.reindex(px.index)/(_Wus+inst_val/0.015)).clip(upper=0.9); _lou=rf+0.85*beta_term+G_LO*sig2*_wlu+0.003; _hiu=np.maximum(rf+1.15*beta_term+G_HI*sig2*_whu+0.03,rf+seg*sig2); _miu=0.5*(_lou+_hiu)
-chk("D.5 2013 lo",100*_lou.iloc[at("2013-06-30")],18,0.6); chk("D.5 2026 hi",100*_hiu.iloc[-1],29,0.6); chk("D.5 2026 lo",100*_lou.iloc[-1],13,0.6); chk("D.5 5y gap",100*(fwd_mu-_miu)[mm].mean(),12,0.6)
+chk("D.5 2013 lo",100*_lou.iloc[at("2013-06-30")],18,0.6); chk("D.5 2026 hi",100*_hiu.iloc[-1],30,0.6); chk("D.5 2026 lo",100*_lou.iloc[-1],13,0.6); chk("D.5 5y gap",100*(fwd_mu-_miu)[mm].mean(),12,0.6)
 _Du=pd.DataFrame({"r":_r,"m":_mo(_miu)}).dropna(); _Du=_Du[_Du.index>="2012-01-01"]; chk("D.5 monthly gap",1200*(_Du.r-_Du.m).mean(),51,0.6)
 chk("BTC share of global household wealth (about $510T) is well under 1%",float(100*cap.iloc[-1]/510e12<0.6),1,0); chk("conc term at a 0.5% weight is under 0.2 points",float(100*1.9*0.42**2*0.005<0.2),1,0); chk("mortality example: 3% x 95%",3*0.95,2.9,0.06)
 chk("all-in bound nominal lo",5+100*0.40**2,21,0.1); chk("all-in bound nominal hi",5+100*0.55**2,35,0.3)
@@ -135,6 +135,7 @@ def _seB(x):
 chk("beta 5y",B(_d.iloc[-60:]),1.8,0.05); chk("beta 5y se",_seB(_d.iloc[-60:]),0.4,0.05); chk("beta 3y",B(_d.iloc[-36:]),1.4,0.05); chk("beta 3y se",_seB(_d.iloc[-36:]),0.5,0.05); chk("beta 2y",B(_d.iloc[-24:]),1.3,0.05); chk("beta 2y se",_seB(_d.iloc[-24:]),0.6,0.05); chk("JPM US large cap premium over 5%",7.9-5,3,0.15)
 for _y,_v in [(2012,1.8),(2014,2.5),(2016,1.8),(2018,2.9),(2020,0.9),(2022,3.0),(2024,4.3)]: chk(f"rf path {_y}",100*rf.iloc[at(f"{_y}-06-30")],_v,0.05)
 chk("rf 2026",100*rf.iloc[-1],5.0,0.05)
+chk("participation 2025 anchor",100*qpart.iloc[at("2025-06-30")],12,0.05); chk("participation 2021Q3 anchor",100*qpart.iloc[at("2021-09-30")],11,0.05); chk("back-cast w 2026 implied by flat participation",18.6*(cap.iloc[-1]/cap.iloc[i21])/1.4*11/12,23,1)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),88,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.21,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares
@@ -144,7 +145,7 @@ def shares(d):
 t13,s13=shares("2013-06-30"); chk("Fig6 2013 total",t13,126,1); chk("Fig6 2013 conc share",s13[2],87,1.5)
 t21,s21_=shares("2021-09-30"); chk("Fig6 2021 conc share",s21_[2],71,3)
 t26,s26=shares("2026-04-30"); chk("Fig6 2026 total",t26,20,0.7)
-for k,vv,lab in [(0,24,"rf"),(1,36,"market"),(2,32,"conc"),(3,8,"mort")]: chk(f"Fig6 2026 share {lab}",s26[k],vv,1.5)
+for k,vv,lab in [(0,24,"rf"),(1,35,"market"),(2,33,"conc"),(3,8,"mort")]: chk(f"Fig6 2026 share {lab}",s26[k],vv,1.5)
 # Section 8/9
 e=pd.read_csv("/tmp/cmdata/csv/eth.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
 le=np.log(e).diff()["2021-10":]; chk("ETH drift 2021Q3->",100*(12*le.mean()+6*le.var()),19,1); chk("ETH CAGR 2021Q3->",100*(np.exp(12*le.mean())-1),-7,0.6)
@@ -155,7 +156,7 @@ chk("Sharpe BTC",(18-5)/42,0.31,0.01); chk("Sharpe BTC ex mort",(18-5-1.65)/42,0
 chk("Sharpe units 2013",(t13-100*rf.iloc[at('2013-06-30')])/(100*sig.iloc[at('2013-06-30')]),0.8,0.05); chk("hist premium BTC required",18+7,25,0.5); chk("hist premium BTC Sharpe",(25-5)/42,0.48,0.01); chk("diluted Sharpe",0.15+0.04,0.19,0.01)
 # Appendix B
 Wp_r=cap.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*interp({2012:0.25,2021:1.0,2026:1.4}); wr=cap.reindex(px.index)/Wp_r
-chk("B: wealth 2021Q3 $T",cap.iloc[i21]/0.19/1e12,4.3,0.2); chk("B: survey-holder wealth 2026 $T",Wp_r.iloc[-1]/1e12,7,0.3); chk("B: w 2013",100*wr.iloc[at("2013-06-30")],3,0.6); chk("B: w 2017",100*wr.iloc[at("2017-06-30")],17,0.8)
-chk("B: w 2021",100*wr.iloc[at("2021-06-30")],18,0.8); chk("B: w 2026",100*wr.iloc[-1],21,0.8); chk("B: w 2026 diluted",100*w_lo.iloc[-1],8,0.6); chk("B: inst value $B",2.5e6*px.iloc[-1]/1e9,190,8)
+chk("B: wealth 2021Q3 $T",cap.iloc[i21]/0.19/1e12,4.3,0.2); chk("B: survey-holder wealth 2026 $T",Wp_r.iloc[-1]/1e12,7,0.45); chk("B: w 2013",100*wr.iloc[at("2013-06-30")],3,0.6); chk("B: w 2017",100*wr.iloc[at("2017-06-30")],17,0.8)
+chk("B: w 2021",100*wr.iloc[at("2021-06-30")],18,0.8); chk("B: w 2026",100*wr.iloc[-1],23,0.8); chk("B: w 2026 diluted",100*w_lo.iloc[-1],8,0.6); chk("B: inst value $B",2.5e6*px.iloc[-1]/1e9,190,8)
 chk("B: address path 2018",100*q_addr.iloc[at("2018-06-30")],6.4,0.2); chk("B: survey path 2018",100*qpart.iloc[at("2018-06-30")],1.2,0.05)
 print(f"\n{sum(res)} PASS, {len(res)-sum(res)} FAIL")

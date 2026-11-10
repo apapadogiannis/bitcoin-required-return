@@ -155,7 +155,7 @@ i21=px.index.get_indexer([pd.Timestamp("2021-09-30")],method="nearest")[0]
 # participation share of US adults: log-linear through the survey anchors (Fed SHED/SCPC, Pew; Candia et al. 2026),
 # address counts carry the shape only before the first survey point (2014)
 _pts={pd.Timestamp("2014-06-30"):0.004,pd.Timestamp("2018-06-30"):0.012,pd.Timestamp("2021-09-30"):0.11,
-      pd.Timestamp("2023-06-30"):0.12,pd.Timestamp("2025-06-30"):0.13}
+      pd.Timestamp("2023-06-30"):0.12,pd.Timestamp("2025-06-30"):0.12}
 _t=np.array([(d-GEN).days/365.25 for d in _pts]); _v=np.log(np.array(list(_pts.values())))
 q=pd.Series(np.exp(np.interp(age,_t,_v)),index=px.index)
 _i14=px.index.get_indexer([pd.Timestamp("2014-06-30")],method="nearest")[0]

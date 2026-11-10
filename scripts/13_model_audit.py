@@ -9,7 +9,7 @@ def chk(label,val,claim,tol):
 def at(d): return px.index.get_indexer([pd.Timestamp(d)],method="nearest")[0]
 sig=np.sqrt(sig2); qpart=q.copy()
 # age rule
-chk("age rule beta/A",100*5.62/17.4,32,0.5); chk("age rule 5-yr form",100*((1+5/17.4)**(5.62/5)-1),33,0.5)
+chk("age rule 5-yr form, Sept 2026 (A=17.7)",100*((1+5/17.7)**(5.62/5)-1),32,0.5); chk("age Sept 2026",(pd.Timestamp("2026-09-15")-pd.Timestamp("2009-01-03")).days/365.25,17.7,0.05); chk("age rule beta/A",100*5.62/17.4,32,0.5); chk("age rule 5-yr form",100*((1+5/17.4)**(5.62/5)-1),33,0.5)
 # Appendix A betas
 def B(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
 chk("beta last 4y",B(_d.iloc[-48:]),1.75,0.03); chk("beta since 2016",B(_d["2016":]),1.5,0.03); chk("beta since 2012",B(_d["2012":]),1.8,0.04)

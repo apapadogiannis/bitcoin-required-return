@@ -114,6 +114,9 @@ _rr=px.pct_change(); chk("delivered 2017-07..2022-12 within the option bound 66-
 chk("S&P hurdle",5+4,9,0); chk("diversified hurdle lo",5+6+1,12,0); chk("diversified hurdle hi",5+8+2,15,0); chk("rent lo",19-15,4,0); chk("rent hi",19-12,7,0); chk("age-rule believer holds 3x",36/12,3,0.1); chk("overstatement two-fifths",(32-19)/32,0.4,0.02)
 chk("required return rises per 1% of wealth at gamma 3",3*0.42**2,0.5,0.04)
 chk("required at gamma=1",5+7+1.65+100*1*0.42**2*0.135,16,0.3); chk("required at central gamma 2.25",5+7+1.65+100*2.25*0.42**2*0.135,19,0.3); chk("required at gamma=0 (central)",5+7+1.65,13.65,0.01); chk("2025 stated 13.8 inside the 12-15 floor",13.8,13.5,1.5)
+_rg=np.random.default_rng(1); _Ng=400000
+_xg=0.05+_rg.uniform(1.5,2.0,_Ng)*0.04+_rg.uniform(1.0,2.8,_Ng)*0.42**2*_rg.uniform(0.08,0.19,_Ng)+_rg.uniform(0.003,0.03,_Ng); _qg=np.percentile(_xg,[5,50,95])
+chk("gamma 1-2.8: median",100*_qg[1],18.0,0.1); chk("gamma 1-2.8: 5%",100*_qg[0],15.3,0.1); chk("gamma 1-2.8: 95%",100*_qg[2],21.6,0.1)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

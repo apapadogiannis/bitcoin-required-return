@@ -10,15 +10,18 @@ Related paper: [Bitcoin's Expected Return: An Age Rule That Beats Current Practi
 
 ## What this is
 
-Two measurements and one pricing condition:
+A required return for Bitcoin built from three measured risks, and a test of it against what Bitcoin delivered:
 
-1. **The graveyard.** Survival analysis of 1,815 cryptoassets (2010–2026, 520 curated
+1. **The required-return equation.** The risk-free rate plus market risk (beta to the
+   S&P 500), concentration risk (Bitcoin's volatility at its holders' portfolio weights,
+   from Fed and Cleveland Fed household surveys) and mortality risk. Central estimate for
+   2026: about 18% a year (90% range 15–22%), about 9% compounded.
+2. **The census of deaths.** Survival analysis of 1,815 cryptoassets (2010–2026, 520 curated
    deaths) from the Coin Metrics community dataset: mortality hazard by age (the Lindy
    hypothesis is rejected; hazard *rises* with age), by size, and for the ever-top-20
    elite (all-cause 3.5%/yr; jump-collapse 0.30%/yr: LUNA, UST, FTT).
-2. **The marginal-holder condition.** Bitcoin's required return measured from its
-   holders' portfolio shares (Fed/Cleveland Fed surveys), their stated expectations,
-   and option-implied bounds, with the mortality term calibrated from the graveyard.
+3. **The test.** The required return evaluated at every month-end since 2012 and compared
+   with Bitcoin's return over the following month (172 observations).
 
 ## Layout
 

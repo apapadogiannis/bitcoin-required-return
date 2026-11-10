@@ -130,6 +130,9 @@ chk("D.5 2013 lo",100*_lou.iloc[at("2013-06-30")],18,0.6); chk("D.5 2026 hi",100
 _Du=pd.DataFrame({"r":_r,"m":_mo(_miu)}).dropna(); _Du=_Du[_Du.index>="2012-01-01"]; chk("D.5 monthly gap",1200*(_Du.r-_Du.m).mean(),51,0.6)
 chk("BTC share of global household wealth (about $510T) is well under 1%",float(100*cap.iloc[-1]/510e12<0.6),1,0); chk("conc term at a 0.5% weight is under 0.2 points",float(100*1.9*0.42**2*0.005<0.2),1,0); chk("mortality example: 3% x 95%",3*0.95,2.9,0.06)
 chk("all-in bound nominal lo",5+100*0.40**2,21,0.1); chk("all-in bound nominal hi",5+100*0.55**2,35,0.3)
+def _seB(x):
+    b=B(x); a_=x.b.mean()-b*x.s.mean(); e_=x.b-a_-b*x.s; return np.sqrt(e_.var(ddof=2)/((x.s-x.s.mean())**2).sum())
+chk("beta 5y",B(_d.iloc[-60:]),1.8,0.05); chk("beta 5y se",_seB(_d.iloc[-60:]),0.4,0.05); chk("beta 3y",B(_d.iloc[-36:]),1.4,0.05); chk("beta 3y se",_seB(_d.iloc[-36:]),0.5,0.05); chk("beta 2y",B(_d.iloc[-24:]),1.3,0.05); chk("beta 2y se",_seB(_d.iloc[-24:]),0.6,0.05); chk("JPM US large cap premium over 5%",7.9-5,3,0.15)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),88,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.21,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

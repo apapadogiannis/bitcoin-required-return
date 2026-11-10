@@ -52,13 +52,35 @@ i=at("2026-05-31"); chk("T4 2026 band lo",100*foc_lo.iloc[i],14,0.7); chk("T4 20
 mm=(age>=3.0)&fwd_mu.notna()
 chk("windows",mm.sum(),113,0); chk("gap vs mid",100*(fwd_mu-req_mid)[mm].mean(),5,0.6); chk("gap vs lower",100*(fwd_mu-foc_lo)[mm].mean(),60,1); chk("gap vs upper",100*(fwd_mu-req_hi)[mm].mean(),-49,1); chk("median gap vs mid",100*(fwd_mu-req_mid)[mm].median(),21,1)
 chk("inside band share",100*((fwd_mu>=foc_lo)&(fwd_mu<=req_hi))[mm].mean(),48,1); chk("MAE mid",100*np.abs(fwd_mu-req_mid)[mm].mean(),51,1); chk("MAE age rule",100*np.abs(fwd_mu-age_rule)[mm].mean(),21,1)
-_g=100*(fwd_mu-req_mid)[mm]; _se=100*(np.log(px).diff().rolling(60).std().shift(-60)*np.sqrt(12))[mm]/np.sqrt(5)
-chk("gap: mean s.e.",_se.mean(),36,1); chk("gap: within 1 s.e. %",100*(_g.abs()<_se).mean(),42,1); chk("gap: within 2 s.e. %",100*(_g.abs()<2*_se).mean(),79,1)
-for _a,_b,_m,_s,_w in [("2012","2014",75,44,69),("2015","2017",52,35,72),("2018","2021",28,30,93)]:
-    chk(f"gap MAE {_a}-{_b}",_g[_a:_b].abs().mean(),_m,1); chk(f"gap s.e. {_a}-{_b}",_se[_a:_b].mean(),_s,1); chk(f"gap within 2 s.e. {_a}-{_b}",100*(_g[_a:_b].abs()<2*_se[_a:_b]).mean(),_w,1)
-_rel=((fwd_mu-req_mid)/req_mid)[mm].abs(); chk("gap: relative, early",_rel["2012":"2014"].mean(),0.5,0.1); chk("gap: relative, late",_rel["2018":"2021"].mean(),0.5,0.1)
-chk("gap: relative, middle",_rel["2015":"2017"].mean(),1.0,0.1)
-_wd=100*(req_hi-foc_lo)[mm]; chk("band width early",_wd["2012":"2014"].mean(),220,8); chk("band width late",_wd["2018":"2021"].mean(),45,3)
+# monthly test (Table: monthly; Figure 6; D.3)
+_r=px.shift(-1)/px-1; _mo=lambda mu: np.exp(mu/12)-1
+_D=pd.DataFrame({"r":_r,"lo":_mo(foc_lo),"mid":_mo(req_mid),"hi":_mo(req_hi),"age":((age+1/12)/age)**5.62-1}).dropna(); _D=_D[_D.index>="2012-01-01"]
+def _nw(e,Lg=6):
+    e=np.asarray(e)-np.mean(e); n=len(e); v=(e**2).sum()/n
+    for l in range(1,Lg+1): v+=2*(1-l/(Lg+1))*(e[l:]*e[:-l]).sum()/n
+    return np.sqrt(v/n)
+_TAB={"all":("2012","2026",172,118,30,116,72,88,47,39,2,48),"2012-14":("2012","2014",36,278,47,298,167,231,111,170,-21,143),
+ "2015-17":("2015","2017",36,160,29,105,67,130,93,46,55,82),"2018-20":("2018","2020",36,69,34,81,57,35,12,48,-12,15),
+ "2021-23":("2021","2023",36,30,21,42,32,9,-2,39,-12,-12),"2024-26":("2024","2026",28,36,17,37,27,20,10,33,0,1),
+ "2012-17":("2012","2017",72,219,38,202,117,180,102,87,17,112),"2018-26":("2018","2026",100,46,25,55,40,21,6,24,-9,1)}
+_dt=0
+for _k,(_a,_b,_n,_re,_lo,_hi,_mi,_gl,_gm,_sm,_gh,_ga) in _TAB.items():
+    _s=_D[_a:_b]; _e=_s.r-_s.mid; _se=1200*_e.std(ddof=1)/np.sqrt(len(_e))
+    chk(f"monthly {_k}: n",len(_s),_n,0); chk(f"monthly {_k}: delivered",1200*_s.r.mean(),_re,0.6); chk(f"monthly {_k}: band lo",1200*_s.lo.mean(),_lo,0.6); chk(f"monthly {_k}: band hi",1200*_s.hi.mean(),_hi,0.6)
+    chk(f"monthly {_k}: mid",1200*_s.mid.mean(),_mi,0.6); chk(f"monthly {_k}: gap lo",1200*(_s.r-_s.lo).mean(),_gl,0.6); chk(f"monthly {_k}: gap mid",1200*_e.mean(),_gm,0.6); chk(f"monthly {_k}: se mid",_se,_sm,0.6)
+    chk(f"monthly {_k}: gap hi",1200*(_s.r-_s.hi).mean(),_gh,0.6); chk(f"monthly {_k}: gap age",1200*(_s.r-_s.age).mean(),_ga,0.6)
+    for _c in ["lo","mid","hi","age"]:
+        _x=(_s.r-_s[_c]); _dt=max(_dt,abs(_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x)))-_x.mean()/_nw(_x)))
+chk("monthly: max |t - HAC t| in table",_dt,0.15,0.15)
+_x=_D.r-_D.lo; chk("monthly: t lower edge",_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x))),2.2,0.06)
+_x=_D["2015":"2017"]; _x=_x.r-_x.mid; chk("monthly: t mid 2015-17",_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x))),2.0,0.06)
+chk("monthly: delivered s.e. all",1200*_D.r.std(ddof=1)/np.sqrt(len(_D)),39,1)
+chk("monthly: largest month %",100*_D.r.max(),451,1); chk("monthly: largest month is Nov 2013",float(_D.r.idxmax()==pd.Timestamp("2013-10-31")),1,0); chk("monthly: its contribution",1200*_D.r.max()/len(_D),31,0.6)
+_x=_D[_D.index.year!=2013]; chk("ex-2013 delivered",1200*_x.r.mean(),69,0.6); chk("ex-2013 mid",1200*_x.mid.mean(),65,0.6); chk("ex-2013 gap mid",1200*(_x.r-_x.mid).mean(),4,0.6); chk("ex-2013 se mid",1200*(_x.r-_x.mid).std(ddof=1)/np.sqrt(len(_x)),21,0.6)
+chk("ex-2013 gap lo",1200*(_x.r-_x.lo).mean(),41,0.6); chk("ex-2013 gap hi",1200*(_x.r-_x.hi).mean(),-35,0.6); _y=_x.r-_x.lo; chk("ex-2013 t lo",_y.mean()/(_y.std(ddof=1)/np.sqrt(len(_y))),2.0,0.06)
+chk("monthly corr with mid",np.corrcoef(_D.r,_D.mid)[0,1],-0.02,0.01); chk("monthly corr with age rule",np.corrcoef(_D.r,_D.age)[0,1],0.17,0.01)
+_x=_D[:"2021-05"]; chk("monthly gap mid over the 5y-window months",1200*(_x.r-_x.mid).mean(),69,0.6); chk("n those months",len(_x),113,0)
+chk("band width 2012-14",298-47,250,2); chk("band width 2024-26",37-17,20,0.5)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

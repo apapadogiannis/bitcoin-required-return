@@ -88,6 +88,27 @@ _lb=np.log(px).diff()
 for _c in ["eth","xrp","bnb","ada","doge","ltc"]:
     _p=pd.read_csv(f"/tmp/cmdata/csv/{_c}.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
     _x=pd.DataFrame({"b":_lb,"a":np.log(_p).diff()}).dropna()["2018":]; chk(f"beta to BTC since 2018: {_c}",_x.cov().iloc[0,1]/_x.b.var(),1.0,0.155)
+# D.6 crypto-wide back-cast (numbers from 28_cryptowide_backcast.py, recomputed here)
+import glob as _gl, os as _os
+_caps={}
+for _f in _gl.glob("/tmp/cmdata/csv/*.csv"):
+    if "CapMrktCurUSD" in pd.read_csv(_f,nrows=0).columns:
+        _c=pd.read_csv(_f,usecols=["time","CapMrktCurUSD"],parse_dates=["time"]).set_index("time")["CapMrktCurUSD"].dropna()
+        if len(_c): _caps[_os.path.basename(_f)[:-4]]=_c.resample("ME").last()
+_C=pd.DataFrame(_caps).reindex(px.index)
+_st=[c for c in _C.columns if any(c.startswith(p) for p in ["usdt","usdc","dai","busd","tusd","pax","usdp","gusd","husd","susd","fdusd","pyusd","usdd","eurs","eurt","usdk","lusd","frax","ust","xaut","paxg","wbtc","renbtc","steth","wsteth","weth"])]
+_tot=_C.drop(columns=_st).sum(axis=1); _dom=cap.reindex(px.index)/_tot
+for _dd,_vv in [("2013-06-30",95),("2017-06-30",38),("2021-09-30",48),("2026-05-31",74)]: chk(f"D.6 BTC share {_dd}",100*_dom.loc[_dd],_vv,1)
+_Wp2=_tot.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*interp({2012:0.25,2021:1.0,2026:1.4}); _wh=(_tot/_Wp2).clip(upper=0.9); _wl=(_tot/(_Wp2+inst_val/0.015)).clip(upper=0.9)
+for _dd,_vv,_tl in [("2013-06-30",1.7,0.1),("2017-06-30",21,0.8),("2021-09-30",19,0.5),("2023-06-30",9,0.5),("2026-05-31",14,0.5)]: chk(f"D.6 w {_dd}",100*_wh.loc[_dd],_vv,_tl)
+chk("D.6 w 2026 with institutions",100*_wl.iloc[-1],7.5,0.1); chk("D.6 base w 2013",100*w_hi.loc["2013-06-30"],3.4,0.1); chk("D.6 base w 2023",100*w_hi.loc["2023-06-30"],11,0.5)
+_fl=rf+0.85*beta_term+1.7*sig2*_wl+0.003; _fh=rf+1.15*beta_term+2.8*sig2*_wh+0.03; _rh=np.maximum(_fh,rf+seg*sig2); _rm=0.5*(_fl+_rh)
+_r1=px.shift(-1)/px-1; _D2=pd.DataFrame({"r":_r1,"mid":np.exp(_rm/12)-1}).dropna(); _D2=_D2[_D2.index>="2012-01-01"]
+for _a,_b,_vv in [("2012","2026",48),("2012","2017",108),("2018","2026",5)]: chk(f"D.6 monthly gap {_a}-{_b}",1200*(_D2[_a:_b].r-_D2[_a:_b].mid).mean(),_vv,0.6)
+chk("D.6 2026 band lo",100*_fl.iloc[-1],14,0.6); chk("D.6 2026 band hi",100*_rh.iloc[-1],23,0.6)
+_rng=np.random.default_rng(1); _N=400000
+_x=0.05+_rng.uniform(1.5,2.0,_N)*0.04+_rng.uniform(1.7,2.8,_N)*0.42**2*_rng.uniform(float(_wl.iloc[-1]),float(_wh.iloc[-1]),_N)+_rng.uniform(0.003,0.03,_N)
+_q=np.percentile(_x,[5,50,95]); chk("D.6 forecast median",100*_q[1],17.9,0.1); chk("D.6 forecast 5%",100*_q[0],15.7,0.1); chk("D.6 forecast 95%",100*_q[2],20.2,0.1)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares

@@ -81,9 +81,9 @@ chk("ex-2013 gap lo",1200*(_x.r-_x.lo).mean(),48,0.6); chk("ex-2013 gap hi",1200
 chk("monthly corr with mid",np.corrcoef(_D.r,_D.mid)[0,1],-0.01,0.01); chk("monthly corr with age rule",np.corrcoef(_D.r,_D.age)[0,1],0.17,0.01)
 _x=_D[:"2021-05"]; chk("monthly gap mid over the 5y-window months",1200*(_x.r-_x.mid).mean(),75,0.6); chk("n those months",len(_x),113,0)
 chk("band width 2012-14",298-32,270,5); chk("band width 2024-26",37-15,20,2.5)
-_pv=np.sqrt((0.95*0.165)**2+(0.05*0.42)**2+2*0.95*0.05*0.5*0.165*0.42)
-chk("rebalanced 5%: added return",0.05*(18-9),0.45,0.01); chk("rebalanced 5%: portfolio vol",100*_pv,16.8,0.06); chk("rebalanced 5%: extra drag",100*(_pv**2-0.165**2)/2,0.05,0.01)
-chk("equity compound",9-100*0.165**2/2,8,0.5); chk("BTC compound",18-100*0.42**2/2,9,0.3); chk("vol ratio",42/16.5,2.5,0.06)
+_pv=np.sqrt((0.95*0.141)**2+(0.05*0.42)**2+2*0.95*0.05*0.5*0.141*0.42)
+chk("rebalanced 5%: added return",0.05*(18-9),0.45,0.01); chk("rebalanced 5%: portfolio vol",100*_pv,14.6,0.06); chk("rebalanced 5%: extra drag",100*(_pv**2-0.141**2)/2,0.07,0.01)
+chk("equity compound",9-100*0.141**2/2,8,0.05); chk("BTC compound",18-100*0.42**2/2,9,0.3); chk("vol ratio",42/14.1,3,0.06)
 _lb=np.log(px).diff()
 for _c in ["eth","xrp","bnb","ada","doge","ltc"]:
     _p=pd.read_csv(f"/tmp/cmdata/csv/{_c}.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
@@ -136,7 +136,7 @@ chk("beta 5y",B(_d.iloc[-60:]),1.8,0.05); chk("beta 5y se",_seB(_d.iloc[-60:]),0
 for _y,_v in [(2012,1.8),(2014,2.5),(2016,1.8),(2018,2.9),(2020,0.9),(2022,3.0),(2024,4.3)]: chk(f"rf path {_y}",100*rf.iloc[at(f"{_y}-06-30")],_v,0.05)
 chk("rf 2026",100*rf.iloc[-1],5.0,0.05)
 chk("participation 2025 anchor",100*qpart.iloc[at("2025-06-30")],12,0.05); chk("participation 2021Q3 anchor",100*qpart.iloc[at("2021-09-30")],11,0.05); chk("back-cast w 2026 implied by flat participation",18.6*(cap.iloc[-1]/cap.iloc[i21])/1.4*11/12,23,1)
-for _n,_mu,_sg,_dr,_cp,_sh in [("global",9.0,16.8,1.4,7.6,0.24),("sp500",9.0,16.5,1.4,7.6,0.24),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",26.0,64,20.5,5.5,0.33)]:
+for _n,_mu,_sg,_dr,_cp,_sh in [("global",9.0,14.0,1.0,8.0,0.29),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",26.0,64,20.5,5.5,0.33)]:
     chk(f"compound table {_n}: drag",_sg**2/200,_dr,0.05); chk(f"compound table {_n}: compound",_mu-_sg**2/200,_cp,0.05); chk(f"compound table {_n}: Sharpe",(_mu-5)/_sg,_sh,0.006)
 chk("drag share BTC about half",8.8/18,0.5,0.02); chk("drag share ETH four-fifths",20.5/26,0.8,0.02)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
@@ -163,3 +163,10 @@ chk("B: wealth 2021Q3 $T",cap.iloc[i21]/0.19/1e12,4.3,0.2); chk("B: survey-holde
 chk("B: w 2021",100*wr.iloc[at("2021-06-30")],18,0.8); chk("B: w 2026",100*wr.iloc[-1],23,0.8); chk("B: w 2026 diluted",100*w_lo.iloc[-1],8,0.6); chk("B: inst value $B",2.5e6*px.iloc[-1]/1e9,190,8)
 chk("B: address path 2018",100*q_addr.iloc[at("2018-06-30")],6.4,0.2); chk("B: survey path 2018",100*qpart.iloc[at("2018-06-30")],1.2,0.05)
 print(f"\n{sum(res)} PASS, {len(res)-sum(res)} FAIL")
+
+# ETF-measured volatilities for the compound table (monthly log total returns, Jan 2012 to Apr 2026)
+def _lr(f):
+    _x=pd.read_csv(f,parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; return np.log(_x).diff().dropna()
+_E=pd.DataFrame({"VT":_lr("/home/claude/model/extdata/vt_monthly.csv"),"VOO":_lr("/home/claude/model/extdata/voo_monthly.csv"),"GLD":_lr("/home/claude/model/extdata/gld_monthly.csv")}).dropna()["2012-01":"2026-04"]
+chk("ETF vol sample months",len(_E),172,0.5); chk("vol VT",100*_E.VT.std()*12**.5,14.0,0.05); chk("vol VOO",100*_E.VOO.std()*12**.5,14.1,0.05); chk("vol GLD",100*_E.GLD.std()*12**.5,15.5,0.05); chk("corr VT VOO",_E.corr().loc["VT","VOO"],0.96,0.005)
+chk("equity Sharpe range lo",4/20,0.20,0.005); chk("equity Sharpe range hi",4/14,0.29,0.005); chk("equity Sharpe high case lo",6/20,0.30,0.005); chk("equity Sharpe high case hi",6/14,0.43,0.005)

@@ -11,12 +11,12 @@ beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)
 m=(age>=3.0)&(age<=17.45)
 A=age[m].values; parts=[100*rf[m].values,100*beta_t[m].values,100*conc_t[m].values,100*mort_t[m].values]
-labels=["risk-free rate","market risk  β·ERP","concentration  γσ²w","mortality  λ(1−δ)"]
+labels=["risk-free rate","market risk  β·ERP","concentration risk  γσ²w","mortality risk  λ(1−δ)"]
 cols=[BASE,BLUE,ORANGE,AQUA]
 tot=sum(parts); shares=[p/tot for p in parts]
 
 plt.rcParams["axes.titlepad"]=8
-fig,axes=plt.subplots(1,2,figsize=(8.6,5.0),gridspec_kw={"width_ratios":[1,1.12]})
+fig,axes=plt.subplots(1,2,figsize=(9.2,5.6),gridspec_kw={"width_ratios":[1,1.12]})
 ax=axes[0]
 ax.set_yscale("log")
 tot_pct=100*(rf[m].values+beta_t[m].values+conc_t[m].values+mort_t[m].values)
@@ -32,7 +32,7 @@ ax.set_ylim(0.9,300)
 ax.set_ylabel("% per year (log scale)"); ax.set_xlabel("Bitcoin age (years)")
 ax.set_xlim(3,17.5)
 ax.set_title("Levels: each term of the requirement")
-ax.legend([l_tot,l_conc,l_rf,l_beta,l_mort],["total required return","concentration  γσ²w","risk-free rate","market risk  β·ERP (rolling 4-yr beta)","mortality  λ(1−δ) (held at 1.65 pts)"],loc="upper right",bbox_to_anchor=(1.0,1.0),fontsize=8,frameon=True,framealpha=0.95,edgecolor=GRID,handlelength=1.6,labelspacing=0.4,borderpad=0.6)
+ax.legend([l_tot,l_conc,l_rf,l_beta,l_mort],["total required return","concentration risk  γσ²w","risk-free rate","market risk  β·ERP (rolling 4-yr beta)","mortality risk  λ(1−δ) (held at 1.65 pts)"],loc="upper center",bbox_to_anchor=(0.5,-0.2),ncol=2,fontsize=8,frameon=False,handlelength=1.6,labelspacing=0.4,columnspacing=1.2)
 ax=axes[1]
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_xlabel("Bitcoin age (years)")

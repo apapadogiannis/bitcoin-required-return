@@ -28,17 +28,17 @@ for (yr,val,lab,tx,ty) in pts:
     l_surv,=ax.plot([A],[G(val)],marker="D",color="#008300",ms=5.5,ls="none",zorder=5)
     ax.annotate(lab,xy=(A,G(val)),xytext=(tx,ty),fontsize=8.3,color="#008300",
                 arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
-ax.plot([17.4],[0.19],marker="o",color=BLUE,ms=5.5,zorder=6)
-ax.annotate("forecast 19%\n(90% range 16–22%)",xy=(17.4,0.19),xytext=(16.2,0.075),fontsize=8.3,color=BLUE,
+ax.plot([17.4],[0.18],marker="o",color=BLUE,ms=5.5,zorder=6)
+ax.annotate("forecast 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(16.2,0.072),fontsize=8.3,color=BLUE,
             arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,
             arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 from matplotlib.lines import Line2D
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
 handles=[l_real,l_cagr,l_req,Patch(facecolor=SEQ[100],alpha=0.8,label="required-return band"),l_age,l_surv,h_halv]
-labels=["realized average return over the next 5 years\n(arithmetic drift: same units as the required return)","realized compound return over the next 5 years\n(CAGR, for reference)",
+labels=["realized average return over the next 5 years\n(arithmetic: same units as the required return)","realized compound return over the next 5 years\n(CAGR, for reference)",
         "required return of the marginal holder\n(midpoint of the band)",
-        "required-return band: holder condition (γ 1.7–2.8) up to\nthe option-implied all-in bound",
+        "required-return band: holder condition (γ 1–2.8) up to\nthe option-implied all-in bound",
         "age rule forecast","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"]
 leg=ax.legend(handles,labels,loc="upper center",bbox_to_anchor=(0.5,-0.13),ncol=2,fontsize=8.0,frameon=True,
               framealpha=1.0,edgecolor=GRID,borderpad=0.8,labelspacing=0.5,handlelength=1.8,columnspacing=1.6)

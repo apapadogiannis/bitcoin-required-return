@@ -31,7 +31,7 @@ us_nw=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e
 ramp_us=us_nw/us_nw.iloc[i21]
 Wp_us=cap.iloc[i21]/0.19*(q/q.iloc[i21])*ramp_us
 whi_us=(cap.reindex(px.index)/Wp_us).clip(upper=0.9); wlo_us=(cap.reindex(px.index)/(Wp_us+inst_val/0.015)).clip(upper=0.9)
-lo_us=rf+0.85*beta_term+1.7*sig2*wlo_us+0.003; hi_us=np.maximum(rf+1.15*beta_term+2.8*sig2*whi_us+0.03, rf+seg*sig2)
+lo_us=rf+0.85*beta_term+G_LO*sig2*wlo_us+0.003; hi_us=np.maximum(rf+1.15*beta_term+2.8*sig2*whi_us+0.03, rf+seg*sig2)
 for y in [2013,2017,2021,2026]:
     i=px.index.get_indexer([pd.Timestamp(f"{y}-06-30" if y<2026 else "2026-05-31")],method="nearest")[0]
     print(f"B.4 {y}: band with US-wealth ramp {100*lo_us.iloc[i]:.0f}-{100*hi_us.iloc[i]:.0f}% (baseline {100*foc_lo.iloc[i]:.0f}-{100*req_hi.iloc[i]:.0f}%)")

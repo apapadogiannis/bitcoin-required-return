@@ -1,21 +1,12 @@
-excluded: ['busd', 'dai', 'fdusd_eth', 'frax_eth', 'gusd', 'husd', 'lusd_eth', 'pax', 'paxg', 'pyusd_eth', 'renbtc', 'susde_eth', 'tusd', 'tusd_eth', 'tusd_trx', 'usdc', 'usdc_avaxc', 'usdc_eth', 'usdc_trx', 'usdd_eth', 'usdk', 'usdt', 'usdt_avaxc', 'usdt_eth', 'usdt_omni', 'usdt_trx', 'wbtc', 'weth', 'xaut']
-dominance: {'2013-06-30': 0.95, '2015-06-30': 0.75, '2017-06-30': 0.38, '2018-01-31': 0.29, '2019-06-30': 0.57, '2021-09-30': 0.48, '2023-06-30': 0.6, '2026-05-31': 0.74}
-2013-06-30 base w_hi 0.034 w_lo 0.034 | total-cap w_hi 0.017 w_lo 0.017
-2015-06-30 base w_hi 0.036 w_lo 0.036 | total-cap w_hi 0.024 w_lo 0.024
-2017-06-30 base w_hi 0.168 w_lo 0.168 | total-cap w_hi 0.215 w_lo 0.215
-2019-06-30 base w_hi 0.248 w_lo 0.248 | total-cap w_hi 0.209 w_lo 0.209
-2021-06-30 base w_hi 0.180 w_lo 0.151 | total-cap w_hi 0.176 w_lo 0.161
-2021-09-30 base w_hi 0.186 w_lo 0.154 | total-cap w_hi 0.186 w_lo 0.169
-2023-06-30 base w_hi 0.108 w_lo 0.094 | total-cap w_hi 0.087 w_lo 0.082
-2026-05-31 base w_hi 0.215 w_lo 0.078 | total-cap w_hi 0.139 w_lo 0.075
-base       2012-2026: delivered 118 band 30-116 mid 72 gap lo +88 mid +47 (se 39) hi +2
-base       2012-2017: delivered 219 band 38-202 mid 117 gap lo +180 mid +102 (se 87) hi +17
-base       2018-2026: delivered 46 band 25-55 mid 40 gap lo +21 mid +6 (se 24) hi -9
-   2026 band 13.5-26.5 mid 20.0
-total cap  2012-2026: delivered 118 band 27-117 mid 70 gap lo +91 mid +48 (se 39) hi +1
-total cap  2012-2017: delivered 219 band 28-202 mid 111 gap lo +190 mid +108 (se 87) hi +17
-total cap  2018-2026: delivered 46 band 26-56 mid 41 gap lo +20 mid +5 (se 24) hi -10
-   2026 band 13.5-22.8 mid 18.1
-Bitcoin base w 0.08-0.19       median 18.9% | 68% 17.2%-20.9% | 90% 16.2%-22.1% | envelope 13.7%-25.4%
-Bitcoin w 0.075-0.139          median 17.9% | 68% 16.5%-19.3% | 90% 15.7%-20.2% | envelope 13.6%-22.9%
-Bitcoin w 0.075-0.19           median 18.8% | 68% 17.1%-20.8% | 90% 16.1%-22.0% | envelope 13.6%-25.4%
+Bitcoin share of the class: 2013-06 95%, 2017-06 38%, 2021-09 48%, 2023-06 60%, 2026-05 74%
+2013-06-30: baseline w 3.4% (with institutions 3.4%) | crypto-wide w 1.7% (with institutions 1.7%)
+2017-06-30: baseline w 16.8% (with institutions 16.8%) | crypto-wide w 21.5% (with institutions 21.5%)
+2021-09-30: baseline w 18.6% (with institutions 15.4%) | crypto-wide w 18.6% (with institutions 16.9%)
+2023-06-30: baseline w 10.8% (with institutions 9.4%) | crypto-wide w 8.7% (with institutions 8.2%)
+2026-05-31: baseline w 21.5% (with institutions 7.8%) | crypto-wide w 13.9% (with institutions 7.5%)
+monthly gap to midpoint 2012-2026: baseline +51, crypto-wide +52
+monthly gap to midpoint 2012-2017: baseline +108, crypto-wide +111
+monthly gap to midpoint 2018-2026: baseline +10, crypto-wide +9
+2026 band: baseline 13-27%, crypto-wide 13-23%
+Bitcoin, baseline w 0.08-0.19  median 18.0% | 68% 16.2%-20.2% | 90% 15.3%-21.6% | envelope 12.7%-25.4%
+Bitcoin, crypto-wide w 0.075-0.139 median 17.2% | 68% 15.7%-18.8% | 90% 14.8%-19.9% | envelope 12.6%-22.9%

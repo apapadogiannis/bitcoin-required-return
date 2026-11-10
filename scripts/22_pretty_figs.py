@@ -165,13 +165,29 @@ def interp(d):
     xs=[(pd.Timestamp(f"{y}-06-30")-GEN).days/365.25 for y in sorted(d)]
     return pd.Series(np.interp(age,xs,[d[y] for y in sorted(d)]),index=px.index)
 rf=interp({2012:.018,2014:.025,2016:.018,2018:.029,2020:.009,2022:.030,2024:.043,2026:.050})
-Wp=cap.iloc[i21]/0.19*(q/q.iloc[i21])*(interp({2012:0.25,2021:1.0,2026:1.4}))
+# capitalization of the whole asset class (panel assets with a reported capitalization, excluding stablecoins and wrapped or tokenized
+# claims), used for the crypto-wide alternative back-cast of Appendix D.6.
+import glob as _glob, os as _os
+_STABLE=("usdt","usdc","dai","busd","tusd","pax","usdp","gusd","husd","susd","fdusd","pyusd","usdd","eurs","eurt","usdk","lusd","frax","ust","xaut","paxg","wbtc","renbtc","steth","wsteth","weth")
+_caps={}
+for _f in _glob.glob(f"{CSV}/*.csv"):
+    _n=_os.path.basename(_f)[:-4]
+    if _n.startswith(_STABLE) or "CapMrktCurUSD" not in pd.read_csv(_f,nrows=0).columns: continue
+    _c=pd.read_csv(_f,usecols=["time","CapMrktCurUSD"],parse_dates=["time"]).set_index("time")["CapMrktCurUSD"].dropna()
+    if len(_c): _caps[_n]=_c.resample("ME").last()
+capc=pd.DataFrame(_caps).reindex(px.index).sum(axis=1)          # all cryptoassets
+dom=cap.reindex(px.index)/capc                                   # Bitcoin's share of the class
+G_LO,G_HI=1.0,2.8                                                # risk aversion: log utility to the upper household estimate
+_ramp=interp({2012:0.25,2021:1.0,2026:1.4})
+Wp=cap.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp                     # baseline: Bitcoin's capitalization against participating wealth
+Wp_cw=capc.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp                 # crypto-wide alternative (Appendix D.6)
 # institutional channel (spot ETFs + public-company treasuries, BTC held; mid-year anchors from issuer and filing data),
 # whose investors are not 'crypto owners' in household surveys and hold small weights (1.5% assumed for the lower edge)
 inst_btc=interp({2019:0.0,2020:0.1e6,2021:0.3e6,2023:0.4e6,2024:1.15e6,2025:2.1e6,2026:2.5e6})
 inst_val=inst_btc*px.reindex(px.index)
 w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # survey-holder back-cast, institutional channel not counted
 w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # institutional channel counted at 1.5% weights
+w_hi_cw=(capc/Wp_cw).clip(upper=0.9); w_lo_cw=(capc/(Wp_cw+inst_val/0.015)).clip(upper=0.9)
 wbar=w_hi
 # market-risk term: rolling 48-month beta on the S&P 500 (VOO total return, month-end), expanding window before 48 months exist
 _v=pd.read_csv("/home/claude/model/extdata/voo_monthly.csv",parse_dates=["Date"]).set_index("Date").sort_index(); _v.index=_v.index+pd.offsets.MonthEnd(0)
@@ -181,8 +197,8 @@ beta_roll=pd.Series({_d.index[i]:_beta(_d.iloc[max(0,i-47):i+1]) for i in range(
 corr_roll=pd.Series({_d.index[i]:_d.iloc[max(0,i-47):i+1].corr().iloc[0,1] for i in range(17,len(_d))}).reindex(px.index).bfill().ffill()
 ERP=0.04
 beta_term=beta_roll*ERP
-foc_lo=rf+0.85*beta_term+1.7*sig2*w_lo+0.003
-foc_hi=rf+1.15*beta_term+2.8*sig2*w_hi+0.03
+foc_lo=rf+0.85*beta_term+G_LO*sig2*w_lo+0.003
+foc_hi=rf+1.15*beta_term+G_HI*sig2*w_hi+0.03
 seg=interp({2012:1.0,2020:1.0,2022:0.6,2025:0.15,2026:0.10})
 req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
 BETA=5.62; age_rule=(1+5/age)**(BETA/5)-1

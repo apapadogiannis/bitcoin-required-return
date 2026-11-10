@@ -1,8 +1,10 @@
-Bitcoin                        median 18.9% | 68% 17.2%-20.9% | 90% 16.2%-22.1% | envelope 13.7%-25.4%
-Bitcoin, mortality 0.3-1.5     median 18.2% | 68% 16.6%-20.0% | 90% 15.7%-21.1% | envelope 13.7%-23.9%
-Bitcoin, w 0.12-0.19           median 19.8% | 68% 18.2%-21.4% | 90% 17.3%-22.4% | envelope 14.9%-25.4%
-Ether                          median 28.2% | 68% 24.7%-32.4% | 90% 23.0%-34.9% | envelope 18.9%-40.6%
-Large altcoin                  median 44.6% | 68% 35.0%-55.4% | 90% 31.3%-61.7% | envelope 24.9%-72.6%
-Small coin                     median 88.4% | 68% 68.5%-113.3% | 90% 60.3%-130.4% | envelope 45.7%-175.2%
-Gold                           median  5.5% | 68%  5.2%- 5.8% | 90%  5.0%- 6.0% | envelope  4.7%- 6.8%
-Bitcoin at gold sigma and w    median 14.0% | 68% 12.9%-15.0% | 90% 12.3%-15.6% | envelope 11.4%-16.6%
+Bitcoin                        median 18.0% | 68% 16.2%-20.2% | 90% 15.3%-21.6% | envelope 12.7%-25.4%
+Bitcoin, mortality 0.3-1.5     median 17.2% | 68% 15.6%-19.3% | 90% 14.8%-20.7% | envelope 12.7%-23.9%
+Bitcoin, w 0.12-0.19           median 18.8% | 68% 16.9%-20.8% | 90% 15.9%-22.0% | envelope 13.4%-25.4%
+Bitcoin, gamma 1.7-2.8 (household range) median 18.9% | 68% 17.2%-20.8% | 90% 16.2%-22.1% | envelope 13.7%-25.4%
+Bitcoin, w 0.075-0.139 (crypto-wide back-cast) median 17.2% | 68% 15.7%-18.8% | 90% 14.8%-19.8% | envelope 12.6%-22.9%
+Ether                          median 26.0% | 68% 22.5%-30.9% | 90% 20.8%-34.0% | envelope 16.6%-40.6%
+Large altcoin                  median 39.1% | 68% 30.8%-51.6% | 90% 26.9%-59.5% | envelope 20.4%-72.6%
+Small coin                     median 77.6% | 68% 59.8%-104.3% | 90% 51.9%-123.5% | envelope 38.7%-175.2%
+Gold                           median  5.5% | 68%  5.1%- 5.8% | 90%  5.0%- 6.0% | envelope  4.6%- 6.8%
+Bitcoin at gold sigma and w    median 13.9% | 68% 12.9%-14.9% | 90% 12.3%-15.5% | envelope 11.3%-16.6%

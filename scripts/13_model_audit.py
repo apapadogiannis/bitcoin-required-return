@@ -52,6 +52,14 @@ i=at("2026-05-31"); chk("T4 2026 band lo",100*foc_lo.iloc[i],14,0.7); chk("T4 20
 mm=(age>=3.0)&fwd_mu.notna()
 chk("windows",mm.sum(),113,0); chk("gap vs mid",100*(fwd_mu-req_mid)[mm].mean(),5,0.6); chk("gap vs lower",100*(fwd_mu-foc_lo)[mm].mean(),60,1); chk("gap vs upper",100*(fwd_mu-req_hi)[mm].mean(),-49,1); chk("median gap vs mid",100*(fwd_mu-req_mid)[mm].median(),21,1)
 chk("inside band share",100*((fwd_mu>=foc_lo)&(fwd_mu<=req_hi))[mm].mean(),48,1); chk("MAE mid",100*np.abs(fwd_mu-req_mid)[mm].mean(),51,1); chk("MAE age rule",100*np.abs(fwd_mu-age_rule)[mm].mean(),21,1)
+_g=100*(fwd_mu-req_mid)[mm]; _se=100*(np.log(px).diff().rolling(60).std().shift(-60)*np.sqrt(12))[mm]/np.sqrt(5)
+chk("gap: mean s.e.",_se.mean(),36,1); chk("gap: within 1 s.e. %",100*(_g.abs()<_se).mean(),42,1); chk("gap: within 2 s.e. %",100*(_g.abs()<2*_se).mean(),79,1)
+for _a,_b,_m,_s,_w in [("2012","2014",75,44,69),("2015","2017",52,35,72),("2018","2021",28,30,93)]:
+    chk(f"gap MAE {_a}-{_b}",_g[_a:_b].abs().mean(),_m,1); chk(f"gap s.e. {_a}-{_b}",_se[_a:_b].mean(),_s,1); chk(f"gap within 2 s.e. {_a}-{_b}",100*(_g[_a:_b].abs()<2*_se[_a:_b]).mean(),_w,1)
+_rel=((fwd_mu-req_mid)/req_mid)[mm].abs(); chk("gap: relative, early",_rel["2012":"2014"].mean(),0.5,0.1); chk("gap: relative, late",_rel["2018":"2021"].mean(),0.5,0.1)
+chk("gap: relative, middle",_rel["2015":"2017"].mean(),1.0,0.1)
+_wd=100*(req_hi-foc_lo)[mm]; chk("band width early",_wd["2012":"2014"].mean(),220,8); chk("band width late",_wd["2018":"2021"].mean(),45,3)
+chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),91,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.14,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.83,0.02)
 # Figure 6 shares
 mort_t=0.5*(0.003+0.03)

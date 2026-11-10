@@ -1,0 +1,4 @@
+windows 113; mean gap 5.4; MAE 50.6; mean s.e. 35.9; within 1 s.e. 42%; within 2 s.e. 79%
+2012–14: mean absolute gap 75, sampling s.e. 44, within 2 s.e. 69%
+2015–17: mean absolute gap 52, sampling s.e. 35, within 2 s.e. 72%
+2018–21: mean absolute gap 28, sampling s.e. 30, within 2 s.e. 93%

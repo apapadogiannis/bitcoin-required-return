@@ -30,7 +30,7 @@ ax.annotate("forecast 19%\n(90% range 16–22%)",xy=(17.4,0.19),xytext=(16.2,0.0
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,
             arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 handles=[l_real,l_cagr,l_req,Patch(facecolor=SEQ[100],alpha=0.8,label="required-return band"),l_age,l_surv]
-labels=["realized drift over the next 5 years\n(same units as the required return)","realized 5-yr CAGR (compound, for reference)",
+labels=["realized average return over the next 5 years\n(arithmetic drift: same units as the required return)","realized compound return over the next 5 years\n(CAGR, for reference)",
         "required return of the marginal holder\n(midpoint of the band)",
         "required-return band: holder condition (γ 1.7–2.8) up to\nthe option-implied all-in bound",
         "age rule forecast","holders' surveyed expectations (2021, 2025)"]
@@ -42,7 +42,7 @@ ax.yaxis.set_major_formatter(FixedFormatter([f"{int(round(100*t))}%" for t in ti
 ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.025,4.8); ax.set_xlim(3,18.5)
 ax.set_xlabel("Bitcoin age (years)"); ax.set_ylabel("% per year (log scale)")
-ax.set_title("Required return and realized drift, 2012–2026")
+ax.set_title("Required return and realized average return, 2012–2026")
 ax.text(0,1.018,"monthly series from age 3 (January 2012); logarithmic vertical scale, so equal distances are equal ratios",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
 finish(fig,[ax],f"{MD}/fig_wedge")

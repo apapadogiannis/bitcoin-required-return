@@ -488,9 +488,30 @@ What remains, if the asset is priced in equilibrium, is a required return built 
 
 \appendix
 
-\section{Market Risk}
+\section{Market Risk and the Risk-Free Rate}
 
-\textbf{A.1 Estimation.} The market term of equation~(\ref{eq:foc}) is Bitcoin's beta to the equity market times the equity premium. Beta is estimated by regressing Bitcoin's monthly log return on that of the S\&P 500, both measured month-end to month-end; the index is represented by the total return of the Vanguard S\&P 500 ETF (VOO, adjusted close), whose month-end ratio to the index is constant to the third decimal over the sample. Over the full windows the estimates are 1.75 for the last four years (correlation 0.50), 1.5 since 2016 (0.32), and 1.8 since 2012 (0.29). The four-year window is a compromise between the two conventions of practice, five years of monthly returns and two years of weekly ones. On monthly data the five-year estimate is 1.8 (standard error 0.4) and the three- and two-year estimates are 1.4 and 1.3 (standard errors 0.5 and 0.6). Every estimate is within one standard error of the others, and the sampling error of any one of them is larger than the range the forecast uses: beta is an imprecise input, and the shorter windows suggest that the market term is, if anything, on the high side. The time path used in Section 6 is the rolling four-year beta (an expanding window before four years of data exist), shown with the rolling correlation in Figure~\ref{fig:beta}. Before 2020 the correlation was 0.0--0.3 and the beta was unstable, near 3 in 2013--2015 only because Bitcoin was so volatile and about zero over the four years to early 2020; since 2022 the correlation has been 0.3--0.6 and the beta 1.6--2.2. The rise in co-movement coincides with institutional entry, and is documented independently by Copestake, Furceri, and Terracciano (2026). The forecast of Section 5 uses a beta of 1.5--2.0.
+The market term of equation~(\ref{eq:foc}) is Bitcoin's beta to the equity market times the equity premium, and it is added to the risk-free rate. The paper uses these three inputs in two places and treats them differently in each. Table~\ref{tab:inputs} says what is used where; the rest of this appendix explains each choice.
+
+\begin{table}[ht]\centering\small
+\caption{The risk-free rate, beta and the equity premium: what is used where.}
+\label{tab:inputs}
+\begin{tabular}{lll}
+\toprule
+ & The 2026 estimate and forecast & The path since 2012 \\
+ & (Sections 5 and 7--9) & (Section 6) \\
+\midrule
+Risk-free rate & 5.0\%: the ten-year Treasury yield in 2026 & the ten-year Treasury yield of each date \\
+Beta & a range, 1.5--2.0 & re-estimated every month on the previous four years \\
+Equity premium & 4\% (6\% as a high case) & 4\%, the same at every date \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{A.1 How beta is estimated.} Beta is the slope of a regression of Bitcoin's monthly log return on that of the S\&P 500, both measured month-end to month-end. The index is represented by the total return of the Vanguard S\&P 500 ETF (VOO, adjusted close), whose month-end ratio to the index is constant to the third decimal over the sample. The S\&P 500 is used as a proxy for the rest of the holder's wealth, not as an index Bitcoin belongs to: what equation~(\ref{eq:foc}) prices is Bitcoin's covariance with that wealth, and the true market portfolio of all assets is not observable (Roll 1977). A global equity index would serve as well; US large caps are most of it and the two move closely together. The equity premium of A.4 is the premium on this same index.
+
+\textbf{A.2 The beta used for 2026.} The estimate and forecast use a range, 1.5--2.0, because the answer depends on how far back one looks and no window is clearly right. On the last four years beta is 1.75 (correlation 0.50); on the last five, the common convention for monthly data, 1.8; since 2016, 1.5; since 2012, 1.8. The range covers these. Shorter windows give less: 1.4 on three years and 1.3 on two. Each estimate has a standard error of 0.4 to 0.6, so all of them are within one standard error of one another, and the sampling error of any single estimate is larger than the range we use. Beta is an imprecise input, and the shorter windows suggest that the market term is, if anything, on the high side.
+
+\textbf{A.3 The beta used for the path.} Section 6 needs a beta at every date since 2012, so there it is time-varying: at each month-end it is re-estimated on the previous four years (on all available data before four years exist). Figure~\ref{fig:beta} shows it with the corresponding correlation. Before 2020 the correlation was 0.0--0.3 and the beta was unstable, near 3 in 2013--2015 only because Bitcoin was so volatile, and about zero over the four years to early 2020. Since 2022 the correlation has been 0.3--0.6 and the beta 1.6--2.2. The rise in co-movement coincides with institutional entry and is documented independently by Copestake, Furceri, and Terracciano (2026).
 
 \begin{figure}[ht]\centering
 \includegraphics[width=0.9\textwidth]{fig_beta.pdf}
@@ -498,7 +519,11 @@ What remains, if the asset is priced in equilibrium, is a required return built 
 \label{fig:beta}
 \end{figure}
 
-\textbf{A.2 The premium, and two approximations.} The equity premium is held at 4\% at every date, with 6\% as a high case. It is a forward-looking assumption, not an estimate that moves with the market: Fama and French (2002) put the expected US premium at 2.6--4.3\% from fundamentals, the J.P. Morgan Asset Management (2026) assumptions imply about 3 points for US large caps over the ten-year yield, and realized premia have averaged more (Dimson, Marsh, and Staunton 2002); Section 9 reworks the comparison with equities at the historical 7--8 points. Each point of premium moves Bitcoin's required return by about 1.75 points. Three points on the market term are worth stating. First, the S\&P 500 is used as a proxy for the rest of the holder's wealth, not as an index Bitcoin belongs to: what equation~(\ref{eq:foc}) prices is Bitcoin's covariance with that wealth, and the true market portfolio of all assets is not observable (Roll 1977). A global equity index would serve as well; US large caps are most of it and the two move closely together. Second, for a holder with weight $w$ in Bitcoin and the rest in the market, the exact term is $(1-w)\beta$ times her price of market variance; at $w$ of 8--19\% the factor $(1-w)$ lowers the term by about a point, which the stated beta range absorbs. Third, a holder with risk aversion $\gamma$ prices market variance at $\gamma\sigma_m^2$, which at $\gamma = 1$--2.8 and $\sigma_m = 16\%$ is 2.6--7.2\%, a range that contains the 4\% and 6\% premia used; the market term and the concentration term are therefore priced consistently.
+\textbf{A.4 The equity premium.} The equity premium is held at 4\% at every date, with 6\% as a high case. It is a forward-looking assumption, not an estimate that moves with the market: Fama and French (2002) put the expected US premium at 2.6--4.3\% from fundamentals, the J.P. Morgan Asset Management (2026) assumptions imply about 3 points for US large caps over the ten-year yield, and realized premia have averaged more (Dimson, Marsh, and Staunton 2002). Section 9 reworks the comparison with equities at the historical 7--8 points. Each point of premium moves Bitcoin's required return by about 1.75 points.
+
+\textbf{A.5 The risk-free rate.} The risk-free rate is the ten-year US Treasury yield, the usual choice for a multi-year horizon. For 2026 it is 5.0\%. For the path of Section 6 it varies with the date: we use approximate mid-year yields every second year (1.8\% in 2012, 2.5\% in 2014, 1.8\% in 2016, 2.9\% in 2018, 0.9\% in 2020, 3.0\% in 2022, 4.3\% in 2024 and 5.0\% in 2026) and interpolate between those points. The survey comparison of Section 5 uses the yield at each survey date, 1.5\% in 2021Q3 and 4.4\% in 2025Q2.
+
+\textbf{A.6 Two approximations.} First, for a holder with weight $w$ in Bitcoin and the rest in the market, the exact market term is $(1-w)\beta$ times her price of market variance; at $w$ of 8--19\% the factor $(1-w)$ lowers the term by about a point, which the stated beta range absorbs. Second, a holder with risk aversion $\gamma$ prices market variance at $\gamma\sigma_m^2$, which at $\gamma = 1$--2.8 and $\sigma_m = 16\%$ is 2.6--7.2\%, a range that contains the 4\% and 6\% premia used; the market term and the concentration term are therefore priced consistently.
 
 \section{Concentration Risk}
 

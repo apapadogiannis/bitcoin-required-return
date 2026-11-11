@@ -176,3 +176,6 @@ _fx=np.log(pd.read_csv("/home/claude/model/extdata/eurusd_monthly.csv",parse_dat
 _bA=_A.cov().loc["ACWI","VOO"]/_A.VOO.var()
 chk("ACWI months",len(_A),172,0.5); chk("vol ACWI",100*_A.ACWI.std()*12**.5,13.8,0.05); chk("beta ACWI on VOO",_bA,0.95,0.005); chk("corr ACWI VOO",_A.corr().loc["ACWI","VOO"],0.97,0.005); chk("ACWI premium",4*_bA,3.8,0.05)
 chk("CAGR ACWI 2012-26",100*(np.exp(12*_A.ACWI.mean())-1),11.5,0.1); chk("EUR vol ACWI",100*(_A.ACWI-_fx).std()*12**.5,12.6,0.05); chk("EUR vol VOO",100*(_A.VOO-_fx).std()*12**.5,13.8,0.05)
+_b=pd.read_csv("/tmp/cmdata/csv/btc.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
+chk("sigma EWMA hl9 May 2026",100*np.sqrt(np.log(_b).diff().pow(2).ewm(halflife=9).mean().iloc[-1]*12),42,0.5)
+chk("mortality hi: all elite deaths",3.54,3.5,0.05); chk("beta x ERP lo",1.5*4,6,0.01); chk("beta x ERP hi",2.0*4,8,0.01); chk("conc lo",1.0*0.42**2*8,1,0.5); chk("conc hi",2.8*0.42**2*19,9,0.5)

@@ -204,3 +204,10 @@ _oth=(_x.risk_free+_x.beta_4y*0.04+0.0165).mean(); _s2=(_x.volatility**2).mean()
 chk("implied gamma*w 2012-17",(12*_rs.mean()-_oth)/_s2,1.2,0.06); chk("its standard error",12*_rs.std()/np.sqrt(len(_rs))/_s2,0.5,0.03)
 chk("back-cast w 2012-14",100*_m.w_lower_edge["2012":"2014"].mean(),6,0.6); chk("back-cast w 2015-17",100*_m.w_lower_edge["2015":"2017"].mean(),12,0.6)
 _i17=at("2017-06-30"); chk("B.3 example: cap ratio",100*cap.iloc[_i17]/cap.iloc[i21],4.9,0.05); chk("B.3 example: ownership ratio",100*q.iloc[_i17]/q.iloc[i21],8.3,0.05); chk("B.3 example: ramp",_ramp.iloc[_i17],0.67,0.01); chk("B.3 example: w",100*0.19*0.049/(0.083*0.67),17,0.5)
+def _pxm(f):
+    _z=pd.read_csv(f,parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; _z.index=_z.index+pd.offsets.MonthEnd(0); return np.log(_z).diff()
+_G=pd.DataFrame({"b":np.log(px).diff(),"s":_pxm("/home/claude/model/extdata/voo_monthly.csv"),"g":_pxm("/home/claude/model/extdata/gld_monthly.csv")}).dropna()[:"2026-04"]
+_g1=_G["2020":]; _g0=_G["2012":"2019"]
+chk("corr BTC S&P since 2020",_g1.corr().loc["b","s"],0.54,0.006); chk("corr BTC gold since 2020",_g1.corr().loc["b","g"],0.04,0.006); chk("corr BTC S&P before 2020",_g0.corr().loc["b","s"],0.16,0.006); chk("corr BTC gold before 2020",_g0.corr().loc["b","g"],-0.02,0.006)
+_X=np.column_stack([np.ones(len(_g1)),_g1.s,_g1.g]); _bb=np.linalg.lstsq(_X,_g1.b,rcond=None)[0]; _rs_=_g1.b-_X@_bb; _se=np.sqrt(np.diag(_rs_.var(ddof=3)*np.linalg.inv(_X.T@_X)))
+chk("joint regression: equity coefficient",_bb[1],2.0,0.05); chk("its t",_bb[1]/_se[1],5.6,0.1); chk("gold coefficient |t| below 1",float(abs(_bb[2]/_se[2])<1),1,0)

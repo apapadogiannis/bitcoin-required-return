@@ -17,8 +17,9 @@ ax=axs[0,1]; ax.plot(A,beta_roll[mm],color=BLUE,lw=1.8); ax.set_ylim(-0.1,3.3); 
 ax=axs[1,0]
 ax.fill_between(A,100*w_lo[mm],100*w_hi[mm],color=SEQ[100],alpha=0.8,lw=0)
 ax.plot(A,100*w_hi[mm],color=BLUE,lw=1.8); ax.plot(A,100*w_lo[mm],color=SEQ[650],lw=1.8)
-ax.set_ylim(0,85); ax.set_title("(c) Holder weight, w (% of holders' wealth)"); mark(ax,8,19,"8–19%")
-ax.text(16.2,42,"surveyed\nowners only",fontsize=7.8,color=BLUE,ha="center",va="bottom"); ax.annotate("with ETF and\ntreasury investors",xy=(17.0,9.0),xytext=(10.4,64),fontsize=7.8,color=SEQ[650],ha="left",arrowprops=dict(arrowstyle="-",lw=0.6,color=SEQ[650]))
+ax.set_ylim(0,85); ax.set_title("(c) Holder weight, w (%): back-cast from one survey"); mark(ax,8,19,"8–19%")
+ax.text(16.2,42,"surveyed\nowners only",fontsize=7.8,color=BLUE,ha="center",va="bottom"); ax.annotate("with ETF and\ntreasury investors",xy=(15.9,11.0),xytext=(10.4,64),fontsize=7.8,color=SEQ[650],ha="left",arrowprops=dict(arrowstyle="-",lw=0.6,color=SEQ[650]))
+ax.plot([2014.5-2009,2018.5-2009,2021.75-2009,2023.5-2009,2025.4-2009],[1.2]*5,marker="^",color=INK2,ms=4.5,ls="none",zorder=6,clip_on=False)
 ax.plot([12.75],[19],marker="D",color="#008300",ms=5,zorder=6); ax.annotate("survey: 19%\n(2021Q3)",xy=(12.75,19),xytext=(9.9,42),fontsize=7.8,color="#008300",arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
 ax=axs[1,1]; ax.plot(A,100*rf[mm],color=BLUE,lw=1.8); ax.set_ylim(0,6); ax.set_title("(d) Risk-free rate (ten-year Treasury yield, %)"); mark(ax,5,5,"5%")
 for ax in axs.ravel():

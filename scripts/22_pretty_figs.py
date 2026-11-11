@@ -208,7 +208,7 @@ fwd5=(px.shift(-60)/px)**(1/5)-1
 _lr=np.log(px).diff()
 fwd_g=_lr.shift(-1).rolling(60).mean().shift(-59)*12
 fwd_v=_lr.shift(-1).rolling(60).var().shift(-59)*12
-fwd_mu=fwd_g+0.5*fwd_v
+fwd_mu=12*px.pct_change().shift(-1).rolling(60).mean().shift(-59)   # average of the next 60 simple monthly returns, annualized: the measure of the monthly test
 m=age>=3.0
 fig,ax=plt.subplots(figsize=(7.6,4.9))
 ax.fill_between(age[m],100*foc_lo[m],100*req_hi[m],color=SEQ[100],alpha=0.65,zorder=1)

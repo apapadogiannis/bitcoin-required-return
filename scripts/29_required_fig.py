@@ -34,7 +34,7 @@ ax.annotate("forecast 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(16.2,0.0
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
 ax.legend([l_real,l_cagr,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_surv,h_halv],
-          ["realized average return, next 5 years (same units as the required return)","realized compound return, next 5 years (CAGR, for reference)",
+          ["realized average return: the next 60 monthly returns, averaged\n(the measure of the monthly test, smoothed over five years)","realized compound return over the same five years (CAGR)",
            "required return (midpoint of the band)","required-return band: diluted survey holders (lower edge)\nto an all-in holder (upper edge)",
            "age rule forecast","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"],
           loc="upper center",bbox_to_anchor=(0.56,-0.075),ncol=2,fontsize=7.8,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.6,labelspacing=0.4,handlelength=1.8,columnspacing=1.4)
@@ -77,7 +77,7 @@ for ax in (axa,axb): ax.tick_params(labelbottom=True)
 for ax_,pd_ in ((axa,10),(axb,2),(axc,2)):
     sec=ax_.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
     sec.set_xticks([2013,2015,2017,2019,2021,2023,2025]); sec.tick_params(labelsize=8,colors=MUT,length=0,pad=pd_); sec.spines["top"].set_visible(False)
-axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(5.0,3.9),fontsize=7.8,color=BLUE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
+axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(4.6,4.3),fontsize=7.8,color=BLUE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 fig.savefig(f"{MD}/fig_required.pdf"); fig.savefig(f"{MD}/fig_required.png",dpi=130)
 print("2026 shares",[round(100*s[-1]) for s in shares], "last parts",[round(p[-1],2) for p in parts], round(tot[-1],1))
 

@@ -228,25 +228,26 @@ The gap closed for two reasons. The band narrowed from about 270 points wide to 
 \begin{table}[ht]\centering\small
 \caption{The monthly test: delivered against required return, percent per year.}
 \label{tab:monthly}
-\begin{tabular}{lcccccccc}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccccc}
 \toprule
- & & & \multicolumn{2}{c}{Required} & \multicolumn{3}{c}{Delivered minus required} & Delivered minus \\
-\cmidrule(lr){4-5}\cmidrule(lr){6-8}
-Period & Months & Delivered & Band & Midpoint & Lower edge & Midpoint (s.e.) & Upper edge & age rule \\
+ & & \multicolumn{2}{c}{Required} & \multicolumn{4}{c}{Delivered minus} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-8}
+Period & Delivered & Band & Midpoint & Lower edge & Midpoint (s.e.) & Upper edge & Age rule \\
 \midrule
-2012--26, all & 172 & 118 & 22--116 & 67 & $+97$ & $+51$ (39) & $+2$ & $+48$ \\
+2012--26, all & 118 & 22--116 & 67 & $+97$ & $+51$ (39) & $+2$ & $+48$ \\
 \midrule
-2012--14 & 36 & 278 & 32--298 & 158 & $+246$ & $+120$ (169) & $-21$ & $+143$ \\
-2015--17 & 36 & 160 & 22--105 & 63 & $+138$ & $+97$ (46) & $+55$ & $+82$ \\
-2018--20 & 36 & 69 & 22--81 & 51 & $+47$ & $+18$ (48) & $-12$ & $+15$ \\
-2021--23 & 36 & 30 & 16--42 & 29 & $+14$ & $+1$ (39) & $-12$ & $-12$ \\
-2024--26 & 28 & 36 & 14--38 & 26 & $+22$ & $+10$ (33) & $-1$ & $+1$ \\
+2012--14 & 278 & 32--298 & 158 & $+246$ & $+120$ (169) & $-21$ & $+143$ \\
+2015--17 & 160 & 22--105 & 63 & $+138$ & $+97$ (46) & $+55$ & $+82$ \\
+2018--20 & 69 & 22--81 & 51 & $+47$ & $+18$ (48) & $-12$ & $+15$ \\
+2021--23 & 30 & 16--42 & 29 & $+14$ & $+1$ (39) & $-12$ & $-12$ \\
+2024--26 & 36 & 14--38 & 26 & $+22$ & $+10$ (33) & $-1$ & $+1$ \\
 \midrule
-2012--17 & 72 & 219 & 27--202 & 110 & $+192$ & $+108$ (87) & $+17$ & $+112$ \\
-2018--26 & 100 & 46 & 18--55 & 36 & $+28$ & $+10$ (24) & $-9$ & $+1$ \\
+2012--17 & 219 & 27--202 & 110 & $+192$ & $+108$ (87) & $+17$ & $+112$ \\
+2018--26 & 46 & 18--55 & 36 & $+28$ & $+10$ (24) & $-9$ & $+1$ \\
 \bottomrule
 \end{tabular}
-\par\smallskip\begin{minipage}{0.96\textwidth}\footnotesize Each observation pairs the required return at a month-end, from that date's inputs, with Bitcoin's simple return over the following month; all figures are twelve times the monthly average. Delivered minus required is the average monthly difference, with its standard error in parentheses for the midpoint. Age rule: the one-month form of the rule, with the exponent held at its 2026 value, 5.62.\end{minipage}
+\par\smallskip\begin{minipage}{0.86\textwidth}\footnotesize Each observation pairs the required return at a month-end, from that date's inputs, with Bitcoin's simple return over the following month; all figures are twelve times the monthly average. There are 172 months: 36 in each three-year period and 28 in the last, which ends in April 2026. Delivered minus required is the average monthly difference, with its standard error in parentheses for the midpoint. Age rule: the one-month form of the rule, with the exponent held at its 2026 value, 5.62. The Delivered column is plotted as the circles of Figure~\ref{fig:wedge} and the dots of Figure~\ref{fig:gap}; the midpoint gaps are the right panel of Figure~\ref{fig:gap}. The required return is converted to a monthly rate before averaging (Appendix D.2), which puts the early band averages slightly above a plain average of the monthly values plotted in Figure~\ref{fig:wedge}: 158 against 147 for the 2012--14 midpoint, with no difference after 2020.\end{minipage}
 \end{table}
 
 \begin{figure}[ht]\centering

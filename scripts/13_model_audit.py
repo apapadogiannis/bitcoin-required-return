@@ -187,3 +187,15 @@ for _dt,_wl,_wh in [("2013-06-30",3,3),("2017-06-30",17,17),("2021-09-30",15,19)
     chk(f"band table w_lo {_dt}",100*w_lo.iloc[at(_dt)],_wl,0.6); chk(f"band table w_hi {_dt}",100*w_hi.iloc[at(_dt)],_wh,0.6)
 chk("band table: w equal before 2019",float((w_lo[:"2018-12"]-w_hi[:"2018-12"]).abs().max()),0,1e-9); chk("market term edges 2026",0.85*1.75*4,6,0.06); chk("market term hi 2026",1.15*1.75*4,8,0.06); chk("beta range in proportion lo",1.5/1.75,0.85,0.01); chk("beta range in proportion hi",2.0/1.75,1.15,0.01)
 chk("monthly return min annualized",1200*_D.r.min(),-470,6); chk("monthly return max annualized",1200*_D.r.max(),5400,10)
+# Table 5 recomputed independently from the published monthly series, and checked against the figure markers
+_m=pd.read_csv("/home/claude/model/required_band_monthly.csv",parse_dates=["month_end"]).set_index("month_end")
+_rr=px.pct_change().shift(-1).reindex(_m.index)
+_Q=pd.DataFrame({"r":_rr,"lo":np.exp(_m.required_lower/12)-1,"mid":np.exp(_m.required_midpoint/12)-1,"hi":np.exp(_m.required_upper/12)-1,"ar":(1+1/12/_m.age_years)**5.62-1}); _Q=_Q[(_Q.index>="2012-01-01")&(_Q.index<="2026-04-30")].dropna()
+_T5={("2012","2026"):(118,22,116,67,97,51,39,2,48),("2012","2014"):(278,32,298,158,246,120,169,-21,143),("2015","2017"):(160,22,105,63,138,97,46,55,82),("2018","2020"):(69,22,81,51,47,18,48,-12,15),
+     ("2021","2023"):(30,16,42,29,14,1,39,-12,-12),("2024","2026"):(36,14,38,26,22,10,33,-1,1),("2012","2017"):(219,27,202,110,192,108,87,17,112),("2018","2026"):(46,18,55,36,28,10,24,-9,1)}
+for (_a,_b),_v in _T5.items():
+    _x=_Q[_a:_b]; _g=_x.r-_x.mid
+    _c=[1200*_x.r.mean(),1200*_x.lo.mean(),1200*_x.hi.mean(),1200*_x.mid.mean(),1200*(_x.r-_x.lo).mean(),1200*_g.mean(),1200*_g.std()/np.sqrt(len(_x)),1200*(_x.r-_x.hi).mean(),1200*(_x.r-_x.ar).mean()]
+    for _n,_cc,_vv in zip(["delivered","band lo","band hi","mid","gap lo","gap mid","se mid","gap hi","gap age"],_c,_v): chk(f"T5 {_a}-{_b} {_n}",_cc,_vv,0.6)
+chk("T5 months",len(_Q),172,0)
+chk("T5 note: plain average midpoint 2012-14",100*_m.required_midpoint["2012":"2014"].mean(),147,0.6); chk("T5 note: plain average midpoint 2021-23",100*_m.required_midpoint["2021":"2023"].mean(),29,0.6)

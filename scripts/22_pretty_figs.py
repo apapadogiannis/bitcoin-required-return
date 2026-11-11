@@ -164,7 +164,8 @@ q_addr=adr*(0.11/adr.iloc[i21])   # the address-scaled alternative, kept for App
 def interp(d):
     xs=[(pd.Timestamp(f"{y}-06-30")-GEN).days/365.25 for y in sorted(d)]
     return pd.Series(np.interp(age,xs,[d[y] for y in sorted(d)]),index=px.index)
-rf=interp({2012:.018,2014:.025,2016:.018,2018:.029,2020:.009,2022:.030,2024:.043,2026:.050})
+_t=pd.read_csv("/home/claude/model/extdata/tnx_monthly.csv",parse_dates=["Date"]).set_index("Date")["Close"]; _t.index=_t.index+pd.offsets.MonthEnd(0)
+rf=(_t/100).reindex(px.index).ffill().bfill()   # ten-year Treasury yield, month-end (CBOE TNX)
 # capitalization of the whole asset class (panel assets with a reported capitalization, excluding stablecoins and wrapped or tokenized
 # claims), used for the crypto-wide alternative back-cast of Appendix D.6.
 import glob as _glob, os as _os

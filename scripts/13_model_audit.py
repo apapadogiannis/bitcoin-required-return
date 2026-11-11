@@ -138,9 +138,9 @@ _tn=pd.read_csv("/home/claude/model/extdata/tnx_monthly.csv",parse_dates=["Date"
 for _mth,_v in [("2026-09-01",5.3),("2026-10-01",4.9),("2026-11-01",5.0)]: chk(f"TNX {_mth}",_tn.loc[_mth],_v,0.05)
 chk("rf May 2026",100*rf.iloc[-1],4.5,0.05)
 chk("participation 2025 anchor",100*qpart.iloc[at("2025-06-30")],12,0.05); chk("participation 2021Q3 anchor",100*qpart.iloc[at("2021-09-30")],11,0.05); chk("back-cast w 2026 implied by flat participation",18.6*(cap.iloc[-1]/cap.iloc[i21])/1.4*11/12,23,1)
-for _n,_mu,_sg,_dr,_cp,_sh in [("global",8.8,13.8,1.0,7.8,0.28),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",26.0,64,20.5,5.5,0.33)]:
+for _n,_mu,_sg,_dr,_cp,_sh in [("global",8.8,13.8,1.0,7.8,0.28),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",23.1,64,20.5,2.6,0.28)]:
     chk(f"compound table {_n}: drag",_sg**2/200,_dr,0.05); chk(f"compound table {_n}: compound",_mu-_sg**2/200,_cp,0.05); chk(f"compound table {_n}: Sharpe",(_mu-5)/_sg,_sh,0.006)
-chk("drag share BTC about half",8.8/18,0.5,0.02); chk("drag share ETH four-fifths",20.5/26,0.8,0.02)
+chk("drag share BTC about half",8.8/18,0.5,0.02); chk("drag share ETH nine-tenths",20.5/23.1,0.9,0.02)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),88,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.24,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.86,0.02)
 # Figure 6 shares
@@ -213,3 +213,25 @@ _X=np.column_stack([np.ones(len(_g1)),_g1.s,_g1.g]); _bb=np.linalg.lstsq(_X,_g1.
 chk("joint regression: equity coefficient",_bb[1],2.0,0.05); chk("its t",_bb[1]/_se[1],5.6,0.1); chk("gold coefficient |t| below 1",float(abs(_bb[2]/_se[2])<1),1,0)
 _rg=np.random.default_rng(1); _N=400000; _sg=_rg.uniform(0.13,0.20,_N)
 chk("gold: concentration term, middle",100*np.median(_rg.uniform(1,2.8,_N)*_sg**2*_rg.uniform(0.02,0.10,_N)),0.3,0.05); chk("gold: mortality middle",0.15,0.15,0.001); chk("gold: premium",0+0.3+0.15,0.5,0.06)
+# Section 7 (31_cross_section.py and the appended runs of 23_uncertainty.py)
+import runpy, io, contextlib
+with contextlib.redirect_stdout(io.StringIO()): _cs=runpy.run_path("/home/claude/model/31_cross_section.py")
+_st=_cs["stats"]; _S=_cs["S"]; _O=_cs["O"]; _Rn=_cs["Rn"]; _Rna=_cs["Rna"]; _Rnw=_cs["Rnw"]
+chk("kappa BTC 4y",_st("btc")["kappa"],1.04,0.006); chk("kappa BTC since 2018",_st("btc",100)["kappa"],0.99,0.006); chk("kappa ETH 4y",_st("eth")["kappa"],0.7,0.006); chk("kappa ETH since 2018",_st("eth",100)["kappa"],0.68,0.03)
+chk("alive altcoins with 4y prices",len(_S),57,0); chk("alt median vol (EWMA)",100*_S.vol_ewma.median(),76,0.6); chk("alt vol q1",100*_S.vol_ewma.quantile(.25),66,0.6); chk("alt vol q3",100*_S.vol_ewma.quantile(.75),88,0.6)
+chk("alt beta q1",_S.beta_eq.quantile(.25),1.5,0.06); chk("alt beta q3",_S.beta_eq.quantile(.75),2.7,0.06); chk("alt kappa median",_S.kappa.median(),0.47,0.006); chk("alt kappa q1",_S.kappa.quantile(.25),0.41,0.006); chk("alt kappa q3",_S.kappa.quantile(.75),0.56,0.006)
+def _dl(x,a0="2018-01",b0="2026-04"):
+    bk=x[a0:b0].mean(axis=1).dropna() if isinstance(x,pd.DataFrame) else x[a0:b0].dropna()
+    return 1200*bk.mean(),1200*bk.std()/np.sqrt(len(bk)),100*(np.exp(12*np.log1p(bk).mean())-1),len(bk)
+for _n,_x,_v in [("BTC",_Rn["btc"],(46,23,28)),("ETH",_Rn["eth"],(48,32,8)),("alt basket",_Rna,(37,33,-2))]:
+    _r=_dl(_x); chk(f"S7 delivered {_n} average",_r[0],_v[0],0.6); chk(f"S7 delivered {_n} se",_r[1],_v[1],0.6); chk(f"S7 delivered {_n} compound",_r[2],_v[2],0.6); chk(f"S7 {_n} months",_r[3],100,0)
+chk("S7 basket compound, feed deaths at -100%",_dl(_Rnw)[2],-3,0.6); chk("S7 ETH since 2021Q3 average",_dl(_Rn["eth"],"2021-09")[0],19,0.6); chk("S7 ETH since 2021Q3 se",_dl(_Rn["eth"],"2021-09")[1],35,0.6)
+chk("S7 altcoins in basket",len(_O),84,0); chk("S7 dead in basket",int(_O.dead.sum()),25,0); chk("S7 median altcoin compound",100*_O.cagr.median(),-27,0.6); chk("S7 share losing money",100*(_O.cagr<0).mean(),77,0.6)
+chk("S7 basket max assets",int(_Rna["2018-01":"2026-04"].notna().sum(axis=1).max()),84,0)
+_u=dict(l.split(" median ") for l in open("/home/claude/model/uncertainty_propagation.txt").read().strip().split("\n"))
+def _med(k): return float(_u[[x for x in _u if x.strip()==k][0]].split("%")[0])
+def _q90(k): 
+    t=_u[[x for x in _u if x.strip()==k][0]].split("90% ")[1].split(" |")[0].replace("%","").split("-"); return float(t[0]),float(t[1])
+for _k,_m,_lo,_hi in [("Bitcoin, diversified holder (w=0)",14,12,15),("Ether, average crypto owner (kappa 0.7)",23,19,29),("Ether, diversified holder (w=0)",16,14,18),("Large altcoin, average crypto owner",22,18,29),("Large altcoin, diversified holder (w=0)",15,13,18),("Small coin, diversified holder (w=0)",30,28,32),("Large altcoin",39,27,60),("Small coin",78,52,124)]:
+    chk(f"S7 required {_k}",_med(_k),_m,0.6); chk(f"S7 required {_k} 5%",_q90(_k)[0],_lo,0.6); chk(f"S7 required {_k} 95%",_q90(_k)[1],_hi,0.6)
+chk("Table 8 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.1,0.05)

@@ -1,0 +1,22 @@
+priced assets: 87 | with cap: 84 | dead (curated): 25
+priced assets by size quartile: {'Q4': 64, 'Q3': 11, 'Q2': 3, 'Q1': 2}
+BTC weight in the index, 2018/2021/2026: [0.38, 0.47, 0.73] | ETH: [0.17, 0.21, 0.14]
+crypto market vol (4y): 57%
+btc 48 {'n': 48.0, 'vol': 0.54, 'vol_ewma': 0.43, 'beta_eq': 1.8, 'kappa': 1.04, 'beta_btc': 1.0, 'corr_m': 0.98}
+btc 100 {'n': 100.0, 'vol': 0.66, 'vol_ewma': 0.43, 'beta_eq': 1.53, 'kappa': 0.99, 'beta_btc': 1.0, 'corr_m': 0.94}
+eth 48 {'n': 48.0, 'vol': 0.74, 'vol_ewma': 0.66, 'beta_eq': 2.79, 'kappa': 0.7, 'beta_btc': 1.15, 'corr_m': 0.91}
+eth 100 {'n': 100.0, 'vol': 0.9, 'vol_ewma': 0.66, 'beta_eq': 2.31, 'kappa': 0.68, 'beta_btc': 1.02, 'corr_m': 0.88}
+alive altcoins with 4y of prices: 57
+        n   vol  vol_ewma  beta_eq  kappa  beta_btc  corr_m
+25%  48.0  0.77      0.66     1.53   0.41      0.80    0.60
+50%  48.0  0.86      0.76     2.06   0.47      1.06    0.74
+75%  48.0  0.96      0.88     2.71   0.56      1.19    0.78
+Bitcoin                                      2018-01 to 2026-04: months 100, assets 1-1, average  46.0% (se 23.3), compound  27.6%
+Ether                                        2018-01 to 2026-04: months 100, assets 1-1, average  47.6% (se 32.1), compound   8.2%
+altcoin basket, feed deaths dropped          2018-01 to 2026-04: months 100, assets 42-84, average  36.8% (se 33.1), compound  -1.9%
+altcoin basket, feed deaths at -100%         2018-01 to 2026-04: months 100, assets 42-84, average  35.5% (se 33.2), compound  -3.2%
+Bitcoin                                      2021-09 to 2026-04: months 56, assets 1-1, average  27.2% (se 26.2), compound  12.7%
+Ether                                        2021-09 to 2026-04: months 56, assets 1-1, average  19.2% (se 35.1), compound  -7.2%
+altcoin basket, feed deaths dropped          2021-09 to 2026-04: months 56, assets 74-84, average  -3.9% (se 31.5), compound -21.7%
+altcoin basket, feed deaths at -100%         2021-09 to 2026-04: months 56, assets 74-84, average  -6.4% (se 31.5), compound -23.6%
+per-asset compound return, January 2018 (or listing) to May 2026: assets 84 | median -27% a year | share negative 77% | share above Bitcoin's 7% | dead 25

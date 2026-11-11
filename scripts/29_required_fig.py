@@ -13,7 +13,7 @@ plt.rcParams["axes.titlepad"]=6
 fig=plt.figure(figsize=(7.6,9.9))
 gs=fig.add_gridspec(3,1,height_ratios=[3.5,2.3,2.0],left=0.085,right=0.985,top=0.965,bottom=0.045,hspace=0.0)
 # manual placement so the legend of (a) sits between (a) and (b)
-axa=fig.add_axes([0.085,0.648,0.775,0.292]); axb=fig.add_axes([0.085,0.275,0.775,0.215]); axc=fig.add_axes([0.085,0.045,0.775,0.175])
+axa=fig.add_axes([0.085,0.648,0.775,0.292]); axb=fig.add_axes([0.085,0.282,0.775,0.20]); axc=fig.add_axes([0.085,0.045,0.775,0.168])
 XL=(3,18.5); etf_age=(pd.Timestamp("2024-01-11")-GEN).days/365.25
 halv=[(pd.Timestamp(h)-GEN).days/365.25 for h in ["2012-11-28","2016-07-09","2020-05-11","2024-04-20"]]
 # ---------- (a) band against realized ----------
@@ -55,14 +55,14 @@ ax.plot(A,parts[0],color=BASE,lw=1.8,zorder=3); ax.plot(A,parts[1],color=BLUE,lw
 tk=[1,2,5,10,20,50,100,200]
 ax.yaxis.set_major_locator(FixedLocator(tk)); ax.yaxis.set_major_formatter(FixedFormatter([f"{t}%" for t in tk])); ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.9,330); ax.set_ylabel("% per year (log scale)")
-ax.set_title("(b) The required return, term by term")
+ax.set_title("(b) The required return, term by term",pad=16)
 for y,lab,c in [(tot[-1],"total",INK),(8.6,"market risk",BLUE),(5.6,"concentration risk",ORANGE),(3.7,"risk-free rate",INK2),(1.65,"mortality risk",AQUA)]:
     ax.text(17.55,y,lab,fontsize=8.2,va="center",ha="left",color=c,weight="bold")
 ax.plot([17.47,17.53],[parts[1][-1],8.6],color=BLUE,lw=0.6); ax.plot([17.47,17.53],[parts[2][-1],5.6],color=ORANGE,lw=0.6); ax.plot([17.47,17.53],[parts[0][-1],3.7],color=MUT,lw=0.6)
 ax=axc
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_ylim(0,100); ax.set_xlabel("Bitcoin age (years)")
-ax.set_title("(c) Each term's share of the total")
+ax.set_title("(c) Each term's share of the total",pad=16)
 i26=int(np.argmin(np.abs(A-(2026.3-2009.0))))
 cum=np.zeros_like(A)
 for s,lab,c in zip(shares,names,cols):
@@ -74,7 +74,9 @@ for ax in (axa,axb,axc):
         ax.axvline(etf_age,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=1)
         for ha in halv: ax.axvline(ha,color=BASE,lw=0.9,zorder=1)
 for ax in (axa,axb): ax.tick_params(labelbottom=True)
-sec=axa.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
-sec.set_xticks([2013,2015,2017,2019,2021,2023,2025]); sec.tick_params(labelsize=8,colors=MUT,length=0,pad=10); sec.spines["top"].set_visible(False)
+for ax_,pd_ in ((axa,10),(axb,2),(axc,2)):
+    sec=ax_.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
+    sec.set_xticks([2013,2015,2017,2019,2021,2023,2025]); sec.tick_params(labelsize=8,colors=MUT,length=0,pad=pd_); sec.spines["top"].set_visible(False)
+axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(5.0,3.9),fontsize=7.8,color=BLUE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 fig.savefig(f"{MD}/fig_required.pdf"); fig.savefig(f"{MD}/fig_required.png",dpi=130)
 print("2026 shares",[round(100*s[-1]) for s in shares], "last parts",[round(p[-1],2) for p in parts], round(tot[-1],1))

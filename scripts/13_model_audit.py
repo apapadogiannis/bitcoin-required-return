@@ -199,3 +199,7 @@ for (_a,_b),_v in _T5.items():
     for _n,_cc,_vv in zip(["delivered","band lo","band hi","mid","gap lo","gap mid","se mid","gap hi","gap age"],_c,_v): chk(f"T5 {_a}-{_b} {_n}",_cc,_vv,0.6)
 chk("T5 months",len(_Q),172,0)
 chk("T5 note: plain average midpoint 2012-14",100*_m.required_midpoint["2012":"2014"].mean(),147,0.6); chk("T5 note: plain average midpoint 2021-23",100*_m.required_midpoint["2021":"2023"].mean(),29,0.6)
+_x=_m[(_m.index>="2012-01-01")&(_m.index<="2017-12-31")]; _rs=px.pct_change().shift(-1).reindex(_x.index)
+_oth=(_x.risk_free+_x.beta_4y*0.04+0.0165).mean(); _s2=(_x.volatility**2).mean()
+chk("implied gamma*w 2012-17",(12*_rs.mean()-_oth)/_s2,1.2,0.06); chk("its standard error",12*_rs.std()/np.sqrt(len(_rs))/_s2,0.5,0.03)
+chk("back-cast w 2012-14",100*_m.w_lower_edge["2012":"2014"].mean(),6,0.6); chk("back-cast w 2015-17",100*_m.w_lower_edge["2015":"2017"].mean(),12,0.6)

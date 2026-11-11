@@ -181,3 +181,6 @@ chk("sigma EWMA hl9 May 2026",100*np.sqrt(np.log(_b).diff().pow(2).ewm(halflife=
 chk("mortality hi: all elite deaths",3.54,3.5,0.05); chk("beta x ERP lo",1.5*4,6,0.01); chk("beta x ERP hi",2.0*4,8,0.01); chk("conc lo",1.0*0.42**2*8,1,0.5); chk("conc hi",2.8*0.42**2*19,9,0.5)
 _opt=(rf+seg*sig2>foc_hi)[m]
 chk("option bound binds, share of months",100*_opt.mean(),68,1.0); chk("option bound last binds 2023-02",float(_opt[_opt].index[-1].year*100+_opt[_opt].index[-1].month),202302,0.1); chk("months in band path",float(m.sum()),172,2)
+for _dt,_wl,_wh in [("2013-06-30",3,3),("2017-06-30",17,17),("2021-09-30",15,19),("2026-04-30",8,23)]:
+    chk(f"band table w_lo {_dt}",100*w_lo.iloc[at(_dt)],_wl,0.6); chk(f"band table w_hi {_dt}",100*w_hi.iloc[at(_dt)],_wh,0.6)
+chk("band table: w equal before 2019",float((w_lo[:"2018-12"]-w_hi[:"2018-12"]).abs().max()),0,1e-9); chk("market term edges 2026",0.85*1.75*4,6,0.06); chk("market term hi 2026",1.15*1.75*4,8,0.06); chk("beta range in proportion lo",1.5/1.75,0.85,0.01); chk("beta range in proportion hi",2.0/1.75,1.15,0.01)

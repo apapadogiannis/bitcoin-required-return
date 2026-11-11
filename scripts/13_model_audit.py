@@ -170,3 +170,4 @@ def _lr(f):
 _E=pd.DataFrame({"VT":_lr("/home/claude/model/extdata/vt_monthly.csv"),"VOO":_lr("/home/claude/model/extdata/voo_monthly.csv"),"GLD":_lr("/home/claude/model/extdata/gld_monthly.csv")}).dropna()["2012-01":"2026-04"]
 chk("ETF vol sample months",len(_E),172,0.5); chk("vol VT",100*_E.VT.std()*12**.5,14.0,0.05); chk("vol VOO",100*_E.VOO.std()*12**.5,14.1,0.05); chk("vol GLD",100*_E.GLD.std()*12**.5,15.5,0.05); chk("corr VT VOO",_E.corr().loc["VT","VOO"],0.96,0.005)
 chk("equity Sharpe range lo",4/20,0.20,0.005); chk("equity Sharpe range hi",4/14,0.29,0.005); chk("equity Sharpe high case lo",6/20,0.30,0.005); chk("equity Sharpe high case hi",6/14,0.43,0.005)
+chk("CAGR VOO 2012-26",100*(np.exp(12*_E.VOO.mean())-1),15,0.5); chk("CAGR VT 2012-26",100*(np.exp(12*_E.VT.mean())-1),12,0.5)

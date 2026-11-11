@@ -203,3 +203,4 @@ _x=_m[(_m.index>="2012-01-01")&(_m.index<="2017-12-31")]; _rs=px.pct_change().sh
 _oth=(_x.risk_free+_x.beta_4y*0.04+0.0165).mean(); _s2=(_x.volatility**2).mean()
 chk("implied gamma*w 2012-17",(12*_rs.mean()-_oth)/_s2,1.2,0.06); chk("its standard error",12*_rs.std()/np.sqrt(len(_rs))/_s2,0.5,0.03)
 chk("back-cast w 2012-14",100*_m.w_lower_edge["2012":"2014"].mean(),6,0.6); chk("back-cast w 2015-17",100*_m.w_lower_edge["2015":"2017"].mean(),12,0.6)
+_i17=at("2017-06-30"); chk("B.3 example: cap ratio",100*cap.iloc[_i17]/cap.iloc[i21],4.9,0.05); chk("B.3 example: ownership ratio",100*q.iloc[_i17]/q.iloc[i21],8.3,0.05); chk("B.3 example: ramp",_ramp.iloc[_i17],0.67,0.01); chk("B.3 example: w",100*0.19*0.049/(0.083*0.67),17,0.5)

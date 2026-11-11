@@ -80,3 +80,8 @@ for ax_,pd_ in ((axa,10),(axb,2),(axc,2)):
 axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(5.0,3.9),fontsize=7.8,color=BLUE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 fig.savefig(f"{MD}/fig_required.pdf"); fig.savefig(f"{MD}/fig_required.png",dpi=130)
 print("2026 shares",[round(100*s[-1]) for s in shares], "last parts",[round(p[-1],2) for p in parts], round(tot[-1],1))
+
+# the monthly series behind the figure
+_o=pd.DataFrame({"age_years":age,"risk_free":rf,"volatility":np.sqrt(sig2),"beta_4y":beta_roll,"w_lower_edge":w_lo,"w_upper_edge":w_hi,
+                 "required_lower":foc_lo,"required_upper":req_hi,"required_midpoint":req_mid,"age_rule":age_rule})[mm]
+_o.index.name="month_end"; _o.round(4).to_csv(f"{MD}/required_band_monthly.csv"); print("rows",len(_o))

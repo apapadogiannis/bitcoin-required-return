@@ -20,11 +20,16 @@ halv=[(pd.Timestamp(h)-GEN).days/365.25 for h in ["2012-11-28","2016-07-09","202
 ax=axa; ax.set_yscale("log")
 ax.fill_between(age[m],G(foc_lo[m]),G(req_hi[m]),color=SEQ[100],alpha=0.55,zorder=1,lw=0)
 l_req,=ax.plot(age[m],G(req_mid[m]),color=BLUE,lw=2.0,zorder=4)
-l_real,=ax.plot(age[m],G(fwd_mu[m]),color=INK,lw=1.5,zorder=5)
-l_cagr,=ax.plot(age[m],G(fwd5[m]),color=MUT,lw=1.0,ls=(0,(3,2)),zorder=3)
+_r=12*px.pct_change().shift(-1); _r=_r[(_r.index>="2012-01-01")&(_r.index<="2026-04-30")]   # the monthly test's observations
+real_c=_r.rolling(36,center=True,min_periods=18).mean()                                     # centered three-year average
+l_real,=ax.plot(age.reindex(real_c.index),G(real_c),color=INK,lw=1.5,zorder=5)
+_per=[("2012","2014"),("2015","2017"),("2018","2020"),("2021","2023"),("2024","2026")]
+_pa=[age.reindex(_r[a:b].index).mean() for a,b in _per]; _pv=[_r[a:b].mean() for a,b in _per]
+l_per,=ax.plot(_pa,_pv,marker="o",mfc="white",mec=INK,mew=1.3,ms=6.5,ls="none",zorder=7)
+print("period averages",[round(100*v) for v in _pv])
 l_age,=ax.plot(age[m],G(age_rule[m]),color=RED,lw=1.6,zorder=4)
 ax.text(etf_age+0.12,0.031,"spot ETFs approved\n(Jan 2024)",fontsize=8.0,color=INK2,va="bottom")
-for ha in halv: ax.plot([ha],[4.45],marker="v",color=MUT,ms=5,ls="none",zorder=6,clip_on=False)
+for ha in halv: ax.plot([ha],[7.4],marker="v",color=MUT,ms=5,ls="none",zorder=6,clip_on=False)
 for (yr,val,lab,tx,ty) in [(2021.75,0.22,"22%",12.2,0.125),(2025.4,0.138,"13.8%",15.3,0.105)]:
     A_=yr-2009.0
     l_surv,=ax.plot([A_],[G(val)],marker="D",color="#008300",ms=5.5,ls="none",zorder=5)
@@ -33,14 +38,14 @@ ax.plot([17.4],[0.18],marker="o",color=BLUE,ms=5.5,zorder=6)
 ax.annotate("forecast 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(16.2,0.072),fontsize=8.3,color=BLUE,arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
-ax.legend([l_real,l_cagr,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_surv,h_halv],
-          ["realized average return: the next 60 monthly returns, averaged\n(the measure of the monthly test, smoothed over five years)","realized compound return over the same five years (CAGR)",
+ax.legend([l_real,l_per,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_surv,h_halv],
+          ["realized average return: monthly returns, annualized, as a\ncentered three-year average (to April 2026)","realized average return by three-year period (the monthly test)",
            "required return (midpoint of the band)","required-return band: diluted survey holders (lower edge)\nto an all-in holder (upper edge)",
            "age rule forecast","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"],
           loc="upper center",bbox_to_anchor=(0.56,-0.075),ncol=2,fontsize=7.8,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.6,labelspacing=0.4,handlelength=1.8,columnspacing=1.4)
-ticks=[0.03,0.05,0.10,0.20,0.50,1.0,2.0,4.0]
+ticks=[0.03,0.05,0.10,0.20,0.50,1.0,2.0,4.0,8.0]
 ax.yaxis.set_major_locator(FixedLocator(ticks)); ax.yaxis.set_major_formatter(FixedFormatter([f"{int(round(100*t))}%" for t in ticks])); ax.yaxis.set_minor_locator(NullLocator())
-ax.set_ylim(0.025,4.8); ax.set_ylabel("% per year (log scale)")
+ax.set_ylim(0.025,8.0); ax.set_ylabel("% per year (log scale)")
 ax.set_title("(a) Required return and realized average return",pad=22)
 # ---------- terms ----------
 beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)

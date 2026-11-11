@@ -136,7 +136,7 @@ chk("beta 5y",B(_d.iloc[-60:]),1.8,0.05); chk("beta 5y se",_seB(_d.iloc[-60:]),0
 for _y,_v in [(2012,1.8),(2014,2.5),(2016,1.8),(2018,2.9),(2020,0.9),(2022,3.0),(2024,4.3)]: chk(f"rf path {_y}",100*rf.iloc[at(f"{_y}-06-30")],_v,0.05)
 chk("rf 2026",100*rf.iloc[-1],5.0,0.05)
 chk("participation 2025 anchor",100*qpart.iloc[at("2025-06-30")],12,0.05); chk("participation 2021Q3 anchor",100*qpart.iloc[at("2021-09-30")],11,0.05); chk("back-cast w 2026 implied by flat participation",18.6*(cap.iloc[-1]/cap.iloc[i21])/1.4*11/12,23,1)
-for _n,_mu,_sg,_dr,_cp,_sh in [("global",9.0,14.0,1.0,8.0,0.29),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",26.0,64,20.5,5.5,0.33)]:
+for _n,_mu,_sg,_dr,_cp,_sh in [("global",8.8,13.8,1.0,7.8,0.28),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",26.0,64,20.5,5.5,0.33)]:
     chk(f"compound table {_n}: drag",_sg**2/200,_dr,0.05); chk(f"compound table {_n}: compound",_mu-_sg**2/200,_cp,0.05); chk(f"compound table {_n}: Sharpe",(_mu-5)/_sg,_sh,0.006)
 chk("drag share BTC about half",8.8/18,0.5,0.02); chk("drag share ETH four-fifths",20.5/26,0.8,0.02)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
@@ -171,3 +171,8 @@ _E=pd.DataFrame({"VT":_lr("/home/claude/model/extdata/vt_monthly.csv"),"VOO":_lr
 chk("ETF vol sample months",len(_E),172,0.5); chk("vol VT",100*_E.VT.std()*12**.5,14.0,0.05); chk("vol VOO",100*_E.VOO.std()*12**.5,14.1,0.05); chk("vol GLD",100*_E.GLD.std()*12**.5,15.5,0.05); chk("corr VT VOO",_E.corr().loc["VT","VOO"],0.96,0.005)
 chk("equity Sharpe range lo",4/20,0.20,0.005); chk("equity Sharpe range hi",4/14,0.29,0.005); chk("equity Sharpe high case lo",6/20,0.30,0.005); chk("equity Sharpe high case hi",6/14,0.43,0.005)
 chk("CAGR VOO 2012-26",100*(np.exp(12*_E.VOO.mean())-1),15,0.5); chk("CAGR VT 2012-26",100*(np.exp(12*_E.VT.mean())-1),12,0.5)
+_A=pd.DataFrame({"ACWI":_lr("/home/claude/model/extdata/acwi_monthly.csv"),"VOO":_lr("/home/claude/model/extdata/voo_monthly.csv")}).dropna()["2012-01":"2026-04"]
+_fx=np.log(pd.read_csv("/home/claude/model/extdata/eurusd_monthly.csv",parse_dates=["Date"]).sort_values("Date").set_index("Date")["Close"]).diff().reindex(_A.index)
+_bA=_A.cov().loc["ACWI","VOO"]/_A.VOO.var()
+chk("ACWI months",len(_A),172,0.5); chk("vol ACWI",100*_A.ACWI.std()*12**.5,13.8,0.05); chk("beta ACWI on VOO",_bA,0.95,0.005); chk("corr ACWI VOO",_A.corr().loc["ACWI","VOO"],0.97,0.005); chk("ACWI premium",4*_bA,3.8,0.05)
+chk("CAGR ACWI 2012-26",100*(np.exp(12*_A.ACWI.mean())-1),11.5,0.1); chk("EUR vol ACWI",100*(_A.ACWI-_fx).std()*12**.5,12.6,0.05); chk("EUR vol VOO",100*(_A.VOO-_fx).std()*12**.5,13.8,0.05)

@@ -211,3 +211,5 @@ _g1=_G["2020":]; _g0=_G["2012":"2019"]
 chk("corr BTC S&P since 2020",_g1.corr().loc["b","s"],0.54,0.006); chk("corr BTC gold since 2020",_g1.corr().loc["b","g"],0.04,0.006); chk("corr BTC S&P before 2020",_g0.corr().loc["b","s"],0.16,0.006); chk("corr BTC gold before 2020",_g0.corr().loc["b","g"],-0.02,0.006)
 _X=np.column_stack([np.ones(len(_g1)),_g1.s,_g1.g]); _bb=np.linalg.lstsq(_X,_g1.b,rcond=None)[0]; _rs_=_g1.b-_X@_bb; _se=np.sqrt(np.diag(_rs_.var(ddof=3)*np.linalg.inv(_X.T@_X)))
 chk("joint regression: equity coefficient",_bb[1],2.0,0.05); chk("its t",_bb[1]/_se[1],5.6,0.1); chk("gold coefficient |t| below 1",float(abs(_bb[2]/_se[2])<1),1,0)
+_rg=np.random.default_rng(1); _N=400000; _sg=_rg.uniform(0.13,0.20,_N)
+chk("gold: concentration term, middle",100*np.median(_rg.uniform(1,2.8,_N)*_sg**2*_rg.uniform(0.02,0.10,_N)),0.3,0.05); chk("gold: mortality middle",0.15,0.15,0.001); chk("gold: premium",0+0.3+0.15,0.5,0.06)

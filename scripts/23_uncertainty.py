@@ -48,3 +48,5 @@ if __name__ == "__main__":
     q = np.percentile(x, [5, 50, 95]); print(f"{'Bitcoin, beta normal (1.75, s.e. 0.45)':46s} median {q[1]:5.1%} | 90% {q[0]:5.1%}-{q[2]:5.1%}")
     # Ownership of 3% at the 2021Q3 anchor (Appendix D.4): the back-cast weight for 2026 is then 4.2-6.3%.
     run("Bitcoin, w 0.042-0.063 (ownership 3% at anchor)", 0.42, 1.5, 2.0, 0.042, 0.063, 0.003, 0.03)
+    # Mortality upper end at the all-cause top-twenty death rate of Table 1 (3.5%) instead of 3 points (Appendix D.1).
+    run("Bitcoin, mortality 0.3-3.5", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)

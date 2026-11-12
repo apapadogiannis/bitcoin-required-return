@@ -347,3 +347,9 @@ chk("A.1 beta on ACWI, last 4y",_acwb(_acw.iloc[-48:]),1.6,0.05); chk("A.1 beta 
 # Appendix C.3: hand-entered collapse dates moved to either end of the documented windows (40_death_date_check.py)
 _ddc=open("/home/claude/model/death_date_check.txt").read()
 chk("C.3 date variants identical to baseline",_ddc.count("apart from the three dates: True"),3,0); chk("C.3 FTT fall on 8 Nov 2022, %",100*(1-5.547440/22.042748),75,0.6)
+
+# Appendix D.1: mortality upper end at 3.5 (appended run of 23_uncertainty.py)
+_u2=dict(l.split(" median ") for l in open("/home/claude/model/uncertainty_propagation.txt").read().strip().split("\n"))
+_m35=[v for k,v in _u2.items() if k.strip()=="Bitcoin, mortality 0.3-3.5"][0]
+chk("D.1 mortality 0.3-3.5 median",float(_m35.split("%")[0]),18.3,0.05); chk("D.1 mortality 0.3-3.5 5%",float(_m35.split("90% ")[1].split("%")[0]),15.4,0.05); chk("D.1 mortality 0.3-3.5 95%",float(_m35.split("90% ")[1].split("-")[1].split("%")[0]),21.9,0.05)
+chk("S3 midpoint of the mortality range",(0.3+3)/2,1.65,0.001); chk("S3 addition from upper end 3.5",18.3-18.0,0.3,0.05)

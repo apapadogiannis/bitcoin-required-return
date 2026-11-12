@@ -42,3 +42,7 @@ if __name__ == "__main__":
     dep("Dependence: gamma and w move together", u1, u1, u3, u4)
     dep("Dependence: gamma and w move oppositely", u1, 1 - u1, u3, u4)
     dep("Dependence: all four inputs move together", u1, u1, u1, u1)
+    # Beta (Appendix A.2 and D.1): a range covering every estimation window, and beta drawn with its sampling error.
+    run("Bitcoin, beta 1.3-2.2 (every window)", 0.42, 1.3, 2.2, 0.08, 0.19, 0.003, 0.03)
+    x = rf + rng.normal(1.75, 0.45, N)*ERP + rng.uniform(1.0, 2.8, N)*0.42**2*rng.uniform(0.08, 0.19, N) + rng.uniform(0.003, 0.03, N)
+    q = np.percentile(x, [5, 50, 95]); print(f"{'Bitcoin, beta normal (1.75, s.e. 0.45)':46s} median {q[1]:5.1%} | 90% {q[0]:5.1%}-{q[2]:5.1%}")

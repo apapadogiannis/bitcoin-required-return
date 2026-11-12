@@ -130,6 +130,18 @@ _zz_d1=_zz_dep(_zz_u,_zz_u,_zz_ub,_zz_um); _zz_d2=_zz_dep(_zz_u,1-_zz_u,_zz_ub,_
 chk("D.1 gamma,w together: median",_zz_d1[1],18.2,0.1); chk("D.1 gamma,w together: 5%",_zz_d1[0],14.7,0.1); chk("D.1 gamma,w together: 95%",_zz_d1[2],22.8,0.1)
 chk("D.1 gamma,w opposite: median",_zz_d2[1],17.9,0.1); chk("D.1 gamma,w opposite: 5%",_zz_d2[0],16.2,0.1); chk("D.1 gamma,w opposite: 95%",_zz_d2[2],19.6,0.1)
 chk("D.1 all together: 5%",_zz_d3[0],13.2,0.1); chk("D.1 all together: 95%",_zz_d3[2],24.6,0.1)
+# Item 6: beta by window (Table in Appendix A.2) and the two beta sensitivities of D.1
+def _seB(x):
+    b=B(x); a_=x.b.mean()-b*x.s.mean(); e_=x.b-a_-b*x.s; return np.sqrt(e_.var(ddof=2)/((x.s-x.s.mean())**2).sum())
+for _lab,_x,_cb,_cs,_cc in (("2y",_d.iloc[-24:],1.26,0.64,0.39),("3y",_d.iloc[-36:],1.38,0.54,0.40),("4y",_d.iloc[-48:],1.75,0.43,0.52),("5y",_d.iloc[-60:],1.81,0.38,0.53),("since 2020",_d["2020":],1.93,0.35,0.54),("since 2016",_d["2016":],1.51,0.38,0.34),("since 2012",_d["2012":],1.77,0.45,0.29)):
+    chk(f"beta table {_lab}: beta",B(_x),_cb,0.006); chk(f"beta table {_lab}: se",_seB(_x),_cs,0.006); chk(f"beta table {_lab}: corr",_x.b.corr(_x.s),_cc,0.006)
+chk("beta table months since 2020",len(_d["2020":]),77,0.5); chk("beta table months since 2016",len(_d["2016":]),125,0.5); chk("beta table months since 2012",len(_d["2012":]),173,0.5)
+import io as _io2, contextlib as _cl2
+with _cl2.redirect_stdout(_io2.StringIO()): _qb=u.run("b",0.42,1.3,2.2,0.08,0.19,0.003,0.03)*100
+chk("D.1 beta 1.3-2.2: median",_qb[2],18.1,0.1); chk("D.1 beta 1.3-2.2: 5%",_qb[0],14.9,0.1); chk("D.1 beta 1.3-2.2: 95%",_qb[4],21.9,0.1)
+_zr=np.random.default_rng(5); _zn=400000; _zx=100*np.percentile(0.05+_zr.normal(1.75,0.45,_zn)*0.04+_zr.uniform(1,2.8,_zn)*0.42**2*_zr.uniform(0.08,0.19,_zn)+_zr.uniform(0.003,0.03,_zn),[5,50,95])
+chk("D.1 beta normal: median",_zx[1],18.1,0.1); chk("D.1 beta normal: 5%",_zx[0],14.1,0.1); chk("D.1 beta normal: 95%",_zx[2],22.5,0.1)
+chk("rolling corr min since mid-2022",corr_roll["2022-06":].min(),0.4,0.03); chk("rolling corr max since mid-2022",corr_roll["2022-06":].max(),0.6,0.06)
 chk("D.1 w 0.08-0.12: median",_qv[2],17.0,0.1); chk("D.1 w 0.08-0.12: 5%",_qv[0],14.7,0.1); chk("D.1 w 0.08-0.12: 95%",_qv[4],19.3,0.1)
 chk("compound range lo",15.3-9.2,6,0.3); chk("compound range hi",21.6-9.2,13,0.7); chk("compound envelope lo",12.7-9.2,4,0.6); chk("compound envelope hi",25.4-9.2,16,0.3); chk("excess return",18-5,13,0)
 chk("gold conc max",100*2.8*0.2**2*0.1,1.1,0.05); chk("gold envelope lo",5-0.4+100*1.0*0.13**2*0.02,4.6,0.05)

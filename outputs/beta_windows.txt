@@ -1,0 +1,7 @@
+Last 2 years   months  24  beta 1.26  s.e. 0.64  correlation 0.39
+Last 3 years   months  36  beta 1.38  s.e. 0.54  correlation 0.40
+Last 4 years   months  48  beta 1.75  s.e. 0.43  correlation 0.52
+Last 5 years   months  60  beta 1.81  s.e. 0.38  correlation 0.53
+Since 2020     months  77  beta 1.93  s.e. 0.35  correlation 0.54
+Since 2016     months 125  beta 1.51  s.e. 0.38  correlation 0.34
+Since 2012     months 173  beta 1.77  s.e. 0.45  correlation 0.29

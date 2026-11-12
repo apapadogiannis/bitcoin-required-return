@@ -20,3 +20,5 @@ Bitcoin, w 0.08-0.12 (wealth-weighted share) median 17.0% | 68% 15.6%-18.4% | 90
 Dependence: gamma and w move together          median 18.2% | 90% 14.7%-22.8%
 Dependence: gamma and w move oppositely        median 17.9% | 90% 16.2%-19.6%
 Dependence: all four inputs move together      median 18.2% | 90% 13.2%-24.6%
+Bitcoin, beta 1.3-2.2 (every window) median 18.1% | 68% 16.0%-20.4% | 90% 14.9%-21.9% | envelope 11.9%-26.2%
+Bitcoin, beta normal (1.75, s.e. 0.45)         median 18.1% | 90% 14.1%-22.5%

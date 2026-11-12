@@ -40,7 +40,7 @@ ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
 ax.legend([l_real,l_per,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_surv,h_halv],
           ["realized average return: monthly returns, annualized, as a\ncentered three-year average (to April 2026)","realized average return by three-year period (the monthly test)",
-           "required return (midpoint of the band)","required-return band: diluted survey holders (lower edge)\nto an all-in holder (upper edge)",
+           "required return (midpoint of the band)","required-return band: the average owner (lower edge)\nto the early holder (upper edge until 2018)",
            "age rule forecast","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"],
           loc="upper center",bbox_to_anchor=(0.56,-0.075),ncol=2,fontsize=7.8,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.6,labelspacing=0.4,handlelength=1.8,columnspacing=1.4)
 ticks=[0.03,0.05,0.10,0.20,0.50,1.0,2.0,4.0,8.0]

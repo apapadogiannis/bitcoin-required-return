@@ -200,7 +200,8 @@ ERP=0.04
 beta_term=beta_roll*ERP
 foc_lo=rf+0.85*beta_term+G_LO*sig2*w_lo+0.003
 foc_hi=rf+1.15*beta_term+G_HI*sig2*w_hi+0.03
-seg=interp({2012:1.0,2020:1.0,2022:0.6,2025:0.15,2026:0.10})
+Q_FEW=0.012                                   # ownership in the 2018 survey: 'few hands' at or below this level
+seg=(Q_FEW/q).clip(upper=1.0)                 # early-holder weight: all-in while ownership <= Q_FEW, then diluted in proportion as ownership multiplies
 req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
 BETA=5.62; age_rule=(1+5/age)**(BETA/5)-1
 fwd5=(px.shift(-60)/px)**(1/5)-1

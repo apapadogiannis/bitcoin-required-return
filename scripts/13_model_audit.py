@@ -124,6 +124,12 @@ chk("D.1 mortality 0.3-1.5: median",_qm[2],17.2,0.1); chk("D.1 mortality: 5%",_q
 chk("D.1 w 0.12-0.19: median",_qw[2],18.8,0.1); chk("D.1 w: 5%",_qw[0],15.9,0.1); chk("D.1 w: 95%",_qw[4],22.0,0.1)
 import io as _io, contextlib as _cl
 with _cl.redirect_stdout(_io.StringIO()): _qv=u.run("v",0.42,1.5,2.0,0.08,0.12,0.003,0.03)*100
+_zz_r=np.random.default_rng(11); _zz_n=400000; _zz_u=_zz_r.uniform(0,1,_zz_n); _zz_ub=_zz_r.uniform(0,1,_zz_n); _zz_um=_zz_r.uniform(0,1,_zz_n)
+_zz_dep=lambda ug,uw,ub,um: 100*np.percentile(0.05+(1.5+0.5*ub)*0.04+(1+1.8*ug)*0.42**2*(0.08+0.11*uw)+0.003+0.027*um,[5,50,95])
+_zz_d1=_zz_dep(_zz_u,_zz_u,_zz_ub,_zz_um); _zz_d2=_zz_dep(_zz_u,1-_zz_u,_zz_ub,_zz_um); _zz_d3=_zz_dep(_zz_u,_zz_u,_zz_u,_zz_u)
+chk("D.1 gamma,w together: median",_zz_d1[1],18.2,0.1); chk("D.1 gamma,w together: 5%",_zz_d1[0],14.7,0.1); chk("D.1 gamma,w together: 95%",_zz_d1[2],22.8,0.1)
+chk("D.1 gamma,w opposite: median",_zz_d2[1],17.9,0.1); chk("D.1 gamma,w opposite: 5%",_zz_d2[0],16.2,0.1); chk("D.1 gamma,w opposite: 95%",_zz_d2[2],19.6,0.1)
+chk("D.1 all together: 5%",_zz_d3[0],13.2,0.1); chk("D.1 all together: 95%",_zz_d3[2],24.6,0.1)
 chk("D.1 w 0.08-0.12: median",_qv[2],17.0,0.1); chk("D.1 w 0.08-0.12: 5%",_qv[0],14.7,0.1); chk("D.1 w 0.08-0.12: 95%",_qv[4],19.3,0.1)
 chk("compound range lo",15.3-9.2,6,0.3); chk("compound range hi",21.6-9.2,13,0.7); chk("compound envelope lo",12.7-9.2,4,0.6); chk("compound envelope hi",25.4-9.2,16,0.3); chk("excess return",18-5,13,0)
 chk("gold conc max",100*2.8*0.2**2*0.1,1.1,0.05); chk("gold envelope lo",5-0.4+100*1.0*0.13**2*0.02,4.6,0.05)

@@ -34,3 +34,11 @@ if __name__ == "__main__":
     run("Small coin, diversified holder (w=0)", (1.0, 1.3), 1.5, 2.7, 0.0, 0.0, 0.157, 0.174)
     # The survey's 19% is an equal-weighted mean of household shares; a wealth-weighted share of 12% as the upper bound.
     run("Bitcoin, w 0.08-0.12 (wealth-weighted share)", 0.42, 1.5, 2.0, 0.08, 0.12, 0.003, 0.03)
+    # Dependence between inputs (Appendix D.1): the baseline draws them independently.
+    def dep(label, ug, uw, ub, um):
+        x = rf + (1.5 + 0.5*ub)*ERP + (1.0 + 1.8*ug)*0.42**2*(0.08 + 0.11*uw) + (0.003 + 0.027*um)
+        q = np.percentile(x, [5, 50, 95]); print(f"{label:46s} median {q[1]:5.1%} | 90% {q[0]:5.1%}-{q[2]:5.1%}")
+    u1, u2, u3, u4 = (rng.uniform(0, 1, N) for _ in range(4))
+    dep("Dependence: gamma and w move together", u1, u1, u3, u4)
+    dep("Dependence: gamma and w move oppositely", u1, 1 - u1, u3, u4)
+    dep("Dependence: all four inputs move together", u1, u1, u1, u1)

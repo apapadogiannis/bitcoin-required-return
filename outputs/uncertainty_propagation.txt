@@ -17,3 +17,6 @@ Large altcoin, average crypto owner median 22.4% | 68% 19.5%-26.3% | 90% 17.8%-2
 Large altcoin, diversified holder (w=0) median 15.4% | 68% 13.7%-17.1% | 90% 13.0%-17.8% | envelope 12.0%-18.8%
 Small coin, diversified holder (w=0) median 29.9% | 68% 28.3%-31.6% | 90% 27.6%-32.3% | envelope 26.7%-33.2%
 Bitcoin, w 0.08-0.12 (wealth-weighted share) median 17.0% | 68% 15.6%-18.4% | 90% 14.7%-19.3% | envelope 12.7%-21.9%
+Dependence: gamma and w move together          median 18.2% | 90% 14.7%-22.8%
+Dependence: gamma and w move oppositely        median 17.9% | 90% 16.2%-19.6%
+Dependence: all four inputs move together      median 18.2% | 90% 13.2%-24.6%

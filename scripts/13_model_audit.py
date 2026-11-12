@@ -343,3 +343,7 @@ chk("A.6 addition to beta at x=1%",0.01*_ix,0.09,0.004); chk("A.6 points at x=1%
 _acw=pd.DataFrame({"b":np.log(px).diff(),"s":_pxm("/home/claude/model/extdata/acwi_monthly.csv"),"v":_pxm("/home/claude/model/extdata/voo_monthly.csv")}).dropna()[:"2026-05"]
 def _acwb(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
 chk("A.1 beta on ACWI, last 4y",_acwb(_acw.iloc[-48:]),1.6,0.05); chk("A.1 beta on ACWI, last 5y",_acwb(_acw.iloc[-60:]),1.7,0.05); chk("A.1 beta on ACWI, since 2020",_acwb(_acw["2020":]),1.9,0.05); chk("A.1 corr ACWI and S&P 500",_acw["2012":].s.corr(_acw["2012":].v),0.97,0.006)
+
+# Appendix C.3: hand-entered collapse dates moved to either end of the documented windows (40_death_date_check.py)
+_ddc=open("/home/claude/model/death_date_check.txt").read()
+chk("C.3 date variants identical to baseline",_ddc.count("apart from the three dates: True"),3,0); chk("C.3 FTT fall on 8 Nov 2022, %",100*(1-5.547440/22.042748),75,0.6)

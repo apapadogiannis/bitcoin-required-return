@@ -1,0 +1,2 @@
+BTC-25JUN27-30000-P: strike 41% of the index; ask 0.0035 BTC = $257 = 0.86% of strike; T = 0.616 years; cap on P(collapse to zero before expiry) 0.89%, 1.44% a year; open interest 604.1
+BTC-24SEP27-35000-P: strike 48% of the index; ask 0.0095 BTC = $698 = 1.99% of strike; T = 0.866 years; cap on P(collapse to zero before expiry) 2.09%, 2.42% a year; open interest 555.1

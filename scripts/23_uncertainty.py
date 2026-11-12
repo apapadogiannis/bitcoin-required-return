@@ -46,3 +46,5 @@ if __name__ == "__main__":
     run("Bitcoin, beta 1.3-2.2 (every window)", 0.42, 1.3, 2.2, 0.08, 0.19, 0.003, 0.03)
     x = rf + rng.normal(1.75, 0.45, N)*ERP + rng.uniform(1.0, 2.8, N)*0.42**2*rng.uniform(0.08, 0.19, N) + rng.uniform(0.003, 0.03, N)
     q = np.percentile(x, [5, 50, 95]); print(f"{'Bitcoin, beta normal (1.75, s.e. 0.45)':46s} median {q[1]:5.1%} | 90% {q[0]:5.1%}-{q[2]:5.1%}")
+    # Ownership of 3% at the 2021Q3 anchor (Appendix D.4): the back-cast weight for 2026 is then 4.2-6.3%.
+    run("Bitcoin, w 0.042-0.063 (ownership 3% at anchor)", 0.42, 1.5, 2.0, 0.042, 0.063, 0.003, 0.03)

@@ -130,6 +130,23 @@ _zz_d1=_zz_dep(_zz_u,_zz_u,_zz_ub,_zz_um); _zz_d2=_zz_dep(_zz_u,1-_zz_u,_zz_ub,_
 chk("D.1 gamma,w together: median",_zz_d1[1],18.2,0.1); chk("D.1 gamma,w together: 5%",_zz_d1[0],14.7,0.1); chk("D.1 gamma,w together: 95%",_zz_d1[2],22.8,0.1)
 chk("D.1 gamma,w opposite: median",_zz_d2[1],17.9,0.1); chk("D.1 gamma,w opposite: 5%",_zz_d2[0],16.2,0.1); chk("D.1 gamma,w opposite: 95%",_zz_d2[2],19.6,0.1)
 chk("D.1 all together: 5%",_zz_d3[0],13.2,0.1); chk("D.1 all together: 95%",_zz_d3[2],24.6,0.1)
+# Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
+_ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
+# Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline
+_oA='pd.Timestamp("2021-09-30"):0.11,'; assert src.count(_oA)==1
+_os=src.replace(_oA,'pd.Timestamp("2021-09-30"):0.03,pd.Timestamp("2022-06-30"):0.11,'); _on={}
+exec(_os.split("# ============ FIG 1")[0],_on); exec(_os[_os.index("# ============ FIG 5"):_os.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")],_on)
+_oat=lambda d: _on["px"].index.get_indexer([pd.Timestamp(d)],method="nearest")[0]
+chk("D.4 ownership alt: w 2017",100*_on["w_hi"].iloc[_oat("2017-06-30")],5,0.5); chk("D.4 ownership alt: w 2026 owners",100*_on["w_hi"].iloc[-1],6,0.5); chk("D.4 ownership alt: w 2026 with funds",100*_on["w_lo"].iloc[-1],4,0.5)
+chk("D.4 ownership alt: anchor weight unchanged",100*_on["w_hi"].iloc[_oat("2021-09-30")],100*w_hi.iloc[at("2021-09-30")],0.01)
+chk("D.4 ownership alt: band 2017 lo",100*_on["foc_lo"].iloc[_oat("2017-06-30")],13,0.6); chk("D.4 ownership alt: band 2017 hi",100*_on["req_hi"].iloc[_oat("2017-06-30")],67,0.6); chk("D.4 ownership alt: band 2026 lo",100*_on["foc_lo"].iloc[-1],11,0.6); chk("D.4 ownership alt: band 2026 hi",100*_on["req_hi"].iloc[-1],19,0.6)
+_oD=pd.DataFrame({"r":_on["px"].shift(-1)/_on["px"]-1,"mid":np.exp(_on["req_mid"]/12)-1}).dropna(); _oD=_oD[_oD.index>="2012-01-01"]; _oe=_oD.r-_oD.mid
+chk("D.4 ownership alt: gap to midpoint, full",1200*_oe.mean(),61,0.6); chk("D.4 ownership alt: gap since 2018",1200*_oe["2018":].mean(),21,0.6); chk("D.4 ownership alt: se since 2018",1200*_oe["2018":].std(ddof=1)/np.sqrt(len(_oe["2018":])),24,0.6)
+chk("D.4 wealth per owner 2021, baseline ($k)",cap.iloc[at("2021-09-30")]/0.19/(0.11*258e6)/1e3,150,8); chk("D.4 wealth per owner 2021, 3% ownership ($k)",cap.iloc[at("2021-09-30")]/0.19/(0.03*258e6)/1e3,560,25)
+import io as _io3, contextlib as _cl3
+with _cl3.redirect_stdout(_io3.StringIO()): _qo=u.run("o",0.42,1.5,2.0,0.042,0.063,0.003,0.03)*100; _qc=u.run("c",0.42,1.5,2.0,0.08,0.15,0.003,0.03)*100
+chk("D.1 table: w 0.04-0.06 median",_qo[2],15.4,0.1); chk("D.1 table: w 0.04-0.06 5%",_qo[0],13.6,0.1); chk("D.1 table: w 0.04-0.06 95%",_qo[4],17.2,0.1); chk("D.1 table: w 0.08-0.15 median",_qc[2],17.4,0.1); chk("D.1 table: w 0.08-0.15 5%",_qc[0],15.0,0.1); chk("D.1 table: w 0.08-0.15 95%",_qc[4],20.3,0.1)
+chk("A.4 required return at a 7-point premium",18.0+1.75*(7-4),23,0.4); chk("A.4 required return at an 8-point premium",18.0+1.75*(8-4),25,0.1); chk("A.4 Sharpe at 7",(18.0+1.75*3-5)/42,0.44,0.006); chk("A.4 Sharpe at 8",(18.0+1.75*4-5)/42,0.48,0.006)
 # Item 6: beta by window (Table in Appendix A.2) and the two beta sensitivities of D.1
 def _seB(x):
     b=B(x); a_=x.b.mean()-b*x.s.mean(); e_=x.b-a_-b*x.s; return np.sqrt(e_.var(ddof=2)/((x.s-x.s.mean())**2).sum())

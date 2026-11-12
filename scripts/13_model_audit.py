@@ -333,3 +333,8 @@ def _q90(k):
 for _k,_m,_lo,_hi in [("Bitcoin, diversified holder (w=0)",14,12,15),("Ether, average crypto owner (kappa 0.7)",23,19,29),("Ether, diversified holder (w=0)",16,14,18),("Large altcoin, average crypto owner",22,18,29),("Large altcoin, diversified holder (w=0)",15,13,18),("Small coin, diversified holder (w=0)",30,28,32),("Large altcoin",39,27,60),("Small coin",78,52,124)]:
     chk(f"S7 required {_k}",_med(_k),_m,0.6); chk(f"S7 required {_k} 5%",_q90(_k)[0],_lo,0.6); chk(f"S7 required {_k} 95%",_q90(_k)[1],_hi,0.6)
 chk("Table 8 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.1,0.05)
+
+# Appendix A.6, third approximation (39_index_exposure.py)
+_ix=0.42**2/0.141**2; _ixw=(0.10+0.16+0.06)/100
+chk("A.6 variance ratio BTC to index",_ix,9,0.2); chk("A.6 exposed constituents, % of index",100*_ixw,0.3,0.03); chk("A.6 addition to beta",_ixw*_ix,0.03,0.004); chk("A.6 addition to required return",100*_ixw*_ix*0.04,0.1,0.02)
+chk("A.6 addition to beta at x=1%",0.01*_ix,0.09,0.004); chk("A.6 points at x=1% below 0.4",float(100*0.01*_ix*0.04<0.4),1,0)

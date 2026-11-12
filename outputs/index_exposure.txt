@@ -1,0 +1,4 @@
+variance ratio, Bitcoin to index: 8.87
+Coinbase + Robinhood + Block: x = 0.32% of the index -> addition to beta 0.028, to the required return 0.11 points
+x = 0.5% -> addition to beta 0.044, to the required return 0.18 points
+x = 1.0% -> addition to beta 0.089, to the required return 0.35 points

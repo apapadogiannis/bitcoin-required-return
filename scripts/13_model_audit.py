@@ -148,6 +148,19 @@ chk("implied ERP start of 2026",_erp[2025],4.2,0.05); chk("implied ERP min 2020-
 # Worked example of the monthly test (Section 5, Step 3): December 2023
 _wi=at("2023-12-31"); _wm=req_mid.iloc[_wi]; _wr=px.iloc[_wi+1]/px.iloc[_wi]-1
 chk("example: midpoint Dec 2023, % a year",100*_wm,22.3,0.1); chk("example: required for the month, %",100*(np.exp(_wm/12)-1),1.9,0.05); chk("example: Bitcoin's return Jan 2024, %",100*_wr,0.9,0.05); chk("example: gap, points",100*(_wr-(np.exp(_wm/12)-1)),-1.0,0.05)
+# Other groupings of the monthly test (Appendix D.2; as in 38_grouping_robustness.py)
+_gD=pd.DataFrame({"r":px.shift(-1)/px-1,"lo":np.exp(foc_lo/12)-1,"mid":np.exp(req_mid/12)-1,"hi":np.exp(req_hi/12)-1}).dropna(); _gD=_gD[_gD.index>="2012-01-01"]
+def _grow(a,b):
+    _s=_gD.loc[a:b]; _e=_s.r-_s.mid; _d=1200*_s.r.mean(); return (0 if 1200*_s.lo.mean()<=_d<=1200*_s.hi.mean() else (1 if _d>1200*_s.hi.mean() else -1)), 1200*_e.mean(), 1200*_e.std(ddof=1)/np.sqrt(len(_e))
+_gy=[_grow(str(y),str(y)) for y in range(2012,2027)]
+chk("grouping: years inside band",sum(r[0]==0 for r in _gy),3,0.1); chk("grouping: years above",sum(r[0]==1 for r in _gy),7,0.1); chk("grouping: years below",sum(r[0]==-1 for r in _gy),5,0.1)
+chk("grouping: yearly gap min",min(r[1] for r in _gy),-282,1); chk("grouping: yearly gap max",max(r[1] for r in _gy),624,1); chk("grouping: yearly se min",min(r[2] for r in _gy),36,0.6); chk("grouping: yearly se max",max(r[2] for r in _gy),474,1)
+for _gq_a,_gq_g,_gq_t in (("2014",-148,-2.9),("2016",153,2.5),("2018",-27,None),("2020",74,None),("2022",0,None),("2024",16,None)):
+    _gq_r=_grow(_gq_a,str(int(_gq_a)+1)); chk(f"grouping: two-year gap from {_gq_a}",_gq_r[1],_gq_g,0.6)
+    if _gq_t is not None: chk(f"grouping: two-year t from {_gq_a}",_gq_r[1]/_gq_r[2],_gq_t,0.06)
+    else: chk(f"grouping: two-year |t| below 2 from {_gq_a}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
+for (_gq_a,_gq_b),_gq_g in zip((("2012","2015"),("2016","2019"),("2020","2023"),("2024","2026")),(86,63,37,10)):
+    _gq_r=_grow(_gq_a,_gq_b); chk(f"grouping: four-year gap {_gq_a}-{_gq_b}",_gq_r[1],_gq_g,0.6); chk(f"grouping: four-year |t| below 2 {_gq_a}-{_gq_b}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
 # Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
 _ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
 # Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline

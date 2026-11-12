@@ -1,0 +1,32 @@
+since 2020: 76 months; corr(activity growth, equity return) 0.18; corr(activity growth, Bitcoin return) 0.26
+  btc ~ equity + gold               spx  2.00 (t  6.2), gold -0.25 (t -0.6) | R2 0.30
+  btc ~ equity + gold + activity    spx  1.89 (t  6.4), gold -0.27 (t -0.7), act  0.47 (t  2.5) | R2 0.33
+  btc ~ lagged activity, lagged btc act1 -0.18 (t -0.8), btc1  0.15 (t  1.4) | R2 0.02
+  activity ~ lagged btc, lagged act btc1  0.13 (t  3.5), act1 -0.10 (t -0.9) | R2 0.12
+before 2020: 96 months; corr(activity growth, equity return) 0.07; corr(activity growth, Bitcoin return) 0.50
+  btc ~ equity + gold               spx  1.46 (t  2.0), gold -0.08 (t -0.1) | R2 0.02
+  btc ~ equity + gold + activity    spx  1.13 (t  1.5), gold  0.06 (t  0.1), act  1.20 (t  3.0) | R2 0.26
+  btc ~ lagged activity, lagged btc act1  0.15 (t  0.7), btc1  0.12 (t  0.8) | R2 0.03
+  activity ~ lagged btc, lagged act btc1  0.10 (t  1.9), act1  0.07 (t  0.5) | R2 0.09
+full sample: 172 months; corr(activity growth, equity return) 0.10; corr(activity growth, Bitcoin return) 0.45
+  btc ~ equity + gold               spx  1.81 (t  5.1), gold -0.22 (t -0.5) | R2 0.09
+  btc ~ equity + gold + activity    spx  1.53 (t  4.6), gold -0.09 (t -0.3), act  1.05 (t  3.2) | R2 0.27
+  btc ~ lagged activity, lagged btc act1  0.11 (t  0.7), btc1  0.14 (t  1.2) | R2 0.03
+  activity ~ lagged btc, lagged act btc1  0.11 (t  2.8), act1  0.07 (t  0.6) | R2 0.10
+
+year  active addresses/day  capitalization $bn  fees, % of capitalization
+2013        82,843             2      0.10
+2014       181,479             7      0.04
+2015       301,076             4      0.06
+2016       515,345             9      0.15
+2017       755,832            66      0.84
+2018       665,701           128      0.22
+2019       716,083           131      0.12
+2020       895,895           205      0.16
+2021       990,065           890      0.11
+2022       913,858           537      0.03
+2023       946,237           561      0.14
+2024       776,647         1,301      0.07
+2025       722,885         2,021      0.01
+
+capitalization 2025 / 2017: 30.5; active addresses 2025 / 2017: 0.96

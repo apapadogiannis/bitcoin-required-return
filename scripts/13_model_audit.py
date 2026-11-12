@@ -193,6 +193,21 @@ for _k,_v,_be,_cg in (("QQQ",17.2,1.12,20),("IWM",19.1,1.18,11)):
     chk(f"{_k} months",len(_Q),172,0.5); chk(f"vol {_k}",_vq,_v,0.06); chk(f"beta {_k} on VOO",_bq,_be,0.006); chk(f"CAGR {_k} 2012-26",100*(np.exp(12*_Q[_k].mean())-1),_cg,0.5)
     chk(f"{_k} average",_av,{"QQQ":9.5,"IWM":9.7}[_k],0.01); chk(f"{_k} drag",_vq**2/200,{"QQQ":1.5,"IWM":1.8}[_k],0.05); chk(f"{_k} compound",_av-_vq**2/200,{"QQQ":8.0,"IWM":7.9}[_k],0.05); chk(f"{_k} Sharpe",(_av-5)/_vq,{"QQQ":0.26,"IWM":0.25}[_k],0.005)
 chk("gold CAGR end-2023 to Nov 2026",100*((4040/2060)**(1/2.87)-1),26,0.6); chk("gold stock value $tn",224000*32150.7*4040/1e12,29,0.5)
+# Appendix E.2: the equity beta does not run through on-chain activity (independent of 33_activity_beta.py)
+import statsmodels.api as _sm
+def _etf(_f):
+    _x=pd.read_csv(f"/home/claude/model/extdata/{_f}_monthly.csv",parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; _y=np.log(_x).diff(); _y.index=_y.index.to_period("M"); return _y
+_cm=pd.read_csv("/tmp/cmdata/csv/btc.csv",parse_dates=["time"]).set_index("time")
+_mm=pd.DataFrame({"btc":_cm.PriceUSD.resample("ME").last(),"act":_cm.AdrActCnt.resample("ME").mean()}); _mm.index=_mm.index.to_period("M")
+_gg=np.log(_mm).diff(); _gg["spx"]=_etf("voo"); _gg["gold"]=_etf("gld"); _gg=_gg["2012-01":"2026-04"].dropna(); _g20=_gg["2020-01":]
+_hac=lambda _y,_X: _sm.OLS(_y,_sm.add_constant(_X)).fit(cov_type="HAC",cov_kwds={"maxlags":3})
+chk("E.2 months since 2020",len(_g20),76,0.5); chk("E.2 corr activity growth, equity",_g20.act.corr(_g20.spx),0.18,0.005)
+chk("E.2 equity coef with gold",_hac(_g20.btc,_g20[["spx","gold"]]).params["spx"],2.0,0.05); chk("E.2 equity coef with gold and activity",_hac(_g20.btc,_g20[["spx","gold","act"]]).params["spx"],1.9,0.05)
+_ll=_gg.assign(btc1=_gg.btc.shift(1),act1=_gg.act.shift(1)).dropna()
+chk("E.2 lagged price -> activity, t",_hac(_ll.act,_ll[["btc1","act1"]]).tvalues["btc1"],2.8,0.05); chk("E.2 lagged activity -> price, t",_hac(_ll.btc,_ll[["act1","btc1"]]).tvalues["act1"],0.7,0.05)
+_yy=_cm.assign(fee=_cm.FeeTotNtv*_cm.PriceUSD).resample("YE").agg({"AdrActCnt":"mean","CapMrktCurUSD":"mean","fee":"sum"}); _yy.index=_yy.index.year
+chk("E.2 active addresses 2017 (thousand)",_yy.AdrActCnt[2017]/1e3,760,5); chk("E.2 active addresses 2025 (thousand)",_yy.AdrActCnt[2025]/1e3,720,5); chk("E.2 cap 2025/2017",_yy.CapMrktCurUSD[2025]/_yy.CapMrktCurUSD[2017],30,1)
+chk("E.2 fees % cap 2017",100*_yy.fee[2017]/_yy.CapMrktCurUSD[2017],0.8,0.05); chk("E.2 fees % cap 2025",100*_yy.fee[2025]/_yy.CapMrktCurUSD[2025],0.01,0.005)
 _b=pd.read_csv("/tmp/cmdata/csv/btc.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
 chk("sigma EWMA hl9 May 2026",100*np.sqrt(np.log(_b).diff().pow(2).ewm(halflife=9).mean().iloc[-1]*12),42,0.5)
 chk("mortality hi: all elite deaths",3.54,3.5,0.05); chk("beta x ERP lo",1.5*4,6,0.01); chk("beta x ERP hi",2.0*4,8,0.01); chk("conc lo",1.0*0.42**2*8,1,0.5); chk("conc hi",2.8*0.42**2*19,9,0.5)

@@ -130,6 +130,18 @@ _zz_d1=_zz_dep(_zz_u,_zz_u,_zz_ub,_zz_um); _zz_d2=_zz_dep(_zz_u,1-_zz_u,_zz_ub,_
 chk("D.1 gamma,w together: median",_zz_d1[1],18.2,0.1); chk("D.1 gamma,w together: 5%",_zz_d1[0],14.7,0.1); chk("D.1 gamma,w together: 95%",_zz_d1[2],22.8,0.1)
 chk("D.1 gamma,w opposite: median",_zz_d2[1],17.9,0.1); chk("D.1 gamma,w opposite: 5%",_zz_d2[0],16.2,0.1); chk("D.1 gamma,w opposite: 95%",_zz_d2[2],19.6,0.1)
 chk("D.1 all together: 5%",_zz_d3[0],13.2,0.1); chk("D.1 all together: 95%",_zz_d3[2],24.6,0.1)
+# The age rule with its exponent re-estimated in real time (Introduction, Appendix D.2 and D.3; as in 37_age_rule_exponent.py)
+_ad=pd.read_csv("/tmp/cmdata/csv/btc.csv",parse_dates=["time"]).set_index("time")["PriceUSD"].dropna()
+if _ad.index.tz is not None: _ad.index=_ad.index.tz_localize(None)
+_afit=lambda x: np.polyfit(np.log((x.index-GEN).days/365.25),np.log(x.values),1)[0]
+_abt=pd.Series({t:_afit(_ad[:t]) for t in px.index if t>=pd.Timestamp("2011-12-31")}).reindex(px.index)
+chk("exponent real-time: min 2012-14",_abt["2012":"2014"].min(),5.5,0.05); chk("exponent real-time: max 2012-14",_abt["2012":"2014"].max(),8.2,0.05); chk("exponent real-time: min 2015",_abt["2015"].min(),6.0,0.05); chk("exponent real-time: max 2015",_abt["2015"].max(),6.8,0.05); chk("exponent real-time: min since 2016",_abt["2016":].min(),5.6,0.05); chk("exponent real-time: max since 2016",_abt["2016":].max(),6.0,0.05)
+_aD=pd.DataFrame({"r":px.shift(-1)/px-1,"fix":((age+1/12)/age)**5.62-1,"rt":((age+1/12)/age)**_abt-1}).dropna(); _aD=_aD[_aD.index>="2012-01-01"]
+_ag=lambda a,b,k: 1200*(_aD[a:b].r-_aD[a:b][k]).mean()
+chk("age gap real-time, full",_ag("2012","2026","rt"),41,0.6); chk("age gap fixed, full",_ag("2012","2026","fix"),48,0.6); chk("age gap real-time 2012-14",_ag("2012","2014","rt"),121,0.6); chk("age gap real-time 2015-17",_ag("2015","2017","rt"),77,0.6)
+chk("age gap change since 2018, max over periods",max(abs(_ag(a,b,"rt")-_ag(a,b,"fix")) for a,b in (("2018","2020"),("2021","2023"),("2024","2026"),("2018","2026"))),2,0.5)
+_aW=pd.DataFrame({"f":fwd_mu,"mid":req_mid,"rt":(1+5/age)**(_abt/5)-1}).dropna()["2012":]
+chk("D.3 real-time age rule: MAE",100*(_aW.f-_aW.rt).abs().mean(),32,0.6); chk("D.3 real-time age rule: corr",_aW.f.corr(_aW.rt),0.72,0.006); chk("D.3 real-time age rule: closer %",100*((_aW.f-_aW.rt).abs()<(_aW.f-_aW.mid).abs()).mean(),83,0.6)
 # Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
 _ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
 # Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline

@@ -353,3 +353,9 @@ _u2=dict(l.split(" median ") for l in open("/home/claude/model/uncertainty_propa
 _m35=[v for k,v in _u2.items() if k.strip()=="Bitcoin, mortality 0.3-3.5"][0]
 chk("D.1 mortality 0.3-3.5 median",float(_m35.split("%")[0]),18.3,0.05); chk("D.1 mortality 0.3-3.5 5%",float(_m35.split("90% ")[1].split("%")[0]),15.4,0.05); chk("D.1 mortality 0.3-3.5 95%",float(_m35.split("90% ")[1].split("-")[1].split("%")[0]),21.9,0.05)
 chk("S3 midpoint of the mortality range",(0.3+3)/2,1.65,0.001); chk("S3 addition from upper end 3.5",18.3-18.0,0.3,0.05)
+
+# Section 3 and Appendix D.1: the two readings of the mortality term taken alone
+_u3=dict(l.split(" median ") for l in open("/home/claude/model/uncertainty_propagation.txt").read().strip().split("\n"))
+for _kk,_mm,_l5,_h5 in (("Bitcoin, mortality fixed at 3 (high reading)",19.3,17.0,22.7),("Bitcoin, mortality fixed at 0.3 (low reading)",16.6,14.3,20.0)):
+    _vv=[v for k,v in _u3.items() if k.strip()==_kk][0]; _rr=_vv.split("90% ")[1].split(" |")[0].replace("%","").split("-")
+    chk(f"D.1 {_kk} median",float(_vv.split("%")[0]),_mm,0.05); chk(f"D.1 {_kk} 5%",float(_rr[0]),_l5,0.05); chk(f"D.1 {_kk} 95%",float(_rr[1]),_h5,0.05)

@@ -50,3 +50,6 @@ if __name__ == "__main__":
     run("Bitcoin, w 0.042-0.063 (ownership 3% at anchor)", 0.42, 1.5, 2.0, 0.042, 0.063, 0.003, 0.03)
     # Mortality upper end at the all-cause top-twenty death rate of Table 1 (3.5%) instead of 3 points (Appendix D.1).
     run("Bitcoin, mortality 0.3-3.5", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
+    # The two readings of the mortality term taken alone (Section 3): every top-twenty death as a total loss, and sudden collapses only.
+    run("Bitcoin, mortality fixed at 3 (high reading)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.03, 0.03)
+    run("Bitcoin, mortality fixed at 0.3 (low reading)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.003)

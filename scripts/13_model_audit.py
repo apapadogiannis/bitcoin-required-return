@@ -163,6 +163,9 @@ for (_gq_a,_gq_b),_gq_g in zip((("2012","2015"),("2016","2019"),("2020","2023"),
     _gq_r=_grow(_gq_a,_gq_b); chk(f"grouping: four-year gap {_gq_a}-{_gq_b}",_gq_r[1],_gq_g,0.6); chk(f"grouping: four-year |t| below 2 {_gq_a}-{_gq_b}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
 # Section 2 example: the cost of a position and of the next dollar (gamma 2, sigma 0.42)
 _s2=0.42**2; chk("example: sigma squared",_s2,0.176,0.0005); chk("example: at 19%",100*2*_s2*0.19,6.7,0.05); chk("example: at 5%",100*2*_s2*0.05,1.8,0.05)
+# Appendix B.2: the fund-investor weight at 3% instead of 1.5%
+_c26=cap.reindex(px.index).iloc[-1]
+chk("B.2 w lower bound at 3%",100*_c26/(Wp.iloc[-1]+inst_val.iloc[-1]/0.03),12,0.5); chk("B.2 fund-investor wealth at 1.5% ($tn)",inst_val.iloc[-1]/0.015/1e12,13,0.6); chk("B.2 fund-investor wealth at 3% ($tn)",inst_val.iloc[-1]/0.03/1e12,6,0.5); chk("B.2 survey-type wealth ($tn)",Wp.iloc[-1]/1e12,7,0.5)
 # Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
 _ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
 # Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline

@@ -161,6 +161,9 @@ for _gq_a,_gq_g,_gq_t in (("2014",-148,-2.9),("2016",153,2.5),("2018",-27,None),
     else: chk(f"grouping: two-year |t| below 2 from {_gq_a}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
 for (_gq_a,_gq_b),_gq_g in zip((("2012","2015"),("2016","2019"),("2020","2023"),("2024","2026")),(86,63,37,10)):
     _gq_r=_grow(_gq_a,_gq_b); chk(f"grouping: four-year gap {_gq_a}-{_gq_b}",_gq_r[1],_gq_g,0.6); chk(f"grouping: four-year |t| below 2 {_gq_a}-{_gq_b}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
+# Section 2 example: the cost of a position and of the next dollar (gamma 2, sigma 0.42)
+_s2=0.42**2; chk("example: sigma squared",_s2,0.176,0.0005); chk("example: cost of a 10% position, % of portfolio",100*_s2*0.10**2,0.18,0.005); chk("example: cost of an 11% position",100*_s2*0.11**2,0.21,0.005)
+chk("example: added cost, points",100*_s2*(0.11**2-0.10**2),0.04,0.005); chk("example: per dollar added, %",100*_s2*(0.11**2-0.10**2)/0.01,3.7,0.05); chk("example: formula at 10.5%",100*2*_s2*0.105,3.7,0.05); chk("example: at 19%",100*2*_s2*0.19,6.7,0.05); chk("example: at 5%",100*2*_s2*0.05,1.8,0.05)
 # Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
 _ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
 # Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline

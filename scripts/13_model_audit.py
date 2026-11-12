@@ -145,6 +145,9 @@ chk("D.3 real-time age rule: MAE",100*(_aW.f-_aW.rt).abs().mean(),32,0.6); chk("
 # Equity premium: Damodaran's implied premium at year-ends 2020-2025 (histimpl table, retrieved 12 Nov 2026)
 _erp={2020:4.72,2021:4.24,2022:5.94,2023:4.60,2024:4.33,2025:4.23}
 chk("implied ERP start of 2026",_erp[2025],4.2,0.05); chk("implied ERP min 2020-25",min(_erp.values()),4.2,0.05); chk("implied ERP max 2020-25",max(_erp.values()),5.9,0.05); chk("implied ERP max is end-2022",float(max(_erp,key=_erp.get)),2022,0.1)
+# Worked example of the monthly test (Section 5, Step 3): December 2023
+_wi=at("2023-12-31"); _wm=req_mid.iloc[_wi]; _wr=px.iloc[_wi+1]/px.iloc[_wi]-1
+chk("example: midpoint Dec 2023, % a year",100*_wm,22.3,0.1); chk("example: required for the month, %",100*(np.exp(_wm/12)-1),1.9,0.05); chk("example: Bitcoin's return Jan 2024, %",100*_wr,0.9,0.05); chk("example: gap, points",100*(_wr-(np.exp(_wm/12)-1)),-1.0,0.05)
 # Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
 _ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
 # Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline

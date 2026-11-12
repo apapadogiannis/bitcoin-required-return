@@ -142,6 +142,9 @@ chk("age gap real-time, full",_ag("2012","2026","rt"),41,0.6); chk("age gap fixe
 chk("age gap change since 2018, max over periods",max(abs(_ag(a,b,"rt")-_ag(a,b,"fix")) for a,b in (("2018","2020"),("2021","2023"),("2024","2026"),("2018","2026"))),2,0.5)
 _aW=pd.DataFrame({"f":fwd_mu,"mid":req_mid,"rt":(1+5/age)**(_abt/5)-1}).dropna()["2012":]
 chk("D.3 real-time age rule: MAE",100*(_aW.f-_aW.rt).abs().mean(),32,0.6); chk("D.3 real-time age rule: corr",_aW.f.corr(_aW.rt),0.72,0.006); chk("D.3 real-time age rule: closer %",100*((_aW.f-_aW.rt).abs()<(_aW.f-_aW.mid).abs()).mean(),83,0.6)
+# Equity premium: Damodaran's implied premium at year-ends 2020-2025 (histimpl table, retrieved 12 Nov 2026)
+_erp={2020:4.72,2021:4.24,2022:5.94,2023:4.60,2024:4.33,2025:4.23}
+chk("implied ERP start of 2026",_erp[2025],4.2,0.05); chk("implied ERP min 2020-25",min(_erp.values()),4.2,0.05); chk("implied ERP max 2020-25",max(_erp.values()),5.9,0.05); chk("implied ERP max is end-2022",float(max(_erp,key=_erp.get)),2022,0.1)
 # Option-implied cap on a collapse to zero (Appendix C.5, Section 6); quotes of 12 Nov 2026 as in 35_option_bound.py
 _ox=0.0035*73477.85; chk("option cap: put price $",_ox,257,1); chk("option cap: % of strike",100*_ox/30000,0.86,0.005); chk("option cap: before expiry %",100*_ox/30000*76081.74/73477.85,0.9,0.05); chk("option cap: % a year",100*_ox/30000*76081.74/73477.85/(225/365),1.4,0.05)
 # Ownership at the 2021Q3 anchor (Appendix D.4): 3% in 2021Q3 and 11% by mid-2022, everything else as in the baseline

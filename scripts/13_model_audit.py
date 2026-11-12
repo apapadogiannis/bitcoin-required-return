@@ -338,3 +338,8 @@ chk("Table 8 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.1
 _ix=0.42**2/0.141**2; _ixw=(0.10+0.16+0.06)/100
 chk("A.6 variance ratio BTC to index",_ix,9,0.2); chk("A.6 exposed constituents, % of index",100*_ixw,0.3,0.03); chk("A.6 addition to beta",_ixw*_ix,0.03,0.004); chk("A.6 addition to required return",100*_ixw*_ix*0.04,0.1,0.02)
 chk("A.6 addition to beta at x=1%",0.01*_ix,0.09,0.004); chk("A.6 points at x=1% below 0.4",float(100*0.01*_ix*0.04<0.4),1,0)
+
+# Appendix A.1: beta against a global index (appended to 34_beta_windows.py)
+_acw=pd.DataFrame({"b":np.log(px).diff(),"s":_pxm("/home/claude/model/extdata/acwi_monthly.csv"),"v":_pxm("/home/claude/model/extdata/voo_monthly.csv")}).dropna()[:"2026-05"]
+def _acwb(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
+chk("A.1 beta on ACWI, last 4y",_acwb(_acw.iloc[-48:]),1.6,0.05); chk("A.1 beta on ACWI, last 5y",_acwb(_acw.iloc[-60:]),1.7,0.05); chk("A.1 beta on ACWI, since 2020",_acwb(_acw["2020":]),1.9,0.05); chk("A.1 corr ACWI and S&P 500",_acw["2012":].s.corr(_acw["2012":].v),0.97,0.006)

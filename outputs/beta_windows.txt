@@ -5,3 +5,7 @@ Last 5 years   months  60  beta 1.81  s.e. 0.38  correlation 0.53
 Since 2020     months  77  beta 1.93  s.e. 0.35  correlation 0.54
 Since 2016     months 125  beta 1.51  s.e. 0.38  correlation 0.34
 Since 2012     months 173  beta 1.77  s.e. 0.45  correlation 0.29
+ACWI Last 4 years   months  48  beta 1.63  s.e. 0.46  correlation 0.46  corr(ACWI, S&P 500) 0.97
+ACWI Last 5 years   months  60  beta 1.72  s.e. 0.42  correlation 0.48  corr(ACWI, S&P 500) 0.97
+ACWI Since 2020     months  77  beta 1.88  s.e. 0.37  correlation 0.50  corr(ACWI, S&P 500) 0.98
+ACWI Since 2012     months 173  beta 1.57  s.e. 0.46  correlation 0.25  corr(ACWI, S&P 500) 0.97

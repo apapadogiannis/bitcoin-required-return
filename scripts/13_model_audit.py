@@ -122,6 +122,9 @@ with contextlib.redirect_stdout(io.StringIO()):
 chk("household gamma: median",_qh[2],18.9,0.1); chk("household gamma: 5%",_qh[0],16.2,0.1); chk("household gamma: 95%",_qh[4],22.1,0.1)
 chk("D.1 mortality 0.3-1.5: median",_qm[2],17.2,0.1); chk("D.1 mortality: 5%",_qm[0],14.8,0.1); chk("D.1 mortality: 95%",_qm[4],20.7,0.1)
 chk("D.1 w 0.12-0.19: median",_qw[2],18.8,0.1); chk("D.1 w: 5%",_qw[0],15.9,0.1); chk("D.1 w: 95%",_qw[4],22.0,0.1)
+import io as _io, contextlib as _cl
+with _cl.redirect_stdout(_io.StringIO()): _qv=u.run("v",0.42,1.5,2.0,0.08,0.12,0.003,0.03)*100
+chk("D.1 w 0.08-0.12: median",_qv[2],17.0,0.1); chk("D.1 w 0.08-0.12: 5%",_qv[0],14.7,0.1); chk("D.1 w 0.08-0.12: 95%",_qv[4],19.3,0.1)
 chk("compound range lo",15.3-9.2,6,0.3); chk("compound range hi",21.6-9.2,13,0.7); chk("compound envelope lo",12.7-9.2,4,0.6); chk("compound envelope hi",25.4-9.2,16,0.3); chk("excess return",18-5,13,0)
 chk("gold conc max",100*2.8*0.2**2*0.1,1.1,0.05); chk("gold envelope lo",5-0.4+100*1.0*0.13**2*0.02,4.6,0.05)
 _us=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e12,2026:170e12}); _Wus=cap.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*(_us/_us.iloc[i21])
@@ -178,6 +181,12 @@ _fx=np.log(pd.read_csv("/home/claude/model/extdata/eurusd_monthly.csv",parse_dat
 _bA=_A.cov().loc["ACWI","VOO"]/_A.VOO.var()
 chk("ACWI months",len(_A),172,0.5); chk("vol ACWI",100*_A.ACWI.std()*12**.5,13.8,0.05); chk("beta ACWI on VOO",_bA,0.95,0.005); chk("corr ACWI VOO",_A.corr().loc["ACWI","VOO"],0.97,0.005); chk("ACWI premium",4*_bA,3.8,0.05)
 chk("CAGR ACWI 2012-26",100*(np.exp(12*_A.ACWI.mean())-1),11.5,0.1); chk("EUR vol ACWI",100*(_A.ACWI-_fx).std()*12**.5,12.6,0.05); chk("EUR vol VOO",100*(_A.VOO-_fx).std()*12**.5,13.8,0.05)
+_Q=pd.DataFrame({"QQQ":_lr("/home/claude/model/extdata/qqq_monthly.csv"),"IWM":_lr("/home/claude/model/extdata/iwm_monthly.csv"),"VOO":_lr("/home/claude/model/extdata/voo_monthly.csv")}).dropna()["2012-01":"2026-04"]
+for _k,_v,_be,_cg in (("QQQ",17.2,1.12,20),("IWM",19.1,1.18,11)):
+    _bq=_Q.cov().loc[_k,"VOO"]/_Q.VOO.var(); _vq=100*_Q[_k].std()*12**.5; _av=5+round(4*_bq,1)
+    chk(f"{_k} months",len(_Q),172,0.5); chk(f"vol {_k}",_vq,_v,0.06); chk(f"beta {_k} on VOO",_bq,_be,0.006); chk(f"CAGR {_k} 2012-26",100*(np.exp(12*_Q[_k].mean())-1),_cg,0.5)
+    chk(f"{_k} average",_av,{"QQQ":9.5,"IWM":9.7}[_k],0.01); chk(f"{_k} drag",_vq**2/200,{"QQQ":1.5,"IWM":1.8}[_k],0.05); chk(f"{_k} compound",_av-_vq**2/200,{"QQQ":8.0,"IWM":7.9}[_k],0.05); chk(f"{_k} Sharpe",(_av-5)/_vq,{"QQQ":0.26,"IWM":0.25}[_k],0.005)
+chk("gold CAGR end-2023 to Nov 2026",100*((4040/2060)**(1/2.87)-1),26,0.6); chk("gold stock value $tn",224000*32150.7*4040/1e12,29,0.5)
 _b=pd.read_csv("/tmp/cmdata/csv/btc.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
 chk("sigma EWMA hl9 May 2026",100*np.sqrt(np.log(_b).diff().pow(2).ewm(halflife=9).mean().iloc[-1]*12),42,0.5)
 chk("mortality hi: all elite deaths",3.54,3.5,0.05); chk("beta x ERP lo",1.5*4,6,0.01); chk("beta x ERP hi",2.0*4,8,0.01); chk("conc lo",1.0*0.42**2*8,1,0.5); chk("conc hi",2.8*0.42**2*19,9,0.5)

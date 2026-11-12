@@ -32,3 +32,5 @@ if __name__ == "__main__":
     run("Large altcoin, average crypto owner", (0.66, 0.88), 1.5, 2.7, 0.08, 0.19, 0.01, 0.03, kap=(0.41, 0.56))
     run("Large altcoin, diversified holder (w=0)", (0.66, 0.88), 1.5, 2.7, 0.0, 0.0, 0.01, 0.03)
     run("Small coin, diversified holder (w=0)", (1.0, 1.3), 1.5, 2.7, 0.0, 0.0, 0.157, 0.174)
+    # The survey's 19% is an equal-weighted mean of household shares; a wealth-weighted share of 12% as the upper bound.
+    run("Bitcoin, w 0.08-0.12 (wealth-weighted share)", 0.42, 1.5, 2.0, 0.08, 0.12, 0.003, 0.03)

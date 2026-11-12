@@ -30,7 +30,7 @@ scripts/    numbered pipeline (see below)
 outputs/    asset-level panel and all result tables used in the paper
 figures/    all paper exhibits
 paper/      the manuscript PDF
-data/       ETF price files (VOO, ACWI, VT, GLD) and EUR/USD; the crypto data are NOT included and are
+data/       ETF price files (VOO, ACWI, VT, QQQ, IWM, GLD), EUR/USD and the Treasury yield; the crypto data are NOT included and are
             fetched by run_all.sh (see Data and licensing)
 ```
 
@@ -60,19 +60,20 @@ badge above shows the latest run.
 | `09_figures.py`, `22_pretty_figs.py` | Exhibits 1, 2 and 4 | Section 4 |
 | `11_km_figure.py` | Exhibit 5, Kaplan-Meier by size | Section 4 |
 | `10_robustness.py` | Cohort fixed effects, Weibull and log-logistic fits | Appendix B.1 |
-| `12_audit.py` (graveyard, 33 checks) and `scripts/13_model_audit.py` (required-return model, 562 checks); together they recompute every quantitative claim in the paper. `scripts/12_audit.py` | Re-checks every number quoted in the paper (prints PASS per claim) | all sections |
+| `12_audit.py` (graveyard, 33 checks) and `scripts/13_model_audit.py` (required-return model, 583 checks); together they recompute every quantitative claim in the paper. `scripts/12_audit.py` | Re-checks every number quoted in the paper (prints PASS per claim) | all sections |
 | `21_final_figs.py` | Required return vs realized drift vs age rule: `fig_wedge`, `wedge_table.csv`; Ether compression exhibit | Section 6, Table 6.1, Exhibit 6 |
 
 ## Data and licensing
 
 - Crypto price/volume data: [Coin Metrics community data](https://github.com/coinmetrics/data)
-  (CC BY-NC 4.0; not redistributed here — step 0 downloads it from the source).
+  (CC BY-NC 4.0; not redistributed here; step 0 downloads it from the source).
   The dataset snapshot used in the paper ends 2026-05-24.
 - ETF prices (`data/voo_monthly.csv`, `data/acwi_monthly.csv`, `data/vt_monthly.csv`,
-  `data/gld_monthly.csv`): monthly close and adjusted close of the Vanguard S&P 500 ETF, the
-  iShares MSCI ACWI ETF, the Vanguard Total World Stock ETF, and SPDR Gold Shares, the
+  `data/qqq_monthly.csv`, `data/iwm_monthly.csv`, `data/gld_monthly.csv`): monthly adjusted close
+  (and close, where given) of the Vanguard S&P 500 ETF, the iShares MSCI ACWI ETF, the Vanguard
+  Total World Stock ETF, the Invesco QQQ (Nasdaq-100), the iShares Russell 2000 ETF, and SPDR Gold Shares, the
   month-end euro/dollar rate (`data/eurusd_monthly.csv`) and the month-end ten-year Treasury
-  yield (`data/tnx_monthly.csv`, the CBOE TNX index), from Yahoo Finance, retrieved November 2026. Used for beta and for the equity and gold figures of the paper's Table 5.
+  yield (`data/tnx_monthly.csv`, the CBOE TNX index), from Yahoo Finance, retrieved November 2026. Used for beta and for the equity and gold figures of the paper's Table 8.
 - Survey anchors, wealth aggregates, and option-implied figures are quoted in the
   paper from their published sources (Cleveland Fed WP 26-16; Fed SCPC/SHED; Pew;
   OeNB Bulletin Q4/25; UBS GWR; arXiv:2410.15195; Deribit DVOL).

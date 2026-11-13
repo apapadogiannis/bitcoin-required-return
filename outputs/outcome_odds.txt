@@ -1,0 +1,11 @@
+Five-year window, volatility 42%: standard deviation of the annualized compound return 18.8 points
+gap between the forecasts in log growth: 13.2 points
+compound return         this paper  age rule                  odds
+25% a year or more             24%       50%           2.1 to 1 age rule
+17% to 25%                     12%       14%           1.1 to 1 age rule
+4% to 17%                      25%       20%           1.2 to 1 this paper
+below 4%                       39%       16%           2.4 to 1 this paper
+zero or less: this paper 31%, age rule 12%
+age rule at 22% compounded: 25% a year or more 45%, 17% to 25% 14%, 4% to 17% 21%, below 4% 20%
+age rule at 28% compounded: 25% a year or more 55%, 17% to 25% 13%, 4% to 17% 18%, below 4% 13%
+years of returns needed to separate the two forecasts by two standard errors: 40

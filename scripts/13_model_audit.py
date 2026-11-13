@@ -463,6 +463,20 @@ for _sc in (0.5,2.0):
     _hc_r=_hc_run(_sc); chk(f"B.3 public-company figures x{_sc}: lower edge moves by at most one point",float(_hc_r[0]<=1.0),1,0); chk(f"B.3 public-company figures x{_sc}: gaps move by at most 0.1",float(max(abs(_hc_r[1]-_hc_b[1]),abs(_hc_r[2]-_hc_b[2]))<=0.15),1,0)
 chk("E.3 J.P. Morgan weights sum",65+30+5,100,0); chk("E.3 J.P. Morgan weighted base case",0.65*10.7+0.30*10.7+0.05*(-3.2),10.0,0.1)
 
+# Section 6, Table 6: chance of each five-year outcome under each forecast (script 46_outcome_odds.py)
+from math import erf as _oo_erf
+_oo_Phi=lambda z: 0.5*(1+_oo_erf(z/2**.5)); _oo_sd=0.42/5**.5; _oo_g={"paper":np.log(1.095),"age":np.log(1.25)}
+_oo_cdf=lambda k,c: _oo_Phi((np.log(1+c)-_oo_g[k])/_oo_sd)
+chk("Table 6: sd of the five-year compound return, about 19 points",100*_oo_sd,19,0.5); chk("Table 6: sd exceeds the gap between the forecasts",float(_oo_sd>_oo_g["age"]-_oo_g["paper"]),1,0)
+for _oo_k,_oo_t in (("paper",(24,12,25,39)),("age",(50,14,20,16))):
+    _oo_p=(1-_oo_cdf(_oo_k,0.25),_oo_cdf(_oo_k,0.25)-_oo_cdf(_oo_k,0.17),_oo_cdf(_oo_k,0.17)-_oo_cdf(_oo_k,0.04),_oo_cdf(_oo_k,0.04))
+    for _oo_l,_oo_x,_oo_y in zip(("25% or more","17 to 25%","4 to 17%","below 4%"),_oo_p,_oo_t): chk(f"Table 6, {_oo_k}: {_oo_l}",100*_oo_x,_oo_y,0.5)
+chk("Table 6: 25% or more favors the age rule about two to one",(1-_oo_cdf("age",0.25))/(1-_oo_cdf("paper",0.25)),2,0.25); chk("Table 6: below 4% favors this paper about two to one",_oo_cdf("paper",0.04)/_oo_cdf("age",0.04),2,0.45)
+chk("Section 6: zero or less, about three in ten if this paper is right",100*_oo_cdf("paper",0.0),31,0.5)
+_oo_out=open(os.path.join(OUT,"outcome_odds.txt")).read().splitlines()
+for _oo_l,_oo_a,_oo_b in (("25% a year or more",24,50),("17% to 25%",12,14),("4% to 17%",25,20),("below 4%",39,16)):
+    _oo_r=[l for l in _oo_out if l.startswith(_oo_l)][0][len(_oo_l):].split(); chk(f"Table 6 against the script output, {_oo_l}: this paper",float(_oo_r[0].rstrip("%")),_oo_a,0.01); chk(f"Table 6 against the script output, {_oo_l}: age rule",float(_oo_r[1].rstrip("%")),_oo_b,0.01)
+
 # Appendix E.4: Table 8 for a euro investor (script 45_euro_table.py)
 _eu_rf=3.4; chk("E.4 Bund yield, mean of 3.58, 3.34 and 3.3",(3.58+3.34+3.3)/3,_eu_rf,0.05); chk("E.4 interest differential",5.0-_eu_rf,1.6,0.001)
 _eu_fx=np.log(pd.read_csv(os.path.join(DATA,"eurusd_monthly.csv"),parse_dates=["Date"]).sort_values("Date").set_index("Date")["Close"]).diff()

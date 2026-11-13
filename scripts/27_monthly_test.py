@@ -2,11 +2,15 @@
 At each month-end from January 2012 the required return is evaluated from that date's inputs and
 compared with Bitcoin's simple return over the following month. Non-overlapping observations;
 figures annualized as twelve times the monthly value. Writes outputs monthly_test.txt and fig_gap."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 r=px.shift(-1)/px-1                                   # next-month simple return
 mo=lambda mu: np.exp(mu/12)-1                         # expected one-month simple return at drift mu
@@ -27,7 +31,7 @@ for lab,o in T.items():
     L.append(f"{lab:14s} {o['n']:4d}  {o['real']:5.0f} ({o['se']:3.0f})   {o['lo']:4.0f}-{o['hi']:4.0f}  {o['mid']:4.0f} |  {o['g_lo']:+5.0f} ({o['t_lo']:+.1f})   {o['g_mid']:+5.0f} ({o['se_mid']:3.0f}; {o['t_mid']:+.1f})   {o['g_hi']:+5.0f} ({o['t_hi']:+.1f}) |  {o['g_age']:+5.0f} ({o['t_age']:+.1f})")
 L.append(f"correlation of monthly return with required midpoint {np.corrcoef(D.r,D.mid)[0,1]:.2f}; with age rule {np.corrcoef(D.r,D.age)[0,1]:.2f}")
 L.append(f"largest month: {D.r.idxmax().date()} start, return {100*D.r.max():.0f}%, contributes {1200*D.r.max()/len(D):.0f} points to the full-sample annualized mean")
-open(f"{MD}/monthly_test.txt","w").write("\n".join(L)+"\n"); print("\n".join(L))
+open(f"{OUT}/monthly_test.txt","w").write("\n".join(L)+"\n"); print("\n".join(L))
 
 fig,(ax,bx)=plt.subplots(1,2,figsize=(9.4,5.0))
 x=np.arange(len(PER)); labs=[p[2] for p in PER]; O=[T[l] for l in labs]
@@ -56,4 +60,4 @@ bx.set_ylabel("percentage points per year"); bx.set_title("The gap: realized min
 bx.legend([plt.Line2D([],[],marker="o",ms=7,color=INK,ls="none"),plt.Line2D([],[],color=INK,lw=3.2),plt.Line2D([],[],color=MUT,lw=1.2),plt.Line2D([],[],color=BLUE,lw=1.6)],
           ["gap, average over the period","±1 standard error","±2 standard errors (2012–14 extends off the panel)","zero: delivered exactly what was required"],
           loc="upper center",bbox_to_anchor=(0.5,-0.12),ncol=1,fontsize=8.0,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.8)
-finish(fig,[ax,bx],f"{MD}/fig_gap")
+finish(fig,[ax,bx],f"{FIG}/fig_gap")

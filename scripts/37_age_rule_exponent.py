@@ -2,14 +2,18 @@
 The paper holds the power-law exponent at 5.62 at every date. Here it is re-estimated at each month-end by least squares of
 log price on log age, on the daily prices available up to that date, and the age-rule comparisons are recomputed.
 Output: age_rule_exponent.txt"""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd
-src = open("/home/claude/model/22_pretty_figs.py").read()
+src = open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
-d = pd.read_csv("/tmp/cmdata/csv/btc.csv", parse_dates=["time"]).set_index("time")["PriceUSD"].dropna()
+d = pd.read_csv(os.path.join(CSV,"btc.csv"), parse_dates=["time"]).set_index("time")["PriceUSD"].dropna()
 if d.index.tz is not None: d.index = d.index.tz_localize(None)
 fit = lambda x: np.polyfit(np.log((x.index - GEN).days/365.25), np.log(x.values), 1)[0]
 bt = pd.Series({t: fit(d[:t]) for t in px.index if t >= pd.Timestamp("2011-12-31")}).reindex(px.index)
-out = open("/home/claude/model/age_rule_exponent.txt", "w")
+out = open(os.path.join(OUT,"age_rule_exponent.txt"), "w")
 def p(s=""):
     print(s); out.write(s + "\n")
 p("real-time exponent: " + ", ".join(f"{t[:4]} {bt[t]:.2f}" for t in ("2012-01-31", "2013-06-30", "2014-12-31", "2016-12-31", "2018-12-31", "2020-12-31", "2022-12-31", "2024-12-31", "2026-04-30")))

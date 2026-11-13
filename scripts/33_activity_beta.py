@@ -1,14 +1,18 @@
 """Does Bitcoin's equity beta run through use of the network? (Appendix E.2)
 Monthly log returns of Bitcoin on those of the S&P 500 (VOO), gold (GLD) and the growth of on-chain activity
 (daily active addresses, monthly mean; Coin Metrics community data). Output: activity_beta.txt"""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, statsmodels.api as sm, sys
 def etf(f):
-    x = pd.read_csv(f"/home/claude/model/extdata/{f}_monthly.csv", parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]
+    x = pd.read_csv(f"{DATA}/{f}_monthly.csv", parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]
     r = np.log(x).diff(); r.index = r.index.to_period("M"); return r
-d = pd.read_csv("/tmp/cmdata/csv/btc.csv", parse_dates=["time"]).set_index("time")
+d = pd.read_csv(os.path.join(CSV,"btc.csv"), parse_dates=["time"]).set_index("time")
 m = pd.DataFrame({"btc": d.PriceUSD.resample("ME").last(), "act": d.AdrActCnt.resample("ME").mean()}); m.index = m.index.to_period("M")
 g = np.log(m).diff(); g["spx"] = etf("voo"); g["gold"] = etf("gld"); g = g["2012-01":"2026-04"].dropna()
-out = open("/home/claude/model/activity_beta.txt", "w")
+out = open(os.path.join(OUT,"activity_beta.txt"), "w")
 def p(*a):
     s = " ".join(str(x) for x in a); print(s); out.write(s + "\n")
 def ols(y, X, lab):

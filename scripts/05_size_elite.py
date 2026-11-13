@@ -22,7 +22,7 @@ for a in core["asset"]:
     if "volume_reported_spot_usd_1d" not in df.columns: continue
     v=pd.to_numeric(df["volume_reported_spot_usd_1d"],errors="coerce")
     s=pd.Series(v.values,index=df["time"]).dropna()
-    s=s[s>0]
+    s=s[(s>0)&(s<1e12)]   # a reported volume above $1 trillion a day is a feed error
     if len(s)<10: continue
     vol[a]=s.resample("ME").mean()
 V=pd.DataFrame(vol)

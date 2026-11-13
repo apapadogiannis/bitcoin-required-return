@@ -13,43 +13,43 @@ def run(label, sig, blo, bhi, wlo, whi, mlo, mhi, glo=1.0, ghi=2.8, kap=1.0):
     print(f"{label:30s} median {q[2]:5.1%} | 68% {q[1]:5.1%}-{q[3]:5.1%} | 90% {q[0]:5.1%}-{q[4]:5.1%} | envelope {lo:5.1%}-{hi:5.1%}")
     return q
 if __name__ == "__main__":
-    run("Bitcoin", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.03)
+    run("Bitcoin", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
     run("Bitcoin, mortality 0.3-1.5", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.015)
-    run("Bitcoin, w 0.12-0.19", 0.42, 1.5, 2.0, 0.12, 0.19, 0.003, 0.03)
-    run("Bitcoin, gamma 1.7-2.8 (household range)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.03, glo=1.7)
-    run("Bitcoin, w 0.075-0.139 (crypto-wide back-cast)", 0.42, 1.5, 2.0, 0.075, 0.139, 0.003, 0.03)
-    run("Ether", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.03)
+    run("Bitcoin, w 0.12-0.19", 0.42, 1.5, 2.0, 0.12, 0.19, 0.003, 0.035)
+    run("Bitcoin, gamma 1.7-2.8 (household range)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.035, glo=1.7)
+    run("Bitcoin, w 0.075-0.139 (crypto-wide back-cast)", 0.42, 1.5, 2.0, 0.075, 0.139, 0.003, 0.035)
+    run("Ether", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.035)
     run("Large altcoin", 0.80, 2.0, 2.7, 0.10, 0.30, 0.01, 0.03)
     run("Small coin", (1.0, 1.3), 2.0, 2.7, 0.10, 0.30, 0.157, 0.174)
     run("Gold", (0.13, 0.20), -0.1, 0.1, 0.02, 0.10, 0.0, 0.003)
-    run("Bitcoin at gold sigma and w", 0.15, 1.5, 2.0, 0.02, 0.10, 0.003, 0.03)
-    run("Bitcoin, sigma 0.35-0.50", (0.35, 0.50), 1.5, 2.0, 0.08, 0.19, 0.003, 0.03)
-    run("Bitcoin, sigma 0.40-0.55 (option-implied)", (0.40, 0.55), 1.5, 2.0, 0.08, 0.19, 0.003, 0.03)
+    run("Bitcoin at gold sigma and w", 0.15, 1.5, 2.0, 0.02, 0.10, 0.003, 0.035)
+    run("Bitcoin, sigma 0.35-0.50", (0.35, 0.50), 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
+    run("Bitcoin, sigma 0.40-0.55 (option-implied)", (0.40, 0.55), 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
     # Section 7: measured inputs (31_cross_section.py). kap is the beta of the crypto market on the asset.
-    run("Bitcoin, diversified holder (w=0)", 0.42, 1.5, 2.0, 0.0, 0.0, 0.003, 0.03)
-    run("Ether, average crypto owner (kappa 0.7)", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.03, kap=0.7)
-    run("Ether, diversified holder (w=0)", 0.64, 2.0, 2.7, 0.0, 0.0, 0.003, 0.03)
+    run("Bitcoin, diversified holder (w=0)", 0.42, 1.5, 2.0, 0.0, 0.0, 0.003, 0.035)
+    run("Ether, average crypto owner (kappa 0.7)", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.035, kap=0.7)
+    run("Ether, diversified holder (w=0)", 0.64, 2.0, 2.7, 0.0, 0.0, 0.003, 0.035)
     run("Large altcoin, average crypto owner", (0.66, 0.88), 1.5, 2.7, 0.08, 0.19, 0.01, 0.03, kap=(0.41, 0.56))
     run("Large altcoin, diversified holder (w=0)", (0.66, 0.88), 1.5, 2.7, 0.0, 0.0, 0.01, 0.03)
     run("Small coin, diversified holder (w=0)", (1.0, 1.3), 1.5, 2.7, 0.0, 0.0, 0.157, 0.174)
     # The survey's 19% is an equal-weighted mean of household shares; a wealth-weighted share of 12% as the upper bound.
-    run("Bitcoin, w 0.08-0.12 (wealth-weighted share)", 0.42, 1.5, 2.0, 0.08, 0.12, 0.003, 0.03)
+    run("Bitcoin, w 0.08-0.12 (wealth-weighted share)", 0.42, 1.5, 2.0, 0.08, 0.12, 0.003, 0.035)
     # Dependence between inputs (Appendix D.1): the baseline draws them independently.
     def dep(label, ug, uw, ub, um):
-        x = rf + (1.5 + 0.5*ub)*ERP + (1.0 + 1.8*ug)*0.42**2*(0.08 + 0.11*uw) + (0.003 + 0.027*um)
+        x = rf + (1.5 + 0.5*ub)*ERP + (1.0 + 1.8*ug)*0.42**2*(0.08 + 0.11*uw) + (0.003 + 0.032*um)
         q = np.percentile(x, [5, 50, 95]); print(f"{label:46s} median {q[1]:5.1%} | 90% {q[0]:5.1%}-{q[2]:5.1%}")
     u1, u2, u3, u4 = (rng.uniform(0, 1, N) for _ in range(4))
     dep("Dependence: gamma and w move together", u1, u1, u3, u4)
     dep("Dependence: gamma and w move oppositely", u1, 1 - u1, u3, u4)
     dep("Dependence: all four inputs move together", u1, u1, u1, u1)
     # Beta (Appendix A.2 and D.1): a range covering every estimation window, and beta drawn with its sampling error.
-    run("Bitcoin, beta 1.3-2.2 (every window)", 0.42, 1.3, 2.2, 0.08, 0.19, 0.003, 0.03)
-    x = rf + rng.normal(1.75, 0.45, N)*ERP + rng.uniform(1.0, 2.8, N)*0.42**2*rng.uniform(0.08, 0.19, N) + rng.uniform(0.003, 0.03, N)
+    run("Bitcoin, beta 1.3-2.2 (every window)", 0.42, 1.3, 2.2, 0.08, 0.19, 0.003, 0.035)
+    x = rf + rng.normal(1.75, 0.45, N)*ERP + rng.uniform(1.0, 2.8, N)*0.42**2*rng.uniform(0.08, 0.19, N) + rng.uniform(0.003, 0.035, N)
     q = np.percentile(x, [5, 50, 95]); print(f"{'Bitcoin, beta normal (1.75, s.e. 0.45)':46s} median {q[1]:5.1%} | 90% {q[0]:5.1%}-{q[2]:5.1%}")
     # Ownership of 3% at the 2021Q3 anchor (Appendix D.4): the back-cast weight for 2026 is then 4.2-6.3%.
-    run("Bitcoin, w 0.042-0.063 (ownership 3% at anchor)", 0.42, 1.5, 2.0, 0.042, 0.063, 0.003, 0.03)
-    # Mortality upper end at the all-cause top-twenty death rate of Table 1 (3.5%) instead of 3 points (Appendix D.1).
-    run("Bitcoin, mortality 0.3-3.5", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
+    run("Bitcoin, w 0.042-0.063 (ownership 3% at anchor)", 0.42, 1.5, 2.0, 0.042, 0.063, 0.003, 0.035)
+    # Mortality upper end without the twelve top-twenty deaths of 2025 (2.4%) instead of the all-cause 3.5% (Appendix D.1).
+    run("Bitcoin, mortality 0.3-2.4 (2025 deaths set aside)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.024)
     # The two readings of the mortality term taken alone (Section 3): every top-twenty death as a total loss, and sudden collapses only.
-    run("Bitcoin, mortality fixed at 3 (high reading)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.03, 0.03)
+    run("Bitcoin, mortality fixed at 3.5 (high reading)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.035, 0.035)
     run("Bitcoin, mortality fixed at 0.3 (low reading)", 0.42, 1.5, 2.0, 0.08, 0.19, 0.003, 0.003)

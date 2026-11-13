@@ -1,8 +1,12 @@
 """Figure: the time-varying inputs of equation (1), month by month (volatility, beta, holder weight, risk-free rate)."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 mm=(age>=3.0)&(age<=17.45); A=age[mm].values
 etf_age=(pd.Timestamp("2024-01-11")-GEN).days/365.25
@@ -28,6 +32,6 @@ for ax in axs.ravel():
     sec=ax.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0)); sec.set_xticks([2013,2016,2019,2022,2025]); sec.tick_params(labelsize=7.5,colors=MUT,length=0,pad=1); sec.spines["top"].set_visible(False)
 for ax in axs[1]: ax.set_xlabel("Bitcoin age (years)")
 fig.subplots_adjust(left=0.06,right=0.90,top=0.93,bottom=0.09,hspace=0.42,wspace=0.42)
-fig.savefig(f"{MD}/fig_inputs.pdf"); fig.savefig(f"{MD}/fig_inputs.png",dpi=140)
+fig.savefig(f"{FIG}/fig_inputs.pdf"); fig.savefig(f"{FIG}/fig_inputs.png",dpi=140)
 i=lambda d: px.index.get_indexer([pd.Timestamp(d)],method="nearest")[0]
 print("sigma 2013 %.0f 2017 %.0f 2021 %.0f 2026 %.0f | max w_hi %.0f%% w_hi last %.0f w_lo last %.0f"%(100*np.sqrt(sig2.iloc[i("2013-06-30")]),100*np.sqrt(sig2.iloc[i("2017-06-30")]),100*np.sqrt(sig2.iloc[i("2021-09-30")]),100*np.sqrt(sig2.iloc[-1]),100*w_hi[mm].max(),100*w_hi.iloc[-1],100*w_lo.iloc[-1]))

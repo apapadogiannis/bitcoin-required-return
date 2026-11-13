@@ -4,6 +4,10 @@ Unified style: Carlito (Calibri-metric) labels, validated categorical palette
 hairline grid, no top/right spines, direct labels over legend boxes where
 feasible, thin marks."""
 import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
+import os
 import numpy as np, pandas as pd
 import matplotlib
 matplotlib.use("Agg")
@@ -28,10 +32,10 @@ def finish(fig,ax_list,path):
     fig.savefig(f"{path}.pdf"); fig.savefig(f"{path}.png",dpi=200)
     print("saved",os.path.basename(path))
 
-GY="/home/claude/graveyard"; MD="/home/claude/model"; CSV="/tmp/cmdata/csv"; YR=365.25
+YR=365.25
 
 # ============ FIG 1: hazard vs age ============
-hb=pd.read_csv(f"{GY}/hazard_buckets_curated.csv"); hb=hb[hb["deaths"]>0]
+hb=pd.read_csv(f"{OUT}/hazard_buckets_curated.csv"); hb=hb[hb["deaths"]>0]
 mid=np.sqrt(hb["a"]*hb["b"]); lam=hb["lam"]; se=np.sqrt(hb["deaths"])/hb["exp"]
 fig,ax=plt.subplots(figsize=(6.4,4.3))
 A=np.linspace(0.32,12,200)
@@ -53,11 +57,11 @@ ax.text(0,1.018,"1,815 assets, 520 curated deaths, 2010–2026 · dots: empirica
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
 ax.grid(which="major",axis="both",alpha=0.9); ax.grid(which="minor",visible=False)
 ax.set_axisbelow(True)
-fig.tight_layout(); fig.savefig(f"{MD}/fig1_hazard_age.pdf"); fig.savefig(f"{MD}/fig1_hazard_age.png",dpi=200)
+fig.tight_layout(); fig.savefig(f"{FIG}/fig1_hazard_age.pdf"); fig.savefig(f"{FIG}/fig1_hazard_age.png",dpi=200)
 print("saved fig1")
 
 # ============ FIG 2: hazard by size ============
-sz=pd.read_csv(f"{GY}/hazard_by_size_curated.csv")
+sz=pd.read_csv(f"{OUT}/hazard_by_size_curated.csv")
 labels=["smallest\nquartile","Q2","Q3","largest\nquartile","ever\ntop-50","ever\ntop-20","top-20\njump only"]
 vals=list(100*sz["lam"])+[5.46,3.54,0.30]
 los=[np.nan]*4+[4.52,2.48,0.06]; his=[np.nan]*4+[6.54,4.90,0.86]
@@ -76,21 +80,21 @@ ax.set_ylabel("deaths per asset-year (%)"); ax.set_ylim(0,20)
 ax.set_title("Size protects; catastrophic death at the top is rare")
 ax.text(0,1.018,"curated deaths · peak-volume quartiles and elite cohorts · whiskers: exact Poisson 95% CI",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
-finish(fig,[ax],f"{MD}/fig2_size")
+finish(fig,[ax],f"{FIG}/fig2_size")
 
 # ============ FIG 3: KM by size ============
 from lifelines import KaplanMeierFitter
-panel=pd.read_csv(f"{GY}/panel_v3.csv",parse_dates=["birth","last","death_cur_date"])
+panel=pd.read_csv(f"{OUT}/panel_v3.csv",parse_dates=["birth","last","death_cur_date"])
 core=panel[~panel["stable2"]&~panel["tokstock"]&~panel["wrapped_like"]].copy()
 core=core[(core["last"]-core["birth"]).dt.days>=30].set_index("asset")
 dataset_end=panel["last"].max()
-V=pd.read_pickle(f"{GY}/volume_monthly.pkl"); core["peak_vol"]=V.max().reindex(core.index)
+V=pd.read_pickle(f"{OUT}/volume_monthly.pkl"); core["peak_vol"]=V.max().reindex(core.index)
 T=np.where(core["dead_cur"],(pd.to_datetime(core["death_cur_date"])-core["birth"]).dt.days/YR,
            (dataset_end-core["birth"]).dt.days/YR)
 core["T"]=np.clip(T,1/365.25,None); core["E"]=core["dead_cur"].astype(int)
 has=core["peak_vol"].notna()
 qs=pd.qcut(core.loc[has,"peak_vol"],4,labels=["smallest quartile","Q2","Q3","largest quartile"])
-E20=pd.read_csv(f"{GY}/elite_top20_curated.csv"); elite=set(E20["asset"])
+E20=pd.read_csv(f"{OUT}/elite_top20_curated.csv"); elite=set(E20["asset"])
 qcols={"smallest quartile":SEQ[200],"Q2":SEQ[350],"Q3":SEQ[450],"largest quartile":SEQ[650]}
 fig,ax=plt.subplots(figsize=(6.6,4.5))
 ends={}
@@ -120,10 +124,10 @@ ax.set_yticks([0,0.25,0.5,0.75,1.0]); ax.set_yticklabels(["0%","25%","50%","75%"
 ax.set_title("Survival curves by size")
 ax.text(0,1.018,"Kaplan–Meier estimates · 1,815 cryptoassets, curated deaths, 2010–2026",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
-finish(fig,[ax],f"{MD}/fig5_km_size")
+finish(fig,[ax],f"{FIG}/fig5_km_size")
 
 # ============ FIG 4: elite death timeline ============
-E=pd.read_csv(f"{GY}/elite_top20_curated.csv",parse_dates=["death_date"])
+E=pd.read_csv(f"{OUT}/elite_top20_curated.csv",parse_dates=["death_date"])
 D=E[E["death"]==1].copy(); D["yr"]=D["death_date"].dt.year
 cnt=D.groupby(["yr","cat"]).size().unstack(fill_value=0)
 yrs=list(range(2014,2027))
@@ -143,7 +147,7 @@ ax.set_title("When the elite died")
 ax.text(0,1.018,"36 deaths among 219 ever-top-20 assets · deaths cluster in calendar time, not in age",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
 ax.legend(loc="upper left")
-finish(fig,[ax],f"{MD}/fig4_timeline")
+finish(fig,[ax],f"{FIG}/fig4_timeline")
 
 # ============ FIG 5: wedge ============
 btcf=pd.read_csv(f"{CSV}/btc.csv",parse_dates=["time"],usecols=["time","PriceUSD","CapMrktCurUSD","AdrBalCnt"]).set_index("time")
@@ -164,7 +168,7 @@ q_addr=adr*(0.11/adr.iloc[i21])   # the address-scaled alternative, kept for App
 def interp(d):
     xs=[(pd.Timestamp(f"{y}-06-30")-GEN).days/365.25 for y in sorted(d)]
     return pd.Series(np.interp(age,xs,[d[y] for y in sorted(d)]),index=px.index)
-_t=pd.read_csv("/home/claude/model/extdata/tnx_monthly.csv",parse_dates=["Date"]).set_index("Date")["Close"]; _t.index=_t.index+pd.offsets.MonthEnd(0)
+_t=pd.read_csv(os.path.join(DATA,"tnx_monthly.csv"),parse_dates=["Date"]).set_index("Date")["Close"]; _t.index=_t.index+pd.offsets.MonthEnd(0)
 rf=(_t/100).reindex(px.index).ffill().bfill()   # ten-year Treasury yield, month-end (CBOE TNX)
 # capitalization of the whole asset class (panel assets with a reported capitalization, excluding stablecoins and wrapped or tokenized
 # claims), used for the crypto-wide alternative back-cast of Appendix D.6.
@@ -191,7 +195,7 @@ w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # institutional
 w_hi_cw=(capc/Wp_cw).clip(upper=0.9); w_lo_cw=(capc/(Wp_cw+inst_val/0.015)).clip(upper=0.9)
 wbar=w_hi
 # market-risk term: rolling 48-month beta on the S&P 500 (VOO total return, month-end), expanding window before 48 months exist
-_v=pd.read_csv("/home/claude/model/extdata/voo_monthly.csv",parse_dates=["Date"]).set_index("Date").sort_index(); _v.index=_v.index+pd.offsets.MonthEnd(0)
+_v=pd.read_csv(os.path.join(DATA,"voo_monthly.csv"),parse_dates=["Date"]).set_index("Date").sort_index(); _v.index=_v.index+pd.offsets.MonthEnd(0)
 _d=pd.DataFrame({"b":np.log(px).diff(),"s":np.log(_v["AdjClose"]).diff()}).dropna()
 def _beta(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
 beta_roll=pd.Series({_d.index[i]:_beta(_d.iloc[max(0,i-47):i+1]) for i in range(17,len(_d))}).reindex(px.index).bfill().ffill().clip(0,3)
@@ -199,7 +203,7 @@ corr_roll=pd.Series({_d.index[i]:_d.iloc[max(0,i-47):i+1].corr().iloc[0,1] for i
 ERP=0.04
 beta_term=beta_roll*ERP
 foc_lo=rf+0.85*beta_term+G_LO*sig2*w_lo+0.003
-foc_hi=rf+1.15*beta_term+G_HI*sig2*w_hi+0.03
+foc_hi=rf+1.15*beta_term+G_HI*sig2*w_hi+0.035
 Q_FEW=0.012                                   # ownership in the 2018 survey: 'few hands' at or below this level
 seg=(Q_FEW/q).clip(upper=1.0)                 # early-holder weight: all-in while ownership <= Q_FEW, then diluted in proportion as ownership multiplies
 req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
@@ -237,7 +241,7 @@ ax.set_xlim(3,18.5); ax.set_ylim(-15,232)
 ax.set_title("The age rule tracks the decaying wedge, not a risk premium")
 ax.text(0,1.018,"required-return band: holder first-order condition (γ 1.7–2.8) up to the option-implied all-in bound",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
-finish(fig,[ax],f"{MD}/fig_wedge")
+finish(fig,[ax],f"{FIG}/fig_wedge")
 
 # ============ FIG 6: Ether compression ============
 ethf=pd.read_csv(f"{CSV}/eth.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")
@@ -265,5 +269,5 @@ for a_ in axes: a_.set_xlim(pd.Timestamp("2016-01-01"),pd.Timestamp("2026-07-01"
 fig.suptitle("Compression is a mechanism, not a Bitcoin idiosyncrasy",x=0.013,ha="left",fontsize=11,fontweight="bold")
 fig.tight_layout(rect=(0,0,1,0.94))
 for a_ in axes: a_.grid(axis="y",alpha=1.0); a_.set_axisbelow(True)
-fig.savefig(f"{MD}/fig6_eth.pdf"); fig.savefig(f"{MD}/fig6_eth.png",dpi=200)
+fig.savefig(f"{FIG}/fig6_eth.pdf"); fig.savefig(f"{FIG}/fig6_eth.png",dpi=200)
 print("saved fig6")

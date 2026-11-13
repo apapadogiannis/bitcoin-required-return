@@ -15,7 +15,7 @@ A required return for Bitcoin built from three measured risks, and a test of it 
 1. **The required-return equation.** The risk-free rate plus market risk (beta to the
    S&P 500), concentration risk (Bitcoin's volatility at its holders' portfolio weights,
    from Fed and Cleveland Fed household surveys) and mortality risk. Central estimate for
-   2026: about 18% a year (90% range 15–22%), about 9% compounded.
+   2026: about 18% a year (90% range 15–22%), about 9.5% compounded.
 2. **The census of deaths.** Survival analysis of 1,815 cryptoassets (2010–2026, 520 curated
    deaths) from the Coin Metrics community dataset: mortality hazard by age (the Lindy
    hypothesis is rejected; hazard *rises* with age), by size, and for the ever-top-20
@@ -41,27 +41,49 @@ statsmodels, scipy, matplotlib). For byte-identical tables use `requirements-loc
 the exact versions under which `outputs/` were generated.
 
 ```bash
-./run_all.sh    # fetches the data snapshot (about 260 MB) on first run, then about a minute
+./run_all.sh    # fetches the data snapshot (about 260 MB) on first run, then about three minutes
 ```
 
 The script fetches the Coin Metrics community dataset at the exact commit the paper used
 (`f1a36af`, data ending 2026-05-24), then runs every step below in order. Re-running
 reproduces every CSV in `outputs/` byte-for-byte. A GitHub Actions workflow does this on
-every push and monthly, and fails if any table differs or any audit line is not PASS; the
+every push and monthly, and fails if a script stops, any table differs or any audit line is not PASS; the
 badge above shows the latest run.
 
 | Script | What it produces | Where it appears |
 |---|---|---|
-| `03_rebuild_panel.py` | Birth/death panel from 2,258 asset files | Section 3 |
-| `06_voldeath.py` | Volume-collapse deaths, unified death definition | Section 3, Appendix A |
-| `07_curated.py` | Migration and catastrophe curation, `panel_v3.csv` | Appendix A |
-| `05_size_elite.py` | Size quartiles, ever-top-N cohorts, elite death tables | Section 4 |
-| `08_cohorts.py` | Buy-at-birth cohort return curves | Section 4 |
-| `09_figures.py`, `22_pretty_figs.py` | Exhibits 1, 2 and 4 | Section 4 |
-| `11_km_figure.py` | Exhibit 5, Kaplan-Meier by size | Section 4 |
-| `10_robustness.py` | Cohort fixed effects, Weibull and log-logistic fits | Appendix B.1 |
-| `12_audit.py` (graveyard, 33 checks) and `scripts/13_model_audit.py` (required-return model, 820 checks); together they recompute every quantitative claim in the paper. `scripts/12_audit.py` | Re-checks every number quoted in the paper (prints PASS per claim) | all sections |
-| `21_final_figs.py` | Required return vs realized drift vs age rule: `fig_wedge`, `wedge_table.csv`; Ether compression exhibit | Section 6, Table 6.1, Exhibit 6 |
+| **1. The census of cryptoasset deaths** | | |
+| `03_rebuild_panel.py` | Birth and death panel from the Coin Metrics asset files | Section 3 |
+| `05_size_elite.py` | Monthly volume matrix; size quartiles and ever-top-N cohorts | Section 3 (Table 1), Appendix C.2 |
+| `06_voldeath.py` | Volume-collapse deaths; unified death definition | Section 3, Appendix C |
+| `07_curated.py` | Migrations and dated collapses; `panel_v3.csv`, hazards, the elite death table | Section 3, Appendix C.3 |
+| `08_cohorts.py` | Buy-at-birth cohort returns | Appendix C |
+| `10_robustness.py` | Cohort fixed effects, Weibull and log-logistic fits | Appendix C.4 |
+| `12_audit.py` | 33 checks of the census numbers quoted in the paper | Section 3, Appendix C |
+| `09_figures.py`, `11_km_figure.py`, `21_final_figs.py` | Draft figures and `wedge_table.csv` from an earlier calibration, kept for the record | not in the paper |
+| **2. The required-return model** | | |
+| `22_pretty_figs.py` | The shared construction of the required-return band (inputs, holder weight, edges), used by the scripts below; hazard and survival figures | Sections 3 and 5, Appendix C |
+| `23_uncertainty.py` | Propagation of the input ranges; sensitivities | Section 4, Tables 7 and 8, Appendix D.1 |
+| `26_holder_weight.py` | The holder weight through time | Appendix B |
+| `27_monthly_test.py` | The monthly test and its figure | Section 5 (Table 5) |
+| `28_cryptowide_backcast.py` | Back-cast on total crypto capitalization | Appendix D.5 |
+| `29_required_fig.py` | The required return since 2012; `required_band_monthly.csv` | Section 5 |
+| `30_inputs_fig.py` | The inputs that move with time | Section 5 |
+| `31_cross_section.py`, `32_eth_fig.py` | Ether and other cryptoassets | Section 7 |
+| `33_activity_beta.py` | On-chain activity and the equity beta | Appendix E.2 |
+| `34_beta_windows.py`, `42_beta_fig.py` | Beta by estimation window and against a global index; rolling beta figure | Appendix A.1 to A.3 |
+| `35_option_bound.py` | Option-implied cap on the probability of a collapse | Appendix C.5 |
+| `36_ownership_sensitivity.py` | Alternative ownership path | Appendix D.4 |
+| `37_age_rule_exponent.py`, `38_grouping_robustness.py` | Real-time age-rule exponent; other groupings of the monthly test | Appendix D.2 |
+| `39_index_exposure.py` | Bitcoin exposure inside the S&P 500 | Appendix A.6 |
+| `40_death_date_check.py` | Collapse dates moved within their documented windows | Appendix C.3 |
+| `41_volatility_table.py` | Volatility by window and by currency | Appendix A.7 |
+| **3. The audit** | | |
+| `13_model_audit.py` | 824 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+
+`24_terms_fig.py` and `25_wedge_log.py` draw earlier figures that are not in the paper. All scripts
+locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables
+`DATA_DIR`, `OUT_DIR`, `FIG_DIR` and `CM_CSV_DIR` override them.
 
 ## Data and licensing
 

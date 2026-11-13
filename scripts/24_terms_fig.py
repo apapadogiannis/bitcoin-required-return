@@ -2,12 +2,16 @@
 Mid-band decomposition: rf(t); beta term at the midpoint of 1.3-4.2 points; mortality at the
 midpoint of 0.3-3 points; concentration = required (mid) minus the other three, which absorbs
 the gamma*sigma^2*w term and the all-in option bound of the band's upper edge."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])  # style block only
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])  # style block only
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])  # shared band construction
-beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)
+beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.035),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)
 m=(age>=3.0)&(age<=17.45)
 A=age[m].values; parts=[100*rf[m].values,100*beta_t[m].values,100*conc_t[m].values,100*mort_t[m].values]
@@ -32,7 +36,7 @@ ax.set_ylim(0.9,300)
 ax.set_ylabel("% per year (log scale)"); ax.set_xlabel("Bitcoin age (years)")
 ax.set_xlim(3,17.5)
 ax.set_title("Levels: each term of the requirement")
-ax.legend([l_tot,l_conc,l_rf,l_beta,l_mort],["total required return","concentration risk  γσ²w","risk-free rate","market risk  β·ERP (rolling 4-yr beta)","mortality risk  λ(1−δ) (held at 1.65 pts)"],loc="upper center",bbox_to_anchor=(0.5,-0.2),ncol=2,fontsize=8,frameon=False,handlelength=1.6,labelspacing=0.4,columnspacing=1.2)
+ax.legend([l_tot,l_conc,l_rf,l_beta,l_mort],["total required return","concentration risk  γσ²w","risk-free rate","market risk  β·ERP (rolling 4-yr beta)","mortality risk  λ(1−δ) (held at 1.9 pts)"],loc="upper center",bbox_to_anchor=(0.5,-0.2),ncol=2,fontsize=8,frameon=False,handlelength=1.6,labelspacing=0.4,columnspacing=1.2)
 ax=axes[1]
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_xlabel("Bitcoin age (years)")
@@ -56,6 +60,6 @@ fig.suptitle("Equation (1), term by term: concentration carried the early requir
 fig.text(0.013,0.925,"mid-band decomposition of the monthly required return; mortality held constant at the midpoint of its range (dashed); concentration is the remainder",
          fontsize=8.5,color=INK2)
 fig.tight_layout(rect=(0,0,0.97,0.925))
-fig.savefig(f"{MD}/fig_terms.pdf"); fig.savefig(f"{MD}/fig_terms.png",dpi=200)
+fig.savefig(f"{FIG}/fig_terms.pdf"); fig.savefig(f"{FIG}/fig_terms.png",dpi=200)
 for y in [2013.5,2015.5,2017.5,2019.5,2021.75,2023.5,2026.3]:
     i=share_at(y); print(y, "total %.0f%%"%tot[i], " ".join(f"{l.split()[0]} {100*s[i]:.0f}%" for l,s in zip(labels,shares)))

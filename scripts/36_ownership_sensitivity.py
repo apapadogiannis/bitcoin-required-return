@@ -1,12 +1,16 @@
 """Appendix D.4: the ownership rate at the 2021Q3 anchor. Baseline 11% (Federal Reserve SHED: 12% in 2021);
 alternative 3% in 2021Q3 rising to 11% by mid-2022, the path of the Candia et al. (2026) panel.
 Recomputes the weights, the band and the monthly test. Output: ownership_sensitivity.txt"""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd
-SRC = open("/home/claude/model/22_pretty_figs.py").read()
+SRC = open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 A = 'pd.Timestamp("2021-09-30"):0.11,'
 assert SRC.count(A) == 1
 def build(src):
-    ns = {}
+    ns = {"__file__": __file__}
     exec(src.split("# ============ FIG 1")[0], ns); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")], ns)
     return ns
 def test(ns):
@@ -17,7 +21,7 @@ def test(ns):
         s = D[a:b]; e = s.r - s.mid
         out[lab] = (1200*s.r.mean(), 1200*s.lo.mean(), 1200*s.hi.mean(), 1200*s.mid.mean(), 1200*(s.r - s.lo).mean(), 1200*e.mean(), 1200*e.std(ddof=1)/np.sqrt(len(e)), 1200*(s.r - s.hi).mean())
     return out
-out = open("/home/claude/model/ownership_sensitivity.txt", "w")
+out = open(os.path.join(OUT,"ownership_sensitivity.txt"), "w")
 def p(s=""):
     print(s); out.write(s + "\n")
 for lab, src in (("baseline: 11% in 2021Q3", SRC), ("alternative: 3% in 2021Q3, 11% by mid-2022", SRC.replace(A, 'pd.Timestamp("2021-09-30"):0.03,pd.Timestamp("2022-06-30"):0.11,'))):

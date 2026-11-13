@@ -1,11 +1,15 @@
 """Appendix D.2: the monthly test under other groupings of the 172 months (calendar years, two-year and four-year periods).
 Table 5 of the paper uses three-year periods. Output: grouping_robustness.txt"""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd
-src = open("/home/claude/model/22_pretty_figs.py").read()
+src = open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 mo = lambda mu: np.exp(mu/12) - 1
 D = pd.DataFrame({"r": px.shift(-1)/px - 1, "lo": mo(foc_lo), "mid": mo(req_mid), "hi": mo(req_hi)}).dropna(); D = D[D.index >= "2012-01-01"]
-out = open("/home/claude/model/grouping_robustness.txt", "w")
+out = open(os.path.join(OUT,"grouping_robustness.txt"), "w")
 def p(s=""):
     print(s); out.write(s + "\n")
 def row(a, b):

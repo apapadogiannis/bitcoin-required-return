@@ -2,22 +2,25 @@
 Monthly log returns (total-return ETFs for the equity indices and gold; Coin Metrics prices for Bitcoin and Ether), annualized with sqrt(12).
 Windows end in April 2026. 'Recent months weighted' is the paper's measure for Bitcoin and Ether: squared returns, exponentially
 weighted with a half-life of nine months. Euro figures convert each return at the month-end EUR/USD rate. Output: volatility_table.txt"""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, io, contextlib, runpy
-M = "/home/claude/model/"
 def etf(f):
     z = pd.read_csv(f, parse_dates=["Date"]).sort_values("Date").set_index("Date"); z = z["AdjClose"] if "AdjClose" in z else z["Close"]
     z.index = z.index + pd.offsets.MonthEnd(0); return np.log(z).diff()
-src = open(M + "22_pretty_figs.py").read(); exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
-with contextlib.redirect_stdout(io.StringIO()): cs = runpy.run_path(M + "31_cross_section.py")
-D = pd.DataFrame({"Global equities (ACWI)": etf(M + "extdata/acwi_monthly.csv"), "S&P 500": etf(M + "extdata/voo_monthly.csv"), "Nasdaq-100": etf(M + "extdata/qqq_monthly.csv"),
-                  "Russell 2000": etf(M + "extdata/iwm_monthly.csv"), "Gold": etf(M + "extdata/gld_monthly.csv"), "Bitcoin": np.log(px).diff(), "Ether": np.log1p(cs["Rn"]["eth"])})
-fx = etf(M + "extdata/eurusd_monthly.csv")                      # log change of the dollar price of one euro
+src = open(os.path.join(SCRIPTS, "22_pretty_figs.py")).read(); exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
+with contextlib.redirect_stdout(io.StringIO()): cs = runpy.run_path(os.path.join(SCRIPTS, "31_cross_section.py"))
+D = pd.DataFrame({"Global equities (ACWI)": etf(os.path.join(DATA, "acwi_monthly.csv")), "S&P 500": etf(os.path.join(DATA, "voo_monthly.csv")), "Nasdaq-100": etf(os.path.join(DATA, "qqq_monthly.csv")),
+                  "Russell 2000": etf(os.path.join(DATA, "iwm_monthly.csv")), "Gold": etf(os.path.join(DATA, "gld_monthly.csv")), "Bitcoin": np.log(px).diff(), "Ether": np.log1p(cs["Rn"]["eth"])})
+fx = etf(os.path.join(DATA, "eurusd_monthly.csv"))                      # log change of the dollar price of one euro
 def table(X, end="2026-04"):
     X = X[:end]; o = {"2012-01 to 2026-04": X["2012-01":].std() * 12**.5}
     for y in (5, 3, 1): o[f"last {y}y"] = X.iloc[-12 * y:].std() * 12**.5
     o["recent months weighted"] = np.sqrt(X.pow(2).ewm(halflife=9).mean().iloc[-1] * 12)
     return (100 * pd.DataFrame(o)).round(1)
-out = open(M + "volatility_table.txt", "w")
+out = open(os.path.join(OUT, "volatility_table.txt"), "w")
 def line(s=""):
     print(s); out.write(s + "\n")
 line("US dollars"); line(table(D).to_string())

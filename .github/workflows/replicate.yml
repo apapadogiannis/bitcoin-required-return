@@ -30,12 +30,15 @@ jobs:
           key: coinmetrics-f1a36afb962731c387bb03982758ab0103063da5
 
       - name: Fetch data and regenerate every table and figure
-        run: ./run_all.sh | tee run.log
+        run: |
+          set -o pipefail
+          ./run_all.sh 2>&1 | tee run.log
 
       - name: Verify every audit line is PASS
         run: |
           grep -c "^PASS" run.log
           if grep -q "^CHECK" run.log; then echo "Audit mismatches:"; grep "^CHECK" run.log; exit 1; fi
+          if grep -q "^FAIL" run.log; then echo "Model audit mismatches:"; grep "^FAIL" run.log; exit 1; fi
 
       - name: Verify tables match the committed results
         # Figures embed timestamps; every CSV in outputs/ must be identical.

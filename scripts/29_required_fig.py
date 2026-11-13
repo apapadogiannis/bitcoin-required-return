@@ -1,12 +1,16 @@
 """Figure 1: the required return against realized returns (a), and the terms of equation (1)
 in levels (b) and as shares (c), on one time axis."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 def G(x): return np.maximum(x,0.02)
 plt.rcParams["axes.titlepad"]=6
@@ -48,7 +52,7 @@ ax.yaxis.set_major_locator(FixedLocator(ticks)); ax.yaxis.set_major_formatter(Fi
 ax.set_ylim(0.025,8.0); ax.set_ylabel("% per year (log scale)")
 ax.set_title("(a) Required return and realized average return",pad=22)
 # ---------- terms ----------
-beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.03),index=px.index)
+beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.035),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)
 mm=(age>=3.0)&(age<=17.45)
 A=age[mm].values; parts=[100*rf[mm].values,100*beta_t[mm].values,100*conc_t[mm].values,100*mort_t[mm].values]
@@ -61,7 +65,7 @@ tk=[1,2,5,10,20,50,100,200]
 ax.yaxis.set_major_locator(FixedLocator(tk)); ax.yaxis.set_major_formatter(FixedFormatter([f"{t}%" for t in tk])); ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.9,330); ax.set_ylabel("% per year (log scale)")
 ax.set_title("(b) The required return, term by term",pad=16)
-for y,lab,c in [(tot[-1],"total",INK),(8.6,"market risk",BLUE),(5.6,"concentration risk",ORANGE),(3.7,"risk-free rate",INK2),(1.65,"mortality risk",AQUA)]:
+for y,lab,c in [(tot[-1],"total",INK),(8.6,"market risk",BLUE),(5.6,"concentration risk",ORANGE),(3.7,"risk-free rate",INK2),(1.9,"mortality risk",AQUA)]:
     ax.text(17.55,y,lab,fontsize=8.2,va="center",ha="left",color=c,weight="bold")
 ax.plot([17.47,17.53],[parts[1][-1],8.6],color=BLUE,lw=0.6); ax.plot([17.47,17.53],[parts[2][-1],5.6],color=ORANGE,lw=0.6); ax.plot([17.47,17.53],[parts[0][-1],3.7],color=MUT,lw=0.6)
 ax=axc
@@ -83,10 +87,10 @@ for ax_,pd_ in ((axa,10),(axb,2),(axc,2)):
     sec=ax_.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
     sec.set_xticks([2013,2015,2017,2019,2021,2023,2025]); sec.tick_params(labelsize=8,colors=MUT,length=0,pad=pd_); sec.spines["top"].set_visible(False)
 axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(4.6,4.3),fontsize=7.8,color=BLUE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
-fig.savefig(f"{MD}/fig_required.pdf"); fig.savefig(f"{MD}/fig_required.png",dpi=130)
+fig.savefig(f"{FIG}/fig_required.pdf"); fig.savefig(f"{FIG}/fig_required.png",dpi=130)
 print("2026 shares",[round(100*s[-1]) for s in shares], "last parts",[round(p[-1],2) for p in parts], round(tot[-1],1))
 
 # the monthly series behind the figure
 _o=pd.DataFrame({"age_years":age,"risk_free":rf,"volatility":np.sqrt(sig2),"beta_4y":beta_roll,"w_lower_edge":w_lo,"w_upper_edge":w_hi,
                  "required_lower":foc_lo,"required_upper":req_hi,"required_midpoint":req_mid,"age_rule":age_rule})[mm]
-_o.index.name="month_end"; _o.round(4).to_csv(f"{MD}/required_band_monthly.csv"); print("rows",len(_o))
+_o.index.name="month_end"; _o.round(4).to_csv(f"{OUT}/required_band_monthly.csv"); print("rows",len(_o))

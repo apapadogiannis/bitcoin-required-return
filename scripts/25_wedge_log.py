@@ -1,10 +1,14 @@
 """Figure 5 (wedge) on a log scale of the return, with a legend box."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
 from matplotlib.patches import Patch
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 data=src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")]
 exec(data)
 def G(x): return np.maximum(x,0.02)
@@ -51,4 +55,4 @@ ax.set_xlabel("Bitcoin age (years)"); ax.set_ylabel("% per year (log scale)")
 ax.set_title("Required return and realized average return, 2012–2026")
 ax.text(0,1.018,"monthly series from age 3 (January 2012); logarithmic vertical scale, so equal distances are equal ratios",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
-finish(fig,[ax],f"{MD}/fig_wedge")
+finish(fig,[ax],f"{FIG}/fig_wedge")

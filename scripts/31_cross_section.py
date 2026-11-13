@@ -1,9 +1,12 @@
 """Section 7: the equation for Ether and the other cryptoassets, with measured inputs.
 Builds (i) the cap-weighted crypto market return, (ii) each priced asset's volatility, equity beta and
 'effective weight' factor kappa = Cov(r_i, r_cm)/Var(r_i), (iii) a survivorship-free equal-weighted altcoin basket."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, glob, os, sys
-CSV="/tmp/cmdata/csv"; GY="/home/claude/graveyard"; MD="/home/claude/model"
-pan=pd.read_csv(f"{GY}/panel_v3.csv",parse_dates=["birth","last","death_cur_date"]).set_index("asset")
+pan=pd.read_csv(f"{OUT}/panel_v3.csv",parse_dates=["birth","last","death_cur_date"]).set_index("asset")
 core=pan[~pan.stable&~pan.stable2&~pan.tokstock&~pan.wrapped_like]
 PX={}; CAP={}
 for a in core.index:
@@ -21,14 +24,14 @@ R=P.pct_change(fill_method=None)
 print("priced assets:",P.shape[1],"| with cap:",C.notna().any().sum(),"| dead (curated):",int(core.loc[P.columns,"dead_cur"].sum()))
 # peak-volume quartile of the priced assets
 try:
-    V=pd.read_pickle(f"{GY}/volume_monthly.pkl"); pk=V.max(); qs=pd.qcut(pk.reindex(core.index).dropna(),4,labels=["Q1","Q2","Q3","Q4"])
+    V=pd.read_pickle(f"{OUT}/volume_monthly.pkl"); pk=V.max(); qs=pd.qcut(pk.reindex(core.index).dropna(),4,labels=["Q1","Q2","Q3","Q4"])
     print("priced assets by size quartile:",qs.reindex(P.columns).value_counts().to_dict())
 except Exception as e: print("no quartiles",e)
 # cap-weighted crypto market return (lagged cap weights, assets with price and cap)
 W=C.shift(1); W=W.where(R.notna()); W=W.div(W.sum(axis=1),axis=0)
 rcm=(W*R).sum(axis=1,min_count=1)
 print("BTC weight in the index, 2018/2021/2026:",[round(float(W["btc"].loc[d]),2) for d in ("2018-06-30","2021-09-30","2026-04-30")], "| ETH:",[round(float(W["eth"].loc[d]),2) for d in ("2018-06-30","2021-09-30","2026-04-30")])
-v=pd.read_csv(f"{MD}/extdata/voo_monthly.csv",parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; v.index=v.index+pd.offsets.MonthEnd(0)
+v=pd.read_csv(f"{DATA}/voo_monthly.csv",parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; v.index=v.index+pd.offsets.MonthEnd(0)
 rs=v.pct_change()
 END="2026-04-30"
 def stats(a,win=48):
@@ -43,7 +46,7 @@ for a in ("btc","eth"):
 alive=[a for a in P.columns if a not in("btc","eth") and not core.loc[a,"dead_cur"] and P[a][:END].notna().iloc[-1]]
 S=pd.DataFrame({a:stats(a) for a in alive if stats(a)}).T.astype(float)
 print("alive altcoins with 4y of prices:",len(S)); print(S.describe().loc[["25%","50%","75%"]].round(2).to_string())
-S.round(4).to_csv(f"{MD}/cross_section_assets.csv")
+S.round(4).to_csv(f"{OUT}/cross_section_assets.csv")
 # ---------- survivorship-free basket ----------
 alt=[a for a in P.columns if a not in("btc","eth")]
 Ra=R[alt].copy()
@@ -71,4 +74,4 @@ for a in alt:
     yrs=(p.index[-1]-p.index[0]).days/365.25; out.append((a,(p.iloc[-1]/p.iloc[0])**(1/yrs)-1,bool(core.loc[a,"dead_cur"])))
 O=pd.DataFrame(out,columns=["asset","cagr","dead"])
 print("per-asset compound return, January 2018 (or listing) to May 2026: assets",len(O),"| median %.0f%% a year"%(100*O.cagr.median()),"| share negative %.0f%%"%(100*(O.cagr<0).mean()),"| share above Bitcoin's %.0f%%"%(100*(O.cagr>((P['btc']['2026-05'].iloc[-1]/P['btc']['2018-01'].iloc[0])**(1/8.33)-1)).mean()),"| dead",int(O.dead.sum()))
-O.round(4).to_csv(f"{MD}/cross_section_cagr.csv",index=False)
+O.round(4).to_csv(f"{OUT}/cross_section_cagr.csv",index=False)

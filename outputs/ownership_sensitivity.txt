@@ -2,21 +2,21 @@ baseline: 11% in 2021Q3
   2013-06: owners' weight   3.4%  with funds   3.4%  early holder 1.00  band   21- 231%
   2017-06: owners' weight  16.8%  with funds  16.8%  early holder 1.00  band   21-  67%
   2019-06: owners' weight  24.8%  with funds  24.8%  early holder 0.51  band   25-  64%
-  2021-09: owners' weight  18.6%  with funds  15.4%  early holder 0.11  band   15-  41%
-  2023-06: owners' weight  10.8%  with funds   9.4%  early holder 0.10  band   15-  29%
+  2021-09: owners' weight  18.6%  with funds  15.4%  early holder 0.11  band   15-  42%
+  2023-06: owners' weight  10.8%  with funds   9.4%  early holder 0.10  band   15-  30%
   2026-05: owners' weight  23.3%  with funds   8.0%  early holder 0.10  band   12-  27%
-  2012-26: delivered  118  band  22-111  midpoint  65  gaps: lower  +97  midpoint  +54 (se 39)  upper   +7
+  2012-26: delivered  118  band  22-111  midpoint  65  gaps: lower  +97  midpoint  +53 (se 39)  upper   +7
   2012-17: delivered  219  band  27-202  midpoint 110  gaps: lower +192  midpoint +108 (se 87)  upper  +17
-  2018-26: delivered   46  band  18- 46  midpoint  32  gaps: lower  +28  midpoint  +14 (se 24)  upper   -0
+  2018-26: delivered   46  band  18- 46  midpoint  32  gaps: lower  +28  midpoint  +14 (se 24)  upper   -1
 
 alternative: 3% in 2021Q3, 11% by mid-2022
   2013-06: owners' weight   0.9%  with funds   0.9%  early holder 1.00  band   15- 231%
   2017-06: owners' weight   4.6%  with funds   4.6%  early holder 1.00  band   13-  67%
   2019-06: owners' weight  10.1%  with funds  10.1%  early holder 0.75  band   13-  63%
-  2021-09: owners' weight  18.6%  with funds  15.4%  early holder 0.40  band   15-  41%
+  2021-09: owners' weight  18.6%  with funds  15.4%  early holder 0.40  band   15-  42%
   2023-06: owners' weight   2.9%  with funds   2.8%  early holder 0.10  band   12-  20%
   2026-05: owners' weight   6.3%  with funds   4.2%  early holder 0.10  band   11-  19%
   2012-26: delivered  118  band  14-105  midpoint  58  gaps: lower +104  midpoint  +61 (se 39)  upper  +13
   2012-17: delivered  219  band  15-198  midpoint 102  gaps: lower +203  midpoint +116 (se 87)  upper  +21
-  2018-26: delivered   46  band  13- 38  midpoint  25  gaps: lower  +33  midpoint  +21 (se 24)  upper   +8
+  2018-26: delivered   46  band  13- 39  midpoint  26  gaps: lower  +33  midpoint  +20 (se 24)  upper   +7
 

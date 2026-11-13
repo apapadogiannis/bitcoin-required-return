@@ -1,9 +1,13 @@
 """Figure: Ether's volatility and realized average return alongside Bitcoin's, in the measures used for Bitcoin elsewhere."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 epx=pd.read_csv(f"{CSV}/eth.csv",parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last()
 esig=np.sqrt(np.log(epx).diff().pow(2).ewm(halflife=9).mean()*12); bsig=np.sqrt(sig2)
@@ -29,4 +33,4 @@ for a_ in axes:
     a_.axvline(ETF_B,color=MUT,ls=(0,(2,2)),lw=0.9); a_.axvline(ETF_E,color=MUT,ls=(0,(2,2)),lw=0.9)
 axes[0].text(pd.Timestamp("2021-07-01"),215,"spot ETFs: Bitcoin (Jan 2024),\nEther (Jul 2024)",fontsize=8.0,color=INK2,va="top")
 fig.tight_layout()
-fig.savefig(f"{MD}/fig6_eth.pdf"); fig.savefig(f"{MD}/fig6_eth.png",dpi=140)
+fig.savefig(f"{FIG}/fig6_eth.pdf"); fig.savefig(f"{FIG}/fig6_eth.png",dpi=140)

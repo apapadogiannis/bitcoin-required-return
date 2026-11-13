@@ -30,7 +30,7 @@ for f in sorted(os.listdir(CSV_DIR)):
         px = px_b.fillna(px_a)
     px = px.where(px > 0)
     vol = pd.to_numeric(df.get("volume_reported_spot_usd_1d"), errors="coerce") if "volume_reported_spot_usd_1d" in df.columns else pd.Series(np.nan, index=df.index)
-    vol = vol.where(vol > 0)
+    vol = vol.where((vol > 0) & (vol < 1e12))   # a reported volume above $1 trillion a day is a feed error (PAXG, GNO and five token pairs in 2026)
 
     t = df["time"]
     p_mask, v_mask = px.notna(), vol.notna()

@@ -1,10 +1,14 @@
 """Appendix D: how the holder weight w is measured, bounded and extrapolated.
 Also recomputes Table 4's band column, B.3 (forecast metric) and B.4 (wealth pairing)."""
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
+SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
+FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
-exec(open("/home/claude/model/22_pretty_figs.py").read().split("# ============ FIG 1")[0])
-src=open("/home/claude/model/22_pretty_figs.py").read()
+exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ============ FIG 1")[0])
+src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 plt.rcParams["axes.titlepad"]=8
 surv={2014.5:0.004,2018.5:0.012,2021.75:0.11,2023.5:0.12,2025.5:0.13}
@@ -31,7 +35,7 @@ us_nw=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e
 ramp_us=us_nw/us_nw.iloc[i21]
 Wp_us=cap.iloc[i21]/0.19*(q/q.iloc[i21])*ramp_us
 whi_us=(cap.reindex(px.index)/Wp_us).clip(upper=0.9); wlo_us=(cap.reindex(px.index)/(Wp_us+inst_val/0.015)).clip(upper=0.9)
-lo_us=rf+0.85*beta_term+G_LO*sig2*wlo_us+0.003; hi_us=np.maximum(rf+1.15*beta_term+2.8*sig2*whi_us+0.03, rf+seg*sig2)
+lo_us=rf+0.85*beta_term+G_LO*sig2*wlo_us+0.003; hi_us=np.maximum(rf+1.15*beta_term+2.8*sig2*whi_us+0.035, rf+seg*sig2)
 for y in [2013,2017,2021,2026]:
     i=px.index.get_indexer([pd.Timestamp(f"{y}-06-30" if y<2026 else "2026-05-31")],method="nearest")[0]
     print(f"B.4 {y}: band with US-wealth ramp {100*lo_us.iloc[i]:.0f}-{100*hi_us.iloc[i]:.0f}% (baseline {100*foc_lo.iloc[i]:.0f}-{100*req_hi.iloc[i]:.0f}%)")
@@ -66,4 +70,4 @@ ax.set_ylim(0.8,130); ax.set_xlim(3,17.5); ax.set_title("(c) Holder weight w"); 
 ax.legend(fontsize=8,loc="center left",bbox_to_anchor=(1.01,0.5),frameon=False)
 fig.suptitle("How the holder weight is built",x=0.013,y=0.995,ha="left",fontsize=11,fontweight="bold")
 fig.tight_layout(rect=(0,0,1,0.97))
-fig.savefig(f"{MD}/fig_w.pdf"); fig.savefig(f"{MD}/fig_w.png",dpi=200); print("saved fig_w")
+fig.savefig(f"{FIG}/fig_w.pdf"); fig.savefig(f"{FIG}/fig_w.png",dpi=200); print("saved fig_w")

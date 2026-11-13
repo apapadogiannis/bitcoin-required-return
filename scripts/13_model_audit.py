@@ -389,3 +389,7 @@ chk("A.7 rest of world vol in dollars",100*_vr.std()*12**.5,15,0.5); chk("A.7 re
 _vb=_vS.iloc[:,1]<-0.05; _v25=_vS.iloc[:,1]["2025":].corr(_vf["2025":])
 chk("A.7 months with S&P below -5%",int(_vb.sum()),14,0); chk("A.7 euro down in those months",int((_vf[_vb]<0).sum()),8,0); chk("A.7 mean euro change in those months",100*_vf[_vb].mean(),-1.0,0.05)
 chk("A.7 corr since 2025 about zero",_v25,0.0,0.06); chk("A.7 months since 2025",len(_vS["2025":]),16,0); chk("A.7 March 2025: S&P down, euro up",float(_vS.iloc[:,1]["2025-03"].iloc[0]<0 and _vf["2025-03"].iloc[0]>0),1,0)
+
+# Appendix D.2: the band's upper-edge formula carries the high end of the mortality range (3.5 points)
+import re as _re2
+chk("D.2 upper-edge mortality constant, points",100*float(_re2.search(r"G_HI\*sig2\*w_hi\+([0-9.]+)",open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()).group(1)),3.5,0.001)

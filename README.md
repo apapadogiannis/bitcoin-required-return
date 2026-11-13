@@ -79,7 +79,7 @@ badge above shows the latest run.
 | `40_death_date_check.py` | Collapse dates moved within their documented windows | Appendix C.3 |
 | `41_volatility_table.py` | Volatility by window and by currency | Appendix A.7 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 824 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 825 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 
 `24_terms_fig.py` and `25_wedge_log.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables

@@ -12,6 +12,6 @@ monthly test, delivered minus age rule (points a year): exponent fixed at 5.62 |
   2018-26:    +1 |    -0
 
 five-year windows (113): mean absolute miss, correlation with the realized average, share of windows closer than the midpoint
-  mid:  59 points, 0.27
-  fix:  27 points, 0.86, 88%
+  mid:  58 points, 0.28
+  fix:  27 points, 0.86, 90%
   rt :  32 points, 0.72, 83%

@@ -3,13 +3,13 @@ Table 4: the required-return band at five dates (required returns in % a year)
 Risk-free rate, %                                                 2.48      2.30      2.00      1.53      4.45
 Volatility, %                                                   151.27     80.21     89.57     77.06     41.75
 Beta                                                              3.00      2.15      0.70      1.30      1.75
-Average owner's weight, with ETF and treasury investors, %        3.39     16.79     24.76     15.44      8.00
+Average owner's weight, with ETF and treasury investors, %        3.39     15.01     20.21     12.08      8.00
 Average owner's weight, surveyed owners only, %                   3.39     16.79     24.76     18.62     23.27
 Early holder's weight, %                                        100.00    100.00     50.63     10.91     10.00
-Lower edge: average owner, low inputs                            20.74     20.71     24.53     15.41     12.10
+Lower edge: average owner, low inputs                            20.74     19.56     20.88     13.42     12.10
 Upper edge (a): average owner, high inputs                       41.52     45.93     64.32     41.97     27.36
 Upper edge (b): early holder                                    231.31     66.63     42.62      8.01      6.20
 Upper edge: the larger of (a) and (b)                           231.31     66.63     64.32     41.97     27.36
-Midpoint                                                        126.02     43.67     44.43     28.69     19.73
+Midpoint                                                        126.02     43.10     42.60     27.69     19.73
 
 The early holder sets the upper edge in 43% of the months, for the last time in April 2019.

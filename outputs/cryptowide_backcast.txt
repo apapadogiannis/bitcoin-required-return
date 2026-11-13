@@ -1,12 +1,12 @@
 Bitcoin share of the class: 2013-06 95%, 2017-06 38%, 2021-09 48%, 2023-06 60%, 2026-05 74%
 2013-06-30: baseline w 3.4% (with institutions 3.4%) | crypto-wide w 1.7% (with institutions 1.7%)
-2017-06-30: baseline w 16.8% (with institutions 16.8%) | crypto-wide w 21.5% (with institutions 21.5%)
-2021-09-30: baseline w 18.6% (with institutions 15.4%) | crypto-wide w 18.6% (with institutions 16.9%)
-2023-06-30: baseline w 10.8% (with institutions 9.4%) | crypto-wide w 8.7% (with institutions 8.2%)
+2017-06-30: baseline w 16.8% (with institutions 15.0%) | crypto-wide w 21.5% (with institutions 20.4%)
+2021-09-30: baseline w 18.6% (with institutions 12.1%) | crypto-wide w 18.6% (with institutions 14.8%)
+2023-06-30: baseline w 10.8% (with institutions 8.1%) | crypto-wide w 8.7% (with institutions 7.6%)
 2026-05-31: baseline w 23.3% (with institutions 8.0%) | crypto-wide w 15.1% (with institutions 7.9%)
-monthly gap to midpoint 2012-2026: baseline +53, crypto-wide +55
-monthly gap to midpoint 2012-2017: baseline +108, crypto-wide +111
-monthly gap to midpoint 2018-2026: baseline +14, crypto-wide +14
+monthly gap to midpoint 2012-2026: baseline +54, crypto-wide +55
+monthly gap to midpoint 2012-2017: baseline +109, crypto-wide +112
+monthly gap to midpoint 2018-2026: baseline +15, crypto-wide +14
 2026 band: baseline 12-27%, crypto-wide 12-23%
 Bitcoin, baseline w 0.08-0.19  median 18.3% | 68% 16.4%-20.5% | 90% 15.4%-21.9% | envelope 12.7%-25.9%
 Bitcoin, crypto-wide w 0.079-0.151 median 17.7% | 68% 16.0%-19.5% | 90% 15.1%-20.6% | envelope 12.7%-24.0%

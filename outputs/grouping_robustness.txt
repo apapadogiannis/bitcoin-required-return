@@ -1,36 +1,36 @@
 calendar years
   2012     months 12  delivered   156  band  10-282  midpoint 139  gap   +17 (se  74, t +0.2)  inside
-  2013     months 12  delivered   780  band  41-284  midpoint 156  gap  +624 (se 474, t +1.3)  above
-  2014     months 12  delivered  -103  band  44-329  midpoint 179  gap  -282 (se  70, t -4.0)  below
+  2013     months 12  delivered   780  band  39-284  midpoint 155  gap  +625 (se 474, t +1.3)  above
+  2014     months 12  delivered  -103  band  42-329  midpoint 178  gap  -281 (se  70, t -4.0)  below
   2015     months 12  delivered    65  band  17-146  midpoint  80  gap   -14 (se  53, t -0.3)  inside
   2016     months 12  delivered   110  band  16- 74  midpoint  45  gap   +65 (se  45, t +1.4)  above
-  2017     months 12  delivered   304  band  33- 95  midpoint  63  gap  +240 (se 112, t +2.1)  above
-  2018     months 12  delivered   -81  band  41-109  midpoint  75  gap  -155 (se  69, t -2.3)  below
-  2019     months 12  delivered   130  band  16- 44  midpoint  30  gap  +100 (se  80, t +1.2)  above
+  2017     months 12  delivered   304  band  27- 95  midpoint  60  gap  +243 (se 111, t +2.2)  above
+  2018     months 12  delivered   -81  band  34-109  midpoint  71  gap  -152 (se  69, t -2.2)  below
+  2019     months 12  delivered   130  band  14- 44  midpoint  29  gap  +101 (se  80, t +1.3)  above
   2020     months 12  delivered   159  band  10- 28  midpoint  19  gap  +140 (se  78, t +1.8)  above
-  2021     months 12  delivered    46  band  19- 56  midpoint  37  gap    +8 (se  83, t +0.1)  inside
-  2022     months 12  delivered   -25  band  14- 31  midpoint  23  gap   -48 (se  72, t -0.7)  below
-  2023     months 12  delivered    70  band  15- 29  midpoint  22  gap   +48 (se  41, t +1.2)  above
+  2021     months 12  delivered    46  band  15- 56  midpoint  36  gap   +10 (se  83, t +0.1)  inside
+  2022     months 12  delivered   -25  band  13- 31  midpoint  22  gap   -48 (se  72, t -0.7)  below
+  2023     months 12  delivered    70  band  14- 29  midpoint  22  gap   +48 (se  41, t +1.2)  above
   2024     months 12  delivered   106  band  16- 40  midpoint  28  gap   +78 (se  62, t +1.3)  above
   2025     months 12  delivered   -20  band  14- 40  midpoint  27  gap   -47 (se  36, t -1.3)  below
   2026     months  4  delivered    -2  band  13- 29  midpoint  21  gap   -23 (se  67, t -0.3)  below
-  inside the band 3, above 7, below 5; gaps -282 to +624; standard errors 36 to 474; |t| > 2 in 3 years
+  inside the band 3, above 7, below 5; gaps -281 to +625; standard errors 36 to 474; |t| > 2 in 3 years
 two-year periods
-  2012-13  months 24  delivered   468  band  25-283  midpoint 148  gap  +320 (se 243, t +1.3)  above
-  2014-15  months 24  delivered   -19  band  30-238  midpoint 129  gap  -148 (se  51, t -2.9)  below
-  2016-17  months 24  delivered   207  band  25- 84  midpoint  54  gap  +153 (se  62, t +2.5)  above
-  2018-19  months 24  delivered    25  band  28- 76  midpoint  52  gap   -28 (se  58, t -0.5)  below
-  2020-21  months 24  delivered   102  band  15- 42  midpoint  28  gap   +74 (se  57, t +1.3)  above
-  2022-23  months 24  delivered    22  band  14- 30  midpoint  22  gap    -0 (se  42, t -0.0)  inside
+  2012-13  months 24  delivered   468  band  25-283  midpoint 147  gap  +321 (se 243, t +1.3)  above
+  2014-15  months 24  delivered   -19  band  29-238  midpoint 129  gap  -147 (se  51, t -2.9)  below
+  2016-17  months 24  delivered   207  band  22- 84  midpoint  53  gap  +154 (se  62, t +2.5)  above
+  2018-19  months 24  delivered    25  band  24- 76  midpoint  50  gap   -25 (se  58, t -0.4)  inside
+  2020-21  months 24  delivered   102  band  12- 42  midpoint  27  gap   +75 (se  57, t +1.3)  above
+  2022-23  months 24  delivered    22  band  14- 30  midpoint  22  gap    +0 (se  42, t +0.0)  inside
   2024-25  months 24  delivered    43  band  15- 40  midpoint  27  gap   +16 (se  37, t +0.4)  above
 three-year periods (Table 5)
-  2012-14  months 36  delivered   278  band  32-298  midpoint 158  gap  +120 (se 169, t +0.7)  inside
-  2015-17  months 36  delivered   160  band  22-105  midpoint  63  gap   +97 (se  46, t +2.1)  above
-  2018-20  months 36  delivered    69  band  22- 60  midpoint  41  gap   +28 (se  48, t +0.6)  above
-  2021-23  months 36  delivered    30  band  16- 39  midpoint  27  gap    +3 (se  39, t +0.1)  inside
+  2012-14  months 36  delivered   278  band  31-298  midpoint 157  gap  +120 (se 169, t +0.7)  inside
+  2015-17  months 36  delivered   160  band  20-105  midpoint  62  gap   +98 (se  46, t +2.1)  above
+  2018-20  months 36  delivered    69  band  19- 60  midpoint  39  gap   +30 (se  48, t +0.6)  above
+  2021-23  months 36  delivered    30  band  14- 39  midpoint  27  gap    +3 (se  39, t +0.1)  inside
   2024-26  months 28  delivered    36  band  14- 38  midpoint  26  gap   +10 (se  33, t +0.3)  inside
 four-year periods
-  2012-15  months 48  delivered   225  band  28-260  midpoint 138  gap   +86 (se 128, t +0.7)  inside
-  2016-19  months 48  delivered   116  band  26- 80  midpoint  53  gap   +63 (se  44, t +1.4)  above
-  2020-23  months 48  delivered    62  band  15- 36  midpoint  25  gap   +37 (se  36, t +1.0)  above
+  2012-15  months 48  delivered   225  band  27-260  midpoint 138  gap   +87 (se 127, t +0.7)  inside
+  2016-19  months 48  delivered   116  band  23- 80  midpoint  51  gap   +64 (se  44, t +1.5)  above
+  2020-23  months 48  delivered    62  band  13- 36  midpoint  25  gap   +38 (se  36, t +1.1)  above
   2024-26  months 28  delivered    36  band  14- 38  midpoint  26  gap   +10 (se  33, t +0.3)  inside

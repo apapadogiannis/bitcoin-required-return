@@ -186,9 +186,19 @@ G_LO,G_HI=1.0,2.8                                                # risk aversion
 _ramp=interp({2012:0.25,2021:1.0,2026:1.4})
 Wp=cap.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp                     # baseline: Bitcoin's capitalization against participating wealth
 Wp_cw=capc.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp                 # crypto-wide alternative (Appendix D.6)
-# institutional channel (spot ETFs + public-company treasuries, BTC held; mid-year anchors from issuer and filing data),
-# whose investors are not 'crypto owners' in household surveys and hold small weights (1.5% assumed for the lower edge)
-inst_btc=interp({2019:0.0,2020:0.1e6,2021:0.3e6,2023:0.4e6,2024:1.15e6,2025:2.1e6,2026:2.5e6})
+# Fund and treasury investors: Bitcoin held through funds and by public companies (million BTC), whose investors are not
+# 'crypto owners' in household surveys and hold small weights (1.5% assumed for the lower edge). Documented anchors, linear in between:
+#   Grayscale Bitcoin Trust, year-end balances from its SEC filings (Form S-1 of January 2017; Forms 10-K for 2019, 2020 and 2023);
+#   the trust began in September 2013 and became a spot ETF on January 11, 2024, after which it is inside the ETF totals.
+#   Public companies: about 0.02 at the start of 2020 and 0.096 and 0.216 at the ends of 2020 and 2021 (Bitcoin Treasuries data);
+#   for 2022 and 2023, MicroStrategy's reported holdings (132,500 and 189,150) plus the other companies at their end-2021 level (0.092).
+#   From mid-2024: US spot ETFs plus public companies (Bitcoin Treasuries), mid-year.
+_GBTC={"2013-09-30":0.0,"2013-12-31":0.069735,"2014-12-31":0.134777,"2015-12-31":0.141101,"2016-12-31":0.172095,"2017-12-31":0.175839,
+       "2018-12-31":0.204277,"2019-12-31":0.261192,"2020-12-31":0.607039,"2021-12-31":0.644810,"2022-12-31":0.632042,"2023-12-31":0.619526}
+_PUBCO={"2018-12-31":0.0,"2019-12-31":0.020,"2020-12-31":0.096,"2021-12-31":0.216,"2022-12-31":0.1325+0.092,"2023-12-31":0.18915+0.092}
+_INST={d:_GBTC[d]+_PUBCO.get(d,0.0) for d in _GBTC}; _INST.update({"2024-06-30":1.15,"2025-06-30":2.1,"2026-06-30":2.5})
+_ix=[(pd.Timestamp(d)-GEN).days/365.25 for d in _INST]
+inst_btc=pd.Series(np.interp(age,_ix,[1e6*v for v in _INST.values()]),index=px.index)
 inst_val=inst_btc*px.reindex(px.index)
 w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # survey-holder back-cast, institutional channel not counted
 w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # institutional channel counted at 1.5% weights

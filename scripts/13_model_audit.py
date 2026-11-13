@@ -44,18 +44,18 @@ chk("Small median",qs[2],78,1.5); chk("Small 90 lo",qs[0],52,1.5); chk("Small 90
 chk("Gold median",qg[2],5.5,0.1); chk("Digital gold median",qd[2],14.2,0.1); chk("Digital gold 90 lo",qd[0],12.3,0.1); chk("Digital gold 90 hi",qd[4],16.0,0.1)
 chk("vol drag",100*(0.42**2+0.45**2)/4,9,0.6); chk("CAGR counterpart",18.0-9.2,9,0.5); chk("diffusive noise",100*0.42/np.sqrt(5),19,0.5)
 # Section 6 table
-T={"2013-06-30":(151,3.0,21,231,126,174,135,132),"2015-06-30":(115,2.9,17,135,76,103,103,90),"2017-06-30":(80,2.2,21,67,44,78,51,68),"2019-06-30":(90,0.7,24,64,44,58,42,55)}
+T={"2013-06-30":(151,3.0,21,231,126,174,135,132),"2015-06-30":(115,2.9,17,135,76,103,103,90),"2017-06-30":(80,2.2,20,67,43,78,51,68),"2019-06-30":(90,0.7,21,64,43,58,42,55)}
 for d,(v,b,lo,hi,mid,dr,cg,ar) in T.items():
     i=at(d); y=d[:4]
     chk(f"T4 {y} vol",100*sig.iloc[i],v,1); chk(f"T4 {y} beta",beta_roll.iloc[i],b,0.06); chk(f"T4 {y} band lo",100*foc_lo.iloc[i],lo,0.7); chk(f"T4 {y} band hi",100*req_hi.iloc[i],hi,0.7)
     chk(f"T4 {y} mid",100*req_mid.iloc[i],mid,0.7); chk(f"T4 {y} realized drift",100*fwd_mu.iloc[i],dr,1); chk(f"T4 {y} CAGR",100*fwd5.iloc[i],cg,1); chk(f"T4 {y} age rule",100*age_rule.iloc[i],ar,1)
-i=at("2021-09-30"); chk("T4 2021Q3 band lo",100*foc_lo.iloc[i],15,0.7); chk("T4 2021Q3 band hi",100*req_hi.iloc[i],42,0.7); chk("T4 2021Q3 mid",100*req_mid.iloc[i],28,0.7); chk("T4 2021Q3 age rule",100*age_rule.iloc[i],45,1)
+i=at("2021-09-30"); chk("T4 2021Q3 band lo",100*foc_lo.iloc[i],13,0.7); chk("T4 2021Q3 band hi",100*req_hi.iloc[i],42,0.7); chk("T4 2021Q3 mid",100*req_mid.iloc[i],28,0.7); chk("T4 2021Q3 age rule",100*age_rule.iloc[i],45,1)
 l=np.log(px).diff()["2021-10":]; g=12*l.mean(); v=12*l.var(); chk("2021Q3-> drift",100*(g+v/2),27,0.6); chk("2021Q3-> CAGR",100*(np.exp(g)-1),13,0.5)
 i=at("2023-06-30"); chk("T4 2023 band lo",100*foc_lo.iloc[i],15,0.7); chk("T4 2023 band hi",100*req_hi.iloc[i],30,0.7); chk("T4 2023 mid",100*req_mid.iloc[i],22,0.7)
 i=at("2026-05-31"); chk("T4 2026 band lo",100*foc_lo.iloc[i],12,0.7); chk("T4 2026 band hi",100*req_hi.iloc[i],27,0.7); chk("T4 2026 mid",100*req_mid.iloc[i],20,0.7); chk("2026 vol",100*sig.iloc[i],42,1)
 mm=(age>=3.0)&fwd_mu.notna()
-chk("windows",mm.sum(),113,0); chk("gap vs mid",100*(fwd_mu-req_mid)[mm].mean(),22.8,0.6); chk("gap vs lower",100*(fwd_mu-foc_lo)[mm].mean(),79,1); chk("gap vs upper",100*(fwd_mu-req_hi)[mm].mean(),-33,1); chk("median gap vs mid",100*(fwd_mu-req_mid)[mm].median(),40,1)
-chk("inside band share",100*((fwd_mu>=foc_lo)&(fwd_mu<=req_hi))[mm].mean(),46,1); chk("MAE mid",100*np.abs(fwd_mu-req_mid)[mm].mean(),59,1); chk("MAE age rule",100*np.abs(fwd_mu-age_rule)[mm].mean(),28,1)
+chk("windows",mm.sum(),113,0); chk("gap vs mid",100*(fwd_mu-req_mid)[mm].mean(),23.8,0.6); chk("gap vs lower",100*(fwd_mu-foc_lo)[mm].mean(),81,1); chk("gap vs upper",100*(fwd_mu-req_hi)[mm].mean(),-33,1); chk("median gap vs mid",100*(fwd_mu-req_mid)[mm].median(),40,1)
+chk("inside band share",100*((fwd_mu>=foc_lo)&(fwd_mu<=req_hi))[mm].mean(),48,1); chk("MAE mid",100*np.abs(fwd_mu-req_mid)[mm].mean(),58,0.6); chk("MAE age rule",100*np.abs(fwd_mu-age_rule)[mm].mean(),28,1)
 # monthly test (Table: monthly; Figure 6; D.3)
 _r=px.shift(-1)/px-1; _mo=lambda mu: np.exp(mu/12)-1
 _D=pd.DataFrame({"r":_r,"lo":_mo(foc_lo),"mid":_mo(req_mid),"hi":_mo(req_hi),"age":((age+1/12)/age)**5.62-1}).dropna(); _D=_D[_D.index>="2012-01-01"]
@@ -63,10 +63,10 @@ def _nw(e,Lg=6):
     e=np.asarray(e)-np.mean(e); n=len(e); v=(e**2).sum()/n
     for l in range(1,Lg+1): v+=2*(1-l/(Lg+1))*(e[l:]*e[:-l]).sum()/n
     return np.sqrt(v/n)
-_TAB={"all":("2012","2026",172,118,22,111,65,97,53,39,7,48),"2012-14":("2012","2014",36,278,32,298,158,246,120,169,-21,143),
- "2015-17":("2015","2017",36,160,22,105,63,138,97,46,55,82),"2018-20":("2018","2020",36,69,22,60,41,47,28,48,9,15),
- "2021-23":("2021","2023",36,30,16,39,27,14,3,39,-9,-12),"2024-26":("2024","2026",28,36,14,38,26,22,10,33,-2,1),
- "2012-17":("2012","2017",72,219,27,202,110,192,108,87,17,112),"2018-26":("2018","2026",100,46,18,46,32,28,14,24,-1,1)}
+_TAB={"all":("2012","2026",172,118,20,111,64,98,54,39,7,48),"2012-14":("2012","2014",36,278,31,298,157,247,120,169,-21,143),
+ "2015-17":("2015","2017",36,160,20,105,62,140,98,46,55,82),"2018-20":("2018","2020",36,69,19,60,39,50,30,48,9,15),
+ "2021-23":("2021","2023",36,30,14,39,27,16,3,39,-9,-12),"2024-26":("2024","2026",28,36,14,38,26,22,10,33,-2,1),
+ "2012-17":("2012","2017",72,219,25,202,110,193,109,87,17,112),"2018-26":("2018","2026",100,46,16,46,31,30,15,24,-1,1)}
 _dt=0
 for _k,(_a,_b,_n,_re,_lo,_hi,_mi,_gl,_gm,_sm,_gh,_ga) in _TAB.items():
     _s=_D[_a:_b]; _e=_s.r-_s.mid; _se=1200*_e.std(ddof=1)/np.sqrt(len(_e))
@@ -80,10 +80,10 @@ _x=_D.r-_D.lo; chk("monthly: t lower edge",_x.mean()/(_x.std(ddof=1)/np.sqrt(len
 _x=_D["2015":"2017"]; _x=_x.r-_x.mid; chk("monthly: t mid 2015-17",_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x))),2.1,0.06)
 chk("monthly: delivered s.e. all",1200*_D.r.std(ddof=1)/np.sqrt(len(_D)),39,1)
 chk("monthly: largest month %",100*_D.r.max(),451,1); chk("monthly: largest month is Nov 2013",float(_D.r.idxmax()==pd.Timestamp("2013-10-31")),1,0); chk("monthly: its contribution",1200*_D.r.max()/len(_D),31,0.6)
-_x=_D[_D.index.year!=2013]; chk("ex-2013 delivered",1200*_x.r.mean(),69,0.6); chk("ex-2013 mid",1200*_x.mid.mean(),58,0.6); chk("ex-2013 gap mid",1200*(_x.r-_x.mid).mean(),11,0.6); chk("ex-2013 se mid",1200*(_x.r-_x.mid).std(ddof=1)/np.sqrt(len(_x)),21,0.6)
-chk("ex-2013 gap lo",1200*(_x.r-_x.lo).mean(),48,0.6); chk("ex-2013 gap hi",1200*(_x.r-_x.hi).mean(),-30,0.6); _y=_x.r-_x.lo; chk("ex-2013 t lo",_y.mean()/(_y.std(ddof=1)/np.sqrt(len(_y))),2.4,0.06)
-chk("monthly corr with mid",np.corrcoef(_D.r,_D.mid)[0,1],-0.01,0.01); chk("monthly corr with age rule",np.corrcoef(_D.r,_D.age)[0,1],0.17,0.01)
-_x=_D[:"2021-05"]; chk("monthly gap mid over the 5y-window months",1200*(_x.r-_x.mid).mean(),79,0.6); chk("n those months",len(_x),113,0)
+_x=_D[_D.index.year!=2013]; chk("ex-2013 delivered",1200*_x.r.mean(),69,0.6); chk("ex-2013 mid",1200*_x.mid.mean(),57,0.6); chk("ex-2013 gap mid",1200*(_x.r-_x.mid).mean(),12,0.6); chk("ex-2013 se mid",1200*(_x.r-_x.mid).std(ddof=1)/np.sqrt(len(_x)),21,0.6)
+chk("ex-2013 gap lo",1200*(_x.r-_x.lo).mean(),50,0.6); chk("ex-2013 gap hi",1200*(_x.r-_x.hi).mean(),-30,0.6); _y=_x.r-_x.lo; chk("ex-2013 t lo",_y.mean()/(_y.std(ddof=1)/np.sqrt(len(_y))),2.5,0.06)
+chk("monthly corr with mid",np.corrcoef(_D.r,_D.mid)[0,1],0.0,0.005); chk("monthly corr with age rule",np.corrcoef(_D.r,_D.age)[0,1],0.17,0.01)
+_x=_D[:"2021-05"]; chk("monthly gap mid over the 5y-window months",1200*(_x.r-_x.mid).mean(),80,0.6); chk("n those months",len(_x),113,0)
 chk("band width 2012-14",298-32,270,5); chk("band width 2024-26",37-15,20,2.5)
 _pv=np.sqrt((0.95*0.141)**2+(0.05*0.42)**2+2*0.95*0.05*0.5*0.141*0.42)
 chk("rebalanced 5%: added return",0.05*(18-9),0.45,0.01); chk("rebalanced 5%: portfolio vol",100*_pv,14.6,0.06); chk("rebalanced 5%: extra drag",100*(_pv**2-0.141**2)/2,0.07,0.01)
@@ -108,7 +108,7 @@ for _dd,_vv,_tl in [("2013-06-30",1.7,0.1),("2017-06-30",21,0.8),("2021-09-30",1
 chk("D.6 w 2026 with institutions",100*_wl.iloc[-1],8,0.2); chk("D.6 base w 2013",100*w_hi.loc["2013-06-30"],3.4,0.1); chk("D.6 base w 2023",100*w_hi.loc["2023-06-30"],11,0.5)
 _fl=rf+0.85*beta_term+G_LO*sig2*_wl+0.003; _fh=rf+1.15*beta_term+2.8*sig2*_wh+0.035; _rh=np.maximum(_fh,rf+seg*sig2); _rm=0.5*(_fl+_rh)
 _r1=px.shift(-1)/px-1; _D2=pd.DataFrame({"r":_r1,"mid":np.exp(_rm/12)-1}).dropna(); _D2=_D2[_D2.index>="2012-01-01"]
-for _a,_b,_vv in [("2012","2026",55),("2012","2017",111),("2018","2026",14)]: chk(f"D.6 monthly gap {_a}-{_b}",1200*(_D2[_a:_b].r-_D2[_a:_b].mid).mean(),_vv,0.6)
+for _a,_b,_vv in [("2012","2026",55),("2012","2017",112),("2018","2026",14)]: chk(f"D.6 monthly gap {_a}-{_b}",1200*(_D2[_a:_b].r-_D2[_a:_b].mid).mean(),_vv,0.6)
 chk("D.6 2026 band lo",100*_fl.iloc[-1],12,0.6); chk("D.6 2026 band hi",100*_rh.iloc[-1],23,0.6)
 _rng=np.random.default_rng(1); _N=400000
 _x=0.05+_rng.uniform(1.5,2.0,_N)*0.04+_rng.uniform(1.0,2.8,_N)*0.42**2*_rng.uniform(float(_wl.iloc[-1]),float(_wh.iloc[-1]),_N)+_rng.uniform(0.003,0.035,_N)
@@ -151,19 +151,19 @@ _erp={2020:4.72,2021:4.24,2022:5.94,2023:4.60,2024:4.33,2025:4.23}
 chk("implied ERP start of 2026",_erp[2025],4.2,0.05); chk("implied ERP min 2020-25",min(_erp.values()),4.2,0.05); chk("implied ERP max 2020-25",max(_erp.values()),5.9,0.05); chk("implied ERP max is end-2022",float(max(_erp,key=_erp.get)),2022,0.1)
 # Worked example of the monthly test (Section 5, Step 3): December 2023
 _wi=at("2023-12-31"); _wm=req_mid.iloc[_wi]; _wr=px.iloc[_wi+1]/px.iloc[_wi]-1
-chk("example: midpoint Dec 2023, % a year",100*_wm,22.6,0.1); chk("example: required for the month, %",100*(np.exp(_wm/12)-1),1.9,0.05); chk("example: Bitcoin's return Jan 2024, %",100*_wr,0.9,0.05); chk("example: gap, points",100*(_wr-(np.exp(_wm/12)-1)),-1.0,0.05)
+chk("example: midpoint Dec 2023, % a year",100*_wm,22.5,0.05); chk("example: required for the month, %",100*(np.exp(_wm/12)-1),1.9,0.05); chk("example: Bitcoin's return Jan 2024, %",100*_wr,0.9,0.05); chk("example: gap, points",100*(_wr-(np.exp(_wm/12)-1)),-1.0,0.05)
 # Other groupings of the monthly test (Appendix D.2; as in 38_grouping_robustness.py)
 _gD=pd.DataFrame({"r":px.shift(-1)/px-1,"lo":np.exp(foc_lo/12)-1,"mid":np.exp(req_mid/12)-1,"hi":np.exp(req_hi/12)-1}).dropna(); _gD=_gD[_gD.index>="2012-01-01"]
 def _grow(a,b):
     _s=_gD.loc[a:b]; _e=_s.r-_s.mid; _d=1200*_s.r.mean(); return (0 if 1200*_s.lo.mean()<=_d<=1200*_s.hi.mean() else (1 if _d>1200*_s.hi.mean() else -1)), 1200*_e.mean(), 1200*_e.std(ddof=1)/np.sqrt(len(_e))
 _gy=[_grow(str(y),str(y)) for y in range(2012,2027)]
 chk("grouping: years inside band",sum(r[0]==0 for r in _gy),3,0.1); chk("grouping: years above",sum(r[0]==1 for r in _gy),7,0.1); chk("grouping: years below",sum(r[0]==-1 for r in _gy),5,0.1)
-chk("grouping: yearly gap min",min(r[1] for r in _gy),-282,1); chk("grouping: yearly gap max",max(r[1] for r in _gy),624,1); chk("grouping: yearly se min",min(r[2] for r in _gy),36,0.6); chk("grouping: yearly se max",max(r[2] for r in _gy),474,1)
-for _gq_a,_gq_g,_gq_t in (("2014",-148,-2.9),("2016",153,2.5),("2018",-28,None),("2020",74,None),("2022",0,None),("2024",16,None)):
+chk("grouping: yearly gap min",min(r[1] for r in _gy),-281,0.6); chk("grouping: yearly gap max",max(r[1] for r in _gy),625,0.6); chk("grouping: yearly se min",min(r[2] for r in _gy),36,0.6); chk("grouping: yearly se max",max(r[2] for r in _gy),474,1)
+for _gq_a,_gq_g,_gq_t in (("2014",-147,-2.9),("2016",154,2.5),("2018",-25,None),("2020",75,None),("2022",0,None),("2024",16,None)):
     _gq_r=_grow(_gq_a,str(int(_gq_a)+1)); chk(f"grouping: two-year gap from {_gq_a}",_gq_r[1],_gq_g,0.6)
     if _gq_t is not None: chk(f"grouping: two-year t from {_gq_a}",_gq_r[1]/_gq_r[2],_gq_t,0.06)
     else: chk(f"grouping: two-year |t| below 2 from {_gq_a}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
-for (_gq_a,_gq_b),_gq_g in zip((("2012","2015"),("2016","2019"),("2020","2023"),("2024","2026")),(86,63,37,10)):
+for (_gq_a,_gq_b),_gq_g in zip((("2012","2015"),("2016","2019"),("2020","2023"),("2024","2026")),(87,64,38,10)):
     _gq_r=_grow(_gq_a,_gq_b); chk(f"grouping: four-year gap {_gq_a}-{_gq_b}",_gq_r[1],_gq_g,0.6); chk(f"grouping: four-year |t| below 2 {_gq_a}-{_gq_b}",float(abs(_gq_r[1]/_gq_r[2])<2),1,0)
 # Section 2 example: the cost of a position and of the next dollar (gamma 2, sigma 0.42)
 _s2=0.42**2; chk("example: sigma squared",_s2,0.176,0.0005); chk("example: at 19%",100*2*_s2*0.19,6.7,0.05); chk("example: at 5%",100*2*_s2*0.05,1.8,0.05)
@@ -181,7 +181,7 @@ chk("D.4 ownership alt: w 2017",100*_on["w_hi"].iloc[_oat("2017-06-30")],5,0.5);
 chk("D.4 ownership alt: anchor weight unchanged",100*_on["w_hi"].iloc[_oat("2021-09-30")],100*w_hi.iloc[at("2021-09-30")],0.01)
 chk("D.4 ownership alt: band 2017 lo",100*_on["foc_lo"].iloc[_oat("2017-06-30")],13,0.6); chk("D.4 ownership alt: band 2017 hi",100*_on["req_hi"].iloc[_oat("2017-06-30")],67,0.6); chk("D.4 ownership alt: band 2026 lo",100*_on["foc_lo"].iloc[-1],11,0.6); chk("D.4 ownership alt: band 2026 hi",100*_on["req_hi"].iloc[-1],19,0.6)
 _oD=pd.DataFrame({"r":_on["px"].shift(-1)/_on["px"]-1,"mid":np.exp(_on["req_mid"]/12)-1}).dropna(); _oD=_oD[_oD.index>="2012-01-01"]; _oe=_oD.r-_oD.mid
-chk("D.4 ownership alt: gap to midpoint, full",1200*_oe.mean(),61,0.6); chk("D.4 ownership alt: gap since 2018",1200*_oe["2018":].mean(),20,0.6); chk("D.4 ownership alt: se since 2018",1200*_oe["2018":].std(ddof=1)/np.sqrt(len(_oe["2018":])),24,0.6)
+chk("D.4 ownership alt: gap to midpoint, full",1200*_oe.mean(),61,0.6); chk("D.4 ownership alt: gap since 2018",1200*_oe["2018":].mean(),21,0.6); chk("D.4 ownership alt: se since 2018",1200*_oe["2018":].std(ddof=1)/np.sqrt(len(_oe["2018":])),24,0.6)
 chk("D.4 wealth per owner 2021, baseline ($k)",cap.iloc[at("2021-09-30")]/0.19/(0.11*258e6)/1e3,150,8); chk("D.4 wealth per owner 2021, 3% ownership ($k)",cap.iloc[at("2021-09-30")]/0.19/(0.03*258e6)/1e3,560,25)
 import io as _io3, contextlib as _cl3
 with _cl3.redirect_stdout(_io3.StringIO()): _qo=u.run("o",0.42,1.5,2.0,0.042,0.063,0.003,0.035)*100; _qc=u.run("c",0.42,1.5,2.0,0.08,0.15,0.003,0.035)*100
@@ -204,7 +204,7 @@ chk("compound range lo",15.4-8.8,7,0.5); chk("compound range hi",21.9-8.8,13,0.5
 chk("gold conc max",100*2.8*0.2**2*0.1,1.1,0.05); chk("gold envelope lo",5-0.4+100*1.0*0.13**2*0.02,4.6,0.05)
 _us=interp({2012:72e12,2013:80e12,2016:95e12,2019:117e12,2021:150e12,2023:150e12,2026:170e12}); _Wus=cap.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*(_us/_us.iloc[i21])
 _whu=(cap.reindex(px.index)/_Wus).clip(upper=0.9); _wlu=(cap.reindex(px.index)/(_Wus+inst_val/0.015)).clip(upper=0.9); _lou=rf+0.85*beta_term+G_LO*sig2*_wlu+0.003; _hiu=np.maximum(rf+1.15*beta_term+G_HI*sig2*_whu+0.035,rf+seg*sig2); _miu=0.5*(_lou+_hiu)
-chk("D.5 2013 lo",100*_lou.iloc[at("2013-06-30")],18,0.6); chk("D.5 2026 hi",100*_hiu.iloc[-1],30,0.6); chk("D.5 2026 lo",100*_lou.iloc[-1],12,0.6); chk("D.5 5y gap",100*(fwd_mu-_miu)[mm].mean(),23.6,0.6)
+chk("D.5 2013 lo",100*_lou.iloc[at("2013-06-30")],18,0.6); chk("D.5 2026 hi",100*_hiu.iloc[-1],30,0.6); chk("D.5 2026 lo",100*_lou.iloc[-1],12,0.6); chk("D.5 5y gap",100*(fwd_mu-_miu)[mm].mean(),24.5,0.6)
 _Du=pd.DataFrame({"r":_r,"m":_mo(_miu)}).dropna(); _Du=_Du[_Du.index>="2012-01-01"]; chk("D.5 monthly gap",1200*(_Du.r-_Du.m).mean(),54,0.6)
 chk("BTC share of global household wealth (about $510T) is well under 1%",float(100*cap.iloc[-1]/510e12<0.6),1,0); chk("conc term at a 0.5% weight is under 0.2 points",float(100*1.9*0.42**2*0.005<0.2),1,0); chk("mortality example: 3% x 95%",3*0.95,2.9,0.06)
 chk("all-in bound nominal lo",5+100*0.40**2,21,0.1); chk("all-in bound nominal hi",5+100*0.55**2,35,0.3)
@@ -223,13 +223,13 @@ for _n,_mu,_sg,_cs in [("global",8.8,13.83,0.21),("sp500",9.0,14.06,0.21),("nasd
 chk("compound Sharpe: BTC below every equity index",float(0.11<min([0.21,0.21,0.18,0.15])),1,0)
 chk("drag share BTC about half",8.8/18.3,0.5,0.03); chk("drag share ETH nearly nine-tenths",20.5/23.4,0.88,0.01)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
-chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),88,1); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.27,0.02); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.86,0.02)
+chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),90,0.6); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.28,0.006); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.86,0.02)
 # Figure 6 shares
 mort_t=0.5*(0.003+0.035)
 def shares(d):
     i=at(d); tot=req_mid.iloc[i]; conc=max(tot-rf.iloc[i]-beta_term.iloc[i]-mort_t,0); return 100*tot,100*np.array([rf.iloc[i],beta_term.iloc[i],conc,mort_t])/tot
 t13,s13=shares("2013-06-30"); chk("Fig6 2013 total",t13,126,1); chk("Fig6 2013 conc share",s13[2],87,1.5)
-t21,s21_=shares("2021-09-30"); chk("Fig6 2021 conc share",s21_[2],70,1)
+t21,s21_=shares("2021-09-30"); chk("Fig6 2021 conc share (text: about 70%)",s21_[2],69,1.5)
 t26,s26=shares("2026-04-30"); chk("Fig6 2026 total",t26,20,0.7)
 for k,vv,lab in [(0,22,"rf"),(1,35,"market"),(2,34,"conc"),(3,9,"mort")]: chk(f"Fig6 2026 share {lab}",s26[k],vv,1.5)
 # Section 8/9
@@ -285,26 +285,26 @@ chk("sigma EWMA hl9 May 2026",100*np.sqrt(np.log(_b).diff().pow(2).ewm(halflife=
 chk("mortality hi: all elite deaths",3.54,3.5,0.05); chk("beta x ERP lo",1.5*4,6,0.01); chk("beta x ERP hi",2.0*4,8,0.01); chk("conc lo",1.0*0.42**2*8,1,0.5); chk("conc hi",2.8*0.42**2*19,9,0.5)
 _opt=(rf+seg*sig2>foc_hi)[m]
 chk("early holder sets the upper edge, share of months",100*_opt.mean(),43,1.0); chk("early holder last sets it 2019-04",float(_opt[_opt].index[-1].year*100+_opt[_opt].index[-1].month),201904,0.1); chk("early weight mid-2018",seg.iloc[at("2018-06-30")],1.0,0.001); chk("early weight mid-2019",seg.iloc[at("2019-06-30")],0.5,0.02); chk("early weight 2021Q3",seg.iloc[at("2021-09-30")],0.1,0.012); chk("owners implied 2013 (thousand)",q.iloc[at("2013-06-30")]*258e6/1e3,600,15); chk("wealth each if all-in 2013",cap.iloc[at("2013-06-30")]/(q.iloc[at("2013-06-30")]*258e6),1700,150); chk("months in band path",float(m.sum()),172,2)
-for _dt,_wl,_wh in [("2013-06-30",3,3),("2017-06-30",17,17),("2021-09-30",15,19),("2026-04-30",8,23)]:
+for _dt,_wl,_wh in [("2013-06-30",3,3),("2017-06-30",15,17),("2021-09-30",12,19),("2026-04-30",8,23)]:
     chk(f"band table w_lo {_dt}",100*w_lo.iloc[at(_dt)],_wl,0.6); chk(f"band table w_hi {_dt}",100*w_hi.iloc[at(_dt)],_wh,0.6)
-chk("band table: w equal before 2019",float((w_lo[:"2018-12"]-w_hi[:"2018-12"]).abs().max()),0,1e-9); chk("market term edges 2026",0.85*1.75*4,6,0.06); chk("market term hi 2026",1.15*1.75*4,8,0.06); chk("beta range in proportion lo",1.5/1.75,0.85,0.01); chk("beta range in proportion hi",2.0/1.75,1.15,0.01)
+chk("the two weights coincide until the Grayscale trust begins (September 2013)",float((w_lo[:"2013-09-30"]-w_hi[:"2013-09-30"]).abs().max()),0,1e-9); chk("market term edges 2026",0.85*1.75*4,6,0.06); chk("market term hi 2026",1.15*1.75*4,8,0.06); chk("beta range in proportion lo",1.5/1.75,0.85,0.01); chk("beta range in proportion hi",2.0/1.75,1.15,0.01)
 chk("monthly return min annualized",1200*_D.r.min(),-470,6); chk("monthly return max annualized",1200*_D.r.max(),5400,10)
 # Table 5 recomputed independently from the published monthly series, and checked against the figure markers
 _m=pd.read_csv(os.path.join(OUT,"required_band_monthly.csv"),parse_dates=["month_end"]).set_index("month_end")
 _rr=px.pct_change().shift(-1).reindex(_m.index)
 _Q=pd.DataFrame({"r":_rr,"lo":np.exp(_m.required_lower/12)-1,"mid":np.exp(_m.required_midpoint/12)-1,"hi":np.exp(_m.required_upper/12)-1,"ar":(1+1/12/_m.age_years)**5.62-1}); _Q=_Q[(_Q.index>="2012-01-01")&(_Q.index<="2026-04-30")].dropna()
-_T5={("2012","2026"):(118,22,111,65,97,53,39,7,48),("2012","2014"):(278,32,298,158,246,120,169,-21,143),("2015","2017"):(160,22,105,63,138,97,46,55,82),("2018","2020"):(69,22,60,41,47,28,48,9,15),
-     ("2021","2023"):(30,16,39,27,14,3,39,-9,-12),("2024","2026"):(36,14,38,26,22,10,33,-2,1),("2012","2017"):(219,27,202,110,192,108,87,17,112),("2018","2026"):(46,18,46,32,28,14,24,-1,1)}
+_T5={("2012","2026"):(118,20,111,64,98,54,39,7,48),("2012","2014"):(278,31,298,157,247,120,169,-21,143),("2015","2017"):(160,20,105,62,140,98,46,55,82),("2018","2020"):(69,19,60,39,50,30,48,9,15),
+     ("2021","2023"):(30,14,39,27,16,3,39,-9,-12),("2024","2026"):(36,14,38,26,22,10,33,-2,1),("2012","2017"):(219,25,202,110,193,109,87,17,112),("2018","2026"):(46,16,46,31,30,15,24,-1,1)}
 for (_a,_b),_v in _T5.items():
     _x=_Q[_a:_b]; _g=_x.r-_x.mid
     _c=[1200*_x.r.mean(),1200*_x.lo.mean(),1200*_x.hi.mean(),1200*_x.mid.mean(),1200*(_x.r-_x.lo).mean(),1200*_g.mean(),1200*_g.std()/np.sqrt(len(_x)),1200*(_x.r-_x.hi).mean(),1200*(_x.r-_x.ar).mean()]
     for _n,_cc,_vv in zip(["delivered","band lo","band hi","mid","gap lo","gap mid","se mid","gap hi","gap age"],_c,_v): chk(f"T5 {_a}-{_b} {_n}",_cc,_vv,0.6)
 chk("T5 months",len(_Q),172,0)
-chk("T5 note: plain average midpoint 2012-14",100*_m.required_midpoint["2012":"2014"].mean(),147,0.6); chk("T5 note: plain average midpoint 2021-23",100*_m.required_midpoint["2021":"2023"].mean(),27,0.6)
+chk("T5 note: plain average midpoint 2012-14",100*_m.required_midpoint["2012":"2014"].mean(),147,0.6); chk("T5 note: plain average within half a point after 2020",float(max(abs(1200*_Q[_a:_b].mid.mean()-100*_m.required_midpoint[_a:_b][:"2026-04-30"].mean()) for _a,_b in (("2021","2023"),("2024","2026")))<0.5),1,0)
 _x=_m[(_m.index>="2012-01-01")&(_m.index<="2017-12-31")]; _rs=px.pct_change().shift(-1).reindex(_x.index)
 _oth=(_x.risk_free+_x.beta_4y*0.04+0.019).mean(); _s2=(_x.volatility**2).mean()
 chk("implied gamma*w 2012-17",(12*_rs.mean()-_oth)/_s2,1.2,0.06); chk("its standard error",12*_rs.std()/np.sqrt(len(_rs))/_s2,0.5,0.03)
-chk("back-cast w 2012-14",100*_m.w_lower_edge["2012":"2014"].mean(),6,0.6); chk("back-cast w 2015-17",100*_m.w_lower_edge["2015":"2017"].mean(),12,0.6)
+chk("back-cast w 2012-14 (surveyed owners)",100*_m.w_upper_edge["2012":"2014"].mean(),6,0.6); chk("back-cast w 2015-17 (surveyed owners)",100*_m.w_upper_edge["2015":"2017"].mean(),12,0.6)
 _i17=at("2017-06-30"); chk("B.3 example: cap ratio",100*cap.iloc[_i17]/cap.iloc[i21],4.9,0.05); chk("B.3 example: ownership ratio",100*q.iloc[_i17]/q.iloc[i21],8.3,0.05); chk("B.3 example: ramp",_ramp.iloc[_i17],0.67,0.01); chk("B.3 example: w",100*0.19*0.049/(0.083*0.67),17,0.5)
 def _pxm(f):
     _z=pd.read_csv(f,parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; _z.index=_z.index+pd.offsets.MonthEnd(0); return np.log(_z).diff()
@@ -404,8 +404,8 @@ _lw=np.log(px).diff().dropna(); _ww=0.5**(np.arange(len(_lw))[::-1]/9); chk("A.7
 
 # Table 4: the band worked out at five dates (script 43_band_table.py)
 _bt_early=rf+seg*sig2
-_BT={"2013-06-30":(2.5,151,3.00,3,3,100,21,42,231,231,126),"2017-06-30":(2.3,80,2.15,17,17,100,21,46,67,67,44),"2019-06-30":(2.0,90,0.70,25,25,51,25,64,43,64,44),
-     "2021-09-30":(1.5,77,1.30,15,19,11,15,42,8,42,29),"2026-05-31":(4.5,42,1.75,8,23,10,12,27,6,27,20)}
+_BT={"2013-06-30":(2.5,151,3.00,3,3,100,21,42,231,231,126),"2017-06-30":(2.3,80,2.15,15,17,100,20,46,67,67,43),"2019-06-30":(2.0,90,0.70,20,25,51,21,64,43,64,43),
+     "2021-09-30":(1.5,77,1.30,12,19,11,13,42,8,42,28),"2026-05-31":(4.5,42,1.75,8,23,10,12,27,6,27,20)}
 for _bd,(_b1,_b2,_b3,_b4,_b5,_b6,_b7,_b8,_b9,_b10,_b11) in _BT.items():
     _bi=at(_bd); _by=_bd[:7]
     chk(f"T4 {_by} risk-free rate",100*rf.iloc[_bi],_b1,0.051); chk(f"T4 {_by} volatility",100*sig.iloc[_bi],_b2,0.5); chk(f"T4 {_by} beta",beta_roll.iloc[_bi],_b3,0.005)
@@ -427,10 +427,14 @@ _cm12=_d.b.rolling(12).corr(_d.s); chk("A.3 twelve-month correlation, end of 201
 chk("intro: correlation before 2020 about 0.2",_cm(_d["2012":"2019"])[2],0.2,0.05); chk("intro: correlation since 2020 about 0.5",_cm(_d["2020":])[2],0.5,0.05)
 chk("A.3 ownership 2018 survey, %",100*q.iloc[at("2018-06-30")],1.2,0.05); chk("A.3 ownership 2021Q3, %",100*q.iloc[at("2021-09-30")],11,0.05)
 chk("A.3 gold: jewelry plus central-bank reserves, % of stock",44+18,62,0)
-# Section 5, equation (3): the average owner is one line until mid-2019 and a band afterwards
-chk("eq 3: fund and treasury holdings zero at mid-2019",inst_btc.iloc[at("2019-06-30")],0,1); chk("eq 3: the two weights coincide through mid-2019",float((w_hi-w_lo)[:"2019-06-30"].abs().max()),0,1e-12)
-chk("eq 3: the two weights differ from July 2019",float((w_hi-w_lo).loc["2019-07-31"]>0),1,0)
-for _yy,_vv in ((2020,0.1),(2021,0.3),(2023,0.4),(2024,1.15),(2025,2.1)): chk(f"B.3 fund and treasury holdings mid-{_yy}, million BTC",inst_btc.iloc[at(f"{_yy}-06-30")]/1e6,_vv,0.005)
+# Section 5, equation (3) and Appendix B.3: the documented fund and treasury series
+_gb={"2013-12-31":0.070,"2014-12-31":0.135,"2015-12-31":0.141,"2016-12-31":0.172,"2017-12-31":0.176,"2018-12-31":0.204,"2019-12-31":0.261,"2020-12-31":0.607,"2021-12-31":0.645,"2022-12-31":0.632,"2023-12-31":0.620}
+_pc={"2019-12-31":0.020,"2020-12-31":0.096,"2021-12-31":0.216,"2022-12-31":0.225,"2023-12-31":0.281}
+for _dd,_vv in _gb.items(): chk(f"B.3 Grayscale trust plus public companies, {_dd[:4]} year-end, million BTC",inst_btc.iloc[at(_dd)]/1e6,_vv+_pc.get(_dd,0.0),0.001)
+chk("B.3 public companies 2022: MicroStrategy 132,500 plus others at 2021 level",0.1325+0.092,0.225,0.001); chk("B.3 public companies 2023: MicroStrategy 189,150 plus others",0.18915+0.092,0.281,0.001); chk("B.3 others at 2021 level: 0.216 less MicroStrategy's 124,391",0.216-0.124391,0.092,0.001)
+chk("B.3 holdings zero before the trust (September 2013)",inst_btc.iloc[at("2013-09-30")],0,1); chk("B.2 trust year-end range 2014-19 lo",0.135,0.13,0.006); chk("B.2 trust year-end range 2014-19 hi",0.261,0.26,0.006); chk("B.2 trust range 2020-23 lo",0.607,0.61,0.006); chk("B.2 trust range 2020-23 hi",0.645,0.64,0.006)
+for _yy,_vv in ((2024,1.15),(2025,2.1)): chk(f"B.3 fund and treasury holdings mid-{_yy}, million BTC",inst_btc.iloc[at(f"{_yy}-06-30")]/1e6,_vv,0.005)
 chk("B.3 fund and treasury holdings 2026, million BTC",inst_btc.iloc[-1]/1e6,2.5,0.05)
-chk("eq 3: band 2021Q3 low",100*w_lo.iloc[at("2021-09-30")],15,0.5); chk("eq 3: band 2021Q3 high",100*w_hi.iloc[at("2021-09-30")],19,0.5); chk("eq 3: weight 2013",100*w_hi.iloc[at("2013-06-30")],3,0.5); chk("eq 3: weight 2017",100*w_hi.iloc[at("2017-06-30")],17,0.5)
+chk("eq 3: band mid-2017 low",100*w_lo.iloc[at("2017-06-30")],15,0.5); chk("eq 3: band mid-2019 low",100*w_lo.iloc[at("2019-06-30")],20,0.5); chk("eq 3: band mid-2019 high",100*w_hi.iloc[at("2019-06-30")],25,0.5)
+chk("eq 3: band 2021Q3 low",100*w_lo.iloc[at("2021-09-30")],12,0.5); chk("eq 3: band 2021Q3 high",100*w_hi.iloc[at("2021-09-30")],19,0.5); chk("eq 3: weight 2013",100*w_hi.iloc[at("2013-06-30")],3,0.5); chk("eq 3: weight 2017",100*w_hi.iloc[at("2017-06-30")],17,0.5)
 chk("eq 3: k 2012",float(_ramp.iloc[at("2012-06-30")]),0.25,0.005); chk("eq 3: k 2026",float(_ramp.iloc[-1]),1.4,0.01)

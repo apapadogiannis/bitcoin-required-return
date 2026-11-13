@@ -19,7 +19,8 @@ def mark(ax,lo,hi,lab,x=17.75,dx=0.3):
     else: ax.plot([x,x],[lo,hi],color=INK,lw=2.2,solid_capstyle="butt",clip_on=False,zorder=6)
     ax.text(x+dx,(lo+hi)/2,lab,fontsize=7.8,va="center",ha="left",color=INK)
 c19_age=(pd.Timestamp("2020-03-31")-GEN).days/365.25      # the month Bitcoin's co-movement with equities appears (Appendix A.3)
-split_age=(pd.Timestamp("2019-06-30")-GEN).days/365.25    # fund and treasury holdings are zero until mid-2019
+split_age=(pd.Timestamp("2013-09-30")-GEN).days/365.25    # the Grayscale trust starts in September 2013: fund holdings are zero before
+mstr_age=(pd.Timestamp("2020-08-11")-GEN).days/365.25     # MicroStrategy's first purchase
 ax=axa; ax.plot(A,100*np.sqrt(sig2[mm]),color=BLUE,lw=1.8); ax.set_ylim(0,220); ax.set_title("(a) Volatility, σ (%)"); mark(ax,42,42,"42%")
 ax=axb; ax.plot(A,beta_roll[mm],color=BLUE,lw=1.8); ax.set_ylim(-0.1,3.3); ax.set_title("(b) Beta to the S&P 500"); mark(ax,1.5,2.0,"1.5–2.0"); ax.text(8.2,3.06,"capped at 3",fontsize=7.8,color=INK2,ha="left",va="bottom")
 ax.annotate("rises from\nMarch 2020",xy=(c19_age+0.15,0.3),xytext=(12.6,0.12),fontsize=7.8,color=INK2,ha="left",va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=INK2))
@@ -32,12 +33,13 @@ print("early holder last sets the upper edge:",last_set.strftime("%B %Y"))
 _e=A<=last_age+1e-9
 ax.plot(A[_e],100*seg[mm].values[_e],color=INK,lw=1.4,ls=(0,(4,2)),zorder=4)
 ax.plot(A[~_e],100*seg[mm].values[~_e],color=MUT,lw=1.2,ls=(0,(4,2)),zorder=4)                        # grey once it no longer sets the upper edge
-ax.text(3.4,96,"early holder, equation (4): an alternative reading,\nused for the upper edge of the required return\nuntil "+last_set.strftime("%B %Y")+" (grey afterwards)",fontsize=7.8,color=INK,ha="left",va="top",linespacing=1.25)
-ax.annotate("average owner, equation (3):\none line until mid-2019",xy=(6.9,5.5),xytext=(3.4,48),fontsize=7.8,color=BLUE,ha="left",va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
-ax.axvline(split_age,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=1)
-ax.text(split_age+0.15,97,"from mid-2019 the Bitcoin held by funds and corporate\ntreasuries is counted (little before the spot ETFs),\nand the average owner becomes a band:",fontsize=7.8,color=INK2,ha="left",va="top",linespacing=1.25,bbox=WB,zorder=5)
-ax.text(split_age+0.15,75,"upper line: surveyed owners only",fontsize=7.8,color=BLUE,ha="left",va="center",bbox=WB,zorder=5)
-ax.text(split_age+0.15,67,"lower line: with fund and treasury investors",fontsize=7.8,color=SEQ[650],ha="left",va="center",bbox=WB,zorder=5)
+ax.text(5.0,96,"early holder, equation (4): an alternative\nreading, used for the upper edge of the\nrequired return until "+last_set.strftime("%B %Y")+" (then grey)",fontsize=7.8,color=INK,ha="left",va="top",linespacing=1.25)
+ax.annotate("average owner, equation (3):\na band between two lines",xy=(7.2,5.5),xytext=(5.0,50),fontsize=7.8,color=BLUE,ha="left",va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
+for _xa in (split_age,mstr_age): ax.axvline(_xa,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=1)
+ax.text(split_age-0.12,74,"Grayscale trust\n(September 2013):\nthe band opens",fontsize=7.8,color=INK2,ha="right",va="top",linespacing=1.25)
+ax.text(mstr_age+0.15,97,"first corporate treasury\n(MicroStrategy, August 2020)",fontsize=7.8,color=INK2,ha="left",va="top",linespacing=1.25,bbox=WB,zorder=5)
+ax.text(mstr_age+0.15,77,"upper line: surveyed owners only",fontsize=7.8,color=BLUE,ha="left",va="center",bbox=WB,zorder=5)
+ax.text(mstr_age+0.15,68,"lower line: with fund and treasury investors",fontsize=7.8,color=SEQ[650],ha="left",va="center",bbox=WB,zorder=5)
 ax.text(etf_age+0.12,57,"spot ETFs approved\n(January 2024):\nthe band widens",fontsize=7.8,color=INK2,ha="left",va="top",linespacing=1.25)
 ax.set_ylim(0,105); ax.set_title("(d) Holder weight, w (%): two readings"); mark(ax,8,19,"8–19%",x=17.68,dx=0.1)
 ax.plot([2014.5-2009,2018.5-2009,2021.75-2009,2023.5-2009,2025.4-2009],[1.2]*5,marker="^",color=INK2,ms=4.5,ls="none",zorder=6,clip_on=False)

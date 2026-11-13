@@ -385,3 +385,8 @@ chk("E.1 gold beta 2012-26",_gb(_vX),0.10,0.006); chk("E.1 gold beta since 2020"
 # Appendix A.7: the rest of the world backed out of the global index, in dollars and in euros
 _vS=np.expm1(_vX[["Global equities (ACWI)","S&P 500"]]); _vf=np.expm1(_vt["fx"].reindex(_vX.index)); _vr=(_vS.iloc[:,0]-0.6*_vS.iloc[:,1])/0.4
 chk("A.7 rest of world vol in dollars",100*_vr.std()*12**.5,15,0.5); chk("A.7 rest of world vol in euros",100*((1+_vr)/(1+_vf)-1).std()*12**.5,13,0.5)
+
+# Appendix A.7: the dollar and equity downturns
+_vb=_vS.iloc[:,1]<-0.05; _v25=_vS.iloc[:,1]["2025":].corr(_vf["2025":])
+chk("A.7 months with S&P below -5%",int(_vb.sum()),14,0); chk("A.7 euro down in those months",int((_vf[_vb]<0).sum()),8,0); chk("A.7 mean euro change in those months",100*_vf[_vb].mean(),-1.0,0.05)
+chk("A.7 corr since 2025 about zero",_v25,0.0,0.06); chk("A.7 months since 2025",len(_vS["2025":]),16,0); chk("A.7 March 2025: S&P down, euro up",float(_vS.iloc[:,1]["2025-03"].iloc[0]<0 and _vf["2025-03"].iloc[0]>0),1,0)

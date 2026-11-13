@@ -23,3 +23,12 @@ out = open(os.path.join(OUT,"beta_windows.txt"), "a")
 for lab, x in (("Last 4 years", _dg.iloc[-48:]), ("Last 5 years", _dg.iloc[-60:]), ("Since 2020", _dg["2020":]), ("Since 2012", _dg["2012":])):
     n, b, se, c = stats(x); s = f"ACWI {lab:14s} months {n:3d}  beta {b:.2f}  s.e. {se:.2f}  correlation {c:.2f}  corr(ACWI, S&P 500) {x.s.corr(x.sp):.2f}"; print(s); out.write(s + "\n")
 out.close()
+# When the co-movement appeared (Appendix A.3): correlation and beta by sub-period, before and after the spot ETFs of January 2024,
+# and the twelve-month correlation around the break of March 2020.
+out = open(os.path.join(OUT,"beta_windows.txt"), "a")
+for lab, x in (("2012-2019", _d["2012":"2019"]), ("2016-2019", _d["2016":"2019"]), ("2020-2023", _d["2020":"2023"]), ("2024-May 2026", _d["2024":])):
+    n, b, se, c = stats(x); s = f"sub-period {lab:14s} months {n:3d}  beta {b:.2f}  s.e. {se:.2f}  correlation {c:.2f}"; print(s); out.write(s + "\n")
+_rc = _d.b.rolling(12).corr(_d.s)
+for d in ("2019-12-31", "2020-02-29", "2020-05-31", "2020-12-31"):
+    s = f"twelve-month correlation to {d[:7]}: {_rc.loc[d]:+.2f}"; print(s); out.write(s + "\n")
+out.close()

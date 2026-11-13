@@ -416,3 +416,21 @@ for _bd,(_b1,_b2,_b3,_b4,_b5,_b6,_b7,_b8,_b9,_b10,_b11) in _BT.items():
     chk(f"T4 {_by} upper (a) from its formula",100*(rf.iloc[_bi]+1.15*beta_roll.iloc[_bi]*0.04+2.8*sig2.iloc[_bi]*w_hi.iloc[_bi]+0.035),100*foc_hi.iloc[_bi],0.01)
 chk("T4 market term moves 15% either way: 1.5/1.75",1.5/1.75,0.85,0.01); chk("T4 market term moves 15% either way: 2.0/1.75",2.0/1.75,1.15,0.01)
 chk("Reading 1: weight 2026 with ETF and treasury investors",100*w_lo.iloc[-1],8,0.5); chk("Reading 1: weight 2026 without",100*w_hi.iloc[-1],23,0.5)
+
+# Appendix A.3: when the co-movement with equities appeared (script 34_beta_windows.py)
+def _cm(x):
+    _b=np.cov(x.b,x.s)[0,1]/x.s.var(); _e=x.b-x.b.mean()-_b*(x.s-x.s.mean()); return _b,np.sqrt(_e.var(ddof=2)/((x.s-x.s.mean())**2).sum()),x.b.corr(x.s)
+chk("A.3 correlation 2012-19",_cm(_d["2012":"2019"])[2],0.16,0.005); chk("A.3 correlation 2016-19",_cm(_d["2016":"2019"])[2],0.00,0.005)
+chk("A.3 correlation 2020-23",_cm(_d["2020":"2023"])[2],0.56,0.005); chk("A.3 correlation 2024 to May 2026",_cm(_d["2024":])[2],0.49,0.005)
+chk("A.3 beta 2020-23",_cm(_d["2020":"2023"])[0],2.0,0.05); chk("A.3 beta s.e. 2020-23",_cm(_d["2020":"2023"])[1],0.4,0.05); chk("A.3 beta 2024 to May 2026",_cm(_d["2024":])[0],1.8,0.05); chk("A.3 beta s.e. 2024 to May 2026",_cm(_d["2024":])[1],0.6,0.05)
+_cm12=_d.b.rolling(12).corr(_d.s); chk("A.3 twelve-month correlation, end of 2019",_cm12.loc["2019-12-31"],-0.4,0.05); chk("A.3 twelve-month correlation, end of 2020",_cm12.loc["2020-12-31"],0.7,0.05)
+chk("intro: correlation before 2020 about 0.2",_cm(_d["2012":"2019"])[2],0.2,0.05); chk("intro: correlation since 2020 about 0.5",_cm(_d["2020":])[2],0.5,0.05)
+chk("A.3 ownership 2018 survey, %",100*q.iloc[at("2018-06-30")],1.2,0.05); chk("A.3 ownership 2021Q3, %",100*q.iloc[at("2021-09-30")],11,0.05)
+chk("A.3 gold: jewelry plus central-bank reserves, % of stock",44+18,62,0)
+# Section 5, equation (3): the average owner is one line until mid-2019 and a band afterwards
+chk("eq 3: fund and treasury holdings zero at mid-2019",inst_btc.iloc[at("2019-06-30")],0,1); chk("eq 3: the two weights coincide through mid-2019",float((w_hi-w_lo)[:"2019-06-30"].abs().max()),0,1e-12)
+chk("eq 3: the two weights differ from July 2019",float((w_hi-w_lo).loc["2019-07-31"]>0),1,0)
+for _yy,_vv in ((2020,0.1),(2021,0.3),(2023,0.4),(2024,1.15),(2025,2.1)): chk(f"B.3 fund and treasury holdings mid-{_yy}, million BTC",inst_btc.iloc[at(f"{_yy}-06-30")]/1e6,_vv,0.005)
+chk("B.3 fund and treasury holdings 2026, million BTC",inst_btc.iloc[-1]/1e6,2.5,0.05)
+chk("eq 3: band 2021Q3 low",100*w_lo.iloc[at("2021-09-30")],15,0.5); chk("eq 3: band 2021Q3 high",100*w_hi.iloc[at("2021-09-30")],19,0.5); chk("eq 3: weight 2013",100*w_hi.iloc[at("2013-06-30")],3,0.5); chk("eq 3: weight 2017",100*w_hi.iloc[at("2017-06-30")],17,0.5)
+chk("eq 3: k 2012",float(_ramp.iloc[at("2012-06-30")]),0.25,0.005); chk("eq 3: k 2026",float(_ramp.iloc[-1]),1.4,0.01)

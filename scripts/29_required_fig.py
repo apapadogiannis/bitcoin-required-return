@@ -56,23 +56,25 @@ beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.035),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)
 mm=(age>=3.0)&(age<=17.45)
 A=age[mm].values; parts=[100*rf[mm].values,100*beta_t[mm].values,100*conc_t[mm].values,100*mort_t[mm].values]
-names=["risk-free rate","market risk","concentration risk","mortality risk"]; cols=[BASE,BLUE,ORANGE,AQUA]
+PURPLE="#a8369f"   # market risk: blue is reserved for the required return itself (band, midpoint, total) in all three panels
+names=["risk-free rate","market risk","concentration risk","mortality risk"]; cols=[BASE,PURPLE,ORANGE,AQUA]
 tot=sum(parts); shares=[p/tot for p in parts]
 ax=axb; ax.set_yscale("log")
-ax.plot(A,tot,color=INK,lw=2.0,zorder=5); ax.plot(A,parts[2],color=ORANGE,lw=1.8,zorder=4)
-ax.plot(A,parts[0],color=BASE,lw=1.8,zorder=3); ax.plot(A,parts[1],color=BLUE,lw=1.8,zorder=3); ax.plot(A,parts[3],color=AQUA,lw=1.8,ls=(0,(4,2)),zorder=3)
+ax.plot(A,tot,color=BLUE,lw=2.2,zorder=5); ax.plot(A,parts[2],color=ORANGE,lw=1.8,zorder=4)
+ax.plot(A,parts[0],color=BASE,lw=1.8,zorder=3); ax.plot(A,parts[1],color=PURPLE,lw=1.8,zorder=3); ax.plot(A,parts[3],color=AQUA,lw=1.8,ls=(0,(4,2)),zorder=3)
 tk=[1,2,5,10,20,50,100,200]
 ax.yaxis.set_major_locator(FixedLocator(tk)); ax.yaxis.set_major_formatter(FixedFormatter([f"{t}%" for t in tk])); ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.9,330); ax.set_ylabel("% per year (log scale)")
-ax.set_title("(b) The required return, term by term",pad=16)
-for y,lab,c in [(tot[-1],"total",INK),(8.6,"market risk",BLUE),(5.6,"concentration risk",ORANGE),(3.7,"risk-free rate",INK2),(1.9,"mortality risk",AQUA)]:
+ax.set_title("(b) The required return of panel (a), term by term",pad=16)
+for y,lab,c in [(tot[-1],"required return",BLUE),(8.6,"market risk",PURPLE),(5.6,"concentration risk",ORANGE),(3.7,"risk-free rate",INK2),(1.9,"mortality risk",AQUA)]:
     ax.text(17.55,y,lab,fontsize=8.2,va="center",ha="left",color=c,weight="bold")
-ax.plot([17.47,17.53],[parts[1][-1],8.6],color=BLUE,lw=0.6); ax.plot([17.47,17.53],[parts[2][-1],5.6],color=ORANGE,lw=0.6); ax.plot([17.47,17.53],[parts[0][-1],3.7],color=MUT,lw=0.6)
+ax.plot([17.47,17.53],[parts[1][-1],8.6],color=PURPLE,lw=0.6); ax.plot([17.47,17.53],[parts[2][-1],5.6],color=ORANGE,lw=0.6); ax.plot([17.47,17.53],[parts[0][-1],3.7],color=MUT,lw=0.6)
 ax=axc
 ax.stackplot(A,*[100*s for s in shares],colors=cols,alpha=0.92,lw=0)
 ax.set_ylabel("share of required return (%)"); ax.set_ylim(0,100); ax.set_xlabel("Bitcoin age (years)")
-ax.set_title("(c) Each term's share of the total",pad=16)
-i26=int(np.argmin(np.abs(A-(2026.3-2009.0))))
+ax.set_title("(c) Each term's share of the required return, month by month",pad=16)
+i26=int(np.argmin(np.abs(A-(2026.33-2009.0))))   # the labels give the shares in April 2026, the last month of the monthly test
+ax.text(17.55,103,"in April 2026:",fontsize=8.2,va="bottom",ha="left",color=INK2,clip_on=False)
 cum=np.zeros_like(A)
 for s,lab,c in zip(shares,names,cols):
     ax.text(17.55,(cum+50*s)[i26],f"{lab} {100*s[i26]:.0f}%",fontsize=8.2,va="center",ha="left",color=c if c!=BASE else INK2,weight="bold")
@@ -86,7 +88,7 @@ for ax in (axa,axb): ax.tick_params(labelbottom=True)
 for ax_,pd_ in ((axa,10),(axb,2),(axc,2)):
     sec=ax_.secondary_xaxis("top",functions=(lambda x:x+2009.0,lambda y:y-2009.0))
     sec.set_xticks([2013,2015,2017,2019,2021,2023,2025]); sec.tick_params(labelsize=8,colors=MUT,length=0,pad=pd_); sec.spines["top"].set_visible(False)
-axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(4.6,4.3),fontsize=7.8,color=BLUE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
+axb.annotate("beta near zero on the four years\nto early 2020 (clipped at zero)",xy=(10.8,1.25),xytext=(4.6,4.3),fontsize=7.8,color=PURPLE,va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=PURPLE))
 fig.savefig(f"{FIG}/fig_required.pdf"); fig.savefig(f"{FIG}/fig_required.png",dpi=130)
 print("2026 shares",[round(100*s[-1]) for s in shares], "last parts",[round(p[-1],2) for p in parts], round(tot[-1],1))
 

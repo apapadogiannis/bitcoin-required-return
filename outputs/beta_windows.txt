@@ -9,3 +9,11 @@ ACWI Last 4 years   months  48  beta 1.63  s.e. 0.46  correlation 0.46  corr(ACW
 ACWI Last 5 years   months  60  beta 1.72  s.e. 0.42  correlation 0.48  corr(ACWI, S&P 500) 0.97
 ACWI Since 2020     months  77  beta 1.88  s.e. 0.37  correlation 0.50  corr(ACWI, S&P 500) 0.98
 ACWI Since 2012     months 173  beta 1.57  s.e. 0.46  correlation 0.25  corr(ACWI, S&P 500) 0.97
+sub-period 2012-2019      months  96  beta 1.46  s.e. 0.95  correlation 0.16
+sub-period 2016-2019      months  48  beta 0.01  s.e. 0.99  correlation 0.00
+sub-period 2020-2023      months  48  beta 1.98  s.e. 0.43  correlation 0.56
+sub-period 2024-May 2026  months  29  beta 1.84  s.e. 0.63  correlation 0.49
+twelve-month correlation to 2019-12: -0.40
+twelve-month correlation to 2020-02: -0.12
+twelve-month correlation to 2020-05: +0.66
+twelve-month correlation to 2020-12: +0.73

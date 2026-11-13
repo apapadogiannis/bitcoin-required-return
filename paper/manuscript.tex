@@ -202,7 +202,7 @@ w_t \;=\; \frac{C_t}{W_t},
 \end{equation}
 Bitcoin's capitalization divided by the total wealth of its holders. This is also the quantity that drives the premium in Merton (1987): the size of the asset relative to the wealth of the investors who hold it.
 
-Capitalization is observed every month. Holders' wealth is observed once: in the 2021Q3 survey owners had 19\% of their financial assets in crypto on average, and taking that as their combined share (Section 9) gives $W = C/0.19$. For every other date $W_t$ must be estimated, and the result depends on who counts as a holder. We use two readings.
+Capitalization is observed every month. Holders' wealth is observed once: in the 2021Q3 survey owners had 19\% of their financial assets in crypto on average, and taking that as their combined share (Section 9) gives $W = C/0.19$. For every other date $W_t$ must be estimated, and the result depends on who counts as a holder. We use two readings. They are alternatives, and the band below takes the more demanding one as its upper edge.
 
 \emph{Reading 1: the average owner.} The holders are everyone who owns crypto. Their wealth is the survey value, scaled by the number of owners and by wealth per owner:
 \begin{equation}
@@ -211,12 +211,12 @@ W_t \;=\; \frac{C_0}{0.19}\cdot\frac{q_t}{q_0}\cdot k_t, \qquad w^{\text{avg}}_t
 \end{equation}
 Here 0 denotes 2021Q3, $q_t$ is the surveyed share of adults who own crypto, and $k_t$ is wealth per owner relative to 2021, an assumed path from 0.25 in 2012 to 1.4 in 2026. $I_t$ is the Bitcoin held by ETFs and corporate treasuries, whose investors are assumed to have 1.5\% of their wealth in it (Appendix B). Until mid-2019 $I_t$ is zero and the weight is one line: 3\% in 2013, 17\% in 2017. From then on we compute it twice, with $I_t$ and without, and the line opens into a band: 15--19\% in 2021 and 8--23\% in 2026 (Figure~\ref{fig:inputs}d).
 
-\emph{Reading 2: the early holder.} An average hides who held the coins. In 2013 Bitcoin was worth about \$1 billion and the ownership rate implies some 600,000 owners. They cannot all have been fully invested: that would put each owner's entire wealth at \$1,700. Most of the supply sat instead with a small number of miners and early adopters for whom Bitcoin was nearly everything they owned, and it was they who had to be willing to keep it. In this reading the holders are that group alone. Their weight is 1 while ownership was no higher than in the 2018 survey (1.2\% of adults), and it falls in proportion as ownership grows:
+\emph{Reading 2: the early holder.} An average hides who held the coins. In 2013 Bitcoin was worth about \$1 billion and the ownership rate implies some 600,000 owners. They cannot all have been fully invested: that would put each owner's entire wealth at \$1,700. Most of the supply sat instead with a few miners and early adopters for whom Bitcoin was nearly everything they owned, and it was they who had to be willing to keep it. In this reading the holders are that group alone. Their weight is 1 while ownership was no higher than in the 2018 survey (1.2\% of adults), and it falls in proportion as ownership grows:
 \begin{equation}
 w^{\text{early}}_t \;=\; \min\!\left(1,\; \frac{q_{2018}}{q_t}\right),
 \label{eq:wearly}
 \end{equation}
-where $q_t$ is the share of adults who own crypto. The weight is 1 through mid-2018, 0.5 in mid-2019 and 0.1 from 2021, by then below the average owner's.
+with $q_t$ as in equation~(\ref{eq:wavg}). The weight is 1 through mid-2018, 0.5 in mid-2019 and 0.1 from 2021, by then below the average owner's.
 
 Where the fully invested era ends is a judgment. We end it at the 2018 survey: regulated Bitcoin futures began trading in December 2017, and the price gaps across exchanges that mark a segmented market are documented through February 2018 (Makarov and Schoar 2020). Ending it at the 2014 survey changes one period: the upper edge for 2015--17 falls from 105\% to 79\%, and delivered returns exceed it by 81 points, not 55 ($t = 1.7$). Nothing since 2018 moves by more than three points, and the forecast is unaffected (Appendix D.2).
 
@@ -225,7 +225,7 @@ Where the fully invested era ends is a judgment. We end it at the 2018 survey: r
 \item \emph{Lower edge}: the average owner with every input at its low end. Risk aversion is 1, the weight counts ETF and treasury investors, mortality is 0.3 points, and the market term is cut by 15\%.
 \item \emph{Upper edge}: the larger of two numbers. (a) The average owner with every input at its high end: risk aversion 2.8, the weight of surveyed owners only, mortality 3.5 points, the market term raised by 15\%. (b) The early holder's requirement, $r_f + w^{\text{early}}_t\sigma_t^2$.
 \end{itemize}
-Table~\ref{tab:band} works the edges out at five dates. The early holder sets the upper edge in every month through 2016, in some months of 2017--19, and in none since. The band is an envelope, wider than a confidence interval, because the inputs are unlikely to have sat at the same extreme together. Its midpoint is the average of the two edges: a convention, not an estimate. Panel (a) of Figure~\ref{fig:wedge} shows the band month by month.
+Table~\ref{tab:band} works the edges out at five dates, and panel (a) of Figure~\ref{fig:wedge} shows them month by month. The early holder sets the upper edge in every month through 2016, in some months of 2017--19, and in none since. The band is an envelope, wider than a confidence interval, because the inputs are unlikely to have sat at the same extreme together. Its midpoint is the average of the two edges: a convention, not an estimate.
 
 \begin{table}[ht]\centering\small
 \caption{The required-return band worked out at five dates.}
@@ -254,7 +254,7 @@ Table~\ref{tab:band} works the edges out at five dates. The early holder sets th
 
 \begin{figure}[ht]\centering
 \includegraphics[width=0.92\textwidth]{fig_inputs.pdf}
-\caption{The four inputs of equation~(\ref{eq:foc}) that move with time, at each month-end. (a) Volatility (weights halving every nine months). (b) Beta (previous four years, capped at 3). (c) The ten-year Treasury yield. (d) Holder weight: the average owner of equation~(\ref{eq:wavg}) and the early holder of equation~(\ref{eq:wearly}). Diamond: the 2021Q3 survey; triangles: the surveyed ownership rates. Marks at the right edge: the 2026 values of Table~\ref{tab:ranges}. Dotted line: spot-ETF approval.}
+\caption{The four inputs of equation~(\ref{eq:foc}) that move with time, at each month-end. (a) Volatility and (b) beta, as defined in the text. (c) The ten-year Treasury yield. (d) Holder weight: the average owner of equation~(\ref{eq:wavg}), a band from mid-2019, and the early holder of equation~(\ref{eq:wearly}). Triangles: the surveyed ownership rates. Right edge: the 2026 values of Table~\ref{tab:ranges}. Dotted line in every panel: spot-ETF approval, January 2024.}
 \label{fig:inputs}
 \end{figure}
 
@@ -266,7 +266,7 @@ Table~\ref{tab:band} works the edges out at five dates. The early holder sets th
 \label{fig:wedge}
 \end{figure}
 
-\textbf{Step 3: the test.} The required return computed at a month-end is quoted per year, as an interest rate is, and applies from that date on. We convert it to a one-month return and pair it with what Bitcoin returned in the month that follows. At the end of December 2023, for example, the midpoint was 22.6\% a year, or 1.9\% for the month; Bitcoin returned 0.9\% in January 2024, so that month's gap is $-1.0$ point. There are 172 such pairs, none overlapping, from January 2012 to April 2026. Table~\ref{tab:monthly} averages the required and the delivered returns over the same months, for the whole sample and by three-year period, long enough to average over most of a boom and a bust (Appendix D.2), and quotes both as annual rates (twelve times the monthly average); Figure~\ref{fig:gap} plots the period gaps.
+\textbf{Step 3: the test.} The required return computed at a month-end is quoted per year, as an interest rate is, and applies from that date on. We convert it to a one-month return and pair it with what Bitcoin returned in the month that follows. At the end of December 2023, for example, the midpoint was 22.6\% a year, or 1.9\% for the month; Bitcoin returned 0.9\% in January 2024, so that month's gap is $-1.0$ point. There are 172 such pairs, none overlapping, from January 2012 to April 2026. Table~\ref{tab:monthly} averages the required and the delivered returns over the same months, for the whole sample and by three-year period, long enough to average over most of a boom and a bust (Appendix D.2), and quotes both as annual rates; Figure~\ref{fig:gap} plots the period gaps.
 \begin{itemize}
 \item \emph{Over the whole sample delivered and required returns are consistent, but the fit is loose.} Bitcoin delivered 118\% a year. The band averaged 22--111\%, with midpoint 65\%. The gap to the midpoint is 54 points, with a standard error of 39.
 \item \emph{The early years favor the early holder.} The lower edge, the average owner, leaves 97 points unexplained and is rejected ($t = 2.5$); the upper edge, the early holder until 2018, leaves 7. The gap to the midpoint is $+120$ points in 2012--14 (standard error 169) and $+97$ in 2015--17 (46), the one period in which the midpoint is rejected.

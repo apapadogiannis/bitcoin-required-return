@@ -27,15 +27,21 @@ ax=axc; ax.plot(A,100*rf[mm],color=BLUE,lw=1.8); ax.set_ylim(0,6); ax.set_title(
 ax=axd; _b=A>=split_age; WB=dict(fc="white",ec="none",pad=1.2)
 ax.fill_between(A[_b],100*w_lo[mm].values[_b],100*w_hi[mm].values[_b],color=SEQ[100],alpha=0.9,lw=0)
 ax.plot(A,100*w_hi[mm],color=BLUE,lw=1.8); ax.plot(A[_b],100*w_lo[mm].values[_b],color=SEQ[650],lw=1.8)
-ax.plot(A,100*seg[mm],color=INK,lw=1.4,ls=(0,(4,2)),zorder=4)
-ax.text(3.4,94,"early holder, equation (4): weight 1 until mid-2018",fontsize=7.8,color=INK,ha="left",va="top")
+_sets=((rf+seg*sig2)>=foc_hi)[mm]; last_set=_sets[_sets].index[-1]; last_age=float(age[last_set])   # the last month the early holder sets the upper edge of the band
+print("early holder last sets the upper edge:",last_set.strftime("%B %Y"))
+_e=A<=last_age+1e-9
+ax.plot(A[_e],100*seg[mm].values[_e],color=INK,lw=1.4,ls=(0,(4,2)),zorder=4)
+ax.plot(A[~_e],100*seg[mm].values[~_e],color=MUT,lw=1.2,ls=(0,(4,2)),zorder=4)                        # grey once it no longer sets the upper edge
+ax.text(3.4,96,"early holder, equation (4): an alternative reading,\nused for the upper edge of the required return\nuntil "+last_set.strftime("%B %Y")+" (grey afterwards)",fontsize=7.8,color=INK,ha="left",va="top",linespacing=1.25)
 ax.annotate("average owner, equation (3):\none line until mid-2019",xy=(6.9,5.5),xytext=(3.4,48),fontsize=7.8,color=BLUE,ha="left",va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
-ax.text(11.9,88,"from mid-2019 the average owner is a band:",fontsize=7.8,color=INK2,ha="left",va="center",bbox=WB,zorder=5)
-ax.text(11.9,78,"upper line: surveyed owners only",fontsize=7.8,color=BLUE,ha="left",va="center",bbox=WB,zorder=5)
-ax.text(11.9,68,"lower line: with ETF and treasury investors",fontsize=7.8,color=SEQ[650],ha="left",va="center",bbox=WB,zorder=5)
+ax.axvline(split_age,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=1)
+ax.text(split_age+0.15,97,"mid-2019: ETF and treasury investors enter,\nand the average owner becomes a band",fontsize=7.8,color=INK2,ha="left",va="top",linespacing=1.25,bbox=WB,zorder=5)
+ax.text(split_age+0.15,78,"upper line: surveyed owners only",fontsize=7.8,color=BLUE,ha="left",va="center",bbox=WB,zorder=5)
+ax.text(split_age+0.15,69,"lower line: with ETF and treasury investors",fontsize=7.8,color=SEQ[650],ha="left",va="center",bbox=WB,zorder=5)
+ax.text(etf_age+0.12,57,"spot ETFs approved\n(January 2024)",fontsize=7.8,color=INK2,ha="left",va="top",linespacing=1.25)
 ax.set_ylim(0,105); ax.set_title("(d) Holder weight, w (%): two readings"); mark(ax,8,19,"8–19%",x=17.68,dx=0.1)
 ax.plot([2014.5-2009,2018.5-2009,2021.75-2009,2023.5-2009,2025.4-2009],[1.2]*5,marker="^",color=INK2,ms=4.5,ls="none",zorder=6,clip_on=False)
-ax.plot([12.75],[19],marker="D",color="#008300",ms=5,zorder=6); ax.annotate("survey: 19% (2021Q3)",xy=(12.75,19),xytext=(13.2,44),fontsize=7.8,color="#008300",bbox=WB,arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
+ax.plot([12.75],[19],marker="D",color="#008300",ms=5,zorder=6); ax.annotate("survey: 19%\n(2021Q3)",xy=(12.75,19),xytext=(13.05,40),fontsize=7.8,color="#008300",bbox=WB,arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
 for ax in (axa,axb,axc,axd):
     ax.set_xlim(3,17.6); ax.grid(axis="y",alpha=1.0); ax.set_axisbelow(True); ax.axvline(etf_age,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=1)
     yrs=[2013,2015,2017,2019,2021,2023,2025] if ax is axd else [2013,2017,2021,2025]

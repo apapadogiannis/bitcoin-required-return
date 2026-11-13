@@ -1,0 +1,13 @@
+Table 8 for a euro investor: risk-free rate 3.4% (ten-year Bund), premia as in Table 8 (dollar risk-free rate 5.0%)
+                               premium  average  vol EUR   drag  compound  Sharpe Sharpe c. | vol USD  avg USD
+Global equities (MSCI ACWI)       3.80     7.20     12.6   0.79      6.41   0.302     0.239 |   13.83     8.80
+S&P 500                           4.00     7.40     13.8   0.95      6.45   0.290     0.221 |   14.06     9.00
+Nasdaq-100                        4.48     7.90     16.9   1.43      6.47   0.266     0.182 |   17.23     9.48
+Russell 2000                      4.72     8.10     18.8   1.77      6.33   0.250     0.156 |   19.14     9.72
+Gold                              0.50     3.90     14.5   1.05      2.85   0.034    -0.038 |   15.51     5.50
+Bitcoin                          13.30    16.70     42.0   8.82      7.88   0.317     0.107 |   41.75    18.30
+Ether                            18.40    21.80     64.0  20.48      1.32   0.288    -0.032 |   64.03    23.40
+
+volatility in euros, unrounded: Global equities (MSCI ACWI) 12.58, S&P 500 13.76, Nasdaq-100 16.89, Russell 2000 18.84, Gold 14.46, Bitcoin 42.09, Ether 64.24
+correlation of the euro's monthly change against the dollar with each asset's dollar return, 2012-01 to 2026-04: Global equities (MSCI ACWI) 0.43, S&P 500 0.30, Nasdaq-100 0.26, Russell 2000 0.23, Gold 0.37, Bitcoin 0.05
+interest differential (dollar less euro risk-free rate): 1.6 points; volatility of the euro against the dollar 7.4%

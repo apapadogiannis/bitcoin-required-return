@@ -80,8 +80,9 @@ badge above shows the latest run.
 | `41_volatility_table.py` | Volatility by window and by currency | Appendix A.7 |
 | `43_band_table.py` | The band worked out at five dates: inputs, both candidates for the upper edge, midpoint | Table 4 |
 | `44_holders_and_comovement.py` | Bitcoin's correlation with the S&P 500 against the share of supply held through funds and by public companies | Appendix A.3 |
+| `45_euro_table.py` | Table 8 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 963 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 1,020 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 
 `24_terms_fig.py` and `25_wedge_log.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables

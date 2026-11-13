@@ -462,3 +462,22 @@ _hc_b=_hc_run(1.0)
 for _sc in (0.5,2.0):
     _hc_r=_hc_run(_sc); chk(f"B.3 public-company figures x{_sc}: lower edge moves by at most one point",float(_hc_r[0]<=1.0),1,0); chk(f"B.3 public-company figures x{_sc}: gaps move by at most 0.1",float(max(abs(_hc_r[1]-_hc_b[1]),abs(_hc_r[2]-_hc_b[2]))<=0.15),1,0)
 chk("E.3 J.P. Morgan weights sum",65+30+5,100,0); chk("E.3 J.P. Morgan weighted base case",0.65*10.7+0.30*10.7+0.05*(-3.2),10.0,0.1)
+
+# Appendix E.4: Table 8 for a euro investor (script 45_euro_table.py)
+_eu_rf=3.4; chk("E.4 Bund yield, mean of 3.58, 3.34 and 3.3",(3.58+3.34+3.3)/3,_eu_rf,0.05); chk("E.4 interest differential",5.0-_eu_rf,1.6,0.001)
+_eu_fx=np.log(pd.read_csv(os.path.join(DATA,"eurusd_monthly.csv"),parse_dates=["Date"]).sort_values("Date").set_index("Date")["Close"]).diff()
+_eu_fx_me=_eu_fx.copy(); _eu_fx_me.index=_eu_fx_me.index+pd.offsets.MonthEnd(0)
+_eu_R=pd.DataFrame({k:_lr(os.path.join(DATA,f"{f}_monthly.csv")) for k,f in (("ACWI","acwi"),("VOO","voo"),("QQQ","qqq"),("IWM","iwm"),("GLD","gld"))})["2012-01":"2026-04"]
+_eu_E=_eu_R.sub(_eu_fx.reindex(_eu_R.index),axis=0)
+_eu_v={"global":100*_eu_E.ACWI.std()*12**.5,"sp500":100*_eu_E.VOO.std()*12**.5,"nasdaq":100*_eu_E.QQQ.std()*12**.5,"russell":100*_eu_E.IWM.std()*12**.5,"gold":100*_eu_E.GLD.std()*12**.5,
+       "btc":100*np.sqrt((np.log(px).diff()-_eu_fx_me.reindex(px.index))[:"2026-05"].pow(2).ewm(halflife=9).mean().iloc[-1]*12)}
+_eu_out=open(os.path.join(OUT,"euro_table.txt")).read(); _eu_v["eth"]=float([l for l in _eu_out.splitlines() if l.startswith("volatility in euros, unrounded")][0].split("Ether ")[1].split()[0].rstrip(","))
+_EU={"global":(3.8,7.2,12.6,0.8,6.4,0.30,0.24),"sp500":(4.0,7.4,13.8,1.0,6.4,0.29,0.22),"nasdaq":(4.48,7.9,16.9,1.4,6.5,0.27,0.18),"russell":(4.72,8.1,18.8,1.8,6.3,0.25,0.16),
+     "gold":(0.5,3.9,14.5,1.1,2.8,0.03,-0.04),"btc":(13.3,16.7,42,8.8,7.9,0.32,0.11),"eth":(18.4,21.8,64,20.5,1.3,0.29,-0.03)}
+for _k,(_pr,_mu,_sg,_dr,_cp,_sh,_sc) in _EU.items():
+    chk(f"E.4 {_k}: average = 3.4 + premium",_eu_rf+_pr,_mu,0.051); chk(f"E.4 {_k}: volatility in euros",_eu_v[_k],_sg,0.05 if _k not in ("btc","eth") else 0.5)
+    chk(f"E.4 {_k}: drag",_sg**2/200,_dr,0.051); chk(f"E.4 {_k}: compound",_mu-_sg**2/200,_cp,0.051); chk(f"E.4 {_k}: Sharpe",(_mu-_eu_rf)/_sg,_sh,0.0051); chk(f"E.4 {_k}: Sharpe on the compound return",(_mu-_sg**2/200-_eu_rf)/_sg,_sc,0.0051)
+chk("E.4 volatility lower in euros, smallest gap",min(14.1-13.8,17.2-16.9,19.1-18.8),0.3,0.001); chk("E.4 volatility lower in euros, largest gap",13.8-12.6,1.2,0.001)
+chk("E.4 euro volatility against the dollar",100*_eu_fx["2012-01":"2026-04"].std()*12**.5,7,0.5); chk("E.4 correlation of the euro's change with Bitcoin's return",(np.log(px).diff())["2012-01":"2026-04"].corr(_eu_fx_me),0.05,0.005)
+for _k,_x in (("global",_eu_R.ACWI),("sp500",_eu_R.VOO),("nasdaq",_eu_R.QQQ),("russell",_eu_R.IWM),("gold",_eu_R.GLD)): chk(f"E.4 correlation of the euro's change with {_k} is between 0.2 and 0.4",float(0.195<=_x.corr(_eu_fx.reindex(_x.index))<=0.445),1,0)
+chk("E.4 Bitcoin over global equities, compound, euros",7.9-6.4,1.5,0.001); chk("E.4 Bitcoin over global equities, compound, dollars",9.5-7.8,1.7,0.001); chk("E.4 volatility ratio above three, euros",float(42/12.6>3),1,0); chk("TNX file's November value is the 11 November download",_tn.loc["2026-11-01"],5.0,0.05)

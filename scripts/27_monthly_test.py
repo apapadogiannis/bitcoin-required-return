@@ -33,31 +33,41 @@ L.append(f"correlation of monthly return with required midpoint {np.corrcoef(D.r
 L.append(f"largest month: {D.r.idxmax().date()} start, return {100*D.r.max():.0f}%, contributes {1200*D.r.max()/len(D):.0f} points to the full-sample annualized mean")
 open(f"{OUT}/monthly_test.txt","w").write("\n".join(L)+"\n"); print("\n".join(L))
 
-fig,(ax,bx)=plt.subplots(1,2,figsize=(9.4,5.0))
+plt.rcParams["axes.titlepad"]=10
+fig,(ax,bx)=plt.subplots(1,2,figsize=(9.4,4.3))
 x=np.arange(len(PER)); labs=[p[2] for p in PER]; O=[T[l] for l in labs]
+DOT=dict(marker="o",ms=7.5,mfc="white",mec=INK,mew=1.6,ls="none")          # delivered: the same open circle as in the figure of the required return
+HW=0.30
+# (a) delivered return against the band
 ax.set_yscale("log")
 for i,o in enumerate(O):
-    ax.fill_between([i-0.27,i+0.27],[o["lo"]]*2,[o["hi"]]*2,color=SEQ[200],alpha=0.85,lw=0,zorder=2)
-    ax.plot([i-0.27,i+0.27],[o["mid"]]*2,color=BLUE,lw=2.2,zorder=3)
-    ax.plot([i],[o["real"]],marker="o",ms=7.5,color=INK,mec="white",mew=1.2,ls="none",zorder=5)
-    ax.text(i+0.33,o["real"],f"{o['real']:.0f}%",fontsize=8.5,color=INK,va="center")
+    ax.fill_between([i-HW,i+HW],[o["lo"]]*2,[o["hi"]]*2,color=SEQ[100],lw=0,zorder=2)
+    ax.plot([i-HW,i+HW],[o["mid"]]*2,color=BLUE,lw=2.4,zorder=3,solid_capstyle="butt")
+    ax.text(i+HW+0.05,o["mid"],f"{o['mid']:.0f}",fontsize=8.3,color=BLUE,va="center",ha="left")
+    ax.plot([i],[o["real"]],zorder=5,**DOT)
+    ax.text(i,o["real"]*1.13,f"{o['real']:.0f}",fontsize=8.8,color=INK,va="bottom",ha="center",weight="bold")
 ticks=[10,20,50,100,200,400]; ax.set_yticks(ticks); ax.set_yticklabels([f"{t}%" for t in ticks]); ax.minorticks_off()
 ax.set_ylim(10,480); ax.set_xlim(-0.6,len(PER)-0.3); ax.set_xticks(x); ax.set_xticklabels(labs)
-ax.set_ylabel("% per year (log scale)"); ax.set_title("Delivered against required",loc="left")
-ax.legend([plt.Line2D([],[],marker="o",ms=7,color=INK,ls="none"),Patch(facecolor=SEQ[200],alpha=0.9),plt.Line2D([],[],color=BLUE,lw=2.2)],
-          ["realized average return (12 × mean monthly return)","required-return band, average over the period","midpoint of the band"],
-          loc="upper center",bbox_to_anchor=(0.5,-0.12),ncol=1,fontsize=8.0,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.8)
+ax.set_ylabel("% per year (log scale)"); ax.set_title("(a) Delivered return against the required band",loc="left")
+ax.legend([plt.Line2D([],[],**DOT),Patch(facecolor=SEQ[100]),plt.Line2D([],[],color=BLUE,lw=2.4)],
+          ["delivered: 12 × the average monthly return","required band, average over the period","midpoint of the band"],
+          loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=1,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35)
+# (b) the gap, delivered minus midpoint, with one and two standard errors
 YL=(-130,300)
-bx.axhline(0,color=BLUE,lw=1.6,zorder=2)
+bx.axhline(0,color=BLUE,lw=1.4,zorder=2)
 for i,o in enumerate(O):
     g,s=o["g_mid"],o["se_mid"]
-    bx.plot([i,i],[max(g-2*s,YL[0]),min(g+2*s,YL[1])],color=MUT,lw=1.2,zorder=3)
-    bx.plot([i,i],[max(g-s,YL[0]),min(g+s,YL[1])],color=INK,lw=3.2,zorder=4,solid_capstyle="butt")
-    bx.plot([i],[g],marker="o",ms=7.5,color=INK,mec="white",mew=1.2,ls="none",zorder=5)
-    bx.text(i+0.16,g+13,f"{g:+.0f}".replace("-","−"),fontsize=8.5,color=INK,va="center")
+    lo2,hi2=g-2*s,g+2*s
+    bx.plot([i,i],[max(lo2,YL[0]),min(hi2,YL[1])],color=MUT,lw=1.0,zorder=3)
+    bx.plot([i,i],[max(g-s,YL[0]),min(g+s,YL[1])],color=INK2,lw=4.0,zorder=4,solid_capstyle="butt")
+    bx.plot([i],[g],zorder=5,**DOT)
+    bx.text(i+0.14,g,f"{g:+.0f}".replace("-","−"),fontsize=8.8,color=INK,va="center",ha="left",weight="bold")
+    if hi2>YL[1]: bx.annotate(f"to {hi2:+.0f}".replace("-","−"),xy=(i,YL[1]),xytext=(i+0.12,YL[1]-14),fontsize=7.8,color=MUT,va="center")
+    if lo2<YL[0]: bx.annotate(f"to {lo2:+.0f}".replace("-","−"),xy=(i,YL[0]),xytext=(i+0.12,YL[0]+14),fontsize=7.8,color=MUT,va="center")
 bx.set_ylim(*YL); bx.set_xlim(-0.6,len(PER)-0.3); bx.set_xticks(x); bx.set_xticklabels(labs)
-bx.set_ylabel("percentage points per year"); bx.set_title("The gap: realized minus required (midpoint)",loc="left")
-bx.legend([plt.Line2D([],[],marker="o",ms=7,color=INK,ls="none"),plt.Line2D([],[],color=INK,lw=3.2),plt.Line2D([],[],color=MUT,lw=1.2),plt.Line2D([],[],color=BLUE,lw=1.6)],
-          ["gap, average over the period","±1 standard error","±2 standard errors (2012–14 extends off the panel)","zero: delivered exactly what was required"],
-          loc="upper center",bbox_to_anchor=(0.5,-0.12),ncol=1,fontsize=8.0,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.8)
+bx.set_yticks([-100,0,100,200,300]); bx.set_yticklabels(["−100","0","+100","+200","+300"])
+bx.set_ylabel("percentage points per year"); bx.set_title("(b) The gap: delivered minus the midpoint",loc="left")
+bx.legend([plt.Line2D([],[],**DOT),plt.Line2D([],[],color=INK2,lw=4.0),plt.Line2D([],[],color=MUT,lw=1.0),plt.Line2D([],[],color=BLUE,lw=1.4)],
+          ["gap, average over the period","± one standard error","± two standard errors","zero: delivered equals required"],
+          loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=2,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35,columnspacing=1.6)
 finish(fig,[ax,bx],f"{FIG}/fig_gap")

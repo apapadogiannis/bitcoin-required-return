@@ -56,7 +56,7 @@ i=at("2026-05-31"); chk("T4 2026 band lo",100*foc_lo.iloc[i],12,0.7); chk("T4 20
 mm=(age>=3.0)&fwd_mu.notna()
 chk("windows",mm.sum(),113,0); chk("gap vs mid",100*(fwd_mu-req_mid)[mm].mean(),23.8,0.6); chk("gap vs lower",100*(fwd_mu-foc_lo)[mm].mean(),81,1); chk("gap vs upper",100*(fwd_mu-req_hi)[mm].mean(),-33,1); chk("median gap vs mid",100*(fwd_mu-req_mid)[mm].median(),40,1)
 chk("inside band share",100*((fwd_mu>=foc_lo)&(fwd_mu<=req_hi))[mm].mean(),48,1); chk("MAE mid",100*np.abs(fwd_mu-req_mid)[mm].mean(),58,0.6); chk("MAE age rule",100*np.abs(fwd_mu-age_rule)[mm].mean(),28,1)
-# monthly test (Table: monthly; Figure 6; D.3)
+# monthly test (Table 5; Figure 3; Appendix D.2)
 _r=px.shift(-1)/px-1; _mo=lambda mu: np.exp(mu/12)-1
 _D=pd.DataFrame({"r":_r,"lo":_mo(foc_lo),"mid":_mo(req_mid),"hi":_mo(req_hi),"age":((age+1/12)/age)**5.62-1}).dropna(); _D=_D[_D.index>="2012-01-01"]
 def _nw(e,Lg=6):
@@ -224,7 +224,7 @@ chk("compound Sharpe: BTC below every equity index",float(0.11<min([0.21,0.21,0.
 chk("drag share BTC about half",8.8/18.3,0.5,0.03); chk("drag share ETH nearly nine-tenths",20.5/23.4,0.88,0.01)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),90,0.6); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.28,0.006); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.86,0.02)
-# Figure 6 shares
+# Figure 2, panel (c): shares
 mort_t=0.5*(0.003+0.035)
 def shares(d):
     i=at(d); tot=req_mid.iloc[i]; conc=max(tot-rf.iloc[i]-beta_term.iloc[i]-mort_t,0); return 100*tot,100*np.array([rf.iloc[i],beta_term.iloc[i],conc,mort_t])/tot
@@ -353,6 +353,9 @@ _k6_o=open(os.path.join(OUT,"cross_section_terms.txt")).read().splitlines()
 for _k6_n,_k6_v in (("Bitcoin",18.4),("Ether",23.7),("Large altcoin",22.4)): chk(f"Table 6 against the script output: {_k6_n} sum",float([l for l in _k6_o if l.startswith(_k6_n)][0].split()[-1]),_k6_v,0.001)
 _k6_ep=pd.read_csv(os.path.join(CSV,"eth.csv"),parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last(); _k6_es=np.sqrt(np.log(_k6_ep).diff().pow(2).ewm(halflife=9).mean()*12); _k6_bs=np.sqrt(sig2)
 for _k6_d,_k6_ve,_k6_vb in (("2017-12-31",172,98),("2021-09-30",99,77),("2026-05-31",64,42)): chk(f"S6 Ether volatility {_k6_d[:7]}",100*_k6_es[:_k6_d].iloc[-1],_k6_ve,0.5); chk(f"S6 Bitcoin volatility {_k6_d[:7]}",100*_k6_bs[:_k6_d].iloc[-1],_k6_vb,0.5)
+chk("S6 priced cryptoassets with a capitalization",int(_cs["C"].notna().any().sum()),84,0); chk("S6 Bitcoin: w_i = kappa x w leaves the weight unchanged",round(float(_st("btc")["kappa"]),1),1.0,0.001); chk("S6 Ether months since 2018",_dl(_Rn["eth"])[3],100,0)
+_fg_l=[l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("2012–14")][0].split("|")[1].split(); _fg_g=float(_fg_l[2]); _fg_s=float(_fg_l[3].strip("(;"))
+chk("Figure 3: 2012-14 two-standard-error interval, lower end as annotated",_fg_g-2*_fg_s,-218,1.5); chk("Figure 3: 2012-14 two-standard-error interval, upper end as annotated",_fg_g+2*_fg_s,459,1.5)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)

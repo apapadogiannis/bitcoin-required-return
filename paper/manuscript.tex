@@ -319,14 +319,23 @@ Period & Delivered & Band & Midpoint & Lower edge & Midpoint (s.e.) & Upper edge
 
 \section{The Same Equation for Ether and Other Cryptoassets}
 
-Nothing in equation~(\ref{eq:foc}) is specific to Bitcoin. For other cryptoassets most of the inputs can be measured from the same data: volatility and equity beta from prices, and death risk by size class from the census. The exception is the holder's weight, which no survey reports coin by coin; we handle it in two steps that need no such survey (Table~\ref{tab:cross}).
+Nothing in equation~(\ref{eq:foc}) is specific to Bitcoin. For another cryptoasset three of the inputs are measured as they are for Bitcoin: volatility and the beta to equities from the asset's prices, and the mortality term from the census, by size class. The fourth, the holder weight, needs one more step, because surveys report the share of an owner's wealth in crypto as a whole, not coin by coin.
 
-\textbf{A floor that needs no holders.} Even an investor who holds a cryptoasset at a negligible weight must be paid the risk-free rate, the market term and the mortality term. That floor is 14\% a year for Bitcoin, 16\% for Ether, 15\% for a large altcoin and 30\% for a small coin. For small coins death risk alone is 16 points: the smallest quartile of the census dies at 17.4\% a year, with almost nothing recovered.
+\textbf{The holder weight of another cryptoasset.} Surveyed owners keep a share $c$ of 8--19\% of their financial wealth in crypto (Section 4). As a group, crypto owners hold every cryptoasset in proportion to its capitalization, since each coin must be held by someone, so the average owner's crypto holding is the crypto market itself: in our capitalization-weighted index for April 2026, which leaves out stablecoins, 73\% Bitcoin, 14\% Ether and 13\% other coins. The concentration term of equation~(\ref{eq:foc}) pays the holder for the risk the asset adds to her own portfolio, which is the covariance of the asset's return with the return on what she holds. If she holds the one asset, at weight $w$, that covariance is $w\sigma^2$, the form in equation~(\ref{eq:foc}). If she holds the crypto market, at weight $c$, it is $c$ times the asset's covariance with the crypto market. Equation~(\ref{eq:foc}) therefore applies to asset $i$ with the weight
+\begin{equation}
+w_i \;=\; c\,\kappa_i, \qquad \kappa_i \;=\; \frac{\mathrm{Cov}(r_i,\, r_c)}{\sigma_i^{2}} \;=\; \rho_i\,\frac{\sigma_c}{\sigma_i},
+\label{eq:kappa}
+\end{equation}
+where $r_i$ and $r_c$ are the returns of the asset and of the capitalization-weighted crypto market, $\sigma_i$ and $\sigma_c$ their volatilities, and $\rho_i$ their correlation. In words, $\kappa_i$ is the slope of a regression of the market's return on the asset's: when the asset moves by 10\%, the owner's crypto holding moves by $\kappa_i$ times 10\% on average. An owner with a share $c$ of her wealth in the crypto market therefore bears the asset's risk as if she held $c\,\kappa_i$ of her wealth in that asset alone.
 
-\textbf{The average crypto owner.} Crypto owners as a group hold the crypto market in proportion to its capitalization; that is market clearing. The risk an asset adds to such a portfolio is its covariance with the crypto market, so its effective weight is the owner's crypto share times $\kappa$, the beta of the crypto market on the asset. For Bitcoin $\kappa$ is 1.0 (1.04 on the last four years, 0.99 since 2018), which is why Section 4 could use the crypto share itself. For Ether it is 0.7: most of the crypto market is Bitcoin, which moves only about half as much as Ether does. For the median large altcoin it is 0.47. With the surveyed crypto share of 8--19\%, the equation gives 23\% a year for Ether and 22\% for a large altcoin. An investor who has concentrated in a single coin requires more: with 10--30\% of her wealth in the coin itself, 39\% for a large altcoin and 78\% for a small one. Those weights are illustrative, since nothing measures them.
+\textbf{The values of $\kappa$.} We estimate $\kappa$ on monthly returns over the four years to April 2026. For Bitcoin it is 1.0 (1.04, and 0.99 since 2018): Bitcoin is three-quarters of the market and the rest moves with it, so the market moves one for one with Bitcoin. This is why Section 4 could take the surveyed crypto share as Bitcoin's weight. For Ether $\kappa$ is 0.7. Ether's correlation with the market is 0.91, but over those four years its volatility was 74\% against the market's 57\%, so the market moves by 7\% when Ether moves by 10\%. For the median large altcoin $\kappa$ is 0.47 (median correlation 0.74, median volatility 86\%). The holder weights are therefore 8--19\% for Bitcoin, 6--13\% for Ether and 4--9\% for a large altcoin. A smaller weight does not mean a smaller concentration term, because the term multiplies the weight by the asset's variance, which is higher for these assets.
+
+\textbf{Worked example: Ether.} At the midpoint of each range the crypto share is 13.5\%, so Ether's weight is $0.135 \times 0.7 = 9.5\%$. With a risk aversion of 1.9 and a volatility of 64\%, the concentration term is $1.9 \times 0.64^2 \times 0.095 = 7.4$ points. The market term is Ether's beta of 2.35 times the ERP of 4\%, or 9.4 points, and the mortality term is Bitcoin's, 1.9 points, since both are top-twenty assets. With the risk-free rate of 5.0\% the sum is 23.7\%. Drawing the inputs over their ranges, as for Bitcoin, gives a median of 23\% (90\% range 19--29\%; envelope 16--35\%). Table~\ref{tab:cross} sets out the same sum for each asset.
+
+\textbf{The floor.} The risk-free rate, the market term and the mortality term need no holder weight. Together they are what an investor requires who holds the asset at a negligible weight: 14\% a year for Bitcoin, 16\% for Ether, 15\% for a large altcoin and 30\% for a small coin. Small coins have no price history in the data, so no $\kappa$ can be estimated and the floor is all we report for them. Their death risk alone is 16--17 points: the smallest quartile of the census dies at 17.4\% a year, with almost nothing recovered.
 
 \begin{table}[ht]\centering\footnotesize
-\caption{The required-return equation across cryptoassets in 2026. Percent per year; required returns are arithmetic averages.}
+\caption{The required return of four cryptoassets in 2026, built term by term from equation~(\ref{eq:foc}). Percent per year; required returns are arithmetic averages.}
 \label{tab:cross}
 \setlength{\tabcolsep}{5pt}
 \begin{tabular}{lcccc}
@@ -334,26 +343,28 @@ Nothing in equation~(\ref{eq:foc}) is specific to Bitcoin. For other cryptoasset
  & Bitcoin & Ether & Large altcoin & Small coin \\
 \midrule
 \emph{Inputs} & & & & \\
-Volatility, 2026 & 42 & 64 & 76 (66--88) & 100--130, assumed \\
-Equity beta & 1.5--2.0 & 2.0--2.7 & 1.5--2.7 & as large altcoin \\
-$\kappa$: share of the crypto weight that moves with the asset & 1.0 & 0.7 & 0.47 (0.41--0.56) & not measured \\
-Death hazard, per year & 0.3 sudden & 0.3 sudden & 3.2 all causes & 17.4 all causes \\
-Mortality term, points & 0.3--3.5 & 0.3--3.5 & 1--3 & 16--17 \\
+Volatility, $\sigma$ & 42 & 64 & 76 (66--88) & 100--130, assumed \\
+Beta to the S\&P 500, $\beta$ & 1.5--2.0 & 2.0--2.7 & 1.5--2.7 & as large altcoin \\
+$\kappa$, equation~(\ref{eq:kappa}) & 1.0 & 0.7 & 0.47 (0.41--0.56) & not measured \\
+Holder weight, $w$ = crypto share of 8--19\% $\times$ $\kappa$ & 8--19 & 6--13 & 4--9 & not measured \\
 \midrule
-\emph{Required return} & & & & \\
-Diversified holder (the floor) & 14 (12--16) & 16 (14--18) & 15 (13--18) & 30 (28--32) \\
-Average crypto owner & \textbf{18} (15--22) & \textbf{23} (19--29) & \textbf{22} (18--29) & not measured \\
-Holder with 10--30\% in the coin, illustrative & & & 39 & 78 \\
+\emph{Required return, term by term} & & & & \\
+\phantom{$+$} Risk-free rate & 5.0 & 5.0 & 5.0 & 5.0 \\
+$+$ Market risk, $\beta \times$ ERP & 7.0 & 9.4 & 8.4 & 8.4 \\
+$+$ Mortality risk & 1.9 & 1.9 & 2.0 & 16.6 \\
+$=$ Floor: a holder with a negligible weight & 14 (12--16) & 16 (14--18) & 15 (13--18) & 30 (28--32) \\
+$+$ Concentration risk, $\gamma\sigma^2 w$ & 4.5 & 7.4 & 7.0 & not measured \\
+$=$ \textbf{Required return, average crypto owner} & \textbf{18} (15--22) & \textbf{23} (19--29) & \textbf{22} (18--29) & not measured \\
 \midrule
 \emph{Delivered, 2018--26} & & & & \\
 Average (standard error) & 46 (23) & 48 (32) & 37 (33) & not observable \\
 Compound & 28 & 8 & $-2$ & not observable \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.93\textwidth}{\footnotesize Ranges in parentheses are 90\% ranges for required returns and interquartile ranges for inputs. Large altcoin: the 57 surviving altcoins with four years of prices, most of them in the largest size quartile; inputs are medians over the last four years, volatility as for Bitcoin. Risk-free rate 5\%, ERP 4\%, $\gamma \in [1, 2.8]$, crypto share 8--19\% throughout; central estimates as in Appendix D.1. Hazards are the census estimates of Section 3. Delivered: the monthly measure of Table~\ref{tab:monthly} over the same 100 months; for altcoins an equal-weighted basket of 84 altcoins, rebalanced monthly and including the 25 that died. Small coins have no price history in the data.}
+\par\smallskip\parbox{0.93\textwidth}{\footnotesize The four terms are computed at the midpoint of each input's range: crypto share 13.5\% (range 8--19\%), risk aversion 1.9 (1--2.8), ERP 4\%, the betas and volatilities shown, and a mortality term of 0.3--3.5 points for Bitcoin and Ether, 1--3 for a large altcoin (hazard 3.2\% a year) and 16--17 for a small coin (17.4\% a year) (Section 3). The floor and the required return are medians over the input ranges, with 90\% ranges in parentheses (Appendix D.1); a median can lie up to 0.3 points below the sum of the terms above it. For inputs, parentheses give interquartile ranges. Large altcoin: the 57 surviving altcoins with four years of prices, most of them in the largest size quartile; inputs are medians over the last four years, volatility as for Bitcoin. Delivered: the monthly measure of Table~\ref{tab:monthly} over the same 100 months; for altcoins an equal-weighted basket of 84 altcoins, rebalanced monthly and including the 25 that died. Small coins have no price history in the data.}
 \end{table}
 
-\textbf{Ether.} Ether shares Bitcoin's mortality class and differs in three inputs: volatility of 64\% against 42\%, an equity beta of 2.0--2.7 against 1.5--2.0, and a $\kappa$ of 0.7. Its required return today is about 23\% a year (90\% range 19--29\%; envelope 16--35\%), against a floor of 16\%. Since 2018 it has delivered an average of 48\% with a standard error of 32, and 19\% (standard error 35) since the 2021Q3 survey; neither figure can confirm or reject a requirement of 23\%. Figure~\ref{fig:eth} shows Ether's volatility compressing alongside Bitcoin's, and the equation says its required return has compressed with it.
+\textbf{What Ether delivered.} Since 2018 Ether has delivered an average of 48\% a year with a standard error of 32, and 19\% (standard error 35) since the 2021Q3 survey; neither figure can confirm or reject a requirement of 23\%. Figure~\ref{fig:eth} shows Ether's volatility compressing alongside Bitcoin's, and the equation says its required return has compressed with it.
 
 \begin{figure}[ht]\centering
 \includegraphics[width=0.95\textwidth]{fig6_eth.pdf}
@@ -363,7 +374,7 @@ Compound & 28 & 8 & $-2$ & not observable \\
 
 \textbf{What altcoins delivered.} The census lets the record be read without survivorship bias, because it keeps the coins that died. An equal-weighted basket of the 84 altcoins with a price history, 25 of which died, earned an average of 37\% a year over 2018--26, with a standard error of 33. The compound record is sharper. The basket, rebalanced monthly, compounded at $-2\%$ a year ($-3\%$ if a coin whose price feed stopped is counted as a total loss). Coin by coin the result is worse: the median altcoin lost 27\% a year compounded, 77\% of them lost money, and 7\% did better than Bitcoin. A high average with a negative compound return is the signature of a lottery: a few large winners carry the mean while the typical holder loses, the pattern documented for lottery-like stocks (Barberis and Huang 2008).
 
-\textbf{What this section can and cannot say.} The death rates, volatilities, betas, floors and compound record are measured. The weights of holders in individual coins are not, and small coins have no price history, so for them the paper offers the floor and one fact: half of the smallest quartile is dead within 3.3 years of listing (Figure~\ref{fig:km}). Down the size ladder the required return rises, because death risk and volatility rise, while the buy-and-hold record worsens. Bitcoin is the one cryptoasset for which delivered and required returns have met, which is a statement about its holder base and its survival, not about the equation.
+\textbf{What this section can and cannot say.} The death rates, volatilities, betas, floors and compound record are measured. The holder weight is that of the average crypto owner, who holds the whole market; an owner concentrated in one coin requires more, and no survey measures such holders. Small coins have no price history, so for them the paper offers the floor and one fact: half of the smallest quartile is dead within 3.3 years of listing (Figure~\ref{fig:km}). Down the size ladder the required return rises, because death risk and volatility rise, while the buy-and-hold record worsens. Bitcoin is the one cryptoasset for which delivered and required returns have met, which is a statement about its holder base and its survival, not about the equation.
 
 \section{For the Allocator}
 
@@ -422,7 +433,7 @@ Appendix E applies the same condition to gold, where it reproduces a known resul
 \section{Limitations and the Measurement Agenda}
 
 \begin{enumerate}
-\item \textbf{The holder weight before 2021 is bounded, not measured.} The portfolio-share surveys begin in 2021; everything earlier rests on a market-clearing back-cast for the average owner and on an assumed fully invested early holder, and the 2026 lower bound on an assumed weight for ETF and treasury investors (Appendix B). The most valuable upgrade would be wealth-weighted portfolio shares from each survey wave.
+\item \textbf{The holder weight before 2021 is bounded, not measured.} The portfolio-share surveys begin in 2021; everything earlier rests on a market-clearing back-cast for the average owner and on an assumed fully invested early holder, and the 2026 lower bound on an assumed weight for fund and treasury investors (Appendix B). The most valuable upgrade would be wealth-weighted portfolio shares from each survey wave.
 \item \textbf{Coverage-onset selection in the graveyard.} Assets enter the panel only after becoming significant (Section 3). This biases the data \emph{toward} Lindy, which makes the rejection conservative, and leaves the elite estimates untouched; but population hazard \emph{levels} at ages under two are floors.
 \item \textbf{Death timing and classification.} Feed and volume deaths lag economic death by months; four elite ``deaths'' are contested zombies. All classifications, dates, recovery fractions, and confidence flags are in Appendix C, and the headline elite hazard moves only from 3.5\% to 3.15\% when the contested cases are dropped.
 \item \textbf{Bitcoin's own existential era is unmeasurable.} No cross-section existed in 2010--2014, when Bitcoin had no peers, to price its risk of failure. The band's upper edge in those years is the requirement of a fully invested holder, which includes mortality (Section 5); the 2026 estimate does not rest on them.

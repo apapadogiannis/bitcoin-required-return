@@ -1,4 +1,4 @@
-"""Figure 1: the required return against realized returns (a), and the terms of equation (1)
+"""Figure 2: the required return against realized returns (a), and the terms of equation (1)
 in levels (b) and as shares (c), on one time axis."""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE

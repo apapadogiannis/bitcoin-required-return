@@ -1,4 +1,4 @@
-"""Final figure set for the graveyard analysis."""
+"""Draft figures of the census of deaths. The paper's versions are drawn by 22_pretty_figs.py."""
 import os
 import numpy as np, pandas as pd
 import matplotlib

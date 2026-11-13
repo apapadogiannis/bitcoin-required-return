@@ -1,4 +1,4 @@
-"""Figure: Ether's volatility and realized average return alongside Bitcoin's, in the measures used for Bitcoin elsewhere."""
+"""Figure 4: Ether's volatility and realized average return alongside Bitcoin's, in the measures used for Bitcoin elsewhere."""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
 SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))

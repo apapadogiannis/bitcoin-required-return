@@ -1,4 +1,4 @@
-"""Appendix A.3 figure: Bitcoin's rolling four-year beta and correlation with the S&P 500 (month-end log returns;
+"""Earlier figure, not in the paper: Bitcoin's rolling four-year beta and correlation with the S&P 500 (month-end log returns;
 expanding window before four years of data; beta capped at 3). Output: fig_beta.pdf and fig_beta.png"""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE

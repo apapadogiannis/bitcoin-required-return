@@ -1,5 +1,5 @@
 """Table 4: the required-return band worked out at five dates. For each date: the inputs (risk-free rate, volatility,
-beta, the average owner's weight with and without ETF and treasury investors, the early holder's weight) and the
+beta, the average owner's weight with and without fund and treasury investors, the early holder's weight) and the
 resulting lower edge, the two candidates for the upper edge, the upper edge and the midpoint. Output: band_table.txt"""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
@@ -16,7 +16,7 @@ px, rf, sig2, beta = ns["px"], ns["rf"], ns["sig2"], ns["beta_roll"]
 early = rf + ns["seg"]*sig2                                  # (b) the early holder's requirement
 DATES = (("Mid-2013", "2013-06-30"), ("Mid-2017", "2017-06-30"), ("Mid-2019", "2019-06-30"), ("2021Q3", "2021-09-30"), ("May 2026", "2026-05-31"))
 ROWS = (("Risk-free rate, %", lambda i: 100*rf.iloc[i]), ("Volatility, %", lambda i: 100*np.sqrt(sig2.iloc[i])), ("Beta", lambda i: beta.iloc[i]),
-        ("Average owner's weight, with ETF and treasury investors, %", lambda i: 100*ns["w_lo"].iloc[i]),
+        ("Average owner's weight, with fund and treasury investors, %", lambda i: 100*ns["w_lo"].iloc[i]),
         ("Average owner's weight, surveyed owners only, %", lambda i: 100*ns["w_hi"].iloc[i]),
         ("Early holder's weight, %", lambda i: 100*ns["seg"].iloc[i]),
         ("Lower edge: average owner, low inputs", lambda i: 100*ns["foc_lo"].iloc[i]),

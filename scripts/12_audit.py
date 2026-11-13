@@ -1,5 +1,5 @@
 import os
-"""Number audit: recompute every quantitative claim in the manuscript from the
+"""Census audit: recompute the census numbers quoted in the paper (Section 3, Appendix C) from the
 saved panel and print PASS/CHECK lines."""
 import numpy as np, pandas as pd
 from scipy import stats

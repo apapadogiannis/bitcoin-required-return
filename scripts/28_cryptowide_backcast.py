@@ -1,4 +1,4 @@
-"""Robustness (Appendix D.6): the holder-weight back-cast on total cryptoasset capitalization instead of Bitcoin's alone.
+"""Robustness (Appendix D.4): the holder-weight back-cast on total cryptoasset capitalization instead of Bitcoin's alone.
 The surveys measure the share of crypto as a whole in owners' financial assets; this version clears the whole asset class
 (panel assets with a reported capitalization, excluding stablecoins and wrapped or tokenized claims) against participating wealth.
 Writes cryptowide_backcast.txt."""

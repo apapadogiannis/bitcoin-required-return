@@ -1,4 +1,6 @@
-"""Publication-grade restyle of all six manuscript figures.
+"""The shared construction of the required-return band (inputs, holder weight, band edges), which the model
+scripts load from this file, and the hazard and survival figures of Appendix C. The remaining figures drawn
+here are earlier versions that are not in the paper.
 Unified style: Carlito (Calibri-metric) labels, validated categorical palette
 (dataviz reference), sequential blue ramp for ordered size groups, recessive
 hairline grid, no top/right spines, direct labels over legend boxes where
@@ -200,8 +202,8 @@ _INST={d:_GBTC[d]+_PUBCO.get(d,0.0) for d in _GBTC}; _INST.update({"2024-06-30":
 _ix=[(pd.Timestamp(d)-GEN).days/365.25 for d in _INST]
 inst_btc=pd.Series(np.interp(age,_ix,[1e6*v for v in _INST.values()]),index=px.index)
 inst_val=inst_btc*px.reindex(px.index)
-w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # survey-holder back-cast, institutional channel not counted
-w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # institutional channel counted at 1.5% weights
+w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # surveyed owners only
+w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # with fund and treasury investors, counted at a 1.5% weight
 w_hi_cw=(capc/Wp_cw).clip(upper=0.9); w_lo_cw=(capc/(Wp_cw+inst_val/0.015)).clip(upper=0.9)
 wbar=w_hi
 # market-risk term: rolling 48-month beta on the S&P 500 (VOO total return, month-end), expanding window before 48 months exist
@@ -215,7 +217,7 @@ beta_term=beta_roll*ERP
 foc_lo=rf+0.85*beta_term+G_LO*sig2*w_lo+0.003
 foc_hi=rf+1.15*beta_term+G_HI*sig2*w_hi+0.035
 Q_FEW=0.012                                   # ownership in the 2018 survey: 'few hands' at or below this level
-seg=(Q_FEW/q).clip(upper=1.0)                 # early-holder weight: all-in while ownership <= Q_FEW, then diluted in proportion as ownership multiplies
+seg=(Q_FEW/q).clip(upper=1.0)                 # early-holder weight: all-in while ownership <= Q_FEW, then falling in proportion as ownership multiplies
 req_hi=np.maximum(foc_hi,rf+seg*sig2); req_mid=0.5*(foc_lo+req_hi)
 BETA=5.62; age_rule=(1+5/age)**(BETA/5)-1
 fwd5=(px.shift(-60)/px)**(1/5)-1
@@ -243,12 +245,12 @@ for (yr,val,lab,tx,ty) in [(2021.75,22,"holders expected 22%",11.0,-11),(2025.4,
                 arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
 ax.text(4.45,224,"realized forward 5-yr CAGR",color=INK,fontsize=8.8,weight="bold")
 ax.text(6.05,96,"age rule forecast",color=RED,fontsize=8.8,weight="bold",rotation=-18)
-ax.text(13.1,42,"required return of the\nmarginal holder (band + mid)",color=BLUE,fontsize=8.8,weight="bold")
-ax.text(9.75,104,"wedge: realized − required\n(green +, red −)",color="#117a55",fontsize=8.6)
+ax.text(13.1,42,"required return\n(band and midpoint)",color=BLUE,fontsize=8.8,weight="bold")
+ax.text(9.75,104,"realized minus required\n(green +, red −)",color="#117a55",fontsize=8.6)
 ax.axhline(0,color=BASE,lw=0.8)
 ax.set_xlabel("Bitcoin age (years)"); ax.set_ylabel("% per year")
 ax.set_xlim(3,18.5); ax.set_ylim(-15,232)
-ax.set_title("The age rule tracks the decaying wedge, not a risk premium")
+ax.set_title("Required return, realized return and the age rule (earlier figure, not in the paper)")
 ax.text(0,1.018,"required-return band: holder first-order condition (γ 1.7–2.8) up to the option-implied all-in bound",
         transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
 finish(fig,[ax],f"{FIG}/fig_wedge")
@@ -274,7 +276,7 @@ ax.axhline(0,color=BASE,lw=0.8)
 ax.text(pd.Timestamp("2018-05-01"),225,"Ether",color=AQUA,fontsize=9.5,weight="bold")
 ax.text(pd.Timestamp("2020-03-01"),-45,"Bitcoin",color=BLUE,fontsize=9.5,weight="bold")
 ax.set_ylabel("forward 3-yr CAGR (%)"); ax.set_ylim(-80,410)
-ax.set_title("…and so does the drift")
+ax.set_title("…and so does the realized average return")
 for a_ in axes: a_.set_xlim(pd.Timestamp("2016-01-01"),pd.Timestamp("2026-07-01"))
 fig.suptitle("Compression is a mechanism, not a Bitcoin idiosyncrasy",x=0.013,ha="left",fontsize=11,fontweight="bold")
 fig.tight_layout(rect=(0,0,1,0.94))

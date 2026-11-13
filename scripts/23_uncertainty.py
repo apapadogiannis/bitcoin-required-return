@@ -1,4 +1,5 @@
-"""Propagate input uncertainty in the marginal-holder condition (Appendix D.1, Table 5, Appendix E)."""
+"""Propagate the input ranges through the MCM equation: Bitcoin (Section 4, Appendix D.1), Ether and the other
+cryptoassets (Section 6, Table 6) and gold (Appendix E). Output: uncertainty_propagation.txt"""
 import numpy as np
 rng = np.random.default_rng(1); N = 400_000; rf = 0.05; ERP = 0.04
 def run(label, sig, blo, bhi, wlo, whi, mlo, mhi, glo=1.0, ghi=2.8, kap=1.0):

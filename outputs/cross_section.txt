@@ -1,5 +1,5 @@
 priced assets: 87 | with cap: 84 | dead (curated): 25
-priced assets by size quartile: {'Q4': 64, 'Q3': 11, 'Q2': 3, 'Q1': 2}
+priced assets by size quartile: {'Q4': 63, 'Q3': 12, 'Q2': 3, 'Q1': 2}
 BTC weight in the index, 2018/2021/2026: [0.38, 0.47, 0.73] | ETH: [0.17, 0.21, 0.14]
 crypto market vol (4y): 57%
 btc 48 {'n': 48.0, 'vol': 0.54, 'vol_ewma': 0.43, 'beta_eq': 1.8, 'kappa': 1.04, 'beta_btc': 1.0, 'corr_m': 0.98}
@@ -20,3 +20,10 @@ Ether                                        2021-09 to 2026-04: months 56, asse
 altcoin basket, feed deaths dropped          2021-09 to 2026-04: months 56, assets 74-84, average  -3.9% (se 31.5), compound -21.7%
 altcoin basket, feed deaths at -100%         2021-09 to 2026-04: months 56, assets 74-84, average  -6.4% (se 31.5), compound -23.6%
 per-asset compound return, January 2018 (or listing) to May 2026: assets 84 | median -27% a year | share negative 77% | share above Bitcoin's 7% | dead 25
+crypto market, April 2026: Bitcoin 73%, Ether 14%, everything else 13%
+four years to April 2026: volatility of the crypto market 57%, Bitcoin 54%, Ether 74%; correlation with the market: Bitcoin 0.98, Ether 0.91; median altcoin: correlation 0.74, volatility 86%
+                  kappa  w low  w mid w high |    rf  market mortality  floor concentration    sum
+Bitcoin            1.00    8.0  13.50   19.0 |   5.0     7.0      1.90   13.9           4.5   18.4
+Ether              0.70    5.6   9.45   13.3 |   5.0     9.4      1.90   16.3           7.4   23.7
+Large altcoin      0.47    3.8   6.34    8.9 |   5.0     8.4      2.00   15.4           7.0   22.4
+Small coin                                   |   5.0     8.4     16.55   30.0

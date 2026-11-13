@@ -1,4 +1,4 @@
-"""Figure 5 (wedge) on a log scale of the return, with a legend box."""
+"""Earlier figure, not in the paper: required against realized returns on a log scale of the return, with a legend box."""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
 SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))

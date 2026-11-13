@@ -1,6 +1,5 @@
-"""Required return versus realized drift versus the age rule (paper Section 6):
-(1) fig_wedge, the full monthly series; (2) wedge_table.csv, Table 6.1, the same
-series at two-year intervals; (3) fig6_eth, the Ether compression exhibit."""
+"""Draft figures and wedge_table.csv from an earlier calibration of the required return, kept for the record.
+Nothing in the paper uses them; the paper's figures come from the scripts numbered 22 and above."""
 import os
 import numpy as np, pandas as pd
 import matplotlib

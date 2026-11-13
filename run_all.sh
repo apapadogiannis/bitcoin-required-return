@@ -24,7 +24,7 @@ done
 # figures written to OUT_DIR by the census scripts are drafts; the paper's versions come from step 2
 rm -f "$OUT_DIR"/fig*.pdf "$OUT_DIR"/fig*.png
 
-# 2. The required-return model (Sections 4 to 8, Appendices A, B, D, E).
+# 2. The required-return model (Sections 4 to 7, Appendices A, B, D, E).
 echo "== 23_uncertainty"; python3 -I scripts/23_uncertainty.py > "$OUT_DIR/uncertainty_propagation.txt"
 for f in 22_pretty_figs 26_holder_weight 27_monthly_test 28_cryptowide_backcast 29_required_fig \
          30_inputs_fig 31_cross_section 32_eth_fig 33_activity_beta 34_beta_windows 35_option_bound \
@@ -35,4 +35,4 @@ done
 
 # 3. The audit of every number quoted in the paper against the regenerated results.
 echo "== 13_model_audit"; python3 -I scripts/13_model_audit.py
-rm -f "$FIG_DIR"/fig_wedge.pdf "$FIG_DIR"/fig_wedge.png   # an earlier figure, not in the paper
+rm -f "$FIG_DIR"/fig_wedge.* "$FIG_DIR"/fig2_size.* "$FIG_DIR"/fig4_timeline.*   # earlier figures, not in the paper

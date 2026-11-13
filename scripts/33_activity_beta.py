@@ -1,4 +1,4 @@
-"""Does Bitcoin's equity beta run through use of the network? (Appendix E.2)
+"""Does Bitcoin's equity beta run through use of the network? (Appendix A.3)
 Monthly log returns of Bitcoin on those of the S&P 500 (VOO), gold (GLD) and the growth of on-chain activity
 (daily active addresses, monthly mean; Coin Metrics community data). Output: activity_beta.txt"""
 import os

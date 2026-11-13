@@ -1,4 +1,4 @@
-"""Figure: the three risk terms of equation (1) plus the risk-free rate, over Bitcoin's life.
+"""Earlier figure, not in the paper: the three risk terms of equation (1) plus the risk-free rate, over Bitcoin's life.
 Mid-band decomposition: rf(t); beta term at the midpoint of 1.3-4.2 points; mortality at the
 midpoint of 0.3-3 points; concentration = required (mid) minus the other three, which absorbs
 the gamma*sigma^2*w term and the all-in option bound of the band's upper edge."""

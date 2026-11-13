@@ -1,7 +1,7 @@
 {
   "title": "Bitcoin's Required Return: paper and replication package",
   "upload_type": "software",
-  "description": "Working paper and full replication package. Survival analysis of 1,815 cryptoassets with 520 curated deaths (mortality curves, Lindy test, elite jump hazard); Bitcoin's required return bounded via Merton's (1987) limited-participation condition with measured inputs (surveyed holder portfolio weights, option-implied bounds); required-plus-wedge decomposition of realized returns; committed 2026-2031 forecast. Includes all scripts, curated data tables, figures, and an audit script that re-checks every number quoted in the paper.",
+  "description": "Working paper and full replication package. The paper derives the return Bitcoin's holders should require from three measured risks, the MCM equation: market risk (beta to the S&P 500), concentration risk (the share of wealth that holders keep in the asset, from household surveys) and mortality risk (from a census of 1,815 cryptoassets with 520 deaths, in which hazard does not fall with age). The required return is tested month by month against Bitcoin's returns since 2012 and applied to Ether, other cryptoassets, equity indices and gold. For 2026 it is about 18% a year on average (90% range 15-22%), about 9.5% compounded. Includes all scripts, result tables, figures, and an audit script that re-checks every number quoted in the paper.",
   "creators": [
     {
       "name": "Papadogiannis, Agisilaos",
@@ -12,11 +12,12 @@
     "Bitcoin",
     "cryptoassets",
     "required return",
+    "MCM equation",
     "expected return",
+    "concentration risk",
     "survival analysis",
     "mortality",
     "limited participation",
-    "marginal holder",
     "Lindy effect",
     "household finance"
   ],
@@ -26,11 +27,6 @@
       "relation": "isSupplementTo",
       "identifier": "https://github.com/apapadogiannis/bitcoin-required-return",
       "scheme": "url"
-    },
-    {
-      "relation": "isRelatedTo",
-      "identifier": "10.5281/zenodo.24004326",
-      "scheme": "doi"
     }
   ]
 }

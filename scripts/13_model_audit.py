@@ -1,4 +1,4 @@
-"""Model-side audit: recompute the quantitative claims of Sections 1-2, 5-9 and Appendices A, B, D, E
+"""Model-side audit: recompute the quantitative claims of Sections 1 to 8 and Appendices A to E
 from the data and the shared band construction, and compare with the manuscript's numbers."""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
@@ -243,7 +243,7 @@ chk("Sharpe units 2013",(t13-100*rf.iloc[at('2013-06-30')])/(100*sig.iloc[at('20
 # Appendix B
 Wp_r=cap.iloc[i21]/0.19*(qpart/qpart.iloc[i21])*interp({2012:0.25,2021:1.0,2026:1.4}); wr=cap.reindex(px.index)/Wp_r
 chk("B: wealth 2021Q3 $T",cap.iloc[i21]/0.19/1e12,4.3,0.2); chk("B: survey-holder wealth 2026 $T",Wp_r.iloc[-1]/1e12,7,0.45); chk("B: w 2013",100*wr.iloc[at("2013-06-30")],3,0.6); chk("B: w 2017",100*wr.iloc[at("2017-06-30")],17,0.8)
-chk("B: w 2021",100*wr.iloc[at("2021-06-30")],18,0.8); chk("B: w 2026",100*wr.iloc[-1],23,0.8); chk("B: w 2026 diluted",100*w_lo.iloc[-1],8,0.6); chk("B: inst value $B",2.5e6*px.iloc[-1]/1e9,190,8)
+chk("B: w 2021",100*wr.iloc[at("2021-06-30")],18,0.8); chk("B: w 2026",100*wr.iloc[-1],23,0.8); chk("B: w 2026 with fund and treasury investors",100*w_lo.iloc[-1],8,0.6); chk("B: inst value $B",2.5e6*px.iloc[-1]/1e9,190,8)
 chk("B: address path 2018",100*q_addr.iloc[at("2018-06-30")],6.4,0.2); chk("B: survey path 2018",100*qpart.iloc[at("2018-06-30")],1.2,0.05)
 print(f"\n{sum(res)} PASS, {len(res)-sum(res)} FAIL")
 
@@ -334,8 +334,23 @@ _u=dict(l.split(" median ") for l in open(os.path.join(OUT,"uncertainty_propagat
 def _med(k): return float(_u[[x for x in _u if x.strip()==k][0]].split("%")[0])
 def _q90(k): 
     t=_u[[x for x in _u if x.strip()==k][0]].split("90% ")[1].split(" |")[0].replace("%","").split("-"); return float(t[0]),float(t[1])
-for _k,_m,_lo,_hi in [("Bitcoin, diversified holder (w=0)",14,12,16),("Ether, average crypto owner (kappa 0.7)",23,19,29),("Ether, diversified holder (w=0)",16,14,18),("Large altcoin, average crypto owner",22,18,29),("Large altcoin, diversified holder (w=0)",15,13,18),("Small coin, diversified holder (w=0)",30,28,32),("Large altcoin",39,27,60),("Small coin",78,52,124)]:
+for _k,_m,_lo,_hi in [("Bitcoin, diversified holder (w=0)",14,12,16),("Ether, average crypto owner (kappa 0.7)",23,19,29),("Ether, diversified holder (w=0)",16,14,18),("Large altcoin, average crypto owner",22,18,29),("Large altcoin, diversified holder (w=0)",15,13,18),("Small coin, diversified holder (w=0)",30,28,32)]:
     chk(f"S6 required {_k}",_med(_k),_m,0.6); chk(f"S6 required {_k} 5%",_q90(_k)[0],_lo,0.6); chk(f"S6 required {_k} 95%",_q90(_k)[1],_hi,0.6)
+# Section 6: the holder weight w = crypto share x kappa, and the term-by-term sums of Table 6 (cross_section_terms.txt)
+_k6_W=_cs["W"].loc["2026-04-30"]; chk("S6 index April 2026: Bitcoin",100*_k6_W["btc"],73,0.5); chk("S6 index April 2026: Ether",100*_k6_W["eth"],14,0.5); chk("S6 index April 2026: other coins",100*(1-_k6_W["btc"]-_k6_W["eth"]),13,0.5)
+_k6_b=_st("btc"); _k6_e=_st("eth"); _k6_vm=float(np.log1p(_cs["rcm"][:"2026-04-30"]).iloc[-48:].std()*12**.5)
+chk("S6 crypto market volatility, four years",100*_k6_vm,57,0.5); chk("S6 Ether volatility, four years",100*_k6_e["vol"],74,0.5); chk("S6 Ether correlation with the market",_k6_e["corr_m"],0.91,0.005)
+chk("S6 kappa = correlation x market volatility / asset volatility, Ether",_k6_e["corr_m"]*_k6_vm/_k6_e["vol"],_k6_e["kappa"],0.005); chk("S6 kappa identity, Bitcoin",_k6_b["corr_m"]*_k6_vm/_k6_b["vol"],_k6_b["kappa"],0.005)
+chk("S6 market moves 7% when Ether moves 10%",10*_k6_e["kappa"],7,0.05); chk("S6 altcoin median correlation",_S.corr_m.median(),0.74,0.005); chk("S6 altcoin median volatility, four years",100*_S.vol.median(),86,0.5)
+for _k6_n,_k6_k,_k6_lo,_k6_hi in (("Ether",0.7,6,13),("large altcoin",0.47,4,9)): chk(f"S6 weight {_k6_n}: low",8*_k6_k,_k6_lo,0.5); chk(f"S6 weight {_k6_n}: high",19*_k6_k,_k6_hi,0.5)
+chk("S6 Ether weight at the midpoint",13.5*0.7,9.5,0.06); chk("S6 Ether concentration term as printed",100*1.9*0.64**2*0.095,7.4,0.05)
+for _k6_n,_k6_s,_k6_be,_k6_k,_k6_m,_k6_t in (("Bitcoin",0.42,1.75,1.0,1.9,(7.0,1.9,14,4.5,18.4)),("Ether",0.64,2.35,0.7,1.9,(9.4,1.9,16,7.4,23.7)),("large altcoin",0.76,2.1,0.47,2.0,(8.4,2.0,15,7.0,22.4)),("small coin",None,2.1,None,16.55,(8.4,16.6,30,None,None))):
+    _k6_fl=5.0+4*_k6_be+_k6_m; chk(f"Table 6 {_k6_n}: market term",4*_k6_be,_k6_t[0],0.001); chk(f"Table 6 {_k6_n}: mortality term",_k6_m,_k6_t[1],0.051); chk(f"Table 6 {_k6_n}: floor",_k6_fl,_k6_t[2],0.5)
+    if _k6_k is not None: _k6_c=100*1.9*_k6_s**2*0.135*_k6_k; chk(f"Table 6 {_k6_n}: concentration term",_k6_c,_k6_t[3],0.05); chk(f"Table 6 {_k6_n}: sum of the terms",_k6_fl+_k6_c,_k6_t[4],0.05)
+chk("Table 6 mortality midpoints: top-twenty",(0.3+3.5)/2,1.9,0.001); chk("Table 6 mortality midpoints: small coin",(15.7+17.4)/2,16.6,0.051)
+for _k6_n,_k6_key,_k6_sum in (("Bitcoin","Bitcoin",18.4),("Ether","Ether, average crypto owner (kappa 0.7)",23.7),("large altcoin","Large altcoin, average crypto owner",22.4)): chk(f"Table 6 {_k6_n}: median at most 0.3 below the sum of the terms",float(0<=_k6_sum-_med(_k6_key)<=0.35),1,0)
+_k6_o=open(os.path.join(OUT,"cross_section_terms.txt")).read().splitlines()
+for _k6_n,_k6_v in (("Bitcoin",18.4),("Ether",23.7),("Large altcoin",22.4)): chk(f"Table 6 against the script output: {_k6_n} sum",float([l for l in _k6_o if l.startswith(_k6_n)][0].split()[-1]),_k6_v,0.001)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)
@@ -415,7 +430,7 @@ for _bd,(_b1,_b2,_b3,_b4,_b5,_b6,_b7,_b8,_b9,_b10,_b11) in _BT.items():
     chk(f"T4 {_by} lower edge from its formula",100*(rf.iloc[_bi]+0.85*beta_roll.iloc[_bi]*0.04+sig2.iloc[_bi]*w_lo.iloc[_bi]+0.003),100*foc_lo.iloc[_bi],0.01)
     chk(f"T4 {_by} upper (a) from its formula",100*(rf.iloc[_bi]+1.15*beta_roll.iloc[_bi]*0.04+2.8*sig2.iloc[_bi]*w_hi.iloc[_bi]+0.035),100*foc_hi.iloc[_bi],0.01)
 chk("T4 market term moves 15% either way: 1.5/1.75",1.5/1.75,0.85,0.01); chk("T4 market term moves 15% either way: 2.0/1.75",2.0/1.75,1.15,0.01)
-chk("Reading 1: weight 2026 with ETF and treasury investors",100*w_lo.iloc[-1],8,0.5); chk("Reading 1: weight 2026 without",100*w_hi.iloc[-1],23,0.5)
+chk("Reading 1: weight 2026 with fund and treasury investors",100*w_lo.iloc[-1],8,0.5); chk("Reading 1: weight 2026 without",100*w_hi.iloc[-1],23,0.5)
 
 # Appendix A.3: when the co-movement with equities appeared (script 34_beta_windows.py)
 def _cm(x):

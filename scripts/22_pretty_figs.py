@@ -44,20 +44,18 @@ A=np.linspace(0.32,12,200)
 i2=int(np.argmin(np.abs(mid.values-2.45))); g=0.416
 ax.plot(A,(lam.iloc[i2]/(mid.iloc[i2]**g))*A**g,color=BLUE,lw=1.8,zorder=3)
 ax.plot(A,(lam.iloc[i2]*mid.iloc[i2])/A,color=RED,lw=1.4,ls=(0,(5,3)),zorder=2)
-ax.errorbar(mid,lam,yerr=1.96*se,fmt="o",color=INK,ecolor=MUT,elinewidth=1.0,
-            capsize=0,ms=4.5,zorder=4)
+ax.errorbar(mid,lam,yerr=1.96*se,fmt="o",mfc="white",mec=INK,mew=1.5,ecolor=MUT,elinewidth=1.0,
+            capsize=0,ms=6.5,zorder=4)
 ax.set_xscale("log"); ax.set_yscale("log")
-ax.set_xticks([0.3,0.5,1,2,3,5,8,12]); ax.set_xticklabels(["0.3","0.5","1","2","3","5","8","12"])
+ax.set_xticks([0.3,1,3,10]); ax.set_xticklabels(["0.3","1","3","10"]); ax.set_xlim(0.14,14)
 ax.set_ylim(0.0045,0.52)
 ax.set_yticks([0.01,0.03,0.1,0.3]); ax.set_yticklabels(["1%","3%","10%","30%"])
 ax.minorticks_off()
-ax.set_xlabel("asset age (years)"); ax.set_ylabel("deaths per asset-year")
-ax.text(4.3,0.30,"fitted: hazard RISES with age\n(elasticity +0.42)",color=BLUE,fontsize=9,weight="bold")
-ax.text(1.02,0.305,"Lindy hypothesis: λ = k/A\n(rejected)",color=RED,fontsize=9,ha="right")
-ax.set_title("Cryptoasset mortality rises with age")
-ax.text(0,1.018,"1,815 assets, 520 curated deaths, 2010–2026 · dots: empirical hazard ±95% CI",
-        transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
-ax.grid(which="major",axis="both",alpha=0.9); ax.grid(which="minor",visible=False)
+ax.set_xlabel("age of the asset, years (log scale)"); ax.set_ylabel("death rate, % a year (log scale)")
+ax.text(0.34,0.085,"fitted line:\nelasticity +0.42",color=BLUE,fontsize=9,weight="bold",va="bottom")
+ax.text(4.0,0.017,"Lindy shape:\ndeath rate = k / age",color=RED,fontsize=9,ha="left",va="top")
+ax.text(0.17,0.40,"circles: death rate in each age bucket, with 95% interval",fontsize=8.3,color=INK2,va="top")
+ax.grid(which="major",axis="y",alpha=1.0); ax.grid(which="minor",visible=False)
 ax.set_axisbelow(True)
 fig.tight_layout(); fig.savefig(f"{FIG}/fig1_hazard_age.pdf"); fig.savefig(f"{FIG}/fig1_hazard_age.png",dpi=200)
 print("saved fig1")
@@ -95,9 +93,9 @@ T=np.where(core["dead_cur"],(pd.to_datetime(core["death_cur_date"])-core["birth"
            (dataset_end-core["birth"]).dt.days/YR)
 core["T"]=np.clip(T,1/365.25,None); core["E"]=core["dead_cur"].astype(int)
 has=core["peak_vol"].notna()
-qs=pd.qcut(core.loc[has,"peak_vol"],4,labels=["smallest quartile","Q2","Q3","largest quartile"])
+qs=pd.qcut(core.loc[has,"peak_vol"],4,labels=["smallest quartile","second quartile","third quartile","largest quartile"])
 E20=pd.read_csv(f"{OUT}/elite_top20_curated.csv"); elite=set(E20["asset"])
-qcols={"smallest quartile":SEQ[200],"Q2":SEQ[350],"Q3":SEQ[450],"largest quartile":SEQ[650]}
+qcols={"smallest quartile":SEQ[200],"second quartile":SEQ[350],"third quartile":SEQ[450],"largest quartile":SEQ[650]}
 fig,ax=plt.subplots(figsize=(6.6,4.5))
 ends={}
 for q in qs.cat.categories:
@@ -111,21 +109,19 @@ km=KaplanMeierFitter().fit(sub["T"],sub["E"]); sf=km.survival_function_
 ax.plot(sf.index,sf.iloc[:,0],color=INK,lw=1.9,ls=(0,(4,2)),drawstyle="steps-post")
 ends["ever top-20"]=(min(sf.index.max(),12.9),float(sf[sf.index<=13].iloc[-1,0]),len(sub))
 # direct labels at line ends
-offsets={"smallest quartile":-0.015,"Q2":0.0,"Q3":-0.01,"largest quartile":0.035,"ever top-20":-0.028}
+offsets={"smallest quartile":-0.015,"second quartile":0.025,"third quartile":-0.03,"largest quartile":0.035,"ever top-20":-0.028}
 for q,(xe,ye,n) in ends.items():
     c=qcols.get(q,INK)
     yy=ye+offsets.get(q,0)
     ax.plot([13.05,13.55],[yy,yy],color=c,lw=2.6 if q=="ever top-20" else 2.2,
             ls=(0,(3,1.5)) if q=="ever top-20" else "-",clip_on=False)
-    ax.text(13.75,yy,f"{q} (n={n})",color=INK2,fontsize=8.8,va="center",
+    ax.text(13.75,yy,f"{'ever in the top twenty' if q=='ever top-20' else q} ({n} assets)",color=INK2,fontsize=8.8,va="center",
             weight="bold" if q=="ever top-20" else "normal")
-ax.set_xlabel("age (years)"); ax.set_ylabel("fraction surviving")
+ax.set_xlabel("age of the asset, years"); ax.set_ylabel("share of assets still alive")
 ax.set_xlim(0,13)
 ax.spines["bottom"].set_bounds(0,13); ax.set_ylim(0,1.02)
 ax.set_yticks([0,0.25,0.5,0.75,1.0]); ax.set_yticklabels(["0%","25%","50%","75%","100%"])
-ax.set_title("Survival curves by size")
-ax.text(0,1.018,"Kaplan–Meier estimates · 1,815 cryptoassets, curated deaths, 2010–2026",
-        transform=ax.transAxes,fontsize=8.5,color=INK2,va="bottom")
+ax.axhline(0.5,color=MUT,lw=0.8,ls=(0,(2,2)),zorder=1); ax.text(12.9,0.515,"half dead",fontsize=8,color=INK2,ha="right",va="bottom")
 finish(fig,[ax],f"{FIG}/fig5_km_size")
 
 # ============ FIG 4: elite death timeline ============

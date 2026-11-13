@@ -402,22 +402,22 @@ This paper supplies both ends of the gap: $\mu_0$ of 12--15\% and $\hat{\mu}$ of
 \begin{table}[ht]\centering\small
 \caption{Average and compound required returns in 2026.}
 \label{tab:compound}
-\setlength{\tabcolsep}{4.5pt}\begin{tabular}{llccccc@{\hskip 1em}c}
+\setlength{\tabcolsep}{4.5pt}\begin{tabular}{lcccccc@{\hskip 1em}c}
 \toprule
  & & \multicolumn{4}{c}{Required return and risk, \% a year} & \multicolumn{2}{c}{Sharpe ratio} \\
 \cmidrule(lr){3-6}\cmidrule(lr){7-8}
- & Model & Average & Volatility & Drag & Compound & Average & Compound \\
+ & Beta & Average & Volatility & Drag & Compound & Average & Compound \\
 \midrule
-Global equities (MSCI ACWI) & CAPM & 8.8 & 13.8 & 1.0 & 7.8 & 0.28 & $\phantom{-}0.21$ \\
-S\&P 500 & CAPM & 9.0 & 14.1 & 1.0 & 8.0 & 0.28 & $\phantom{-}0.21$ \\
-Nasdaq-100 & CAPM & 9.5 & 17.2 & 1.5 & 8.0 & 0.26 & $\phantom{-}0.18$ \\
-Russell 2000 & CAPM & 9.7 & 19.1 & 1.8 & 7.9 & 0.25 & $\phantom{-}0.15$ \\
-Gold & MCM & 5.5 & 15.5 & 1.2 & 4.3 & 0.03 & $-0.05$ \\
-Bitcoin & MCM & 18.3 & 42 & 8.8 & 9.5 & 0.32 & $\phantom{-}0.11$ \\
-Ether & MCM & 23.4 & 64 & 20.5 & 2.9 & 0.29 & $-0.03$ \\
+Global equities (MSCI ACWI) & 0.95 & 8.8 & 13.8 & 1.0 & 7.8 & 0.28 & $\phantom{-}0.21$ \\
+S\&P 500 & 1.00 & 9.0 & 14.1 & 1.0 & 8.0 & 0.28 & $\phantom{-}0.21$ \\
+Nasdaq-100 & 1.12 & 9.5 & 17.2 & 1.5 & 8.0 & 0.26 & $\phantom{-}0.18$ \\
+Russell 2000 & 1.18 & 9.7 & 19.1 & 1.8 & 7.9 & 0.25 & $\phantom{-}0.15$ \\
+Gold & 0.0 & 5.5 & 15.5 & 1.2 & 4.3 & 0.03 & $-0.05$ \\
+Bitcoin & 1.75 & 18.3 & 42 & 8.8 & 9.5 & 0.32 & $\phantom{-}0.11$ \\
+Ether & 2.35 & 23.4 & 64 & 20.5 & 2.9 & 0.29 & $-0.03$ \\
 \bottomrule
 \end{tabular}
-\par\smallskip\begin{minipage}{0.92\textwidth}\footnotesize Required returns in nominal US dollars, not histories (in euros: Appendix E.4). Model: the equity indices are priced by the CAPM, the 5\% risk-free rate plus the 4\% ERP times each index's beta on the S\&P 500 over January 2012 to April 2026 (0.95, 1, 1.12 and 1.18), with no separate size or style premium. Gold, Bitcoin and Ether are priced by the MCM equation~(\ref{eq:foc}) (Table~\ref{tab:cross}; for gold Appendix E, where the figure is an upper bound). Volatility: of monthly returns; for the equity indices and gold over the same months (ETF total returns, dividends reinvested), for Bitcoin and Ether with recent months weighted more (Appendix A.7). Drag: half the variance. Compound: average less drag, the growth rate of a position never rebalanced. Sharpe ratio: the average or compound return, less the 5\% risk-free rate, divided by volatility. The ratio on compound returns is descriptive; Sharpe's (1994) measure is defined on average returns.\end{minipage}
+\par\smallskip\begin{minipage}{0.92\textwidth}\footnotesize Required returns in nominal US dollars, not histories (in euros: Appendix E.4). Beta: to the S\&P 500; for the equity indices over January 2012 to April 2026, for gold, Bitcoin and Ether the midpoint of the range used. The equity indices are priced by the CAPM, the 5\% risk-free rate plus the 4\% ERP times beta, with no separate size or style premium. Gold, Bitcoin and Ether are priced by the MCM equation~(\ref{eq:foc}) (Table~\ref{tab:cross}; for gold Appendix E, where the figure is an upper bound). Volatility: of monthly returns; for the equity indices and gold over the same months (ETF total returns, dividends reinvested), for Bitcoin and Ether with recent months weighted more (Appendix A.7). Drag: half the variance. Compound: average less drag. Sharpe ratio: the average or compound return, less the 5\% risk-free rate, divided by volatility. The ratio on compound returns is descriptive; Sharpe's (1994) measure is defined on average returns.\end{minipage}
 \end{table}
 
 \textbf{Against equities, standing alone.} The S\&P 500's expected excess return is the ERP, 4\% (6\% in the high case). Its volatility was 14\% a year over January 2012 to April 2026 (Table~\ref{tab:compound}) and is 16--20\% over the long history (Dimson, Marsh, and Staunton 2002), so its Sharpe ratio (Sharpe 1994) is 0.20--0.29, and 0.30--0.43 in the high case. Bitcoin's is $(18.3-5)/42 \approx 0.32$, and about 0.27 once the mortality term, which is compensation for a loss and not a return, is taken out. If the required return is paid, Bitcoin offers about the same reward per unit of risk as equities on their recent volatility, and somewhat more on their long-run volatility; where there is an excess, it is the concentration premium.
@@ -909,22 +909,22 @@ The whole asset class & 8--15 & 17--231 & 12--23 & $+55$ & $+14$ \\
 \begin{table}[ht]\centering\small
 \caption{Average and compound required returns in 2026, for a euro investor.}
 \label{tab:compoundeur}
-\setlength{\tabcolsep}{4.5pt}\begin{tabular}{llccccc@{\hskip 1em}c}
+\setlength{\tabcolsep}{4.5pt}\begin{tabular}{lcccccc@{\hskip 1em}c}
 \toprule
  & & \multicolumn{4}{c}{Required return and risk, \% a year, in euros} & \multicolumn{2}{c}{Sharpe ratio} \\
 \cmidrule(lr){3-6}\cmidrule(lr){7-8}
- & Model & Average & Volatility & Drag & Compound & Average & Compound \\
+ & Beta & Average & Volatility & Drag & Compound & Average & Compound \\
 \midrule
-Global equities (MSCI ACWI) & CAPM & 7.2 & 12.6 & 0.8 & 6.4 & 0.30 & $\phantom{-}0.24$ \\
-S\&P 500 & CAPM & 7.4 & 13.8 & 1.0 & 6.4 & 0.29 & $\phantom{-}0.22$ \\
-Nasdaq-100 & CAPM & 7.9 & 16.9 & 1.4 & 6.5 & 0.27 & $\phantom{-}0.18$ \\
-Russell 2000 & CAPM & 8.1 & 18.8 & 1.8 & 6.3 & 0.25 & $\phantom{-}0.16$ \\
-Gold & MCM & 3.9 & 14.5 & 1.1 & 2.8 & 0.03 & $-0.04$ \\
-Bitcoin & MCM & 16.7 & 42 & 8.8 & 7.9 & 0.32 & $\phantom{-}0.11$ \\
-Ether & MCM & 21.8 & 64 & 20.5 & 1.3 & 0.29 & $-0.03$ \\
+Global equities (MSCI ACWI) & 0.95 & 7.2 & 12.6 & 0.8 & 6.4 & 0.30 & $\phantom{-}0.24$ \\
+S\&P 500 & 1.00 & 7.4 & 13.8 & 1.0 & 6.4 & 0.29 & $\phantom{-}0.22$ \\
+Nasdaq-100 & 1.12 & 7.9 & 16.9 & 1.4 & 6.5 & 0.27 & $\phantom{-}0.18$ \\
+Russell 2000 & 1.18 & 8.1 & 18.8 & 1.8 & 6.3 & 0.25 & $\phantom{-}0.16$ \\
+Gold & 0.0 & 3.9 & 14.5 & 1.1 & 2.8 & 0.03 & $-0.04$ \\
+Bitcoin & 1.75 & 16.7 & 42 & 8.8 & 7.9 & 0.32 & $\phantom{-}0.11$ \\
+Ether & 2.35 & 21.8 & 64 & 20.5 & 1.3 & 0.29 & $-0.03$ \\
 \bottomrule
 \end{tabular}
-\par\smallskip\begin{minipage}{0.92\textwidth}\footnotesize Required returns in nominal euros for an unhedged investor: the 3.4\% euro risk-free rate plus each asset's premium in Table~\ref{tab:compound}. Volatility: of monthly total returns (dividends reinvested) converted to euros, over the windows of Table~\ref{tab:compound}. Drag: half the variance. Compound: average less drag. Sharpe ratio: the average or compound return, less 3.4\%, divided by volatility. A hedged euro investor has the averages of this table and the volatilities of Table~\ref{tab:compound}.\end{minipage}
+\par\smallskip\begin{minipage}{0.92\textwidth}\footnotesize Beta as in Table~\ref{tab:compound}. Required returns in nominal euros for an unhedged investor: the 3.4\% euro risk-free rate plus each asset's premium in Table~\ref{tab:compound}. Volatility: of monthly total returns (dividends reinvested) converted to euros, over the windows of Table~\ref{tab:compound}. Drag: half the variance. Compound: average less drag. Sharpe ratio: the average or compound return, less 3.4\%, divided by volatility. A hedged euro investor has the averages of this table and the volatilities of Table~\ref{tab:compound}.\end{minipage}
 \end{table}
 
 The ranking of the assets is that of Table~\ref{tab:compound}, and for Bitcoin nothing changes but the level: 16.7\% on average and 7.9\% compounded, with the same Sharpe ratios. Measured against the global index, Bitcoin's compound return is 1.5 points higher in euros (7.9\% against 6.4\%) and 1.7 points higher in dollars (9.5\% against 7.8\%), at more than three times the volatility in both.

@@ -63,13 +63,13 @@ badge above shows the latest run.
 | `09_figures.py`, `11_km_figure.py`, `21_final_figs.py` | Draft figures and `wedge_table.csv` from an earlier calibration, kept for the record | not in the paper |
 | **2. The required-return model** | | |
 | `22_pretty_figs.py` | The shared construction of the required-return band (inputs, holder weight, edges), used by the scripts below; hazard and survival figures | Sections 3 and 5, Appendix C |
-| `23_uncertainty.py` | Propagation of the input ranges; sensitivities | Section 4, Tables 7 and 8, Appendix D.1 |
+| `23_uncertainty.py` | Propagation of the input ranges; sensitivities | Section 4, Tables 6 and 7, Appendix D.1 |
 | `26_holder_weight.py` | The holder weight through time | Appendix B |
 | `27_monthly_test.py` | The monthly test and its figure | Section 5 (Table 5) |
 | `28_cryptowide_backcast.py` | Back-cast on total crypto capitalization | Appendix D.5 |
 | `29_required_fig.py` | The required return since 2012; `required_band_monthly.csv` | Section 5 |
 | `30_inputs_fig.py` | The inputs that move with time | Section 5 |
-| `31_cross_section.py`, `32_eth_fig.py` | Ether and other cryptoassets | Section 7 |
+| `31_cross_section.py`, `32_eth_fig.py` | Ether and other cryptoassets | Section 6 |
 | `33_activity_beta.py` | On-chain activity and the equity beta | Appendix E.2 |
 | `34_beta_windows.py` | Beta by estimation window and against a global index; correlation by sub-period | Appendix A.1 to A.3 |
 | `35_option_bound.py` | Option-implied cap on the probability of a collapse | Appendix C.5 |
@@ -80,10 +80,9 @@ badge above shows the latest run.
 | `41_volatility_table.py` | Volatility by window and by currency | Appendix A.7 |
 | `43_band_table.py` | The band worked out at five dates: inputs, both candidates for the upper edge, midpoint | Table 4 |
 | `44_holders_and_comovement.py` | Bitcoin's correlation with the S&P 500 against the share of supply held through funds and by public companies | Appendix A.3 |
-| `45_euro_table.py` | Table 8 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
-| `46_outcome_odds.py` | Chance of each five-year outcome under this paper's forecast and under the age rule | Section 6, Table 6 |
+| `45_euro_table.py` | Table 7 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 1,060 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 1,039 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 
 `24_terms_fig.py`, `25_wedge_log.py` and `42_beta_fig.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables
@@ -99,7 +98,7 @@ locate `data/`, `outputs/` and `figures/` relative to the repository; the enviro
   (and close, where given) of the Vanguard S&P 500 ETF, the iShares MSCI ACWI ETF, the Vanguard
   Total World Stock ETF, the Invesco QQQ (Nasdaq-100), the iShares Russell 2000 ETF, and SPDR Gold Shares, the
   month-end euro/dollar rate (`data/eurusd_monthly.csv`) and the month-end ten-year Treasury
-  yield (`data/tnx_monthly.csv`, the CBOE TNX index), from Yahoo Finance, retrieved November 2026. Used for beta and for the equity and gold figures of the paper's Table 8.
+  yield (`data/tnx_monthly.csv`, the CBOE TNX index), from Yahoo Finance, retrieved November 2026. Used for beta and for the equity and gold figures of the paper's Table 7.
 - Survey anchors, wealth aggregates, and option-implied figures are quoted in the
   paper from their published sources (Cleveland Fed WP 26-16; Fed SCPC/SHED; Pew;
   OeNB Bulletin Q4/25; UBS GWR; arXiv:2410.15195; Deribit DVOL).

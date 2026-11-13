@@ -1,4 +1,4 @@
-"""Appendix A.7: how volatility is measured for every asset of Table 8, and how it changes with the window and the currency.
+"""Appendix A.7: how volatility is measured for every asset of Table 7, and how it changes with the window and the currency.
 Monthly log returns (total-return ETFs for the equity indices and gold; Coin Metrics prices for Bitcoin and Ether), annualized with sqrt(12).
 Windows end in April 2026. 'Recent months weighted' is the paper's measure for Bitcoin and Ether: squared returns, exponentially
 weighted with a half-life of nine months. Euro figures convert each return at the month-end EUR/USD rate. Output: volatility_table.txt"""

@@ -1,4 +1,4 @@
-"""Month-by-month test of the required return (Section 6, Appendix D.3, Figure 6).
+"""Month-by-month test of the required return (Section 5, Appendix D.2).
 At each month-end from January 2012 the required return is evaluated from that date's inputs and
 compared with Bitcoin's simple return over the following month. Non-overlapping observations;
 figures annualized as twelve times the monthly value. Writes outputs monthly_test.txt and fig_gap."""

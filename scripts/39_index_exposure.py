@@ -7,7 +7,7 @@ _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HER
 SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
 FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.environ.get("CM_CSV_DIR", os.path.join(DATA, "cmdata", "csv"))
 weights = {"Coinbase": 0.05, "Robinhood": 0.10, "Block": 0.07}      # percent of the S&P 500
-sig_btc, sig_idx, erp = 0.42, 0.141, 0.04                          # volatilities as in Table 8; equity premium 4%
+sig_btc, sig_idx, erp = 0.42, 0.141, 0.04                          # volatilities as in Table 7; equity premium 4%
 ratio = sig_btc**2 / sig_idx**2
 out = open(os.path.join(OUT,"index_exposure.txt"), "w")
 def line(s):

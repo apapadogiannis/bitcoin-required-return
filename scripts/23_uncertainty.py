@@ -25,7 +25,7 @@ if __name__ == "__main__":
     run("Bitcoin at gold sigma and w", 0.15, 1.5, 2.0, 0.02, 0.10, 0.003, 0.035)
     run("Bitcoin, sigma 0.35-0.50", (0.35, 0.50), 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
     run("Bitcoin, sigma 0.40-0.55 (option-implied)", (0.40, 0.55), 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
-    # Section 7: measured inputs (31_cross_section.py). kap is the beta of the crypto market on the asset.
+    # Section 6: measured inputs (31_cross_section.py). kap is the beta of the crypto market on the asset.
     run("Bitcoin, diversified holder (w=0)", 0.42, 1.5, 2.0, 0.0, 0.0, 0.003, 0.035)
     run("Ether, average crypto owner (kappa 0.7)", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.035, kap=0.7)
     run("Ether, diversified holder (w=0)", 0.64, 2.0, 2.7, 0.0, 0.0, 0.003, 0.035)

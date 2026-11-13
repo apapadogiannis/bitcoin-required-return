@@ -39,7 +39,7 @@ for (yr,val,lab,tx,ty) in [(2021.75,0.22,"22%",12.2,0.125),(2025.4,0.138,"13.8%"
     l_surv,=ax.plot([A_],[G(val)],marker="D",color="#008300",ms=5.5,ls="none",zorder=5)
     ax.annotate(lab,xy=(A_,G(val)),xytext=(tx,ty),fontsize=8.3,color="#008300",arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
 ax.plot([17.4],[0.18],marker="o",color=BLUE,ms=5.5,zorder=6)
-ax.annotate("forecast 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(16.2,0.072),fontsize=8.3,color=BLUE,arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
+ax.annotate("required return 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(16.55,0.064),fontsize=8.3,color=BLUE,arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
 ax.legend([l_real,l_per,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_surv,h_halv],

@@ -1,4 +1,4 @@
-"""Section 7: the equation for Ether and the other cryptoassets, with measured inputs.
+"""Section 6: the equation for Ether and the other cryptoassets, with measured inputs.
 Builds (i) the cap-weighted crypto market return, (ii) each priced asset's volatility, equity beta and
 'effective weight' factor kappa = Cov(r_i, r_cm)/Var(r_i), (iii) a survivorship-free equal-weighted altcoin basket."""
 import os

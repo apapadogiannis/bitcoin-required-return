@@ -481,3 +481,14 @@ chk("E.4 volatility lower in euros, smallest gap",min(14.1-13.8,17.2-16.9,19.1-1
 chk("E.4 euro volatility against the dollar",100*_eu_fx["2012-01":"2026-04"].std()*12**.5,7,0.5); chk("E.4 correlation of the euro's change with Bitcoin's return",(np.log(px).diff())["2012-01":"2026-04"].corr(_eu_fx_me),0.05,0.005)
 for _k,_x in (("global",_eu_R.ACWI),("sp500",_eu_R.VOO),("nasdaq",_eu_R.QQQ),("russell",_eu_R.IWM),("gold",_eu_R.GLD)): chk(f"E.4 correlation of the euro's change with {_k} is between 0.2 and 0.4",float(0.195<=_x.corr(_eu_fx.reindex(_x.index))<=0.445),1,0)
 chk("E.4 Bitcoin over global equities, compound, euros",7.9-6.4,1.5,0.001); chk("E.4 Bitcoin over global equities, compound, dollars",9.5-7.8,1.7,0.001); chk("E.4 volatility ratio above three, euros",float(42/12.6>3),1,0); chk("TNX file's November value is the 11 November download",_tn.loc["2026-11-01"],5.0,0.05)
+
+# Appendix D.4, table of other paths for the holder weight; Appendix B, table of fund and company holdings
+_pt_D=pd.DataFrame({"r":px.shift(-1)/px-1,"m":np.exp(_miu/12)-1}).dropna(); _pt_D=_pt_D[(_pt_D.index>="2012-01-01")&(_pt_D.index<="2026-04-30")]
+chk("D.4 table, US wealth: weight 2026 low",100*_wlu.iloc[-1],9,0.5); chk("D.4 table, US wealth: weight 2026 high",100*_whu.iloc[-1],29,0.5); chk("D.4 table, US wealth: gap 2012-26",1200*(_pt_D.r-_pt_D.m).mean(),54,0.6); chk("D.4 table, US wealth: gap 2018-26",1200*(_pt_D["2018":].r-_pt_D["2018":].m).mean(),14,0.6)
+_pt_lo=rf+0.85*beta_term+G_LO*sig2*w_lo_cw+0.003; _pt_hi=np.maximum(rf+1.15*beta_term+G_HI*sig2*w_hi_cw+0.035,rf+seg*sig2)
+chk("D.4 table, whole class: weight 2026 low",100*w_lo_cw.iloc[-1],8,0.5); chk("D.4 table, whole class: weight 2026 high",100*w_hi_cw.iloc[-1],15,0.5); chk("D.4 table, whole class: band 2013 low",100*_pt_lo.iloc[at("2013-06-30")],17,0.5); chk("D.4 table, whole class: band 2013 high",100*_pt_hi.iloc[at("2013-06-30")],231,0.5)
+chk("D.4 table, whole class: band 2026 low",100*_pt_lo.iloc[-1],12,0.5); chk("D.4 table, whole class: band 2026 high",100*_pt_hi.iloc[-1],23,0.5)
+_pt_o=open(os.path.join(OUT,"ownership_sensitivity.txt")).read().split("alternative:")[1]
+chk("D.4 table, ownership 3%: band 2013 low",float(_pt_o.split("2013-06:")[1].split("band")[1].split("-")[0]),15,0.5); chk("D.4 table, ownership 3%: gap since 2018",float(_pt_o.split("2018-26:")[1].split("midpoint")[2].split("(")[0]),21,0.5)
+chk("D.4 table, baseline band 2013 low",100*foc_lo.iloc[at("2013-06-30")],21,0.5); chk("D.4 table, baseline band 2026 high",100*req_hi.iloc[-1],27,0.5)
+for _dd,_tt in (("2019-12-31",0.281),("2020-12-31",0.703),("2021-12-31",0.861),("2022-12-31",0.857),("2023-12-31",0.901)): chk(f"B table: total {_dd[:4]}",inst_btc.iloc[at(_dd)]/1e6,_tt,0.001)

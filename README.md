@@ -71,7 +71,7 @@ badge above shows the latest run.
 | `30_inputs_fig.py` | The inputs that move with time | Section 5 |
 | `31_cross_section.py`, `32_eth_fig.py` | Ether and other cryptoassets | Section 7 |
 | `33_activity_beta.py` | On-chain activity and the equity beta | Appendix E.2 |
-| `34_beta_windows.py`, `42_beta_fig.py` | Beta by estimation window and against a global index; rolling beta figure | Appendix A.1 to A.3 |
+| `34_beta_windows.py` | Beta by estimation window and against a global index; correlation by sub-period | Appendix A.1 to A.3 |
 | `35_option_bound.py` | Option-implied cap on the probability of a collapse | Appendix C.5 |
 | `36_ownership_sensitivity.py` | Alternative ownership path | Appendix D.4 |
 | `37_age_rule_exponent.py`, `38_grouping_robustness.py` | Real-time age-rule exponent; other groupings of the monthly test | Appendix D.2 |
@@ -82,9 +82,9 @@ badge above shows the latest run.
 | `44_holders_and_comovement.py` | Bitcoin's correlation with the S&P 500 against the share of supply held through funds and by public companies | Appendix A.3 |
 | `45_euro_table.py` | Table 8 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 1,020 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 1,039 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 
-`24_terms_fig.py` and `25_wedge_log.py` draw earlier figures that are not in the paper. All scripts
+`24_terms_fig.py`, `25_wedge_log.py` and `42_beta_fig.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables
 `DATA_DIR`, `OUT_DIR`, `FIG_DIR` and `CM_CSV_DIR` override them.
 

@@ -397,3 +397,7 @@ chk("D.2 upper-edge mortality constant, points",100*float(_re2.search(r"G_HI\*si
 # Table 3: how the 8% lower end of the holder weight is built
 chk("T3 Bitcoin capitalization, $tn",cap.reindex(px.index).iloc[-1]/1e12,1.5,0.05); chk("T3 surveyed owners' wealth, $tn",Wp.iloc[-1]/1e12,7,0.5); chk("T3 fund and treasury investors' wealth at 1.5%, $tn",inst_val.iloc[-1]/0.015/1e12,13,0.5)
 chk("T3 combined weight, %",100*cap.reindex(px.index).iloc[-1]/(Wp.iloc[-1]+inst_val.iloc[-1]/0.015),8,0.1)
+
+# Section 5 and Appendix A.7: the volatility weights
+chk("A.7 weight of the latest 9 months, %",100*(1-0.5**(9/9)),50,0.01); chk("A.7 weight of the latest 18 months, %",100*(1-0.5**(18/9)),75,0.01); chk("A.7 weight of the latest 3 years, %",100*(1-0.5**(36/9)),94,0.3)
+_lw=np.log(px).diff().dropna(); _ww=0.5**(np.arange(len(_lw))[::-1]/9); chk("A.7 formula reproduces the script's volatility, May 2026 (%)",100*np.sqrt(12*(_ww*_lw.values**2).sum()/_ww.sum()),100*np.sqrt(sig2.iloc[-1]),0.01)

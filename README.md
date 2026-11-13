@@ -60,7 +60,7 @@ badge above shows the latest run.
 | `09_figures.py`, `22_pretty_figs.py` | Exhibits 1, 2 and 4 | Section 4 |
 | `11_km_figure.py` | Exhibit 5, Kaplan-Meier by size | Section 4 |
 | `10_robustness.py` | Cohort fixed effects, Weibull and log-logistic fits | Appendix B.1 |
-| `12_audit.py` (graveyard, 33 checks) and `scripts/13_model_audit.py` (required-return model, 812 checks); together they recompute every quantitative claim in the paper. `scripts/12_audit.py` | Re-checks every number quoted in the paper (prints PASS per claim) | all sections |
+| `12_audit.py` (graveyard, 33 checks) and `scripts/13_model_audit.py` (required-return model, 814 checks); together they recompute every quantitative claim in the paper. `scripts/12_audit.py` | Re-checks every number quoted in the paper (prints PASS per claim) | all sections |
 | `21_final_figs.py` | Required return vs realized drift vs age rule: `fig_wedge`, `wedge_table.csv`; Ether compression exhibit | Section 6, Table 6.1, Exhibit 6 |
 
 ## Data and licensing

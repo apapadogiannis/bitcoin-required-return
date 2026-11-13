@@ -381,3 +381,7 @@ chk("A.7 BTC recent-weighted May 2026",100*np.sqrt(_vt["D"]["Bitcoin"][:"2026-05
 def _gb(x):
     g=x[["Gold","S&P 500"]].dropna(); return g.cov().iloc[0,1]/g["S&P 500"].var()
 chk("E.1 gold beta 2012-26",_gb(_vX),0.10,0.006); chk("E.1 gold beta since 2020",_gb(_vX["2020":]),0.17,0.006); chk("E.1 beta 0.1 adds 0.4 points",0.1*4,0.4,0.001); chk("E.1 jewelry plus reserves share",44+18,62,0.5)
+
+# Appendix A.7: the rest of the world backed out of the global index, in dollars and in euros
+_vS=np.expm1(_vX[["Global equities (ACWI)","S&P 500"]]); _vf=np.expm1(_vt["fx"].reindex(_vX.index)); _vr=(_vS.iloc[:,0]-0.6*_vS.iloc[:,1])/0.4
+chk("A.7 rest of world vol in dollars",100*_vr.std()*12**.5,15,0.5); chk("A.7 rest of world vol in euros",100*((1+_vr)/(1+_vf)-1).std()*12**.5,13,0.5)

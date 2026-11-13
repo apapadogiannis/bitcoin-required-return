@@ -28,4 +28,9 @@ line(f"EUR/USD volatility 2012-01 to 2026-04: {100*fx['2012-01':'2026-04'].std()
 for lab, x in (("2012-01 to 2026-04", X), ("since 2020", X["2020":])):
     g = x[["Gold", "S&P 500"]].dropna(); b = g.cov().iloc[0, 1] / g["S&P 500"].var(); e = g["Gold"] - g["Gold"].mean() - b * (g["S&P 500"] - g["S&P 500"].mean())
     line(f"Gold beta on the S&P 500, {lab}: {b:.2f} (s.e. {np.sqrt(e.var(ddof=2)/((g['S&P 500']-g['S&P 500'].mean())**2).sum()):.2f}), correlation {g.corr().iloc[0,1]:.2f}")
+# Why the gap between the two indices depends on the currency: the rest of the world backed out of the global index at a US weight of 60% (simple returns)
+S = np.expm1(X[["Global equities (ACWI)", "S&P 500"]]); f = np.expm1(fx.reindex(X.index)); rest = (S.iloc[:, 0] - 0.6 * S.iloc[:, 1]) / 0.4
+line(f"Rest of the world (US weight 60%): volatility {100*rest.std()*12**.5:.1f} in dollars, {100*((1+rest)/(1+f)-1).std()*12**.5:.1f} in euros")
+bad = S.iloc[:, 1] < -0.05
+line(f"Months with the S&P 500 down more than 5%: {int(bad.sum())}; mean change of the euro against the dollar in those months {100*f[bad].mean():.1f}%")
 out.close()

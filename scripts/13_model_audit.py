@@ -504,6 +504,11 @@ chk("E.4 euro volatility against the dollar",100*_eu_fx["2012-01":"2026-04"].std
 for _k,_x in (("global",_eu_R.ACWI),("sp500",_eu_R.VOO),("nasdaq",_eu_R.QQQ),("russell",_eu_R.IWM),("gold",_eu_R.GLD)): chk(f"E.4 correlation of the euro's change with {_k} is between 0.2 and 0.4",float(0.195<=_x.corr(_eu_fx.reindex(_x.index))<=0.445),1,0)
 chk("E.4 Bitcoin over global equities, compound, euros",7.9-6.4,1.5,0.001); chk("E.4 Bitcoin over global equities, compound, dollars",9.5-7.8,1.7,0.001); chk("E.4 volatility ratio above three, euros",float(42/12.6>3),1,0); chk("TNX file's November value is the 11 November download",_tn.loc["2026-11-01"],5.0,0.05)
 
+_eu_bt=lambda c: float(_eu_E[c].cov(_eu_E.VOO)/_eu_E.VOO.var())
+chk("E.4 note: beta of the global index in euros",_eu_bt("ACWI"),0.88,0.005); chk("E.4 note: beta of gold in euros",_eu_bt("GLD"),0.00,0.005); chk("E.4 note: Nasdaq-100 and Russell 2000 betas in euros within 0.03 of dollars",float(abs(_eu_bt("QQQ")-1.12)<=0.03 and abs(_eu_bt("IWM")-1.18)<=0.03),1,0)
+_eu_bx=pd.DataFrame({"b":np.log(px).diff(),"s":_pxm(os.path.join(DATA,"voo_monthly.csv")),"f":_eu_fx_me}).dropna()["2022-05":"2026-04"]
+chk("E.4 note: Bitcoin's four-year beta in euros within 0.03 of dollars",float(abs((_eu_bx.b-_eu_bx.f).cov(_eu_bx.s-_eu_bx.f)/(_eu_bx.s-_eu_bx.f).var()-_eu_bx.b.cov(_eu_bx.s)/_eu_bx.s.var())<=0.03),1,0)
+
 # Appendix D.4, table of other paths for the holder weight; Appendix B, table of fund and company holdings
 _pt_D=pd.DataFrame({"r":px.shift(-1)/px-1,"m":np.exp(_miu/12)-1}).dropna(); _pt_D=_pt_D[(_pt_D.index>="2012-01-01")&(_pt_D.index<="2026-04-30")]
 chk("D.4 table, US wealth: weight 2026 low",100*_wlu.iloc[-1],9,0.5); chk("D.4 table, US wealth: weight 2026 high",100*_whu.iloc[-1],29,0.5); chk("D.4 table, US wealth: gap 2012-26",1200*(_pt_D.r-_pt_D.m).mean(),54,0.6); chk("D.4 table, US wealth: gap 2018-26",1200*(_pt_D["2018":].r-_pt_D["2018":].m).mean(),14,0.6)

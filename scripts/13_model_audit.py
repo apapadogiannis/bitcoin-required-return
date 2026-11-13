@@ -356,6 +356,7 @@ for _k6_d,_k6_ve,_k6_vb in (("2017-12-31",172,98),("2021-09-30",99,77),("2026-05
 chk("S6 priced cryptoassets with a capitalization",int(_cs["C"].notna().any().sum()),84,0); chk("S6 Bitcoin: w_i = kappa x w leaves the weight unchanged",round(float(_st("btc")["kappa"]),1),1.0,0.001); chk("S6 Ether months since 2018",_dl(_Rn["eth"])[3],100,0)
 _fg_l=[l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("2012–14")][0].split("|")[1].split(); _fg_g=float(_fg_l[2]); _fg_s=float(_fg_l[3].strip("(;"))
 chk("Figure 3: 2012-14 two-standard-error interval, lower end as annotated",_fg_g-2*_fg_s,-218,1.5); chk("Figure 3: 2012-14 two-standard-error interval, upper end as annotated",_fg_g+2*_fg_s,459,1.5)
+chk("S7 sizing example: hurdle with the low reading of mortality",5+7+0.3,12.3,0.001); chk("S7 Black-Litterman: full confidence",100*(18-12.3)/(3*0.42**2*100),11,0.5); chk("S7 Black-Litterman: half confidence, about 5%",0.5*100*(18-12.3)/(3*0.42**2*100),5,0.5)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)

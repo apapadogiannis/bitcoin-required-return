@@ -401,3 +401,18 @@ chk("T3 combined weight, %",100*cap.reindex(px.index).iloc[-1]/(Wp.iloc[-1]+inst
 # Section 5 and Appendix A.7: the volatility weights
 chk("A.7 weight of the latest 9 months, %",100*(1-0.5**(9/9)),50,0.01); chk("A.7 weight of the latest 18 months, %",100*(1-0.5**(18/9)),75,0.01); chk("A.7 weight of the latest 3 years, %",100*(1-0.5**(36/9)),94,0.3)
 _lw=np.log(px).diff().dropna(); _ww=0.5**(np.arange(len(_lw))[::-1]/9); chk("A.7 formula reproduces the script's volatility, May 2026 (%)",100*np.sqrt(12*(_ww*_lw.values**2).sum()/_ww.sum()),100*np.sqrt(sig2.iloc[-1]),0.01)
+
+# Table 4: the band worked out at five dates (script 43_band_table.py)
+_bt_early=rf+seg*sig2
+_BT={"2013-06-30":(2.5,151,3.00,3,3,100,21,42,231,231,126),"2017-06-30":(2.3,80,2.15,17,17,100,21,46,67,67,44),"2019-06-30":(2.0,90,0.70,25,25,51,25,64,43,64,44),
+     "2021-09-30":(1.5,77,1.30,15,19,11,15,42,8,42,29),"2026-05-31":(4.5,42,1.75,8,23,10,12,27,6,27,20)}
+for _bd,(_b1,_b2,_b3,_b4,_b5,_b6,_b7,_b8,_b9,_b10,_b11) in _BT.items():
+    _bi=at(_bd); _by=_bd[:7]
+    chk(f"T4 {_by} risk-free rate",100*rf.iloc[_bi],_b1,0.051); chk(f"T4 {_by} volatility",100*sig.iloc[_bi],_b2,0.5); chk(f"T4 {_by} beta",beta_roll.iloc[_bi],_b3,0.005)
+    chk(f"T4 {_by} average owner's weight, low",100*w_lo.iloc[_bi],_b4,0.5); chk(f"T4 {_by} average owner's weight, high",100*w_hi.iloc[_bi],_b5,0.5); chk(f"T4 {_by} early holder's weight",100*seg.iloc[_bi],_b6,0.5)
+    chk(f"T4 {_by} lower edge",100*foc_lo.iloc[_bi],_b7,0.5); chk(f"T4 {_by} upper (a)",100*foc_hi.iloc[_bi],_b8,0.5); chk(f"T4 {_by} upper (b)",100*_bt_early.iloc[_bi],_b9,0.5)
+    chk(f"T4 {_by} upper edge is the larger",100*req_hi.iloc[_bi],_b10,0.5); chk(f"T4 {_by} midpoint",100*req_mid.iloc[_bi],_b11,0.5)
+    chk(f"T4 {_by} lower edge from its formula",100*(rf.iloc[_bi]+0.85*beta_roll.iloc[_bi]*0.04+sig2.iloc[_bi]*w_lo.iloc[_bi]+0.003),100*foc_lo.iloc[_bi],0.01)
+    chk(f"T4 {_by} upper (a) from its formula",100*(rf.iloc[_bi]+1.15*beta_roll.iloc[_bi]*0.04+2.8*sig2.iloc[_bi]*w_hi.iloc[_bi]+0.035),100*foc_hi.iloc[_bi],0.01)
+chk("T4 market term moves 15% either way: 1.5/1.75",1.5/1.75,0.85,0.01); chk("T4 market term moves 15% either way: 2.0/1.75",2.0/1.75,1.15,0.01)
+chk("Reading 1: weight 2026 with ETF and treasury investors",100*w_lo.iloc[-1],8,0.5); chk("Reading 1: weight 2026 without",100*w_hi.iloc[-1],23,0.5)

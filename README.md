@@ -78,8 +78,9 @@ badge above shows the latest run.
 | `39_index_exposure.py` | Bitcoin exposure inside the S&P 500 | Appendix A.6 |
 | `40_death_date_check.py` | Collapse dates moved within their documented windows | Appendix C.3 |
 | `41_volatility_table.py` | Volatility by window and by currency | Appendix A.7 |
+| `43_band_table.py` | The band worked out at five dates: inputs, both candidates for the upper edge, midpoint | Table 4 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 833 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 902 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 
 `24_terms_fig.py` and `25_wedge_log.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables

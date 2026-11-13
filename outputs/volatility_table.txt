@@ -1,0 +1,19 @@
+US dollars
+                        2012-01 to 2026-04  last 5y  last 3y  last 1y  recent months weighted
+Global equities (ACWI)                13.8     14.9     12.2     12.7                    14.5
+S&P 500                               14.1     15.7     12.9     13.1                    15.1
+Nasdaq-100                            17.2     20.4     16.4     18.7                    20.1
+Russell 2000                          19.1     20.5     20.0     14.5                    19.8
+Gold                                  15.5     15.8     16.2     22.0                    21.6
+Bitcoin                               86.9     57.9     45.2     34.7                    43.4
+Ether                                111.2     73.1     64.1     62.2                    64.0
+
+Euros
+                        2012-01 to 2026-04  last 5y  last 3y  last 1y  recent months weighted
+Global equities (ACWI)                12.6     13.0     11.2      9.9                    12.9
+S&P 500                               13.8     14.7     13.0     11.1                    14.4
+
+Bitcoin, recent months weighted, May 2026: 41.8
+EUR/USD volatility 2012-01 to 2026-04: 7.4; correlation of the euro's monthly change with returns: ACWI 0.43, S&P 500 0.30
+Gold beta on the S&P 500, 2012-01 to 2026-04: 0.10 (s.e. 0.08), correlation 0.09
+Gold beta on the S&P 500, since 2020: 0.17 (s.e. 0.10), correlation 0.19

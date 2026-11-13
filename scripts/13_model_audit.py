@@ -212,9 +212,9 @@ _tn=pd.read_csv("/home/claude/model/extdata/tnx_monthly.csv",parse_dates=["Date"
 for _mth,_v in [("2026-09-01",5.3),("2026-10-01",4.9),("2026-11-01",5.0)]: chk(f"TNX {_mth}",_tn.loc[_mth],_v,0.05)
 chk("rf May 2026",100*rf.iloc[-1],4.5,0.05)
 chk("participation 2025 anchor",100*qpart.iloc[at("2025-06-30")],12,0.05); chk("participation 2021Q3 anchor",100*qpart.iloc[at("2021-09-30")],11,0.05); chk("back-cast w 2026 implied by flat participation",18.6*(cap.iloc[-1]/cap.iloc[i21])/1.4*11/12,23,1)
-for _n,_mu,_sg,_dr,_cp,_sh in [("global",8.8,13.8,1.0,7.8,0.28),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15,1.1,4.4,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",23.1,64,20.5,2.6,0.28)]:
+for _n,_mu,_sg,_dr,_cp,_sh in [("global",8.8,13.8,1.0,7.8,0.28),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15.5,1.2,4.3,0.03),("btc",18.0,42,8.8,9.2,0.31),("eth",23.1,64,20.5,2.6,0.28)]:
     chk(f"compound table {_n}: drag",_sg**2/200,_dr,0.05); chk(f"compound table {_n}: compound",_mu-_sg**2/200,_cp,0.05); chk(f"compound table {_n}: Sharpe",(_mu-5)/_sg,_sh,0.006)
-for _n,_mu,_sg,_cs in [("global",8.8,13.83,0.21),("sp500",9.0,14.06,0.21),("nasdaq",9.5,17.226,0.18),("russell",9.7,19.138,0.15),("gold",5.5,15,-0.04),("btc",18.0,42,0.10),("eth",23.1,64,-0.04)]:
+for _n,_mu,_sg,_cs in [("global",8.8,13.83,0.21),("sp500",9.0,14.06,0.21),("nasdaq",9.5,17.226,0.18),("russell",9.7,19.138,0.15),("gold",5.5,15.5,-0.05),("btc",18.0,42,0.10),("eth",23.1,64,-0.04)]:
     chk(f"compound table {_n}: Sharpe on the compound return",(_mu-_sg**2/200-5)/_sg,_cs,0.0051)
 chk("compound Sharpe: BTC half of equities' mean",0.10/np.mean([0.21,0.21,0.18,0.15]),0.5,0.05)
 chk("drag share BTC about half",8.8/18,0.5,0.02); chk("drag share ETH nine-tenths",20.5/23.1,0.9,0.02)
@@ -359,3 +359,25 @@ _u3=dict(l.split(" median ") for l in open("/home/claude/model/uncertainty_propa
 for _kk,_mm,_l5,_h5 in (("Bitcoin, mortality fixed at 3 (high reading)",19.3,17.0,22.7),("Bitcoin, mortality fixed at 0.3 (low reading)",16.6,14.3,20.0)):
     _vv=[v for k,v in _u3.items() if k.strip()==_kk][0]; _rr=_vv.split("90% ")[1].split(" |")[0].replace("%","").split("-")
     chk(f"D.1 {_kk} median",float(_vv.split("%")[0]),_mm,0.05); chk(f"D.1 {_kk} 5%",float(_rr[0]),_l5,0.05); chk(f"D.1 {_kk} 95%",float(_rr[1]),_h5,0.05)
+
+# Appendix A.7 (41_volatility_table.py) and Appendix E.1: volatility by window and currency; gold's beta
+with contextlib.redirect_stdout(io.StringIO()): _vt=runpy.run_path("/home/claude/model/41_volatility_table.py")
+_vtU=_vt["table"](_vt["D"]); _vtE=_vt["table"](_vt["D"].sub(_vt["fx"].reindex(_vt["D"].index),axis=0))
+_vtP={"Global equities (ACWI)":(13.8,14.9,12.2,12.7,14.5),"S&P 500":(14.1,15.7,12.9,13.1,15.1),"Nasdaq-100":(17.2,20.4,16.4,18.7,20.1),"Russell 2000":(19.1,20.5,20.0,14.5,19.8),"Gold":(15.5,15.8,16.2,22.0,21.6),"Bitcoin":(86.9,57.9,45.2,34.7,43.4),"Ether":(111.2,73.1,64.1,62.2,64.0)}
+for _vk,_vv in _vtP.items():
+    for _vi,_vx in enumerate(_vv): chk(f"A.7 vol USD {_vk} col {_vi+1}",_vtU.loc[_vk].iloc[_vi],_vx,0.051)
+for _vk,_vv in {"Global equities (ACWI)":(12.6,13.0,11.2,9.9,12.9),"S&P 500":(13.8,14.7,13.0,11.1,14.4)}.items():
+    for _vi,_vx in enumerate(_vv): chk(f"A.7 vol EUR {_vk} col {_vi+1}",_vtE.loc[_vk].iloc[_vi],_vx,0.051)
+_vd=_vtU["recent months weighted"]-_vtU["2012-01 to 2026-04"]; _ve=_vd.iloc[:4]
+chk("A.7 recent basis: equities more volatile, min",_ve.min(),0.7,0.06); chk("A.7 equities more volatile, max",_ve.max(),2.9,0.06); chk("A.7 gold more volatile",_vd["Gold"],6.1,0.06)
+_vc=[(_vtU["recent months weighted"][k]**2-_vtU["2012-01 to 2026-04"][k]**2)/200 for k in list(_vtP)[:5]]
+chk("A.7 compound lower, equities min",min(_vc[:4]),0.1,0.05); chk("A.7 compound lower, equities max",max(_vc[:4]),0.5,0.05); chk("A.7 compound lower, gold",_vc[4],1.1,0.05)
+_vn=[m-_vtU["recent months weighted"][k]**2/200 for k,m in zip(list(_vtP)[:4],(8.8,9.0,9.5,9.7))]
+chk("A.7 equity compound on recent basis, min",min(_vn),7.5,0.05); chk("A.7 equity compound on recent basis, max",max(_vn),7.9,0.05)
+_vg=(_vtU-_vtU.loc["Global equities (ACWI)"]).loc["S&P 500"]; _vh=(_vtE-_vtE.loc["Global equities (ACWI)"]).loc["S&P 500"]
+chk("A.7 USD gap S&P less ACWI, min",_vg.min(),0.3,0.11); chk("A.7 USD gap, max",_vg.max(),0.8,0.11); chk("A.7 EUR gap, min",_vh.min(),1.2,0.11); chk("A.7 EUR gap, max",_vh.max(),1.8,0.11)
+_vX=_vt["D"]["2012-01":"2026-04"]; chk("A.7 corr euro change, ACWI",_vX.iloc[:,0].corr(_vt["fx"]),0.4,0.05); chk("A.7 corr euro change, S&P",_vX.iloc[:,1].corr(_vt["fx"]),0.3,0.05)
+chk("A.7 BTC recent-weighted May 2026",100*np.sqrt(_vt["D"]["Bitcoin"][:"2026-05"].pow(2).ewm(halflife=9).mean().iloc[-1]*12),41.8,0.05)
+def _gb(x):
+    g=x[["Gold","S&P 500"]].dropna(); return g.cov().iloc[0,1]/g["S&P 500"].var()
+chk("E.1 gold beta 2012-26",_gb(_vX),0.10,0.006); chk("E.1 gold beta since 2020",_gb(_vX["2020":]),0.17,0.006); chk("E.1 beta 0.1 adds 0.4 points",0.1*4,0.4,0.001); chk("E.1 jewelry plus reserves share",44+18,62,0.5)

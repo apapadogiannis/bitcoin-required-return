@@ -438,3 +438,27 @@ chk("B.3 fund and treasury holdings 2026, million BTC",inst_btc.iloc[-1]/1e6,2.5
 chk("eq 3: band mid-2017 low",100*w_lo.iloc[at("2017-06-30")],15,0.5); chk("eq 3: band mid-2019 low",100*w_lo.iloc[at("2019-06-30")],20,0.5); chk("eq 3: band mid-2019 high",100*w_hi.iloc[at("2019-06-30")],25,0.5)
 chk("eq 3: band 2021Q3 low",100*w_lo.iloc[at("2021-09-30")],12,0.5); chk("eq 3: band 2021Q3 high",100*w_hi.iloc[at("2021-09-30")],19,0.5); chk("eq 3: weight 2013",100*w_hi.iloc[at("2013-06-30")],3,0.5); chk("eq 3: weight 2017",100*w_hi.iloc[at("2017-06-30")],17,0.5)
 chk("eq 3: k 2012",float(_ramp.iloc[at("2012-06-30")]),0.25,0.005); chk("eq 3: k 2026",float(_ramp.iloc[-1]),1.4,0.01)
+
+# Appendix A.3, "A test on holdings" (script 44_holders_and_comovement.py) and the sensitivity of Appendix B.3
+_hc_sply=pd.read_csv(os.path.join(CSV,"btc.csv"),usecols=["time","SplyCur"],parse_dates=["time"]).set_index("time")["SplyCur"]; _hc_sply.index=_hc_sply.index.tz_localize(None) if _hc_sply.index.tz is not None else _hc_sply.index
+_hc_sply=_hc_sply.resample("ME").last().reindex(px.index).ffill()
+def _hc_path(an):
+    _dd=pd.Series({pd.Timestamp(k):v for k,v in an.items()}).sort_index()
+    return pd.Series(np.interp(px.index.astype("int64").values.astype(float),_dd.index.astype("int64").values.astype(float),_dd.values,left=0.0),index=px.index)
+_hc_f=dict(_GBTC); _hc_f.update({"2024-01-11":0.62,"2024-07-22":0.90,"2024-12-31":1.13,"2025-06-28":1.24,"2026-06-01":1.29})
+_hc_p=dict(_PUBCO); _hc_p.update({"2024-09-30":0.33,"2024-12-31":0.58,"2025-05-31":0.67,"2025-09-30":1.00,"2025-12-31":1.10,"2026-04-19":1.13,"2026-09-21":1.27})
+_hc_t=100*1e6*(_hc_path(_hc_f)+_hc_path(_hc_p))/_hc_sply
+chk("A.3 share held, average 2014-19 (about 1%)",_hc_t["2014":"2019"].mean(),1.0,0.2); chk("A.3 share held, end of 2019",_hc_t.loc["2019-12-31"],1.5,0.06); chk("A.3 share held, end of 2020",_hc_t.loc["2020-12-31"],3.8,0.05)
+chk("A.3 share held, minimum from end-2020 to end-2023",_hc_t["2020-12-31":"2023-12-31"].min(),3.8,0.05); chk("A.3 share held, maximum from end-2020 to end-2023",_hc_t["2020-12-31":"2023-12-31"].max(),4.6,0.05); chk("A.3 share held, May 2026",_hc_t.iloc[-1],12,0.5)
+chk("A.3 correlation 2014-19",_cm(_d["2014":"2019"])[2],0.09,0.005); _hc_x=_d["2020":"2023"].drop(pd.Timestamp("2020-03-31")); chk("A.3 correlation 2020-23 without March 2020",_hc_x.b.corr(_hc_x.s),0.52,0.005)
+chk("A.3 model series and chart series agree, May 2026 (million BTC)",(_hc_path(_hc_f)+_hc_path(_hc_p)).iloc[-1],inst_btc.iloc[-1]/1e6,0.1)
+def _hc_run(sc):
+    _I={d:_GBTC[d]+sc*_PUBCO.get(d,0.0) for d in _GBTC}; _I.update({"2024-06-30":1.15,"2025-06-30":2.1,"2026-06-30":2.5})
+    _ib=pd.Series(np.interp(age,[(pd.Timestamp(d)-GEN).days/365.25 for d in _I],[1e6*v for v in _I.values()]),index=px.index)
+    _wl=(cap.reindex(px.index)/(Wp+_ib*px/0.015)).clip(upper=0.9); _lo=rf+0.85*beta_term+G_LO*sig2*_wl+0.003; _mi=0.5*(_lo+req_hi)
+    _DD=pd.DataFrame({"r":px.shift(-1)/px-1,"m":np.exp(_mi/12)-1}).dropna(); _DD=_DD[(_DD.index>="2012-01-01")&(_DD.index<="2026-04-30")]
+    return 100*(_lo-foc_lo).abs().max(),1200*(_DD.r-_DD.m).mean(),1200*(_DD["2018":].r-_DD["2018":].m).mean()
+_hc_b=_hc_run(1.0)
+for _sc in (0.5,2.0):
+    _hc_r=_hc_run(_sc); chk(f"B.3 public-company figures x{_sc}: lower edge moves by at most one point",float(_hc_r[0]<=1.0),1,0); chk(f"B.3 public-company figures x{_sc}: gaps move by at most 0.1",float(max(abs(_hc_r[1]-_hc_b[1]),abs(_hc_r[2]-_hc_b[2]))<=0.15),1,0)
+chk("E.3 J.P. Morgan weights sum",65+30+5,100,0); chk("E.3 J.P. Morgan weighted base case",0.65*10.7+0.30*10.7+0.05*(-3.2),10.0,0.1)

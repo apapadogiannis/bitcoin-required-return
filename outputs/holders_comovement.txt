@@ -1,0 +1,20 @@
+Share of the Bitcoin supply held through funds and by public companies, and Bitcoin's correlation with the S&P 500 (monthly log returns)
+period           months  correlation  funds %  companies %  together %
+2012-2013            24         0.23      0.0          0.0         0.0
+2014-2019            72         0.09      1.0          0.0         1.1
+2020-2023            48         0.56      3.1          0.9         4.0
+2024-May 2026        29         0.49      5.5          3.4         8.9
+
+2019-12-31: funds  1.44%  companies  0.11%  together  1.55%  | 12-month correlation -0.40  24-month -0.09
+2020-06-30: funds  2.35%  companies  0.31%  together  2.67%  | 12-month correlation +0.62  24-month +0.26
+2020-12-31: funds  3.27%  companies  0.52%  together  3.78%  | 12-month correlation +0.73  24-month +0.35
+2021-12-31: funds  3.41%  companies  1.14%  together  4.55%  | 12-month correlation +0.37  24-month +0.54
+2023-12-31: funds  3.16%  companies  1.44%  together  4.60%  | 12-month correlation +0.37  24-month +0.56
+2024-12-31: funds  5.71%  companies  2.93%  together  8.63%  | 12-month correlation +0.68  24-month +0.49
+2025-12-31: funds  6.35%  companies  5.51%  together 11.86%  | 12-month correlation +0.38  24-month +0.54
+2026-05-31: funds  6.44%  companies  5.83%  together 12.27%  | 12-month correlation +0.50  24-month +0.39
+
+24-month correlation against the share held (levels, 149 overlapping months): correlation 0.54
+  within 2014-2019: correlation of the 24-month correlation with the share held -0.49
+  within 2020-2023: correlation of the 24-month correlation with the share held +0.95
+  within 2024-May 2026: correlation of the 24-month correlation with the share held -0.20

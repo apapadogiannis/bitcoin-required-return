@@ -47,11 +47,15 @@ L2=[f"regression intercepts, percent per year ({len(RG)} months): alpha (se; t; 
     "period              CAPM alpha                  slope |  MCM alpha                   slope"]
 for lab,(c,m_) in AL.items():
     L2.append(f"alpha {lab:14s} {c['a']:+5.0f} ({c['se']:3.0f}; {c['t']:+.1f}; {c['thac']:+.1f})  {c['b']:5.2f} | {m_['a']:+5.0f} ({m_['se']:3.0f}; {m_['t']:+.1f}; {m_['thac']:+.1f})  {m_['b']:5.2f}")
+# cumulative unexplained return: each month's return less what the model allows, with the four-year beta known at that month-end
+CU=RG.copy(); CU["bt"]=beta_roll.reindex(CU.index); CU["capm"]=CU.r-CU.rf-CU.bt*(CU.s-CU.rf); CU["mcm"]=CU.r-CU.extra-CU.bt*(CU.s-CU.rf)
+for a_,b_ in (("2012","2026"),("2018","2026")):
+    x_=CU[a_:b_]; L2.append(f"cumulative unexplained return {a_}-{b_}, points: CAPM {100*x_.capm.sum():+.0f}, MCM {100*x_.mcm.sum():+.0f}; per year: CAPM {1200*x_.capm.mean():+.0f}, MCM {1200*x_.mcm.mean():+.0f}")
 open(f"{OUT}/monthly_test.txt","a").write("\n".join(L2)+"\n"); print("\n".join(L2))
 
 plt.rcParams["axes.titlepad"]=10
-fig=plt.figure(figsize=(9.4,7.9)); _gs=fig.add_gridspec(2,2,height_ratios=[1.0,0.86],hspace=0.62,wspace=0.24)
-ax=fig.add_subplot(_gs[0,0]); bx=fig.add_subplot(_gs[0,1]); cx=fig.add_subplot(_gs[1,:])
+fig=plt.figure(figsize=(9.4,11.6)); _gs=fig.add_gridspec(3,2,height_ratios=[1.0,0.86,0.86],hspace=0.58,wspace=0.24)
+ax=fig.add_subplot(_gs[0,0]); bx=fig.add_subplot(_gs[0,1]); cx=fig.add_subplot(_gs[1,:]); dx_=fig.add_subplot(_gs[2,:])
 x=np.arange(len(PER)); labs=[p[2] for p in PER]; O=[T[l] for l in labs]
 DOT=dict(marker="o",ms=7.5,mfc="white",mec=INK,mew=1.6,ls="none")          # delivered: the same open circle as in the figure of the required return
 HW=0.30
@@ -67,7 +71,7 @@ ticks=[10,20,50,100,200,400]; ax.set_yticks(ticks); ax.set_yticklabels([f"{t}%" 
 ax.set_ylim(10,480); ax.set_xlim(-0.6,len(PER)-0.3); ax.set_xticks(x); ax.set_xticklabels(labs)
 ax.set_ylabel("% per year (log scale)"); ax.set_title("(a) Delivered return against the required band",loc="left")
 ax.legend([plt.Line2D([],[],**DOT),Patch(facecolor=SEQ[100]),plt.Line2D([],[],color=BLUE,lw=2.4)],
-          ["delivered: 12 × the average monthly return","required band, average over the period","midpoint of the band"],
+          ["delivered: 12 × the average monthly return","required band, average over the period","required return used in the test: midpoint of the band"],
           loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=1,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35)
 # (b) the gap, delivered minus midpoint, with one and two standard errors
 YL=(-130,300)
@@ -83,14 +87,15 @@ for i,o in enumerate(O):
     if lo2<YL[0]: bx.annotate(f"to {lo2:+.0f}".replace("-","−"),xy=(i,YL[0]),xytext=(i+0.12,YL[0]+14),fontsize=7.8,color=MUT,va="center")
 bx.set_ylim(*YL); bx.set_xlim(-0.6,len(PER)-0.3); bx.set_xticks(x); bx.set_xticklabels(labs)
 bx.set_yticks([-100,0,100,200,300]); bx.set_yticklabels(["−100","0","+100","+200","+300"])
-bx.set_ylabel("percentage points per year"); bx.set_title("(b) The gap: delivered minus the midpoint",loc="left")
+bx.set_ylabel("percentage points per year"); bx.set_title("(b) The gap: delivered minus required (the midpoint)",loc="left")
 bx.legend([plt.Line2D([],[],**DOT),plt.Line2D([],[],color=INK2,lw=4.0),plt.Line2D([],[],color=MUT,lw=1.0),plt.Line2D([],[],color=BLUE,lw=1.4)],
-          ["gap, average over the period","± one standard error","± two standard errors","zero: delivered equals required"],
+          ["gap: circle minus blue line of panel (a)","± one standard error","± two standard errors","zero: delivered equals required"],
           loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=2,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35,columnspacing=1.6)
 # (c) regression intercepts: CAPM and MCM, by period and for the two long samples
 GR=[p[2] for p in PER]+["2012–26, all","2018–26"]; XL=[p[2] for p in PER]+["2012–26","2018–26"]
 xc=np.array([0,1,2,3,4,5.6,6.6]); YC=(-130,300)
-cx.axhline(0,color=INK2,lw=0.9,zorder=2); cx.axvline(4.8,color=GRID,lw=1.0,zorder=1)
+cx.axhline(0,color=INK2,lw=0.9,zorder=2); cx.axvline(4.8,color=BASE,lw=1.0,zorder=1)
+for i_ in (0,2,4,6): cx.axvspan(xc[i_]-0.5,xc[i_]+0.5,color="#f4f3ef",lw=0,zorder=0)
 for i,lab in enumerate(GR):
     for k,(o,col,dx) in enumerate(((AL[lab][0],ORANGE,-0.17),(AL[lab][1],BLUE,0.17))):
         g,sd=o["a"],o["se"]; xx=xc[i]+dx
@@ -98,11 +103,25 @@ for i,lab in enumerate(GR):
         cx.plot([xx,xx],[max(g-sd,YC[0]),min(g+sd,YC[1])],color=col,lw=4.0,zorder=4,solid_capstyle="butt",alpha=0.55)
         cx.plot([xx],[g],marker="s" if k==0 else "o",ms=7,mfc=col,mec="white",mew=1.2,ls="none",zorder=5)
         cx.text(xx+(-0.09 if k==0 else 0.09),g,f"{g:+.0f}".replace("-","−"),fontsize=8.6,color=INK,va="center",ha="right" if k==0 else "left",weight="bold")
+        if g+2*sd>YC[1]: cx.text(xx+(-0.07 if k==0 else 0.07),YC[1]-16,f"to {g+2*sd:+.0f}".replace("-","−"),fontsize=7.6,color=MUT,va="center",ha="right" if k==0 else "left")
+        if g-2*sd<YC[0]: cx.text(xx+(-0.07 if k==0 else 0.07),YC[0]+16,f"to {g-2*sd:+.0f}".replace("-","−"),fontsize=7.6,color=MUT,va="center",ha="right" if k==0 else "left")
 cx.set_ylim(*YC); cx.set_xlim(-0.85,7.2); cx.set_xticks(xc); cx.set_xticklabels(XL)
 cx.set_yticks([-100,0,100,200,300]); cx.set_yticklabels(["−100","0","+100","+200","+300"])
-cx.set_ylabel("percent per year"); cx.set_title("(c) What each model leaves unexplained: the regression intercept (alpha)",loc="left")
-cx.text(5.2,270,"long samples",fontsize=8,color=INK2,va="center")
+cx.set_ylabel("percent per year"); cx.set_title("(c) What each model leaves unexplained (alpha): CAPM and MCM side by side, for each three-year period",loc="left")
+cx.text(5.0,272,"whole sample, and since 2018",fontsize=8,color=INK2,va="center"); cx.text(2.0,272,"three-year periods",fontsize=8,color=INK2,va="center",ha="center")
 cx.legend([plt.Line2D([],[],marker="s",ms=7,mfc=ORANGE,mec="white",ls="none"),plt.Line2D([],[],marker="o",ms=7,mfc=BLUE,mec="white",ls="none"),plt.Line2D([],[],color=INK2,lw=4.0,alpha=0.55),plt.Line2D([],[],color=MUT,lw=1.0)],
           ["CAPM alpha","MCM alpha","± one standard error","± two standard errors"],loc="upper center",bbox_to_anchor=(0.5,-0.13),ncol=4,fontsize=8.2,frameon=False,handlelength=1.8,columnspacing=1.8)
-for a_ in (ax,bx,cx): a_.grid(axis="y",alpha=1.0); a_.set_axisbelow(True)
+# (d) cumulative unexplained return
+cc=100*CU.capm.cumsum(); cm=100*CU.mcm.cumsum(); td=CU.index+pd.offsets.MonthEnd(1)
+dx_.axhline(0,color=INK2,lw=0.9,zorder=2)
+dx_.plot(td,cc.values,color=ORANGE,lw=2.0,zorder=4); dx_.plot(td,cm.values,color=BLUE,lw=2.0,zorder=5)
+t18=pd.Timestamp("2018-01-01"); dx_.axvline(t18,color=MUT,lw=0.9,ls=(0,(2,2)),zorder=3)
+c18=float(cc[:"2017-12-31"].iloc[-1]); m18=float(cm[:"2017-12-31"].iloc[-1])
+dx_.text(td[-1]+pd.Timedelta(45,"D"),cc.iloc[-1],f"CAPM  {cc.iloc[-1]:+,.0f}".replace("-","−"),fontsize=8.8,color=INK,va="center",weight="bold",clip_on=False)
+dx_.text(td[-1]+pd.Timedelta(45,"D"),cm.iloc[-1],f"MCM  {cm.iloc[-1]:+,.0f}".replace("-","−"),fontsize=8.8,color=INK,va="center",weight="bold",clip_on=False)
+dx_.text(pd.Timestamp("2018-03-01"),cc.max()*1.02,f"since January 2018:  CAPM {cc.iloc[-1]-c18:+.0f},  MCM {cm.iloc[-1]-m18:+.0f}".replace("-","−"),fontsize=8.3,color=INK2,va="bottom")
+dx_.set_xlim(pd.Timestamp("2012-01-01"),pd.Timestamp("2026-06-30")); dx_.set_ylim(min(-150,cm.min()*1.1),cc.max()*1.13)
+dx_.set_ylabel("percentage points, cumulative"); dx_.set_title("(d) Cumulative unexplained return: a flat line means the model leaves nothing unexplained",loc="left")
+dx_.legend([plt.Line2D([],[],color=ORANGE,lw=2.0),plt.Line2D([],[],color=BLUE,lw=2.0)],["CAPM: return less the risk-free rate and beta × the S&P 500's excess return","MCM: the same, less the concentration and mortality terms"],loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=1,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35)
+for a_ in (ax,bx,cx,dx_): a_.grid(axis="y",alpha=1.0); a_.set_axisbelow(True)
 fig.savefig(f"{FIG}/fig_gap.pdf",bbox_inches="tight"); fig.savefig(f"{FIG}/fig_gap.png",dpi=200,bbox_inches="tight"); print("saved fig_gap")

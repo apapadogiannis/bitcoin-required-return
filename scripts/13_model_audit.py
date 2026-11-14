@@ -366,6 +366,9 @@ for _ak,_av in (("2012–26",((90,2.3),(37,0.9))),("2018–26",((24,1.1),(1,0.1)
     for _an,_ao,_ap in zip(("CAPM","MCM"),_alp(_ak),_av):
         chk(f"S5 {_an} alpha {_ak}",_ao[0],_ap[0],0.5)
         if _ap[1] is not None: chk(f"S5 {_an} alpha {_ak}, t",_ao[1],_ap[1],0.05)
+_cu={l.split(",")[0].split()[-1]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("cumulative unexplained return")}
+for _ck,_cv in (("2012-2026",(1307,546)),("2018-2026",(198,15))):
+    _cz=_cu[_ck].split("points:")[1].split(";")[0]; chk(f"S5 cumulative unexplained return {_ck}: CAPM",float(_cz.split("CAPM")[1].split(",")[0]),_cv[0],0.5); chk(f"S5 cumulative unexplained return {_ck}: MCM",float(_cz.split("MCM")[1]),_cv[1],0.5)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)

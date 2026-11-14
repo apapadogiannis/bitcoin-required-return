@@ -98,33 +98,39 @@ core["T"]=np.clip(T,1/365.25,None); core["E"]=core["dead_cur"].astype(int)
 has=core["peak_vol"].notna()
 qs=pd.qcut(core.loc[has,"peak_vol"],4,labels=["smallest quartile","second quartile","third quartile","largest quartile"])
 E20=pd.read_csv(f"{OUT}/elite_top20_curated.csv"); elite=set(E20["asset"])
-qcols={"smallest quartile":SEQ[200],"second quartile":SEQ[350],"third quartile":SEQ[450],"largest quartile":SEQ[650]}
-fig,ax=plt.subplots(figsize=(6.6,4.5))
-ends={}
+qcols={"smallest quartile":SEQ[200],"second quartile":SEQ[350],"third quartile":SEQ[550],"largest quartile":SEQ[650]}
+fig,ax=plt.subplots(figsize=(7.4,4.6))
+ends={}; meds={}
 for q in qs.cat.categories:
     sub=core.loc[has][qs==q]
     km=KaplanMeierFitter().fit(sub["T"],sub["E"])
     sf=km.survival_function_
-    ax.plot(sf.index,sf.iloc[:,0],color=qcols[q],lw=1.9,drawstyle="steps-post")
+    ax.plot(sf.index,sf.iloc[:,0],color=qcols[q],lw=2.2,drawstyle="steps-post",zorder=3)
+    _b=sf[sf.iloc[:,0]<=0.5]; meds[q]=float(_b.index[0]) if len(_b) else None
     ends[q]=(min(sf.index.max(),12.9),float(sf[sf.index<=13].iloc[-1,0]),len(sub))
 sub=core.loc[core.index.isin(elite)]
 km=KaplanMeierFitter().fit(sub["T"],sub["E"]); sf=km.survival_function_
-ax.plot(sf.index,sf.iloc[:,0],color=INK,lw=1.9,ls=(0,(4,2)),drawstyle="steps-post")
+ax.plot(sf.index,sf.iloc[:,0],color=ORANGE,lw=2.0,ls=(0,(4,2)),drawstyle="steps-post",zorder=4)
 ends["ever top-20"]=(min(sf.index.max(),12.9),float(sf[sf.index<=13].iloc[-1,0]),len(sub))
 # direct labels at line ends
 offsets={"smallest quartile":-0.015,"second quartile":0.025,"third quartile":-0.03,"largest quartile":0.035,"ever top-20":-0.028}
 for q,(xe,ye,n) in ends.items():
-    c=qcols.get(q,INK)
+    c=qcols.get(q,ORANGE)
     yy=ye+offsets.get(q,0)
     ax.plot([13.05,13.55],[yy,yy],color=c,lw=2.6 if q=="ever top-20" else 2.2,
             ls=(0,(3,1.5)) if q=="ever top-20" else "-",clip_on=False)
-    ax.text(13.75,yy,f"{'ever in the top twenty' if q=='ever top-20' else q} ({n} assets)",color=INK2,fontsize=8.8,va="center",
+    _mq=meds.get(q)
+    ax.text(13.75,yy,f"{'ever in the top twenty' if q=='ever top-20' else q}"+(f": half dead by age {_mq:.1f}" if _mq else ""),color=INK2,fontsize=8.8,va="center",
             weight="bold" if q=="ever top-20" else "normal")
 ax.set_xlabel("age of the asset, years"); ax.set_ylabel("share of assets still alive")
 ax.set_xlim(0,13)
 ax.spines["bottom"].set_bounds(0,13); ax.set_ylim(0,1.02)
 ax.set_yticks([0,0.25,0.5,0.75,1.0]); ax.set_yticklabels(["0%","25%","50%","75%","100%"])
-ax.axhline(0.5,color=MUT,lw=0.8,ls=(0,(2,2)),zorder=1); ax.text(12.9,0.515,"half dead",fontsize=8,color=INK2,ha="right",va="bottom")
+ax.axhline(0.5,color=MUT,lw=0.8,ls=(0,(2,2)),zorder=1); ax.text(12.9,0.515,"half of the group dead",fontsize=8,color=INK2,ha="right",va="bottom")
+for q,mv in meds.items():
+    if mv is not None:
+        ax.plot([mv],[0.5],marker="o",ms=6.5,mfc="white",mec=qcols[q],mew=1.8,zorder=6)
+print("median ages",{k:(round(v,1) if v else None) for k,v in meds.items()})
 finish(fig,[ax],f"{FIG}/fig5_km_size")
 
 # ============ FIG 4: elite death timeline ============

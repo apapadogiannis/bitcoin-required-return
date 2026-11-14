@@ -780,18 +780,18 @@ Among tracked assets the hazard \emph{rises} with age through at least age nine 
 
 \begin{figure}[!htbp]\centering
 \includegraphics[width=0.74\textwidth]{fig5_km_size.pdf}
-\caption{Kaplan--Meier survival curves by peak-volume quartile, with the ever-top-20 cohort (dashed). Half of the smallest quartile is dead by age 3.3; the largest quartile and the elite track each other and remain above 60\% survival past age 10.}
+\caption{How long cryptoassets survive, by size. Each line shows the share of a group still alive at each age (Kaplan--Meier estimates). The four solid lines are the quartiles of the 1,806 assets sorted by peak trading volume; the dashed line is the 219 assets that ever ranked in the top twenty. Circles mark the age at which half of a group is dead: 3.3 years for the smallest quartile, 4.6 and 5.7 for the next two. The largest quartile and the top twenty stay above 60\% alive past age ten.}
 \label{fig:km}
 \end{figure}
 
-\emph{Adoption, not age.} The death rate falls as an asset is adopted. Table~\ref{tab:adoption} places every asset-month in a band by the asset's average daily trading volume over the previous twelve months, and asks whether the asset is dead two years later. The share falls from 43\% below \$100,000 a day to 4\% above \$100 million, and the pattern holds when assets already fading are left out. Within each band the death rate still rises with age. Bitcoin passed through these bands between 2011 and 2017: its volume was about \$0.1 million a day in mid-2011, \$4 million in mid-2013, \$23 million in mid-2014 and \$236 million in mid-2017. Read off the table, its own risk of failure was some 15--20\% a year in 2011--13 and about 6\% in 2014--16. This is a rough reading, since an asset that leads its market differs from a later one of the same size, and the band of Section 5 does not use it.
+\emph{Adoption, not age.} The death rate falls as an asset is adopted. Table~\ref{tab:adoption} places every asset-month in a band by the asset's average daily trading volume over the previous twelve months, and asks whether the asset is dead two years later. The share falls from 43\% below \$100,000 a day to 4\% above \$100 million, and the pattern holds when assets whose volume has already fallen far below its earlier peak are left out. Within each band the death rate still rises with age. Bitcoin passed through these bands between 2011 and 2017: its volume was about \$0.1 million a day in mid-2011, \$4 million in mid-2013, \$23 million in mid-2014 and \$236 million in mid-2017. Read off the table, its own risk of failure was some 15--20\% a year in 2011--13 and about 6\% in 2014--16. This is a rough reading, since an asset that leads its market differs from a later one of the same size, and the band of Section 5 does not use it.
 
 \begin{table}[ht]\centering\small
 \caption{Cryptoassets dead within two years, by trading volume.}
 \label{tab:adoption}
 \begin{tabular}{lcccc}
 \toprule
- & \multicolumn{2}{c}{All asset-months} & \multicolumn{2}{c}{Not fading} \\
+ & \multicolumn{2}{c}{All assets} & \multicolumn{2}{c}{Assets near their peak volume} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Average daily volume & Dead within 2 years & Rate a year & Dead within 2 years & Rate a year \\
 \midrule
@@ -802,7 +802,7 @@ Average daily volume & Dead within 2 years & Rate a year & Dead within 2 years &
 \$100 million to \$1 billion & 4\% & 2\% & 4\% & 2\% \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.9\textwidth}{\footnotesize Volume: the average daily dollar volume of the previous twelve months, known at the start of the month. Dead within 2 years: the share of asset-months followed by the asset's death within 24 months (curated definition); living assets with less than 24 months of data ahead are left out. Rate a year: the constant annual death rate that gives that share. Not fading: asset-months in which volume is at least a third of the asset's own earlier peak. 39,115 asset-months in all.}
+\par\smallskip\parbox{0.9\textwidth}{\footnotesize Volume: the average daily dollar volume of the previous twelve months, known at the start of the month. Dead within 2 years: the share of asset-months followed by the asset's death within 24 months (curated definition); living assets with less than 24 months of data ahead are left out. Rate a year: the constant annual death rate that gives that share. Assets near their peak volume: only months in which the asset's volume is at least a third of the highest it had reached before. An asset whose volume has already collapsed is close to our definition of death, so leaving such months out shows that the pattern is not produced by that definition. 39,115 asset-months in all.}
 \end{table}
 
 \textbf{C.3 The curated elite death table.} Table~\ref{tab:elite} lists all 36 deaths among the 219 ever-top-20 assets. \emph{Type}: jump = sudden, value-destroying collapse; exchange = failure of the issuing exchange; fade = gradual abandonment and loss of listings; contested = flagged by a mechanical rule although the chain still operates. $\delta$ is the approximate fraction of pre-event value recoverable by a holder, an estimate and not an accounting figure. \emph{Conf.}\ flags classification confidence (H/M/L). The collapses of LUNA, UST and FTT are dated from the public record. LUNA and UST: May 12, 2022, the day Terra's validators halted the blockchain after LUNA had lost over 99\% of its value (Melinek 2022), inside the run of May 7 to 13 documented by Liu, Makarov, and Schoar (2023). FTT: November 10, 2022, the day the Securities Commission of The Bahamas froze the assets of FTX Digital Markets (Securities Commission of The Bahamas 2022); the token had lost three quarters of its value on November 8, and FTX filed for bankruptcy on November 11 (Vidal-Tom\'as, Briola, and Aste 2023). Dating the three deaths at either end of these windows changes no hazard, confidence interval or elasticity reported here.

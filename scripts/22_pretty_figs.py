@@ -37,28 +37,30 @@ def finish(fig,ax_list,path):
 YR=365.25
 
 # ============ FIG 1: hazard vs age ============
-hb=pd.read_csv(f"{OUT}/hazard_buckets_curated.csv"); hb=hb[hb["deaths"]>0]
-mid=np.sqrt(hb["a"]*hb["b"]); lam=hb["lam"]; se=np.sqrt(hb["deaths"])/hb["exp"]
-fig,ax=plt.subplots(figsize=(6.4,4.3))
-A=np.linspace(0.32,12,200)
-i2=int(np.argmin(np.abs(mid.values-2.45))); g=0.416
-ax.plot(A,(lam.iloc[i2]/(mid.iloc[i2]**g))*A**g,color=BLUE,lw=1.8,zorder=3)
-ax.plot(A,(lam.iloc[i2]*mid.iloc[i2])/A,color=RED,lw=1.4,ls=(0,(5,3)),zorder=2)
-ax.errorbar(mid,lam,yerr=1.96*se,fmt="o",mfc="white",mec=INK,mew=1.5,ecolor=MUT,elinewidth=1.0,
-            capsize=0,ms=6.5,zorder=4)
-ax.set_xscale("log"); ax.set_yscale("log")
-ax.set_xticks([0.3,1,3,10]); ax.set_xticklabels(["0.3","1","3","10"]); ax.set_xlim(0.14,14)
-ax.set_ylim(0.0045,0.52)
-ax.set_yticks([0.01,0.03,0.1,0.3]); ax.set_yticklabels(["1%","3%","10%","30%"])
-ax.minorticks_off()
-ax.set_xlabel("age of the asset, years (log scale)"); ax.set_ylabel("death rate, % a year (log scale)")
-ax.text(0.34,0.085,"fitted line:\nelasticity +0.42",color=BLUE,fontsize=9,weight="bold",va="bottom")
-ax.text(4.0,0.017,"Lindy shape:\ndeath rate = k / age",color=RED,fontsize=9,ha="left",va="top")
-ax.text(0.17,0.40,"circles: death rate in each age bucket, with 95% interval",fontsize=8.3,color=INK2,va="top")
-ax.grid(which="major",axis="y",alpha=1.0); ax.grid(which="minor",visible=False)
-ax.set_axisbelow(True)
+hb=pd.read_csv(f"{OUT}/hazard_buckets_curated.csv"); hb=hb[hb["deaths"]>0].reset_index(drop=True)
+# the nine age buckets of the paper's table: ages 1-1.5 and 1.5-2 are shown as one bucket
+_m=hb[(hb.a>=1.0)&(hb.b<=2.0)]; hb=pd.concat([hb[hb.b<=1.0],pd.DataFrame([dict(a=1.0,b=2.0,deaths=_m.deaths.sum(),exp=_m.exp.sum(),lam=_m.deaths.sum()/_m.exp.sum())]),hb[hb.a>=2.0]],ignore_index=True)
+lam=100*hb["lam"]; se=100*np.sqrt(hb["deaths"])/hb["exp"]; mid=np.sqrt(hb["a"]*hb["b"])
+labs=[f"{a_:g}–{b_:g}" for a_,b_ in zip(hb.a,hb.b)]; xb=np.arange(len(hb))
+fig,ax=plt.subplots(figsize=(7.2,4.3))
+few=hb["deaths"]<10
+ax.bar(xb[~few],lam[~few],width=0.72,color=SEQ[350],zorder=3)
+ax.bar(xb[few],lam[few],width=0.72,color=SEQ[100],edgecolor=SEQ[350],lw=1.0,zorder=3)
+ax.errorbar(xb,lam,yerr=[np.minimum(1.96*se,lam),1.96*se],fmt="none",ecolor=INK2,elinewidth=1.0,capsize=2.5,zorder=4)
+for i_ in range(len(hb)):
+    ax.text(xb[i_]-0.05,lam[i_]+0.5,f"{lam[i_]:.1f}%" if lam[i_]<10 else f"{lam[i_]:.0f}%",ha="right",va="bottom",fontsize=8.8,color=INK,weight="bold",zorder=6)
+    ax.text(xb[i_],0.45,f"{int(hb.deaths[i_])}",ha="center",va="bottom",fontsize=7.6,color="white" if not few[i_] and lam[i_]>3 else INK2,zorder=6)
+# the Lindy shape, death rate = k / age, drawn through the bucket of ages 2-3
+i2=int(np.argmin(np.abs(mid.values-2.45))); lind=lam.iloc[i2]*mid.iloc[i2]/mid
+YM=31.0; ax.plot(xb,np.minimum(lind,YM+5),color=RED,lw=1.6,ls=(0,(5,3)),marker="o",ms=4,mfc=RED,mec="white",mew=0.8,zorder=5,clip_on=True)
+ax.text(xb[i2]+0.15,lind.iloc[i2-1]*0.0+26.5,"if survival made an asset safer (Lindy),\nthe death rate would fall like this",color=RED,fontsize=8.6,va="center",ha="left")
+ax.text(xb[-1]+0.42,lam.iloc[-1]+8.5,"4 deaths:\nwide interval",fontsize=7.8,color=INK2,ha="right",va="bottom")
+ax.set_ylim(0,YM); ax.set_yticks([0,10,20,30]); ax.set_yticklabels(["0%","10%","20%","30%"])
+ax.set_xticks(xb); ax.set_xticklabels(labs); ax.set_xlim(-0.6,len(hb)-0.4)
+ax.set_xlabel("age of the cryptoasset, years"); ax.set_ylabel("share dying within a year")
+ax.text(-0.5,0.45,"deaths:",fontsize=7.6,color=INK2,ha="right",va="bottom",clip_on=False)
+ax.grid(axis="y",alpha=1.0); ax.set_axisbelow(True)
 fig.tight_layout(); fig.savefig(f"{FIG}/fig1_hazard_age.pdf"); fig.savefig(f"{FIG}/fig1_hazard_age.png",dpi=200)
-print("saved fig1")
 
 # ============ FIG 2: hazard by size ============
 sz=pd.read_csv(f"{OUT}/hazard_by_size_curated.csv")

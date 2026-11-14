@@ -99,7 +99,7 @@ T=np.where(core["dead_cur"],(pd.to_datetime(core["death_cur_date"])-core["birth"
 core["T"]=np.clip(T,1/365.25,None); core["E"]=core["dead_cur"].astype(int)
 has=core["peak_vol"].notna()
 qs=pd.qcut(core.loc[has,"peak_vol"],4,labels=["smallest quartile","second quartile","third quartile","largest quartile"])
-E20=pd.read_csv(f"{OUT}/elite_top20_curated.csv"); elite=set(E20["asset"])
+E20=pd.read_csv(f"{OUT}/elite_top20_curated.csv",parse_dates=["first_top"]); elite=set(E20["asset"])
 qcols={"smallest quartile":SEQ[200],"second quartile":SEQ[350],"third quartile":SEQ[550],"largest quartile":SEQ[650]}
 fig,ax=plt.subplots(figsize=(7.4,4.6))
 ends={}; meds={}
@@ -110,8 +110,9 @@ for q in qs.cat.categories:
     ax.plot(sf.index,sf.iloc[:,0],color=qcols[q],lw=2.2,drawstyle="steps-post",zorder=3)
     _b=sf[sf.iloc[:,0]<=0.5]; meds[q]=float(_b.index[0]) if len(_b) else None
     ends[q]=(min(sf.index.max(),12.9),float(sf[sf.index<=13].iloc[-1,0]),len(sub))
-sub=core.loc[core.index.isin(elite)]
-km=KaplanMeierFitter().fit(sub["T"],sub["E"]); sf=km.survival_function_
+# a top-twenty asset is followed from the month it first ranks in the top twenty (delayed entry), as in the 3.5% a year of the size table
+sub=core.loc[core.index.isin(elite)].copy(); sub["entry"]=((E20.set_index("asset")["first_top"].reindex(sub.index)-sub["birth"]).dt.days/YR).clip(lower=0); sub=sub[sub["entry"]<sub["T"]]
+km=KaplanMeierFitter().fit(sub["T"],sub["E"],entry=sub["entry"]); sf=km.survival_function_
 ax.plot(sf.index,sf.iloc[:,0],color=ORANGE,lw=2.0,ls=(0,(4,2)),drawstyle="steps-post",zorder=4)
 ends["ever top-20"]=(min(sf.index.max(),12.9),float(sf[sf.index<=13].iloc[-1,0]),len(sub))
 # direct labels at line ends

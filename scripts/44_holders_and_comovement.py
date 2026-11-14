@@ -1,13 +1,8 @@
 """Appendix A.3: Bitcoin's correlation with the S&P 500 through time, against the share of the Bitcoin supply held through funds
 (the Grayscale trust, then the US spot ETFs) and by public companies (treasury companies). Two panels on one time axis.
 Outputs: fig_holders_comovement.pdf/png, holders_comovement.txt
-Anchors (million BTC), linear in between:
-  funds: Grayscale Bitcoin Trust year-end balances from its SEC filings (2013-2023); US spot ETFs including the converted trust:
-         0.62 at launch (January 11, 2024), 0.90 (July 22, 2024), 1.13 (end of 2024), 1.24 (June 28, 2025), 1.29 (June 1, 2026), from press
-         reports of issuer data.
-  public companies: 0.02 (end of 2019), 0.096 (2020), 0.216 (2021), 0.225 (2022), 0.281 (2023) as in 22_pretty_figs.py; then 0.33
-         (September 30, 2024), 0.58 (end of 2024), 0.67 (May 2025), 1.00 (September 30, 2025), 1.10 (end of 2025), 1.13 (April 19, 2026),
-         1.27 (September 21, 2026), from Bitcoin Treasuries reports."""
+Holdings: the series of the paper's holdings table (22_pretty_figs.py), linear between its dates; the split between funds and
+  public companies is the table's where it gives one and linear in between."""
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__)); _ROOT = os.path.dirname(_HERE) if os.path.basename(_HERE) == "scripts" else _HERE
 SCRIPTS = _HERE; DATA = os.environ.get("DATA_DIR", os.path.join(_ROOT, "data")); OUT = os.environ.get("OUT_DIR", os.path.join(_ROOT, "outputs"))
@@ -25,9 +20,12 @@ def path(anchors):
     d = pd.Series({pd.Timestamp(k): v for k, v in anchors.items()}).sort_index()
     t = px.index.astype("int64").values.astype(float); x = d.index.astype("int64").values.astype(float)
     return pd.Series(np.interp(t, x, d.values, left=0.0), index=px.index)
-FUNDS = dict(_GBTC); FUNDS.update({"2024-01-11": 0.62, "2024-07-22": 0.90, "2024-12-31": 1.13, "2025-06-28": 1.24, "2026-06-01": 1.29})
-PUBCO = dict(_PUBCO); PUBCO.update({"2024-09-30": 0.33, "2024-12-31": 0.58, "2025-05-31": 0.67, "2025-09-30": 1.00, "2025-12-31": 1.10, "2026-04-19": 1.13, "2026-09-21": 1.27})
-funds = 100 * 1e6 * path(FUNDS) / sply; pub = 100 * 1e6 * path(PUBCO) / sply; tot = funds + pub
+# the total is the series of the holdings table (inst_btc of 22_pretty_figs.py); the split between funds and companies is the
+# table's where it gives one (year-ends to 2023, and 1.25 against 1.26 in mid-2026) and linear in between
+SHARE = {d: (_GBTC[d] / (_GBTC[d] + _PUBCO.get(d, 0.0)) if _GBTC[d] > 0 else 1.0) for d in _GBTC}; SHARE["2026-06-30"] = 1.25 / 2.51
+_sd = pd.Series({pd.Timestamp(k): v for k, v in SHARE.items()}).sort_index()
+share = pd.Series(np.interp(px.index.astype("int64").values.astype(float), _sd.index.astype("int64").values.astype(float), _sd.values), index=px.index)
+tot = 100 * inst_btc.reindex(px.index) / sply; funds = tot * share; pub = tot - funds
 c24 = _d.b.rolling(24).corr(_d.s); c12 = _d.b.rolling(12).corr(_d.s)
 out = open(os.path.join(OUT, "holders_comovement.txt"), "w")
 def p(s=""):

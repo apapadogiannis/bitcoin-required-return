@@ -115,7 +115,8 @@ _x=0.05+_rng.uniform(1.5,2.0,_N)*0.04+_rng.uniform(1.0,2.8,_N)*0.42**2*_rng.unif
 _q=np.percentile(_x,[5,50,95]); chk("D.1 required return 2026, crypto-wide back-cast: median",100*_q[1],17.7,0.1); chk("D.1 required return 2026, crypto-wide back-cast: 5%",100*_q[0],15.1,0.1); chk("D.1 required return 2026, crypto-wide back-cast: 95%",100*_q[2],20.6,0.1)
 chk("fn: all-in at 120% vol",100*1.2**2,144,0.1); chk("fn: conc term lo",100*1.0*0.42**2*0.08,1,0.5); chk("fn: conc term hi",100*2.8*0.42**2*0.19,9,0.5)
 _rr=px.pct_change(); chk("delivered 2017-07..2022-12 within the option bound 66-84 (+rf)",1200*_rr["2017-07":"2022-12"].mean(),75,12)
-chk("S&P hurdle",5+4,9,0); chk("diversified hurdle lo",5+6+1,12,0); chk("diversified hurdle hi",5+8+2,15,0); chk("rent lo",18-15,3,0); chk("rent hi",18-12,6,0); chk("age-rule believer holds more than 3x",37.2/10.8,3.4,0.15); chk("overstatement more than two-fifths",(32-18)/32,0.44,0.01)
+chk("S&P hurdle",5+4,9,0); _dh=[float(x_.split("%")[0]) for x_ in open(os.path.join(OUT,"uncertainty_propagation.txt")).read().split("Bitcoin, diversified holder (w=0)")[1].split("90% ")[1].split("|")[0].split("-")]
+chk("diversified hurdle lo (90% range)",_dh[0],12,0.5); chk("diversified hurdle hi (90% range)",_dh[1],16,0.5); chk("rent lo",18.3-_dh[1],3,0.5); chk("rent hi",18.3-_dh[0],6,0.5); chk("overstatement more than two-fifths",(32-18)/32,0.44,0.01)
 chk("required return rises per 1% of wealth at gamma 3",3*0.42**2,0.5,0.04)
 chk("required at gamma=1",5+7+1.9+100*1*0.42**2*0.135,16,0.3); chk("required at central gamma 1.9",5+7+1.9+100*1.9*0.42**2*0.135,18.3,0.3); chk("required at gamma=0 (central)",5+7+1.9,13.9,0.01); chk("2025 stated 13.8 inside the 12-15 floor",13.8,13.5,1.5)
 _rg=np.random.default_rng(1); _Ng=400000
@@ -237,7 +238,7 @@ e=pd.read_csv(os.path.join(CSV,"eth.csv"),parse_dates=["time"],usecols=["time","
 le=np.log(e).diff()["2021-10":]; chk("ETH drift 2021Q3->",100*(12*le.mean()+6*le.var()),19,1); chk("ETH CAGR 2021Q3->",100*(np.exp(12*le.mean())-1),-7,0.6)
 de=pd.DataFrame({"b":np.log(e).diff(),"s":_d.s}).dropna(); chk("ETH beta 4y",B(de.iloc[-48:]),2.7,0.05); chk("ETH beta since 2016",B(de["2016":]),2.0,0.05)
 chk("altcoin drift from -7% CAGR at 80% vol",-7+32,25,1); chk("altcoin shortfall",39-25,15,1.5); chk("market share of required",7/18,0.4,0.02)
-chk("hurdle lo",5+6,11,0.1); chk("hurdle hi",5+8,13,0.1); chk("sizing",100*(18.3-5-7-1.9)/(3*0.42**2*100),8,0.5); chk("sizing age rule",100*(32-5-7-1.9)/(3*0.42**2*100),34,0.5); chk("sizing across the hurdle range, low",100*(18.3-15)/(3*0.42**2*100),6,0.5); chk("sizing across the hurdle range, high",100*(18.3-12.3)/(3*0.42**2*100),11,0.5)
+chk("hurdle lo",5+6,11,0.1); chk("hurdle hi",5+8,13,0.1); chk("sizing",100*(18.3-5-7-1.9)/(3*0.42**2*100),8,0.5); chk("sizing age rule",100*(32-5-7-1.9)/(3*0.42**2*100),34,0.5); chk("sizing across the hurdle range, low",100*(18.3-_dh[1])/(3*0.42**2*100),5,0.5); chk("sizing across the hurdle range, high",100*(18.3-_dh[0])/(3*0.42**2*100),12,0.5)
 chk("Sharpe BTC",(18.3-5)/42,0.32,0.006); chk("Sharpe BTC ex mort",(18.3-5-1.9)/42,0.27,0.01); chk("Sharpe market term",7/42,0.15,0.02); chk("Sharpe conc",1.9*0.42*0.135,0.11,0.01); chk("Sharpe sum",0.15+0.11+0.05,0.31,0.001); chk("Sharpe mort",1.9/42,0.05,0.005); chk("Sharpe diluted",0.15+0.05,0.20,0.001)
 chk("Sharpe units 2013",(t13-100*rf.iloc[at('2013-06-30')])/(100*sig.iloc[at('2013-06-30')]),0.8,0.05); chk("hist premium BTC required",18+7,25,0.5); chk("hist premium BTC Sharpe",(25-5)/42,0.48,0.01); chk("diluted Sharpe",0.15+0.04,0.19,0.01)
 # Appendix B

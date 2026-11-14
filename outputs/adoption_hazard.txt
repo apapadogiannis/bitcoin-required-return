@@ -1,0 +1,7 @@
+daily dollar volume          asset-months dead in 2y  rate/yr |  not fading dead in 2y  rate/yr
+$10,000 to $100,000                  3707        43%      28% |        1289        28%      17%
+$100,000 to $1 million               9981        36%      22% |        3123        29%      17%
+$1 to $10 million                   14691        27%      16% |        4278        24%      14%
+$10 to $100 million                  8739        12%       6% |        2497        11%       6%
+$100 million to $1 billion           1997         4%       2% |         747         4%       2%
+Bitcoin, trailing twelve-month average daily volume at mid-year: 2011: $0.11m, 2012: $0.34m, 2013: $4.40m, 2014: $23.26m, 2015: $14.24m, 2016: $41.51m, 2017: $235.93m, 2018: $2,837.60m

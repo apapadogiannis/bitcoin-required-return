@@ -29,7 +29,7 @@ echo "== 23_uncertainty"; python3 -I scripts/23_uncertainty.py > "$OUT_DIR/uncer
 for f in 22_pretty_figs 26_holder_weight 27_monthly_test 28_cryptowide_backcast 29_required_fig \
          30_inputs_fig 31_cross_section 33_activity_beta 34_beta_windows 35_option_bound \
          36_ownership_sensitivity 37_age_rule_exponent 38_grouping_robustness 39_index_exposure \
-         40_death_date_check 41_volatility_table 43_band_table 44_holders_and_comovement 45_euro_table; do
+         40_death_date_check 41_volatility_table 43_band_table 44_holders_and_comovement 45_euro_table 46_adoption_hazard; do
   echo "== $f"; python3 -I "scripts/$f.py"
 done
 

@@ -369,6 +369,13 @@ for _ak,_av in (("2012–26",((90,2.3),(37,0.9))),("2018–26",((24,1.1),(1,0.1)
 _cu={l.split(",")[0].split()[-1]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("cumulative unexplained return")}
 for _ck,_cv in (("2012-2026",(1307,546)),("2018-2026",(198,15))):
     _cz=_cu[_ck].split("points:")[1].split(";")[0]; chk(f"S5 cumulative unexplained return {_ck}: CAPM",float(_cz.split("CAPM")[1].split(",")[0]),_cv[0],0.5); chk(f"S5 cumulative unexplained return {_ck}: MCM",float(_cz.split("MCM")[1]),_cv[1],0.5)
+_ah=[l for l in open(os.path.join(OUT,"adoption_hazard.txt")).read().splitlines() if l.startswith("$")]
+for _ahl,_ahv in zip(_ah,((43,28,28,17),(36,22,29,17),(27,16,24,14),(12,6,11,6),(4,2,4,2))):
+    _ahp=[float(x_.rstrip("%")) for x_ in _ahl.replace("|"," ").split() if x_.endswith("%")]
+    for _ahn,_aho,_ahe in zip(("dead in 2y","rate","not fading: dead in 2y","not fading: rate"),_ahp,_ahv): chk(f"C.2 adoption table, {_ahl[:26].strip()}: {_ahn}",_aho,_ahe,0.01)
+_ahm=[int(l.replace("|"," ").split("%")[0].split()[-2]) for l in _ah]; chk("C.2 adoption table: asset-months",sum(_ahm),39115,0); chk("S3 under $1m a day: nearly four in ten dead within two years",(_ahm[0]*43+_ahm[1]*36)/(_ahm[0]+_ahm[1]),38,1.0)
+_ahb=open(os.path.join(OUT,"adoption_hazard.txt")).read().split("Bitcoin,")[1]; 
+for _ahy,_ahx in ((2011,0.11),(2013,4.40),(2014,23.26),(2017,235.93)): chk(f"C.2 Bitcoin's daily volume mid-{_ahy}, $m",float(_ahb.split(f"{_ahy}: $")[1].split("m")[0].replace(",","")),_ahx,0.01)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)

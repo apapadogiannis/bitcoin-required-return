@@ -688,11 +688,19 @@ S\&P 500 & 13.8 & 14.7 & 13.0 & 11.1 & 14.4 \\
 
 One number is measured: in 2021Q3 US households that owned any crypto held 19\% of their financial assets in it on average (Candia, Coibion, Gorodnichenko, and Weber 2026), with the Austrian 2023 survey (OeNB 2025) as a cross-check. Everything else follows from market clearing, run backward and forward from that anchor (Figure~\ref{fig:w}).
 
-\textbf{Why the combined weight.} Holder $i$, with wealth $W_i$ and risk aversion $\gamma_i$, chooses the weight $w_i$ at which $\pi = \gamma_i \sigma^2 w_i$, where $\pi$ is the premium the asset offers for concentration risk, so she holds $W_i\,\pi/(\gamma_i\sigma^2)$ dollars of it. The holdings must add up to the capitalization $C$, so
+\textbf{Why the combined weight.} Holders differ, so whose weight belongs in equation~(\ref{eq:foc})? The answer follows in four steps. We index holders by $h$, since $i$ denotes an asset in Section 6.
+
+\emph{Step 1: one holder.} Let $\pi$ be the premium the asset pays for concentration risk. Holder $h$, with risk aversion $\gamma_h$, adds Bitcoin until that premium just pays for the risk of her own position, $\pi = \gamma_h \sigma^2 w_h$. Her weight is therefore $w_h = \pi/(\gamma_h\sigma^2)$: the more risk-averse hold less.
+
+\emph{Step 2: her dollars.} With wealth $W_h$ she holds $W_h w_h = W_h\,\pi/(\gamma_h\sigma^2)$ dollars of Bitcoin.
+
+\emph{Step 3: the market clears.} Every coin is held by someone, so the holders' dollars add up to the capitalization: $C = \sum_h W_h\,\pi/(\gamma_h\sigma^2)$.
+
+\emph{Step 4: solve for the premium.} The premium $\pi$ is the same for everyone, so it comes out of the sum. With $W = \sum_h W_h$ the holders' total wealth,
 \begin{equation}
-\pi \;=\; \bar{\gamma}\,\sigma^{2}\,\frac{C}{W}, \qquad \frac{1}{\bar{\gamma}} \;=\; \sum_i \frac{W_i}{W}\,\frac{1}{\gamma_i}, \qquad W = \sum_i W_i .
+\pi \;=\; \bar{\gamma}\,\sigma^{2}\,\frac{C}{W}, \qquad \text{where} \quad \frac{1}{\bar{\gamma}} \;=\; \sum_h \frac{W_h}{W}\,\frac{1}{\gamma_h}.
 \end{equation}
-The premium that clears the market is the concentration term at the combined weight $C/W$ of equation~(\ref{eq:w}) and at a wealth-weighted (harmonic) average of risk aversions. The two readings of Section 5 differ only in whose wealth is counted in $W$: every owner of crypto, or the early holders alone.
+This is the concentration term of equation~(\ref{eq:foc}) with two substitutions: the weight is the combined weight $C/W$ of equation~(\ref{eq:w}), all holders' Bitcoin over all their wealth, and risk aversion is an average $\bar{\gamma}$ in which wealthier holders count for more. An example: two holders with the same risk aversion, one with \$10,000 and one with \$1 million, both choose the same weight, say 10\%, and the combined weight is also 10\%. If the richer one is twice as risk-averse she chooses 5\%, the combined weight is $(1{,}000 + 50{,}000)/1{,}010{,}000 = 5.05\%$, and the simple average of the two weights, 7.5\%, overstates it. The two readings of Section 5 differ only in whose wealth is counted in $W$: every owner of crypto, or the early holders alone.
 
 \textbf{B.1 Participation.} The share of US adults holding crypto is 0.4\% (2014) and 1.2\% (2018) from the Federal Reserve's payment-choice surveys, 11\% in 2021Q3, and 12\% in mid-2023 and in 2025 from Candia et al.\ (2026). The 2021 level is the least settled: the Federal Reserve's SHED puts adults who used or held crypto at 12\% in 2021, while the Candia et al.\ panel reports about 3\% in 2021 and 11\% in 2022. We use 11\% because the same survey reports portfolio shares as similar in 2021 and 2025, which the back-cast reproduces only if participation is similar too; D.4 gives the alternative. The path is interpolated log-linearly between survey dates; the Coin Metrics count of addresses holding a balance supplies the shape before the first survey point.
 

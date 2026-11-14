@@ -1,5 +1,5 @@
 {
-  "title": "Bitcoin's Required Return: paper and replication package",
+  "title": "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold (paper and replication package)",
   "upload_type": "software",
   "description": "Working paper and full replication package. The paper derives the return Bitcoin's holders should require from three measured risks, the MCM equation: market risk (beta to the S&P 500), concentration risk (the share of wealth that holders keep in the asset, from household surveys) and mortality risk (from a census of 1,815 cryptoassets with 520 deaths, in which hazard does not fall with age). The required return is tested month by month against Bitcoin's returns since 2012 and applied to Ether, other cryptoassets, equity indices and gold. For 2026 it is about 18% a year on average (90% range 15-22%), about 9.5% compounded. Includes all scripts, result tables, figures, and an audit script that re-checks every number quoted in the paper.",
   "creators": [

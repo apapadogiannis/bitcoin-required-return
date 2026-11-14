@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this paper or replication package, please cite it as below."
-title: "Bitcoin's Required Return"
+title: "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold"
 authors:
   - family-names: Papadogiannis
     given-names: Agisilaos
@@ -12,7 +12,7 @@ license: MIT
 repository-code: "https://github.com/apapadogiannis/bitcoin-required-return"
 preferred-citation:
   type: article
-  title: "Bitcoin's Required Return"
+  title: "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold"
   authors:
     - family-names: Papadogiannis
       given-names: Agisilaos

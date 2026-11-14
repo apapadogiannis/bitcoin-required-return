@@ -1,4 +1,4 @@
-# Bitcoin's Required Return
+# Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24003938.svg)](https://doi.org/10.5281/zenodo.24003938)
 [![replication](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml/badge.svg)](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml)
@@ -120,7 +120,7 @@ dates. The table of every top-twenty death: paper Appendix C.3; machine-readable
 
 ## Citation
 
-> Papadogiannis, A. (2026). "Bitcoin's Required Return." Working paper.
+> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper.
 > https://doi.org/10.5281/zenodo.24003938
 
 ## Disclaimer

@@ -23,7 +23,9 @@ alpha 2012–17         +167 ( 91; +1.8; +2.6)   3.74 |   +72 ( 93; +0.8; +1.1) 
 alpha 2018–26          +24 ( 22; +1.1; +1.0)   1.63 |    +1 ( 22; +0.1; +0.1)   1.65
 cumulative unexplained return 2012-2026, points: CAPM +1307, MCM +546; per year: CAPM +91, MCM +38
 cumulative unexplained return 2018-2026, points: CAPM +198, MCM +15; per year: CAPM +24, MCM +2
-trailing three-year unexplained return to 2017-12-31: CAPM +129, MCM +81
-trailing three-year unexplained return to 2020-12-31: CAPM +55, MCM +22
-trailing three-year unexplained return to 2023-12-31: CAPM +12, MCM -5
-trailing three-year unexplained return to 2026-04-30: CAPM +6, MCM -7
+share of Bitcoin's excess return left unexplained, whole sample: CAPM 79%, MCM 33%; excess return 116% a year
+share of Bitcoin's excess return left unexplained, since 2018: CAPM 55%, MCM 4%; excess return 43% a year
+trailing three-year unexplained return to 2017-12-31: CAPM +129, MCM +81; share of excess return: CAPM 82%, MCM 51%
+trailing three-year unexplained return to 2020-12-31: CAPM +55, MCM +22; share of excess return: CAPM 82%, MCM 33%
+trailing three-year unexplained return to 2023-12-31: CAPM +12, MCM -5; share of excess return: CAPM 43%, MCM -20%
+trailing three-year unexplained return to 2026-04-30: CAPM +6, MCM -7; share of excess return: CAPM 14%, MCM -18%

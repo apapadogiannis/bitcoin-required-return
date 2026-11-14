@@ -55,7 +55,7 @@ open(f"{OUT}/monthly_test.txt","a").write("\n".join(L2)+"\n"); print("\n".join(L
 
 plt.rcParams["axes.titlepad"]=10
 fig=plt.figure(figsize=(9.4,11.6)); _gs=fig.add_gridspec(3,2,height_ratios=[1.0,0.86,0.86],hspace=0.58,wspace=0.24)
-ax=fig.add_subplot(_gs[0,0]); bx=fig.add_subplot(_gs[0,1]); cx=fig.add_subplot(_gs[1,:]); dx_=fig.add_subplot(_gs[2,:])
+ax=fig.add_subplot(_gs[0,0]); bx=fig.add_subplot(_gs[0,1]); cx=fig.add_subplot(_gs[1,:]); dx_=fig.add_subplot(_gs[2,0]); ex_=fig.add_subplot(_gs[2,1])
 x=np.arange(len(PER)); labs=[p[2] for p in PER]; O=[T[l] for l in labs]
 DOT=dict(marker="o",ms=7.5,mfc="white",mec=INK,mew=1.6,ls="none")          # delivered: the same open circle as in the figure of the required return
 HW=0.30
@@ -111,19 +111,30 @@ cx.set_ylabel("percent per year"); cx.set_title("(c) What each model leaves unex
 cx.text(5.0,272,"whole sample, and since 2018",fontsize=8,color=INK2,va="center"); cx.text(2.0,272,"three-year periods",fontsize=8,color=INK2,va="center",ha="center")
 cx.legend([plt.Line2D([],[],marker="s",ms=7,mfc=ORANGE,mec="white",ls="none"),plt.Line2D([],[],marker="o",ms=7,mfc=BLUE,mec="white",ls="none"),plt.Line2D([],[],color=INK2,lw=4.0,alpha=0.55),plt.Line2D([],[],color=MUT,lw=1.0)],
           ["CAPM alpha","MCM alpha","± one standard error","± two standard errors"],loc="upper center",bbox_to_anchor=(0.5,-0.13),ncol=4,fontsize=8.2,frameon=False,handlelength=1.8,columnspacing=1.8)
-# (d) unexplained return through time: trailing three-year average, annualized (display; the tests are panels b and c)
-rc=1200*CU.capm.rolling(36).mean(); rm=1200*CU.mcm.rolling(36).mean(); td=CU.index+pd.offsets.MonthEnd(1)
+# (d) unexplained return through time, and (e) the same as a share of Bitcoin's excess return: trailing three-year averages (display)
+CU["ex"]=CU.r-CU.rf
+rc=1200*CU.capm.rolling(36).mean(); rm=1200*CU.mcm.rolling(36).mean(); rx=1200*CU.ex.rolling(36).mean(); td=CU.index+pd.offsets.MonthEnd(1)
+X0,X1=pd.Timestamp("2014-10-01"),pd.Timestamp("2026-06-30")
 dx_.axhline(0,color=INK2,lw=0.9,zorder=2)
 dx_.plot(td,rc.values,color=ORANGE,lw=2.0,zorder=4); dx_.plot(td,rm.values,color=BLUE,lw=2.0,zorder=5)
 dx_.fill_between(td,rc.values,rm.values,color=ORANGE,alpha=0.10,lw=0,zorder=1)
-dx_.text(td[-1]+pd.Timedelta(45,"D"),rc.dropna().iloc[-1]+7,f"CAPM  {rc.dropna().iloc[-1]:+.0f}".replace("-","−"),fontsize=8.8,color=INK,va="center",weight="bold",clip_on=False)
-dx_.text(td[-1]+pd.Timedelta(45,"D"),rm.dropna().iloc[-1]-7,f"MCM  {rm.dropna().iloc[-1]:+.0f}".replace("-","−"),fontsize=8.8,color=INK,va="center",weight="bold",clip_on=False)
-dx_.text(pd.Timestamp("2018-09-01"),235,"shaded: what the concentration and mortality terms explain",fontsize=8.2,color=INK2,va="center")
-dx_.set_xlim(pd.Timestamp("2014-10-01"),pd.Timestamp("2026-06-30")); dx_.set_ylim(-120,330)
-dx_.set_yticks([-100,0,100,200,300]); dx_.set_yticklabels(["−100","0","+100","+200","+300"])
-dx_.set_ylabel("percent per year"); dx_.set_title("(d) Unexplained return through time: average of the previous three years",loc="left")
-dx_.legend([plt.Line2D([],[],color=ORANGE,lw=2.0),plt.Line2D([],[],color=BLUE,lw=2.0)],["CAPM: return less the risk-free rate and beta × the S&P 500's excess return","MCM: the same, less the concentration and mortality terms"],loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=1,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35)
-for d_ in ("2017-12-31","2020-12-31","2023-12-31","2026-04-30"): L2.append(f"trailing three-year unexplained return to {d_}: CAPM {rc[:d_].iloc[-1]:+.0f}, MCM {rm[:d_].iloc[-1]:+.0f}")
-open(f"{OUT}/monthly_test.txt","a").write("\n".join(L2[-4:])+"\n"); print("\n".join(L2[-4:]))
-for a_ in (ax,bx,cx,dx_): a_.grid(axis="y",alpha=1.0); a_.set_axisbelow(True)
+dx_.text(td[-1]+pd.Timedelta(40,"D"),rc.dropna().iloc[-1]+9,f"{rc.dropna().iloc[-1]:+.0f}".replace("-","−"),fontsize=8.6,color=INK,va="center",weight="bold",clip_on=False)
+dx_.text(td[-1]+pd.Timedelta(40,"D"),rm.dropna().iloc[-1]-9,f"{rm.dropna().iloc[-1]:+.0f}".replace("-","−"),fontsize=8.6,color=INK,va="center",weight="bold",clip_on=False)
+dx_.set_xlim(X0,X1); dx_.set_ylim(-120,330); dx_.set_yticks([-100,0,100,200,300]); dx_.set_yticklabels(["−100","0","+100","+200","+300"])
+dx_.set_ylabel("percent per year"); dx_.set_title("(d) Unexplained return, previous three years",loc="left")
+# share: unexplained over Bitcoin's excess return; left blank where the excess return is under 25% a year and the ratio is unstable
+ok=rx>=25; sc=(100*rc/rx).where(ok); sm_=(100*rm/rx).where(ok)
+ex_.axhline(0,color=INK2,lw=0.9,zorder=2); ex_.axhline(100,color=BASE,lw=0.9,zorder=2)
+ex_.plot(td,sc.values,color=ORANGE,lw=2.0,zorder=4); ex_.plot(td,sm_.values,color=BLUE,lw=2.0,zorder=5)
+for (a_,b_,lab_) in (("2012","2026","whole sample"),("2018","2026","since 2018")):
+    x_=CU[a_:b_]; L2.append(f"share of Bitcoin's excess return left unexplained, {lab_}: CAPM {100*x_.capm.mean()/x_.ex.mean():.0f}%, MCM {100*x_.mcm.mean()/x_.ex.mean():.0f}%; excess return {1200*x_.ex.mean():.0f}% a year")
+_w=CU["2012":"2026"]; _s18=CU["2018":"2026"]
+ex_.text(X0+pd.Timedelta(120,"D"),128,f"whole sample:  CAPM {100*_w.capm.mean()/_w.ex.mean():.0f}%,  MCM {100*_w.mcm.mean()/_w.ex.mean():.0f}%\nsince 2018:  CAPM {100*_s18.capm.mean()/_s18.ex.mean():.0f}%,  MCM {100*_s18.mcm.mean()/_s18.ex.mean():.0f}%",fontsize=8.3,color=INK,va="center",weight="bold")
+ex_.set_xlim(X0,X1); ex_.set_ylim(-60,148); ex_.set_yticks([-50,0,50,100]); ex_.set_yticklabels(["−50%","0%","50%","100%"])
+ex_.set_ylabel("share of excess return"); ex_.set_title("(e) Share of Bitcoin's return left unexplained",loc="left")
+dx_.legend([plt.Line2D([],[],color=ORANGE,lw=2.0),plt.Line2D([],[],color=BLUE,lw=2.0)],["CAPM","MCM"],loc="upper center",bbox_to_anchor=(0.5,-0.12),ncol=2,fontsize=8.2,frameon=False,handlelength=1.8,columnspacing=1.8)
+ex_.legend([plt.Line2D([],[],color=ORANGE,lw=2.0),plt.Line2D([],[],color=BLUE,lw=2.0)],["CAPM","MCM"],loc="upper center",bbox_to_anchor=(0.5,-0.12),ncol=2,fontsize=8.2,frameon=False,handlelength=1.8,columnspacing=1.8)
+for d_ in ("2017-12-31","2020-12-31","2023-12-31","2026-04-30"): L2.append(f"trailing three-year unexplained return to {d_}: CAPM {rc[:d_].iloc[-1]:+.0f}, MCM {rm[:d_].iloc[-1]:+.0f}; share of excess return: CAPM {sc[:d_].iloc[-1]:.0f}%, MCM {sm_[:d_].iloc[-1]:.0f}%")
+open(f"{OUT}/monthly_test.txt","a").write("\n".join(L2[-6:])+"\n"); print("\n".join(L2[-6:]))
+for a_ in (ax,bx,cx,dx_,ex_): a_.grid(axis="y",alpha=1.0); a_.set_axisbelow(True)
 fig.savefig(f"{FIG}/fig_gap.pdf",bbox_inches="tight"); fig.savefig(f"{FIG}/fig_gap.png",dpi=200,bbox_inches="tight"); print("saved fig_gap")

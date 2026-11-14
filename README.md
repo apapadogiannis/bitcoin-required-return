@@ -35,8 +35,8 @@ scripts/    numbered pipeline (see below)
 outputs/    asset-level panel and all result tables used in the paper
 figures/    the paper's figures
 paper/      the manuscript (PDF and LaTeX source)
-data/       ETF price files (VOO, ACWI, VT, QQQ, IWM, GLD), EUR/USD and the Treasury yield; the crypto data are NOT included and are
-            fetched by run_all.sh (see Data and licensing)
+data/       all input data: the Coin Metrics snapshot the paper used (data/cmdata), ETF price files (VOO, ACWI, VT, QQQ, IWM,
+            GLD), EUR/USD and the Treasury yield (see Data and licensing)
 ```
 
 ## Reproducing
@@ -46,13 +46,13 @@ statsmodels, scipy, matplotlib). For byte-identical tables use `requirements-loc
 the exact versions under which `outputs/` were generated.
 
 ```bash
-./run_all.sh    # fetches the data snapshot (about 260 MB) on first run, then about three minutes
+./run_all.sh    # about three minutes; no downloads
 ```
 
-The script fetches the Coin Metrics community dataset at the exact commit the paper used
-(`f1a36af`, data ending 2026-05-24), then runs every step below in order. Re-running
+All input data are in the repository, so the script needs no network access; it runs every
+step below in order. Re-running
 reproduces every CSV in `outputs/` byte-for-byte. A GitHub Actions workflow does this on
-every push and monthly, and fails if a script stops, any table differs or any audit line is not PASS; the
+every push and monthly, and fails if a script stops, a data file differs from its recorded checksum, any table differs or any audit line is not PASS; the
 badge above shows the latest run.
 
 | Script | What it produces | Where it appears |
@@ -96,9 +96,14 @@ locate `data/`, `outputs/` and `figures/` relative to the repository; the enviro
 
 ## Data and licensing
 
-- Crypto price/volume data: [Coin Metrics community data](https://github.com/coinmetrics/data)
-  (CC BY-NC 4.0; not redistributed here; step 0 downloads it from the source).
-  The dataset snapshot used in the paper ends 2026-05-24.
+- Crypto price, volume and network data (`data/cmdata/csv`, 2,258 asset files): the
+  [Coin Metrics community dataset](https://github.com/coinmetrics/data), by Coin Metrics, Inc.,
+  licensed [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) (non-commercial use,
+  with attribution; licence notice in `data/cmdata/LICENSE`). The files are an unmodified copy of
+  the `csv/` directory at upstream commit `f1a36afb962731c387bb03982758ab0103063da5`
+  ("Update CSV 2026-05-24", data ending 2026-05-24), kept here so that the paper's results do not
+  depend on the upstream archive, which is updated daily. `data/cmdata/MANIFEST.sha256` lists
+  the checksum of every file: `cd data/cmdata && sha256sum --quiet -c MANIFEST.sha256`.
 - ETF prices (`data/voo_monthly.csv`, `data/acwi_monthly.csv`, `data/vt_monthly.csv`,
   `data/qqq_monthly.csv`, `data/iwm_monthly.csv`, `data/gld_monthly.csv`): monthly adjusted close
   (and close, where given) of the Vanguard S&P 500 ETF, the iShares MSCI ACWI ETF, the Vanguard
@@ -108,7 +113,8 @@ locate `data/`, `outputs/` and `figures/` relative to the repository; the enviro
 - Survey anchors, wealth aggregates, and option-implied figures are quoted in the
   paper from their published sources (Cleveland Fed WP 26-16; Fed SCPC/SHED; Pew;
   OeNB Bulletin Q4/25; UBS GWR; arXiv:2410.15195; Deribit DVOL).
-- Code: MIT License. Output tables (`outputs/`): CC BY 4.0, cite the paper.
+- Code: MIT License. Output tables (`outputs/`): CC BY 4.0, cite the paper. The Coin Metrics
+  files in `data/cmdata` keep their own licence (CC BY-NC 4.0) and are not covered by either.
 
 ## Death-definition summary (paper Section 3, Appendix C)
 

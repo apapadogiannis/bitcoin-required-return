@@ -23,13 +23,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements-lock.txt
 
-      - name: Cache the Coin Metrics snapshot
-        uses: actions/cache@v6
-        with:
-          path: data/cmdata
-          key: coinmetrics-f1a36afb962731c387bb03982758ab0103063da5
+      - name: Verify the stored data against its checksums
+        run: cd data/cmdata && sha256sum --quiet -c MANIFEST.sha256 && echo "All $(wc -l < MANIFEST.sha256) data files match."
 
-      - name: Fetch data and regenerate every table and figure
+      - name: Regenerate every table and figure
         run: |
           set -o pipefail
           ./run_all.sh 2>&1 | tee run.log

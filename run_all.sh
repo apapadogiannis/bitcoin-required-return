@@ -1,18 +1,9 @@
 #!/usr/bin/env bash
-# Reproduces every table and figure in the paper from the Coin Metrics snapshot the
-# paper used. Step 0 fetches that snapshot (about 260 MB) if it is not already present.
+# Reproduces every table and figure in the paper. All input data are in data/, including
+# the Coin Metrics snapshot the paper used (data/cmdata/csv; see scripts/00_extract_coinmetrics.py).
 set -e
 cd "$(dirname "$0")"
 export CM_CSV_DIR="${CM_CSV_DIR:-data/cmdata/csv}" OUT_DIR="${OUT_DIR:-outputs}" FIG_DIR="${FIG_DIR:-figures}"
-CM_COMMIT=f1a36afb962731c387bb03982758ab0103063da5   # coinmetrics/data, "Update CSV 2026-05-24"
-
-if [ ! -f "$CM_CSV_DIR/btc.csv" ]; then
-  echo "== fetching Coin Metrics community data at $CM_COMMIT"
-  mkdir -p "$(dirname "$CM_CSV_DIR")"
-  git -C "$(dirname "$CM_CSV_DIR")" init -q
-  git -C "$(dirname "$CM_CSV_DIR")" fetch -q --depth 1 https://github.com/coinmetrics/data.git "$CM_COMMIT"
-  git -C "$(dirname "$CM_CSV_DIR")" checkout -q FETCH_HEAD -- csv
-fi
 
 mkdir -p "$OUT_DIR" "$FIG_DIR"
 

@@ -1,6 +1,7 @@
 # Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24003938.svg)](https://doi.org/10.5281/zenodo.24003938)
+[![SSRN](https://img.shields.io/badge/SSRN-7705239-154881)](https://ssrn.com/abstract=7705239)
 [![replication](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml/badge.svg)](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml)
 
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).

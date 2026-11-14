@@ -4,7 +4,7 @@
 [![replication](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml/badge.svg)](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml)
 
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
-Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; v0.1 is 10.5281/zenodo.24003939).
+Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record). Current version: 1.0, November 14, 2026.
 
 ## What this is
 
@@ -120,7 +120,7 @@ dates. The table of every top-twenty death: paper Appendix C.3; machine-readable
 
 ## Citation
 
-> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper.
+> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper, version 1.0.
 > https://doi.org/10.5281/zenodo.24003938
 
 ## Disclaimer

@@ -28,5 +28,7 @@
       "identifier": "https://github.com/apapadogiannis/bitcoin-required-return",
       "scheme": "url"
     }
-  ]
+  ],
+  "version": "1.0",
+  "publication_date": "2026-11-14"
 }

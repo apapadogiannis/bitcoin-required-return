@@ -41,7 +41,7 @@ chk("envelope lo",5+6+1.0*0.42**2*8+0.3,12.7,0.1); chk("envelope hi",5+8+2.8*0.4
 chk("Ether median",qe[2],26,0.6); chk("Ether 90 lo",qe[0],21,0.6); chk("Ether 90 hi",qe[4],34,0.6)
 chk("Large alt median",ql[2],39,0.8); chk("Large alt 90 lo",ql[0],27,0.8); chk("Large alt 90 hi",ql[4],60,0.8)
 chk("Small median",qs[2],78,1.5); chk("Small 90 lo",qs[0],52,1.5); chk("Small 90 hi",qs[4],124,2)
-chk("Gold median",qg[2],5.5,0.1); chk("Digital gold median",qd[2],14.2,0.1); chk("Digital gold 90 lo",qd[0],12.3,0.1); chk("Digital gold 90 hi",qd[4],16.0,0.1)
+chk("Gold median",qg[2],5.5,0.1); chk("Digital gold: beta at 15% volatility and correlation 0.5",0.5*15/14.1,0.5,0.04); chk("Digital gold: required return",5+0.5*15/14.1*4+1.9,9,0.1); chk("Digital gold lo",5+0.5*15/14.1*4+0.3,7,0.5); chk("Digital gold hi",5+0.5*15/14.1*4+3.5,11,0.5)
 chk("vol drag",100*(0.42**2+0.45**2)/4,9,0.6); chk("CAGR counterpart",18.0-9.2,9,0.5); chk("diffusive noise",100*0.42/np.sqrt(5),19,0.5)
 # Section 5 table
 T={"2013-06-30":(151,3.0,21,231,126,174,135,132),"2015-06-30":(115,2.9,17,135,76,103,103,90),"2017-06-30":(80,2.2,20,67,43,78,51,68),"2019-06-30":(90,0.7,21,64,43,58,42,55)}
@@ -218,9 +218,9 @@ chk("rf May 2026",100*rf.iloc[-1],4.5,0.05)
 chk("participation 2025 anchor",100*qpart.iloc[at("2025-06-30")],12,0.05); chk("participation 2021Q3 anchor",100*qpart.iloc[at("2021-09-30")],11,0.05); chk("back-cast w 2026 implied by flat participation",18.6*(cap.iloc[-1]/cap.iloc[i21])/1.4*11/12,23,1)
 for _n,_mu,_sg,_dr,_cp,_sh in [("global",8.8,13.8,1.0,7.8,0.28),("sp500",9.0,14.1,1.0,8.0,0.28),("gold",5.5,15.5,1.2,4.3,0.03),("btc",18.3,42,8.8,9.5,0.32),("eth",23.4,64,20.5,2.9,0.29)]:
     chk(f"compound table {_n}: drag",_sg**2/200,_dr,0.05); chk(f"compound table {_n}: compound",_mu-_sg**2/200,_cp,0.05); chk(f"compound table {_n}: Sharpe",(_mu-5)/_sg,_sh,0.006)
-for _n,_mu,_sg,_cs in [("global",8.8,13.83,0.21),("sp500",9.0,14.06,0.21),("nasdaq",9.5,17.226,0.18),("russell",9.7,19.138,0.15),("gold",5.5,15.5,-0.05),("btc",18.3,42,0.11),("eth",23.4,64,-0.03)]:
+for _n,_mu,_sg,_cs in [("global",8.8,13.83,0.21),("sp500",9.0,14.06,0.21),("nasdaq",9.48,17.226,0.17),("russell",9.7,19.138,0.15),("gold",5.5,15.5,-0.05),("btc",18.3,42,0.11),("eth",23.4,64,-0.03)]:
     chk(f"compound table {_n}: Sharpe on the compound return",(_mu-_sg**2/200-5)/_sg,_cs,0.0051)
-chk("compound Sharpe: BTC below every equity index",float(0.11<min([0.21,0.21,0.18,0.15])),1,0)
+chk("compound Sharpe: BTC below every equity index",float(0.11<min([0.21,0.21,0.17,0.15])),1,0)
 chk("drag share BTC about half",8.8/18.3,0.5,0.03); chk("drag share ETH nearly nine-tenths",20.5/23.4,0.88,0.01)
 chk("drift example: +100%,-50% average",(100-50)/2,25,0)
 chk("age rule closer share",100*(np.abs(fwd_mu-age_rule)<np.abs(fwd_mu-req_mid))[mm].mean(),90,0.6); chk("corr realized, mid",np.corrcoef(fwd_mu[mm],req_mid[mm])[0,1],0.28,0.006); chk("corr realized, age rule",np.corrcoef(fwd_mu[mm],age_rule[mm])[0,1],0.86,0.02)
@@ -237,7 +237,7 @@ e=pd.read_csv(os.path.join(CSV,"eth.csv"),parse_dates=["time"],usecols=["time","
 le=np.log(e).diff()["2021-10":]; chk("ETH drift 2021Q3->",100*(12*le.mean()+6*le.var()),19,1); chk("ETH CAGR 2021Q3->",100*(np.exp(12*le.mean())-1),-7,0.6)
 de=pd.DataFrame({"b":np.log(e).diff(),"s":_d.s}).dropna(); chk("ETH beta 4y",B(de.iloc[-48:]),2.7,0.05); chk("ETH beta since 2016",B(de["2016":]),2.0,0.05)
 chk("altcoin drift from -7% CAGR at 80% vol",-7+32,25,1); chk("altcoin shortfall",39-25,15,1.5); chk("market share of required",7/18,0.4,0.02)
-chk("hurdle lo",5+6,11,0.1); chk("hurdle hi",5+8,13,0.1); chk("sizing",100*(18-5-7-0.3)/(3*0.42**2*100),11,0.8); chk("sizing age rule",100*(32-5-7-0.3)/(3*0.42**2*100),37,1.5); chk("sizing vs 2021 share: a little over half",10.8/19,0.57,0.05)
+chk("hurdle lo",5+6,11,0.1); chk("hurdle hi",5+8,13,0.1); chk("sizing",100*(18.3-5-7-1.9)/(3*0.42**2*100),8,0.5); chk("sizing age rule",100*(32-5-7-1.9)/(3*0.42**2*100),34,0.5); chk("sizing across the hurdle range, low",100*(18.3-15)/(3*0.42**2*100),6,0.5); chk("sizing across the hurdle range, high",100*(18.3-12.3)/(3*0.42**2*100),11,0.5)
 chk("Sharpe BTC",(18.3-5)/42,0.32,0.006); chk("Sharpe BTC ex mort",(18.3-5-1.9)/42,0.27,0.01); chk("Sharpe market term",7/42,0.15,0.02); chk("Sharpe conc",1.9*0.42*0.135,0.11,0.01); chk("Sharpe sum",0.15+0.11+0.05,0.31,0.001); chk("Sharpe mort",1.9/42,0.05,0.005); chk("Sharpe diluted",0.15+0.05,0.20,0.001)
 chk("Sharpe units 2013",(t13-100*rf.iloc[at('2013-06-30')])/(100*sig.iloc[at('2013-06-30')]),0.8,0.05); chk("hist premium BTC required",18+7,25,0.5); chk("hist premium BTC Sharpe",(25-5)/42,0.48,0.01); chk("diluted Sharpe",0.15+0.04,0.19,0.01)
 # Appendix B
@@ -356,7 +356,7 @@ for _k6_d,_k6_ve,_k6_vb in (("2017-12-31",172,98),("2021-09-30",99,77),("2026-05
 chk("S6 priced cryptoassets with a capitalization",int(_cs["C"].notna().any().sum()),84,0); chk("S6 Bitcoin: w_i = kappa x w leaves the weight unchanged",round(float(_st("btc")["kappa"]),1),1.0,0.001); chk("S6 Ether months since 2018",_dl(_Rn["eth"])[3],100,0)
 _fg_l=[l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("2012–14")][0].split("|")[1].split(); _fg_g=float(_fg_l[2]); _fg_s=float(_fg_l[3].strip("(;"))
 chk("Figure 3: 2012-14 two-standard-error interval, lower end as annotated",_fg_g-2*_fg_s,-218,1.5); chk("Figure 3: 2012-14 two-standard-error interval, upper end as annotated",_fg_g+2*_fg_s,459,1.5)
-chk("S7 sizing example: hurdle with the low reading of mortality",5+7+0.3,12.3,0.001); chk("S7 Black-Litterman: full confidence",100*(18-12.3)/(3*0.42**2*100),11,0.5); chk("S7 Black-Litterman: half confidence, about 5%",0.5*100*(18-12.3)/(3*0.42**2*100),5,0.5)
+chk("S7 hurdle at the central mortality term, about 14%",5+7+1.9,14,0.15); chk("S7 rent at the middle, about 4.5 points",18.3-13.9,4.5,0.11); chk("S7 Black-Litterman: full confidence",100*(18.3-13.9)/(3*0.42**2*100),8,0.5); chk("S7 Black-Litterman: half confidence, about 4%",0.5*100*(18.3-13.9)/(3*0.42**2*100),4,0.5)
 for _sp_d,_sp_v,_sp_g in (("2013-06-30",6.5,120),("2021-09-30",5.5,22),("2026-05-31",8.5,11)): chk(f"S5 S&P 500 required return {_sp_d[:7]}",100*float((rf+0.04)[:_sp_d].iloc[-1]),_sp_v,0.06); chk(f"S5 gap of the Bitcoin midpoint to the S&P 500 required return {_sp_d[:7]}",100*float((req_mid-rf-0.04)[:_sp_d].iloc[-1]),_sp_g,0.6)
 _al={l.split()[1].rstrip(","):l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("alpha ")}
 def _alp(k):
@@ -370,10 +370,10 @@ _cu={l.split(",")[0].split()[-1]:l for l in open(os.path.join(OUT,"monthly_test.
 for _ck,_cv in (("2012-2026",(1307,546)),("2018-2026",(198,15))):
     _cz=_cu[_ck].split("points:")[1].split(";")[0]; chk(f"S5 cumulative unexplained return {_ck}: CAPM",float(_cz.split("CAPM")[1].split(",")[0]),_cv[0],0.5); chk(f"S5 cumulative unexplained return {_ck}: MCM",float(_cz.split("MCM")[1]),_cv[1],0.5)
 _ah=[l for l in open(os.path.join(OUT,"adoption_hazard.txt")).read().splitlines() if l.startswith("$")]
-for _ahl,_ahv in zip(_ah,((43,28,28,17),(36,22,29,17),(27,16,24,14),(12,6,11,6),(4,2,4,2))):
+for _ahl,_ahv in zip(_ah,((29,17,22,12),(24,14,18,10),(14,8,10,5),(6,3,6,3),(3,2,4,2))):
     _ahp=[float(x_.rstrip("%")) for x_ in _ahl.replace("|"," ").split() if x_.endswith("%")]
     for _ahn,_aho,_ahe in zip(("dead in 2y","rate","not fading: dead in 2y","not fading: rate"),_ahp,_ahv): chk(f"C.2 adoption table, {_ahl[:26].strip()}: {_ahn}",_aho,_ahe,0.01)
-_ahm=[int(l.replace("|"," ").split("%")[0].split()[-2]) for l in _ah]; chk("C.2 adoption table: asset-months",sum(_ahm),39115,0); chk("S3 under $1m a day: four in ten dead within two years",(_ahm[0]*43+_ahm[1]*36)/(_ahm[0]+_ahm[1]),38,1.0)
+_ahm=[int(l.replace("|"," ").split("%")[0].split()[-2]) for l in _ah]; chk("C.2 adoption table: asset-months",sum(_ahm),34155,0); chk("S3 under $1m a day: one in four dead within two years",(_ahm[0]*29+_ahm[1]*24)/(_ahm[0]+_ahm[1]),25,1.0)
 _ahb=open(os.path.join(OUT,"adoption_hazard.txt")).read().split("Bitcoin,")[1]; 
 for _ahy,_ahx in ((2011,0.11),(2013,4.40),(2014,23.26),(2017,235.93)): chk(f"C.2 Bitcoin's daily volume mid-{_ahy}, $m",float(_ahb.split(f"{_ahy}: $")[1].split("m")[0].replace(",","")),_ahx,0.01)
 _tr={l.split(" to ")[1].split(":")[0]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("trailing three-year")}
@@ -384,6 +384,13 @@ for _sk,_sv in (("whole sample",(21,67)),("since 2018",(45,96))): chk(f"S5 share
 _shp={l.split()[2].rstrip(":"):l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("share explained ")}
 for _sk,_sv in (("2012–14",(13,65)),("2015–17",(18,49)),("2018–20",(18,67)),("2021–23",(57,120)),("2024–26",(104,148))): chk(f"D.2 share explained {_sk}: CAPM",float(_shp[_sk].split("CAPM ")[1].split("%")[0]),_sv[0],0.5); chk(f"D.2 share explained {_sk}: MCM",float(_shp[_sk].split("MCM ")[1].split("%")[0]),_sv[1],0.5)
 _shD=pd.DataFrame({"r":px.shift(-1)/px-1}); _shD["rf"]=np.exp(rf/12)-1; _shD["ex"]=_shD.r-_shD.rf
+# review fixes: Sharpe decomposition, rebalanced example, net-of-death figures, compound at 55% volatility
+chk("RV Sharpe units: market term 7/42",7/42,0.17,0.005); chk("RV Sharpe units: sum",7/42+1.9*0.42*0.135+1.9/42,0.32,0.005); chk("RV Sharpe units: diluted",7/42+1.9/42,0.21,0.005)
+_rvv=((0.95*0.141)**2+(0.05*0.42)**2+2*0.95*0.05*1.75*0.141**2)**0.5
+chk("RV rebalanced 5%: return added",0.05*(18.3-9.0),0.46,0.006); chk("RV rebalanced 5%: portfolio volatility",100*_rvv,14.7,0.05); chk("RV rebalanced 5%: extra drag",100*(_rvv**2-0.141**2)/2,0.09,0.005)
+chk("RV net of death: Bitcoin average",18.3-1.9,16.4,0.001); chk("RV net of death: Bitcoin compound",9.5-1.9,7.6,0.001); chk("RV net of death: Ether average",23.4-1.9,21.5,0.001); chk("RV net of death: Ether compound",2.9-1.9,1.0,0.001)
+_rv55=5+7+1.9+1.9*0.135*0.55**2*100; chk("RV at 55% volatility: average",_rv55,22,0.5); chk("RV at 55% volatility: compound",_rv55-0.55**2*50,6.5,0.15)
+chk("RV double count: w times beta times ERP, about one point",0.135*7,1,0.1); chk("RV put: cost per year of protection",0.86*12/7.4,1.4,0.05)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)

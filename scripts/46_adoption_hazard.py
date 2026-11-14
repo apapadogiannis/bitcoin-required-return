@@ -1,7 +1,7 @@
 """Appendix C.2: the death rate of cryptoassets by stage of adoption, measured by dollar trading volume.
 For every asset-month, the trailing twelve-month average of daily dollar volume (known at the start of the month) places the
 asset in a volume band; the outcome is whether the asset is dead within the following 24 months (curated death definition).
-Asset-months of living assets with less than 24 months of data ahead are left out. A second version keeps only asset-months
+Asset-months in the last 24 months of data are left out for every asset, so that every outcome is observed in full. A second version keeps only asset-months
 in which the volume is at least a third of the asset's own earlier peak, so that assets already fading are excluded.
 Output: adoption_hazard.txt"""
 import os
@@ -12,6 +12,7 @@ V = pd.read_pickle(f"{OUT}/volume_monthly.pkl")
 P = pd.read_csv(f"{OUT}/panel_v3.csv", parse_dates=["birth", "last", "death_cur_date"]).set_index("asset")
 core = P[~P.stable & ~P.stable2 & ~P.tokstock & ~P.wrapped_like]; A = [a for a in core.index if a in V.columns]
 T = V[A].rolling(12, min_periods=3).mean().shift(1); PK = V[A].cummax().shift(1); H = 24
+CUT = V.index.max() - pd.DateOffset(months=H)                    # months in the last two years of data are left out for every asset, dead or alive
 rows = []
 for a in A:
     b = core.loc[a, "birth"]; dead = bool(core.loc[a, "dead_cur"]); end = core.loc[a, "death_cur_date"] if dead else core.loc[a, "last"]
@@ -19,7 +20,7 @@ for a in A:
     if n == 0: continue
     left = n - 1 - np.arange(n)                                   # months until the asset's last observation
     rows.append(pd.DataFrame({"v": T.loc[idx, a].values, "near": (T.loc[idx, a] / PK.loc[idx, a]).values,
-                              "dies": dead & (left <= H) & (left > 0), "obs": (left >= H) | (dead & (left > 0))}))
+                              "dies": dead & (left <= H) & (left > 0), "obs": ((left >= H) | (dead & (left > 0))) & (idx <= CUT)}))
 X = pd.concat(rows).dropna(); X = X[X.obs]
 BANDS = ((1e4, 1e5, "$10,000 to $100,000"), (1e5, 1e6, "$100,000 to $1 million"), (1e6, 1e7, "$1 to $10 million"), (1e7, 1e8, "$10 to $100 million"), (1e8, 1e9, "$100 million to $1 billion"))
 bt = V["btc"].rolling(12, min_periods=3).mean()

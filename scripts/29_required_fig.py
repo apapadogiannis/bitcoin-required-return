@@ -53,7 +53,7 @@ ax.legend([l_real,l_per,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_sp,l_s
 ticks=[0.03,0.05,0.10,0.20,0.50,1.0,2.0,4.0,8.0]
 ax.yaxis.set_major_locator(FixedLocator(ticks)); ax.yaxis.set_major_formatter(FixedFormatter([f"{int(round(100*t))}%" for t in ticks])); ax.yaxis.set_minor_locator(NullLocator())
 ax.set_ylim(0.025,8.0); ax.set_ylabel("% per year (log scale)")
-ax.set_title("(a) Required return and realized average return",pad=22)
+ax.set_title("(a) Required return and delivered average return",pad=22)
 # ---------- terms ----------
 beta_t=beta_term.copy(); mort_t=pd.Series(0.5*(0.003+0.035),index=px.index)
 conc_t=(req_mid-rf-beta_t-mort_t).clip(lower=0)

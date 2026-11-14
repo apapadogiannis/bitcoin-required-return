@@ -46,7 +46,7 @@ ax.annotate("required return 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(1
 ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
 ax.legend([l_real,l_per,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_sp,l_surv,h_halv],
-          ["delivered return, smoothed for display: average of the 36 months\naround each date, annualized (not used in the test)","delivered return by three-year period (what the test compares)",
+          ["delivered return, smoothed: average of the 36 months around each\ndate, annualized (for display; Table 5 uses the monthly returns)","delivered return, average of each three-year period (Table 5)",
            "required return (midpoint of the band)","required-return band: the average owner (lower edge)\nto the early holder (upper edge until 2018)",
            "age rule forecast","S&P 500, required return: Treasury yield plus 4%","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"],
           loc="upper center",bbox_to_anchor=(0.56,-0.075),ncol=2,fontsize=7.8,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.6,labelspacing=0.4,handlelength=1.8,columnspacing=1.4)

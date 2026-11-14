@@ -33,8 +33,25 @@ L.append(f"correlation of monthly return with required midpoint {np.corrcoef(D.r
 L.append(f"largest month: {D.r.idxmax().date()} start, return {100*D.r.max():.0f}%, contributes {1200*D.r.max()/len(D):.0f} points to the full-sample annualized mean")
 open(f"{OUT}/monthly_test.txt","w").write("\n".join(L)+"\n"); print("\n".join(L))
 
+# ---------- the same test as a regression: the intercept (alpha) of the CAPM and of the MCM equation ----------
+# CAPM: Bitcoin's excess return over the following month on the S&P 500's. MCM: the same regression after subtracting from
+# Bitcoin's return the concentration and mortality terms of the midpoint (the midpoint less its market term), month by month.
+import statsmodels.api as sm
+_voo=pd.read_csv(os.path.join(DATA,"voo_monthly.csv"),parse_dates=["Date"]).sort_values("Date").set_index("Date")["AdjClose"]; _voo.index=_voo.index+pd.offsets.MonthEnd(0)
+RG=pd.DataFrame({"r":r,"s":_voo.pct_change().shift(-1),"rf":mo(rf),"extra":mo(req_mid-beta_term)}).dropna(); RG=RG[RG.index>="2012-01-01"]
+def alpha(x,y):
+    X_=sm.add_constant(x.s-x.rf); f=sm.OLS(y,X_).fit(); h=sm.OLS(y,X_).fit(cov_type="HAC",cov_kwds={"maxlags":6})
+    return dict(a=1200*f.params.iloc[0],se=1200*f.bse.iloc[0],t=f.tvalues.iloc[0],thac=h.tvalues.iloc[0],b=f.params.iloc[1])
+AL={lab:(alpha(RG[a_:b_],RG[a_:b_].r-RG[a_:b_].rf),alpha(RG[a_:b_],RG[a_:b_].r-RG[a_:b_].extra)) for a_,b_,lab in ALL}
+L2=[f"regression intercepts, percent per year ({len(RG)} months): alpha (se; t; t with robust errors, six lags) and slope",
+    "period              CAPM alpha                  slope |  MCM alpha                   slope"]
+for lab,(c,m_) in AL.items():
+    L2.append(f"alpha {lab:14s} {c['a']:+5.0f} ({c['se']:3.0f}; {c['t']:+.1f}; {c['thac']:+.1f})  {c['b']:5.2f} | {m_['a']:+5.0f} ({m_['se']:3.0f}; {m_['t']:+.1f}; {m_['thac']:+.1f})  {m_['b']:5.2f}")
+open(f"{OUT}/monthly_test.txt","a").write("\n".join(L2)+"\n"); print("\n".join(L2))
+
 plt.rcParams["axes.titlepad"]=10
-fig,(ax,bx)=plt.subplots(1,2,figsize=(9.4,4.3))
+fig=plt.figure(figsize=(9.4,7.9)); _gs=fig.add_gridspec(2,2,height_ratios=[1.0,0.86],hspace=0.62,wspace=0.24)
+ax=fig.add_subplot(_gs[0,0]); bx=fig.add_subplot(_gs[0,1]); cx=fig.add_subplot(_gs[1,:])
 x=np.arange(len(PER)); labs=[p[2] for p in PER]; O=[T[l] for l in labs]
 DOT=dict(marker="o",ms=7.5,mfc="white",mec=INK,mew=1.6,ls="none")          # delivered: the same open circle as in the figure of the required return
 HW=0.30
@@ -70,4 +87,22 @@ bx.set_ylabel("percentage points per year"); bx.set_title("(b) The gap: delivere
 bx.legend([plt.Line2D([],[],**DOT),plt.Line2D([],[],color=INK2,lw=4.0),plt.Line2D([],[],color=MUT,lw=1.0),plt.Line2D([],[],color=BLUE,lw=1.4)],
           ["gap, average over the period","± one standard error","± two standard errors","zero: delivered equals required"],
           loc="upper center",bbox_to_anchor=(0.5,-0.10),ncol=2,fontsize=8.2,frameon=False,handlelength=1.8,labelspacing=0.35,columnspacing=1.6)
-finish(fig,[ax,bx],f"{FIG}/fig_gap")
+# (c) regression intercepts: CAPM and MCM, by period and for the two long samples
+GR=[p[2] for p in PER]+["2012–26, all","2018–26"]; XL=[p[2] for p in PER]+["2012–26","2018–26"]
+xc=np.array([0,1,2,3,4,5.6,6.6]); YC=(-130,300)
+cx.axhline(0,color=INK2,lw=0.9,zorder=2); cx.axvline(4.8,color=GRID,lw=1.0,zorder=1)
+for i,lab in enumerate(GR):
+    for k,(o,col,dx) in enumerate(((AL[lab][0],ORANGE,-0.17),(AL[lab][1],BLUE,0.17))):
+        g,sd=o["a"],o["se"]; xx=xc[i]+dx
+        cx.plot([xx,xx],[max(g-2*sd,YC[0]),min(g+2*sd,YC[1])],color=MUT,lw=1.0,zorder=3)
+        cx.plot([xx,xx],[max(g-sd,YC[0]),min(g+sd,YC[1])],color=col,lw=4.0,zorder=4,solid_capstyle="butt",alpha=0.55)
+        cx.plot([xx],[g],marker="s" if k==0 else "o",ms=7,mfc=col,mec="white",mew=1.2,ls="none",zorder=5)
+        cx.text(xx+(-0.09 if k==0 else 0.09),g,f"{g:+.0f}".replace("-","−"),fontsize=8.6,color=INK,va="center",ha="right" if k==0 else "left",weight="bold")
+cx.set_ylim(*YC); cx.set_xlim(-0.85,7.2); cx.set_xticks(xc); cx.set_xticklabels(XL)
+cx.set_yticks([-100,0,100,200,300]); cx.set_yticklabels(["−100","0","+100","+200","+300"])
+cx.set_ylabel("percent per year"); cx.set_title("(c) What each model leaves unexplained: the regression intercept (alpha)",loc="left")
+cx.text(5.2,270,"long samples",fontsize=8,color=INK2,va="center")
+cx.legend([plt.Line2D([],[],marker="s",ms=7,mfc=ORANGE,mec="white",ls="none"),plt.Line2D([],[],marker="o",ms=7,mfc=BLUE,mec="white",ls="none"),plt.Line2D([],[],color=INK2,lw=4.0,alpha=0.55),plt.Line2D([],[],color=MUT,lw=1.0)],
+          ["CAPM alpha","MCM alpha","± one standard error","± two standard errors"],loc="upper center",bbox_to_anchor=(0.5,-0.13),ncol=4,fontsize=8.2,frameon=False,handlelength=1.8,columnspacing=1.8)
+for a_ in (ax,bx,cx): a_.grid(axis="y",alpha=1.0); a_.set_axisbelow(True)
+fig.savefig(f"{FIG}/fig_gap.pdf",bbox_inches="tight"); fig.savefig(f"{FIG}/fig_gap.png",dpi=200,bbox_inches="tight"); print("saved fig_gap")

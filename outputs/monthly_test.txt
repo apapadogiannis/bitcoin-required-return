@@ -11,3 +11,13 @@ period            n  realized (se)   band lo-hi   mid | gap vs lo (t)  gap vs mi
 excl. 2013      160     69 ( 20)     19-  99    57 |    +50 (+2.5)     +12 ( 21; +0.6)     -30 (-1.3) |     +3 (+0.1)
 correlation of monthly return with required midpoint -0.00; with age rule 0.17
 largest month: 2013-10-31 start, return 451%, contributes 31 points to the full-sample annualized mean
+regression intercepts, percent per year (172 months): alpha (se; t; t with robust errors, six lags) and slope
+period              CAPM alpha                  slope |  MCM alpha                   slope
+alpha 2012–26, all     +90 ( 39; +2.3; +2.5)   2.06 |   +37 ( 40; +0.9; +1.1)   2.07
+alpha 2012–14         +185 (180; +1.0; +1.6)   6.33 |   +40 (184; +0.2; +0.4)   6.40
+alpha 2015–17         +141 ( 47; +3.0; +2.8)   1.39 |   +93 ( 49; +1.9; +1.7)   1.30
+alpha 2018–20          +53 ( 45; +1.2; +1.1)   1.30 |   +20 ( 47; +0.4; +0.4)   1.36
+alpha 2021–23          +10 ( 34; +0.3; +0.4)   1.89 |    -7 ( 35; -0.2; -0.3)   1.88
+alpha 2024–26           -1 ( 31; -0.0; -0.0)   1.94 |   -15 ( 32; -0.5; -0.6)   1.95
+alpha 2012–17         +167 ( 91; +1.8; +2.6)   3.74 |   +72 ( 93; +0.8; +1.1)   3.67
+alpha 2018–26          +24 ( 22; +1.1; +1.0)   1.63 |    +1 ( 22; +0.1; +0.1)   1.65

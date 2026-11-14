@@ -358,6 +358,14 @@ _fg_l=[l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines()
 chk("Figure 3: 2012-14 two-standard-error interval, lower end as annotated",_fg_g-2*_fg_s,-218,1.5); chk("Figure 3: 2012-14 two-standard-error interval, upper end as annotated",_fg_g+2*_fg_s,459,1.5)
 chk("S7 sizing example: hurdle with the low reading of mortality",5+7+0.3,12.3,0.001); chk("S7 Black-Litterman: full confidence",100*(18-12.3)/(3*0.42**2*100),11,0.5); chk("S7 Black-Litterman: half confidence, about 5%",0.5*100*(18-12.3)/(3*0.42**2*100),5,0.5)
 for _sp_d,_sp_v,_sp_g in (("2013-06-30",6.5,120),("2021-09-30",5.5,22),("2026-05-31",8.5,11)): chk(f"S5 S&P 500 required return {_sp_d[:7]}",100*float((rf+0.04)[:_sp_d].iloc[-1]),_sp_v,0.06); chk(f"S5 gap of the Bitcoin midpoint to the S&P 500 required return {_sp_d[:7]}",100*float((req_mid-rf-0.04)[:_sp_d].iloc[-1]),_sp_g,0.6)
+_al={l.split()[1].rstrip(","):l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("alpha ")}
+def _alp(k):
+    c,m_=_al[k].split("|"); f=lambda z: (float(z.split("(")[0].split()[-1]),float(z.split(";")[1]))
+    return f(c),f(m_)
+for _ak,_av in (("2012–26",((90,2.3),(37,0.9))),("2018–26",((24,1.1),(1,0.1))),("2012–14",((185,None),(40,None))),("2015–17",((141,3.0),(93,None))),("2018–20",((53,None),(20,None))),("2021–23",((10,None),(-7,None))),("2024–26",((-1,None),(-15,None)))):
+    for _an,_ao,_ap in zip(("CAPM","MCM"),_alp(_ak),_av):
+        chk(f"S5 {_an} alpha {_ak}",_ao[0],_ap[0],0.5)
+        if _ap[1] is not None: chk(f"S5 {_an} alpha {_ak}, t",_ao[1],_ap[1],0.05)
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 
 # Appendix A.6, third approximation (39_index_exposure.py)

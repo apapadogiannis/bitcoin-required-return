@@ -5,7 +5,7 @@
 [![replication](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml/badge.svg)](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml)
 
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
-Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record). Current version: 1.0, November 14, 2026. Also on SSRN: [ssrn.com/abstract=7705239](https://ssrn.com/abstract=7705239).
+Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record). Current version: paper 1.0 (November 14, 2026); replication package 1.0.1, which adds the input data to the repository. Also on SSRN: [ssrn.com/abstract=7705239](https://ssrn.com/abstract=7705239).
 
 ## What this is
 

@@ -6,7 +6,7 @@ authors:
     given-names: Agisilaos
     orcid: "https://orcid.org/0009-0002-7753-7052"
 date-released: 2026-11-14
-version: "1.0"
+version: "1.0.1"
 doi: "10.5281/zenodo.24003938"
 license: MIT
 repository-code: "https://github.com/apapadogiannis/bitcoin-required-return"

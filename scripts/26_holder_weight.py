@@ -11,7 +11,7 @@ exec(open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read().split("# ===========
 src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 plt.rcParams["axes.titlepad"]=8
-surv={2014.5:0.004,2018.5:0.012,2021.75:0.11,2023.5:0.12,2025.5:0.13}
+surv={2014.5:0.004,2018.5:0.012,2021.75:0.11,2023.5:0.12,2025.5:0.12}
 wealth_ramp=interp({2012:0.25,2021:1.0,2026:1.4})
 Wp_retail=cap.iloc[i21]/0.19*(q/q.iloc[i21])*wealth_ramp
 w_retail=(cap.reindex(px.index)/Wp_retail)

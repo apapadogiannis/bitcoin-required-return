@@ -87,7 +87,7 @@ badge above shows the latest run.
 | `45_euro_table.py` | Table 7 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
 | `46_adoption_hazard.py` | Death within two years by trading volume, as a measure of adoption | Appendix C.2 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 1,159 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 1,169 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 
 `24_terms_fig.py`, `25_wedge_log.py`, `32_eth_fig.py` and `42_beta_fig.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables

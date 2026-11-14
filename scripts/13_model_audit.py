@@ -379,8 +379,10 @@ for _ahy,_ahx in ((2011,0.11),(2013,4.40),(2014,23.26),(2017,235.93)): chk(f"C.2
 _tr={l.split(" to ")[1].split(":")[0]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("trailing three-year")}
 for _tk,_tv in (("2017-12-31",(129,81)),("2020-12-31",(55,22)),("2026-04-30",(6,-7))):
      _tz=_tr[_tk].split(";")[0]; chk(f"S5 trailing three-year unexplained return {_tk}: CAPM",float(_tz.split("CAPM")[1].split(",")[0]),_tv[0],0.5); chk(f"S5 trailing three-year unexplained return {_tk}: MCM",float(_tz.split("MCM")[1]),_tv[1],0.5)
-_shl={l.split("unexplained, ")[1].split(":")[0]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("share of Bitcoin")}
-for _sk,_sv in (("whole sample",(79,33)),("since 2018",(55,4))): chk(f"S5 share unexplained, {_sk}: CAPM",float(_shl[_sk].split("CAPM ")[1].split("%")[0]),_sv[0],0.5); chk(f"S5 share unexplained, {_sk}: MCM",float(_shl[_sk].split("MCM ")[1].split("%")[0]),_sv[1],0.5)
+_shl={l.split("explained, ")[1].split(":")[0]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("share of Bitcoin")}
+for _sk,_sv in (("whole sample",(21,67)),("since 2018",(45,96))): chk(f"S5 share explained, {_sk}: CAPM",float(_shl[_sk].split("CAPM ")[1].split("%")[0]),_sv[0],0.5); chk(f"S5 share explained, {_sk}: MCM",float(_shl[_sk].split("MCM ")[1].split("%")[0]),_sv[1],0.5)
+_shp={l.split()[2].rstrip(":"):l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("share explained ")}
+for _sk,_sv in (("2012–14",(13,65)),("2015–17",(18,49)),("2018–20",(18,67)),("2021–23",(57,120)),("2024–26",(104,148))): chk(f"D.2 share explained {_sk}: CAPM",float(_shp[_sk].split("CAPM ")[1].split("%")[0]),_sv[0],0.5); chk(f"D.2 share explained {_sk}: MCM",float(_shp[_sk].split("MCM ")[1].split("%")[0]),_sv[1],0.5)
 _shD=pd.DataFrame({"r":px.shift(-1)/px-1}); _shD["rf"]=np.exp(rf/12)-1; _shD["ex"]=_shD.r-_shD.rf
 chk("Table 7 Ether average",_med("Ether, average crypto owner (kappa 0.7)"),23.4,0.05)
 

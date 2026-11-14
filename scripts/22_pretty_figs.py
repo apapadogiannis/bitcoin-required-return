@@ -53,8 +53,9 @@ for i_ in range(len(hb)):
 # the Lindy shape, death rate = k / age, drawn through the bucket of ages 2-3
 i2=int(np.argmin(np.abs(mid.values-2.45))); lind=lam.iloc[i2]*mid.iloc[i2]/mid
 YM=31.0; ax.plot(xb,np.minimum(lind,YM+5),color=RED,lw=1.6,ls=(0,(5,3)),marker="o",ms=4,mfc=RED,mec="white",mew=0.8,zorder=5,clip_on=True)
-ax.text(xb[i2]+0.15,lind.iloc[i2-1]*0.0+26.5,"if survival made an asset safer (Lindy),\nthe death rate would fall like this",color=RED,fontsize=8.6,va="center",ha="left")
-ax.text(xb[-1]+0.42,lam.iloc[-1]+8.5,"4 deaths:\nwide interval",fontsize=7.8,color=INK2,ha="right",va="bottom")
+ax.text(xb[i2]-0.2,lind.iloc[i2-1]*0.0+28.6,"if survival made an asset safer (Lindy),\nthe death rate would fall like this",color=RED,fontsize=8.6,va="center",ha="left")
+ax.text(xb[-1]+0.42,lam.iloc[-1]+8.5,"4 deaths:\nwide margin",fontsize=7.8,color=INK2,ha="right",va="bottom")
+_k=int(np.argmin(np.abs(mid.values-4.47))); ax.annotate("margin of error: the range in which\nthe true rate lies, 95% confidence",xy=(xb[_k],lam.iloc[_k]+1.96*se.iloc[_k]),xytext=(xb[_k]+0.35,21.6),fontsize=7.8,color=INK2,ha="center",va="bottom",arrowprops=dict(arrowstyle="-",lw=0.6,color=INK2))
 ax.set_ylim(0,YM); ax.set_yticks([0,10,20,30]); ax.set_yticklabels(["0%","10%","20%","30%"])
 ax.set_xticks(xb); ax.set_xticklabels(labs); ax.set_xlim(-0.6,len(hb)-0.4)
 ax.set_xlabel("age of the cryptoasset, years"); ax.set_ylabel("share dying within a year")

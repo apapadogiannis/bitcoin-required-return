@@ -42,13 +42,13 @@ for (yr,val,lab,tx,ty) in [(2021.75,0.22,"22%",12.2,0.125),(2025.4,0.138,"13.8%"
     l_surv,=ax.plot([A_],[G(val)],marker="D",color="#008300",ms=5.5,ls="none",zorder=5)
     ax.annotate(lab,xy=(A_,G(val)),xytext=(tx,ty),fontsize=8.3,color="#008300",arrowprops=dict(arrowstyle="-",lw=0.6,color="#008300"))
 ax.plot([17.4],[0.18],marker="o",color=BLUE,ms=5.5,zorder=6)
-ax.annotate("required return 18%\n(90% range 15–22%)",xy=(17.4,0.18),xytext=(16.55,0.064),fontsize=8.3,color=BLUE,arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
-ax.annotate("age rule 32%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
+ax.annotate("2026 required return (Section 4):\n18%, 90% range 15–22%",xy=(17.4,0.18),xytext=(16.55,0.064),fontsize=8.3,color=BLUE,arrowprops=dict(arrowstyle="-",lw=0.6,color=BLUE))
+ax.annotate("age rule 33%",xy=(17.4,0.33),xytext=(16.3,0.56),fontsize=8.3,color=RED,arrowprops=dict(arrowstyle="-",lw=0.6,color=RED))
 h_halv=Line2D([],[],color=BASE,lw=0.9,marker="v",mfc=MUT,mec=MUT,ms=5)
 ax.legend([l_real,l_per,l_req,Patch(facecolor=SEQ[100],alpha=0.8),l_age,l_sp,l_surv,h_halv],
-          ["delivered return, smoothed: average of the 36 months around each\ndate, annualized (for display; Table 5 uses the monthly returns)","delivered return, average of each three-year period (Table 5)",
-           "required return (midpoint of the band)","required-return band: the average owner (lower edge)\nto the early holder (upper edge until 2018)",
-           "age rule forecast","S&P 500, required return: Treasury yield plus 4%","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"],
+          ["delivered return, smoothed: average of the 36 months around each date\n(fewer at both ends), annualized (for display; Table 5 uses the monthly returns)","delivered return, average of each three-year period (Table 5)",
+           "required return (midpoint of the band)","required-return band: the average owner (lower edge) to the larger\nof the average owner at high inputs and the early holder (upper edge)",
+           "age rule (exponent 5.62)","S&P 500, required return: Treasury yield plus 4%","holders' surveyed expectations (2021, 2025)","halvings (Nov 2012, Jul 2016, May 2020, Apr 2024)"],
           loc="upper center",bbox_to_anchor=(0.56,-0.075),ncol=2,fontsize=7.8,frameon=True,framealpha=1.0,edgecolor=GRID,borderpad=0.6,labelspacing=0.4,handlelength=1.8,columnspacing=1.4)
 ticks=[0.03,0.05,0.10,0.20,0.50,1.0,2.0,4.0,8.0]
 ax.yaxis.set_major_locator(FixedLocator(ticks)); ax.yaxis.set_major_formatter(FixedFormatter([f"{int(round(100*t))}%" for t in ticks])); ax.yaxis.set_minor_locator(NullLocator())

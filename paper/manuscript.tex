@@ -131,22 +131,22 @@ The required-return equation, equation~(\ref{eq:foc}), needs five inputs. The ce
 \textbf{Source 2: holders' stated expectations, a partial check.} The same surveys asked holders what return they expected over the next year: 22\% in 2021Q3, 13.8\% in 2025Q2. Table~\ref{tab:gamma} sets each answer against equation~(\ref{eq:foc}) evaluated with the inputs of its date.
 
 \begin{table}[ht]\centering\small
-\caption{Two survey waves, one equation.}
+\caption{Holders' stated expected returns against the MCM equation, at two survey dates.}
 \label{tab:gamma}
 \begin{tabular}{lcc}
 \toprule
  & 2021Q3 & 2025Q2 \\
 \midrule
-Volatility $\sigma$ (at the survey date) & 77\% & 53\% \\
+Volatility, $\sigma$ & 77\% & 53\% \\
 Holder portfolio weight $w$ & 0.19 (measured) & 0.19 (``similar across waves'') \\
 Risk-free rate & 1.5\% & 4.4\% \\
-Market term (rolling beta $\times$ 4\%) & 5.2 pts ($\beta = 1.3$) & 7.8 pts ($\beta = 2.0$) \\
-Required return at $\gamma \in [1, 2.8]$ & 18--38\% & 18--27\% \\
+Market term (beta $\times$ 4\% ERP) & 5.2 points ($\beta = 1.3$) & 7.8 points ($\beta = 1.95$) \\
+Required return, $\gamma$ of 1--2.8 & 18--38\% & 18--27\% \\
 Stated expected return & 22\% & 13.8\% \\
 $\gamma$ that reproduces the stated return & $\approx 1.3$ & $\approx 0.2$ \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.9\textwidth}{\footnotesize Mortality term at 0.3 points. Volatility is the measure of Section 5 (weights halving every nine months), averaged over the quarter each wave was fielded; Weber et al.\ report the 2025 wave as 2025Q2 and the 2025 portfolio share as similar to 2021's. Betas: the rolling four-year estimates of Appendix A.}
+\par\smallskip\parbox{0.9\textwidth}{\footnotesize Mortality term at its low reading, 0.3 points. Volatility is the measure of Section 5, averaged over the quarter each wave was fielded; Weber et al.\ (2026) report the 2025 portfolio share as similar to 2021's. Betas: the rolling four-year estimates of Appendix A.}
 \end{table}
 
 The table is not a clean confirmation. In 2021 holders' stated 22\% lies inside the model's 18--38\% and is reproduced at a risk aversion of about 1.3, close to log utility: beliefs and positions cohere, as Giglio, Maggiori, Stroebel, and Utkus (2021) find for equity investors. In 2025 they do not. Holders said 13.8\%, barely more than the risk-free rate plus the market term alone (12.2\%), which leaves almost nothing for a fifth of their wealth in an asset with 53\% volatility; it would take a risk aversion of about 0.2. Either holders in 2025 expected less than their own risk required, or they do not perceive the market risk the rolling beta measures, or a twelve-month point forecast given after a strong run is not the long-run expectation the equation prices. The paper therefore does not calibrate risk aversion to the surveys.
@@ -155,7 +155,7 @@ The table is not a clean confirmation. In 2021 holders' stated 22\% lies inside 
 
 \textbf{Source 3: option prices.} Options answer a question the surveys cannot: what would a holder with \emph{everything} in Bitcoin require? No holder can be more concentrated, so her requirement is a ceiling for the concentration term. Martin (2017) shows that it can be read from option prices: an investor fully invested in an asset, with log utility ($\gamma w = 1$ in equation~(\ref{eq:foc})), requires an excess return equal to the asset's variance as option prices imply it, not as history shows it. For July 2017 to December 2022, when implied volatility ran at 80--90\%, Deribit options put this at \textbf{66--84 points a year} (Almeida, Grith, Miftachov, and Wang 2024). Crypto markets were then segmented from mainstream capital (Makarov and Schoar 2020), so holders close to all-in are plausible for those years; Section 5 builds the upper edge of the band on such a holder. Today implied volatility (Deribit's DVOL index) has run between about 40 and 55, so the same all-in holder would require $0.40^2$--$0.55^2 \approx$ \textbf{16--30 points of excess return}, or 21--35\% a year in nominal terms. Today's holder is not all-in: with $w$ of 8--19\% she requires \textbf{1--9 points} for concentration, on top of the risk-free rate and the market term.
 
-\textbf{Putting the 2026 number together.} Table~\ref{tab:ranges} lists every input of equation~(\ref{eq:foc}) and its source. Volatility, beta, the risk-free rate and the death hazard are measured; the ERP is a convention; risk aversion and today's holder weight are bounded, not measured, and carry the widest ranges. On a risk-free rate of 5.0\%, the market term is 6--8 points, concentration 1--9 points and mortality 0.3--3.5 points. Summing the extremes gives an \emph{envelope} of 13--26\% a year, which puts every input at its extreme at once. We therefore treat every value in a range as equally likely and draw the four ranged inputs independently, since they come from separate sources (prices, surveys, a census), 400,000 times (Appendix D). The median of the resulting required returns is \textbf{about 18\% a year}; 68\% fall in 16--20\% and \textbf{90\% in 15--22\%}. These ranges describe uncertainty about the four bounded inputs, with the ERP, volatility and the risk-free rate held fixed; they are not statistical confidence intervals. Each point of ERP moves the required return by 1.75 points. The market term is now the largest component (about 7 points), followed by concentration (about 4.5); the holder weight contributes most of the width. Beta's range spans point estimates, not sampling error; with that error the 90\% range is 14--23\% and the median is unchanged (Appendix D). This is an arithmetic average; the compound return it implies is lower by about half the variance, roughly 9 points today, so about 9.5\% a year.
+\textbf{Putting the 2026 number together.} Table~\ref{tab:ranges} lists every input of equation~(\ref{eq:foc}) and its source. Volatility, beta, the risk-free rate and the death hazard are measured; the ERP is a convention; risk aversion and today's holder weight are bounded, not measured, and carry the widest ranges. On a risk-free rate of 5.0\%, the market term is 6--8 points, concentration 1--9 points and mortality 0.3--3.5 points. Summing the extremes gives an \emph{envelope} of 13--26\% a year, which puts every input at its extreme at once. We therefore treat every value in a range as equally likely and draw the four ranged inputs independently, since they come from separate sources (prices, surveys, a census), 400,000 times (Appendix D). The median of the resulting required returns is \textbf{about 18\% a year}; 68\% fall in 16--20\% and \textbf{90\% in 15--22\%}. These ranges describe uncertainty about the four bounded inputs, with the ERP, volatility and the risk-free rate held fixed; they are not statistical confidence intervals. Each point of ERP moves the required return by 1.75 points. The market term is now the largest component (about 7 points), followed by concentration (about 4.5); the holder weight contributes most of the width. Beta's range spans point estimates, not sampling error; with that error the 90\% range is 14--23\% and the median moves by 0.1 point (Appendix D). This is an arithmetic average; the compound return it implies is lower by about half the variance, roughly 9 points today, so about 9.5\% a year.
 
 \begin{table}[ht]\centering\small
 \caption{The inputs to the 2026 required return, and where each comes from.}
@@ -211,7 +211,7 @@ Capitalization is observed every month. Holders' wealth is observed once: in the
 W_t \;=\; \frac{C_0}{0.19}\cdot\frac{q_t}{q_0}\cdot k_t, \qquad w^{\text{avg}}_t \;=\; \frac{C_t}{W_t + I_t/0.015}.
 \label{eq:wavg}
 \end{equation}
-Here 0 denotes 2021Q3, $q_t$ is the surveyed share of adults who own crypto, and $k_t$ is wealth per owner relative to 2021, an assumed path from 0.25 in 2012 to 1.4 in 2026. $I_t$ is the Bitcoin held through funds and by public companies: the Grayscale trust from 2013, corporate treasuries from 2020 and the spot ETFs from January 2024. Their investors are assumed to have 1.5\% of their wealth in it (Appendix B). We compute the weight with $I_t$ and without, which gives a band: 3\% at both ends in 2013, 15--17\% in 2017, 12--19\% in 2021 and 8--23\% in 2026 (Figure~\ref{fig:inputs}d).
+Here 0 denotes 2021Q3, $q_t$ is the surveyed share of adults who own crypto, and $k_t$ is wealth per owner relative to 2021, an assumed path from 0.25 in 2012 to 1.4 in 2026. $I_t$ is the Bitcoin held through funds and by public companies: the Grayscale trust from 2013, corporate treasuries from 2019 and the spot ETFs from January 2024. Their investors are assumed to have 1.5\% of their wealth in it (Appendix B). We compute the weight with $I_t$ and without, which gives a band: 3.4\% at both ends in 2013, 15--17\% in 2017, 12--19\% in 2021 and 8--23\% in 2026 (Figure~\ref{fig:inputs}d).
 
 \emph{Reading 2: the early holder.} An average hides who held the coins. In 2013 Bitcoin was worth about \$1 billion and the ownership rate implies some 600,000 owners. They cannot all have been fully invested: that would put each owner's entire wealth at \$1,700. Most coins sat instead with a few miners and early adopters for whom Bitcoin was nearly everything they owned, and it was they who had to be willing to keep it. In this reading the holders are that group alone. Their weight is 1 while ownership was no higher than in the 2018 survey (1.2\% of adults), and it falls in proportion as ownership grows:
 \begin{equation}
@@ -240,7 +240,7 @@ Table~\ref{tab:band} works the edges out at five dates, and panel (a) of Figure~
 \quad Risk-free rate, \% & 2.5 & 2.3 & 2.0 & 1.5 & 4.5 \\
 \quad Volatility, \% & 151 & 80 & 90 & 77 & 42 \\
 \quad Beta & 3.00 & 2.15 & 0.70 & 1.30 & 1.75 \\
-\quad Average owner's weight, \% & 3 & 15--17 & 20--25 & 12--19 & 8--23 \\
+\quad Average owner's weight, \% & 3.4 & 15--17 & 20--25 & 12--19 & 8--23 \\
 \quad Early holder's weight, \% & 100 & 100 & 51 & 11 & 10 \\
 \addlinespace
 \multicolumn{6}{l}{\emph{Required return, \% a year}} \\
@@ -251,12 +251,12 @@ Table~\ref{tab:band} works the edges out at five dates, and panel (a) of Figure~
 \quad Midpoint & 126 & 43 & 43 & 28 & 20 \\
 \bottomrule
 \end{tabular}
-\par\smallskip\begin{minipage}{0.9\textwidth}\footnotesize Bold: the number that sets the upper edge. The market term, beta times the 4\% ERP, moves 15\% either way, as the 2026 range of beta (1.5--2.0) does around 1.75. The May 2026 column uses that month's inputs; the 2026 required return of Table~\ref{tab:ranges} takes the risk-free rate at 5.0\% and the high weight at the surveyed 19\%. The early holder's requirement is the bound of Martin (2017) for a fully invested investor with $\gamma = 1$, which includes the market and mortality terms. Formulas: Appendix D.2.\end{minipage}
+\par\smallskip\begin{minipage}{0.9\textwidth}\footnotesize Bold: the number that sets the upper edge. The market term, beta times the 4\% ERP, moves 15\% either way. Cells are computed from unrounded inputs. The May 2026 column uses that month's inputs; the 2026 required return of Table~\ref{tab:ranges} takes the risk-free rate at 5.0\% and the high weight at the surveyed 19\%. The early holder's requirement is the bound of Martin (2017) for a fully invested investor with $\gamma = 1$, which includes the market and mortality terms. Formulas: Appendix D.2.\end{minipage}
 \end{table}
 
 \begin{figure}[ht]\centering
 \includegraphics[width=0.92\textwidth]{fig_inputs.pdf}
-\caption{The four inputs of equation~(\ref{eq:foc}) that move with time, at each month-end. (a) Volatility. (b) Beta to the S\&P 500 over the previous four years. (c) The ten-year Treasury yield. (d) Holder weight: the average owner of equation~(\ref{eq:wavg}), a band once fund and treasury investors exist (from 2013), and the early holder of equation~(\ref{eq:wearly}). Triangles: the surveyed ownership rates. Right edge: the 2026 values of Table~\ref{tab:ranges}. Dotted line in every panel: spot-ETF approval, January 2024.}
+\caption{The four inputs of equation~(\ref{eq:foc}) that move with time, at each month-end, against Bitcoin's age (bottom) and the year (top). (a) Volatility, annualized. (b) Beta to the S\&P 500 over the previous four years, kept between 0 and 3. (c) The ten-year Treasury yield. (d) Holder weight: the average owner of equation~(\ref{eq:wavg}), a band once fund and treasury investors exist (from 2013), and the early holder of equation~(\ref{eq:wearly}). Triangles: dates of the ownership surveys. Right edge: the 2026 values of Table~\ref{tab:ranges}, which differ from the last month plotted (Table~\ref{tab:band}). Dotted lines: spot-ETF approval, January 2024, and in (d) the events labeled.}
 \label{fig:inputs}
 \end{figure}
 
@@ -264,7 +264,7 @@ Table~\ref{tab:band} works the edges out at five dates, and panel (a) of Figure~
 
 \begin{figure}[p]\centering
 \includegraphics[width=0.88\textwidth]{fig_required.pdf}
-\caption{The required return since 2012. (a) The band and its midpoint: equation~(\ref{eq:foc}) at each month-end, from the inputs of Figure~\ref{fig:inputs} and the edges of Table~\ref{tab:band}. Black line: Bitcoin's monthly returns, annualized and smoothed (Step 2); not used in the test. Circles: the period averages of Table~\ref{tab:monthly}, which the test uses. Dashed: the S\&P 500's required return, the Treasury yield plus the 4\% ERP. (b) The midpoint of panel (a) split into the four terms of equation~(\ref{eq:foc}); mortality is held at 1.9 points and concentration is the remainder. (c) Each term's share of the midpoint, month by month; the labels give April 2026.}
+\caption{The required return since 2012. (a) The band and its midpoint: equation~(\ref{eq:foc}) at each month-end, from the inputs of Figure~\ref{fig:inputs} and the edges of Table~\ref{tab:band}. Blue dot: the 2026 required return of Section 4. Black line: Bitcoin's monthly returns, annualized and smoothed (Step 2); not used in the test. Its drop in 2015 is November 2013 leaving the average. Circles: the period averages of Table~\ref{tab:monthly}, which the test uses. Dashed: the S\&P 500's required return, the Treasury yield plus the 4\% ERP. (b) The midpoint of panel (a) split into the four terms of equation~(\ref{eq:foc}); mortality is held at 1.9 points and concentration is the remainder. (c) Each term's share of the midpoint, month by month; the labels give April 2026.}
 \label{fig:wedge}
 \end{figure}
 
@@ -274,7 +274,7 @@ Table~\ref{tab:band} works the edges out at five dates, and panel (a) of Figure~
 \item \emph{The early years favor the early holder.} The lower edge, the average owner, leaves 98 points unexplained and is rejected ($t = 2.5$); the upper edge, the early holder until 2018, leaves 7. The gap to the midpoint is $+120$ points in 2012--14 (standard error 169) and $+98$ in 2015--17 (46), the one period in which the midpoint is rejected.
 \item \emph{Since 2018 the two agree.} The gaps to the midpoint in the three periods are $+30$, $+3$ and $+10$, each well inside one standard error, and the gap to the upper edge is $-1$.
 \end{itemize}
-\textbf{The same test as a regression.} The standard test of a pricing model regresses the asset's excess return on the market's and asks whether the intercept, alpha, is zero (Jensen 1968). For the CAPM, Bitcoin's alpha is 90\% a year over the whole sample ($t = 2.3$) and 24\% since 2018 ($t = 1.1$). Subtracting the midpoint's concentration and mortality terms from Bitcoin's return and running the same regression gives the MCM alpha: 37\% ($t = 0.9$) and 1\% ($t = 0.1$); panel (c) of Figure~\ref{fig:gap} shows both by period. The CAPM explains 21\% of Bitcoin's return over the risk-free rate in the whole sample and the MCM equation 67\%; since 2018, 45\% and 96\%. Panels (d) and (e) follow them through time: the CAPM explains a fifth until 2022.
+\textbf{The same test as a regression.} The standard test of a pricing model regresses the asset's excess return on the market's and asks whether the intercept, alpha, is zero (Jensen 1968). For the CAPM, Bitcoin's alpha is 90\% a year over the whole sample ($t = 2.3$) and 24\% since 2018 ($t = 1.1$). Subtracting the midpoint's concentration and mortality terms from Bitcoin's return and running the same regression gives the MCM alpha: 37\% ($t = 0.9$) and 1\% ($t = 0.1$); panel (c) of Figure~\ref{fig:gap} shows both by period. The CAPM explains 21\% of Bitcoin's return over the risk-free rate in the whole sample and the MCM equation 67\%; since 2018, 45\% and 96\%. Panels (d) and (e) follow them through time: the CAPM explains a fifth to a third until 2023.
 
 Why did Bitcoin deliver more than the midpoint in its early years? Three readings fit, and the data cannot separate them. Concentration may have been greater than the back-cast assumes: the returns of 2012--17 are what a holder with $\gamma w$ of about 1.2 (standard error 0.5) would require, nearly all her wealth in Bitcoin at a risk aversion near one. This is the early holder of equation~(\ref{eq:wearly}), so the upper edge of the band is in effect calibrated on 2012--17, and only 2018--26 tests the equation outside that calibration. Early holders may have been paid for risks the equation does not price: that Bitcoin or its exchanges would fail (as Mt.\ Gox did in 2014), and illiquidity. And a falling required return by itself lifts the price while the fall lasts, as with US equities when their valuations rose (Fama and French 2002).
 
@@ -302,12 +302,12 @@ Period & Delivered & Band & Midpoint & Lower edge & Midpoint (s.e.) & Upper edge
 2018--26 & 46 & 16--46 & 31 & $+30$ & $+15$ (24) & $-1$ & $+1$ \\
 \bottomrule
 \end{tabular}
-\par\smallskip\begin{minipage}{0.86\textwidth}\footnotesize Each observation pairs a month-end's required return with Bitcoin's simple return over the following month; all figures are twelve times the monthly average. There are 172 months: 36 in each three-year period and 28 in the last. Months are dated by the required return: the last is formed at the end of April 2026 and paired with the return of May 2026. Delivered minus required is the average monthly difference, with its standard error in parentheses for the midpoint. Age rule: the one-month form of the rule, with the exponent held at its 2026 value, 5.62.\end{minipage}
+\par\smallskip\begin{minipage}{0.86\textwidth}\footnotesize Each observation pairs a month-end's required return with Bitcoin's simple return over the following month; all figures are twelve times the monthly average. There are 172 months: 36 in each three-year period and 28 in the last. Months are dated by the required return; the last is April 2026. Standard errors of the midpoint gap in parentheses. The midpoint is averaged after conversion to a monthly return, so it can lie below the middle of the averaged band. Age rule: the one-month form of the rule, with the exponent held at its 2026 value, 5.62.\end{minipage}
 \end{table}
 
 \begin{figure}[p]\centering
 \includegraphics[width=0.90\textwidth]{fig_gap.pdf}
-\caption{The monthly test by three-year period (Table~\ref{tab:monthly}). (a) The average delivered return (circles) against the average band and its midpoint; logarithmic scale. (b) The gap: delivered minus required (the midpoint of the band), with one and two standard errors. (c) The intercept of a regression of Bitcoin's monthly excess return on the S\&P 500's (CAPM), and of the same regression net of the midpoint's concentration and mortality terms (MCM). (d) Gray: the return to be explained, Bitcoin's return over the risk-free rate. Colored: what each model leaves unexplained (three-year averages). (e) The share each explains: 100\% when its line in (d) is zero, 0\% when on the gray line; shown at 100\% where a model requires more than Bitcoin delivered.}
+\caption{The monthly test by three-year period (Table~\ref{tab:monthly}). (a) The average delivered return (circles) against the average band and its midpoint; logarithmic scale. (b) The gap: delivered minus required (the midpoint of the band), with one and two standard errors. (c) The intercept of a regression of Bitcoin's monthly excess return on the S\&P 500's (CAPM), and of the same regression net of the midpoint's concentration and mortality terms (MCM), by period, for the whole sample and since 2018. (d) Gray: the return to be explained, Bitcoin's return over the risk-free rate. Colored: what each model leaves unexplained (trailing three-year averages). (e) The share each explains: 100\% when its line in (d) is zero, 0\% when on the gray line; shown at 100\% where a model requires more than Bitcoin delivered.}
 \label{fig:gap}
 \end{figure}
 
@@ -367,7 +367,7 @@ Average (standard error) & 46 (23) & 48 (32) & 37 (33) & not observable \\
 Compound & 28 & 8 & $-2$ & not observable \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.93\textwidth}{\footnotesize The four terms are computed at the midpoint of each input's range: $w$ of 13.5\% (range 8--19\%, Table~\ref{tab:ranges}), risk aversion 1.9 (1--2.8), ERP 4\%, and a mortality term of 0.3--3.5 points for Bitcoin and Ether, 1--3 for a large altcoin (hazard 3.2\% a year) and 16--17 for a small coin (17.4\% a year) (Section 3). The floor and the required return are medians over the input ranges, with 90\% ranges in parentheses (Appendix D.1); a median can lie up to 0.3 points below the sum of the terms above it. For inputs, parentheses give interquartile ranges. Large altcoin: the 57 surviving altcoins with four years of prices; inputs are medians over the last four years, volatility as for Bitcoin. Delivered: the monthly measure of Table~\ref{tab:monthly} over the 100 months of its 2018--26 row, when required returns were higher than in 2026, so the two panels are not a test; for altcoins an equal-weighted basket of 84 altcoins, rebalanced monthly and including the 25 that died.}
+\par\smallskip\parbox{0.93\textwidth}{\footnotesize The four terms are computed at the midpoint of each input's range: $w$ of 13.5\% (range 8--19\%, Table~\ref{tab:ranges}), risk aversion 1.9 (1--2.8), ERP 4\%, and a mortality term of 0.3--3.5 points for Bitcoin and Ether, 1--3 for a large altcoin (hazard 3.2\% a year) and 16--17 for a small coin (17.4\% a year) (Section 3). The floor and the required return are medians over the input ranges, with 90\% ranges in parentheses (Appendix D.1); a median can lie up to 0.3 points below the sum of the terms above it. For inputs, parentheses give interquartile ranges. Large altcoin: the 57 surviving altcoins with four years of prices; inputs are medians over the last four years, volatility as for Bitcoin. Delivered: the monthly measure of Table~\ref{tab:monthly} over the 100 months of its 2018--26 row, when required returns were higher than in 2026, so the two panels are not a test; for altcoins an equal-weighted basket of up to 84 altcoins, rebalanced monthly and including the 25 that died.}
 \end{table}
 
 \textbf{What altcoins delivered.} The census keeps the coins that died, so within the priced assets the record carries no survivorship bias. An equal-weighted basket of up to 84 altcoins with a price history, 25 of which died, earned an average of 37\% a year over 2018--26, with a standard error of 33. The basket, rebalanced monthly, compounded at $-2\%$ a year ($-3\%$ if a coin whose price feed stopped is counted as a total loss). Coin by coin the result is worse: the median altcoin lost 27\% a year compounded, 77\% of them lost money, and 7\% did better than Bitcoin. A high average with a negative compound return is the signature of a lottery, in which a few large winners carry the mean (Barberis and Huang 2008).
@@ -383,7 +383,7 @@ Compound & 28 & 8 & $-2$ & not observable \\
 \mu_0 \;=\; r_f + \beta\,\mathrm{ERP} + \lambda(1-\delta).
 \label{eq:hurdle}
 \end{equation}
-The first two terms are \textbf{11--13\% today}. The mortality term is an expected loss per dollar held, the same for every holder, so she charges it in full: about 2 points at the middle of its range, and more if she judges deaths systematic, as the 2022 clustering of top-twenty deaths suggests. That makes the hurdle about 14\% (12--15\%). It is the bar Bitcoin must clear to belong in her portfolio at more than market weight.
+The first two terms are \textbf{11--13\% today}. The mortality term is an expected loss per dollar held, the same for every holder, so she charges it in full: about 2 points at the middle of its range, and more if she judges deaths systematic, as the 2022 clustering of top-twenty deaths suggests. That makes the hurdle about 14\% (12--15\%).
 
 \textbf{Is it worth holding at all?} For the smaller cryptoassets the buy-and-hold record says no: even a diversified holder requires 15--30\% a year, and the median altcoin has lost 27\% a year since 2018 (Section 6). For Bitcoin's concentrated holders the 18\% is what they require and, in equilibrium, what they get, so it carries no alpha for them. A diversified investor does not bear the concentration risk they are paid for. Against her hurdle of 12--15\% the asset offers about 18\%. The difference, 3--6 points and about 4.5 at the middle, is a rent: the premium a still-concentrated holder base demands, open to an investor who holds the asset as a small part of a diversified portfolio (Merton 1987). The rent is what remains of the concentration term, and it shrinks as holders become less concentrated. It is the least certain part of the required return: zero at the bottom of the 90\% range, and absent if holders' own 2025 expectation of 14\% is the right one.
 
@@ -416,7 +416,7 @@ Global equities (MSCI ACWI) & 0.95 & 8.8 & 13.8 & 1.0 & 7.8 & 0.28 & $\phantom{-
 S\&P 500 & 1.00 & 9.0 & 14.1 & 1.0 & 8.0 & 0.28 & $\phantom{-}0.21$ \\
 Nasdaq-100 & 1.12 & 9.5 & 17.2 & 1.5 & 8.0 & 0.26 & $\phantom{-}0.17$ \\
 Russell 2000 & 1.18 & 9.7 & 19.1 & 1.8 & 7.9 & 0.25 & $\phantom{-}0.15$ \\
-Gold & 0.0 & 5.5 & 15.5 & 1.2 & 4.3 & 0.03 & $-0.05$ \\
+Gold & 0.00 & 5.5 & 15.5 & 1.2 & 4.3 & 0.03 & $-0.05$ \\
 Bitcoin & 1.75 & 18.3 & 42 & 8.8 & 9.5 & 0.32 & $\phantom{-}0.11$ \\
 Ether & 2.35 & 23.4 & 64 & 20.5 & 2.9 & 0.29 & $-0.03$ \\
 \bottomrule
@@ -437,7 +437,7 @@ Ether & 2.35 & 23.4 & 64 & 20.5 & 2.9 & 0.29 & $-0.03$ \\
 \end{equation}
 where $\rho$ is the asset's correlation with the market and $\mathrm{SR}_m$ the market's Sharpe ratio. For a fully diversified holder of an asset that cannot die the right side collapses to $\rho\,\mathrm{SR}_m$, the CAPM in Sharpe units. The concentration term, $\gamma\sigma w$, is what a holder adds when she owns a lot; $\sigma w$ is the position's contribution to her portfolio volatility, so the ratio depends on its size. Today the market term is about 0.17 (7 points over 42\%), the concentration term about 0.11 ($1.9 \times 0.42 \times 0.135$) and mortality about 0.05 (1.9 points over 42\%): a required Sharpe ratio of about 0.32. Once holders are diluted toward market weight ($w \to 0$) the requirement falls to $\rho\,\mathrm{SR}_m$ plus the mortality term, about 0.21 at today's volatility. Bitcoin's Sharpe ratio exceeds that only because its holders are still concentrated, and integration should push it down. An asset improves a diversified portfolio's Sharpe ratio if and only if its own exceeds $\rho$ times the portfolio's, here about 0.32 against about 0.17, so a small position adds today.
 
-\textbf{What about the halving cycle?} The four-year cycle does not enter the required return. The halving changes supply, which is not one of the risks a holder is paid for, and its schedule is known years ahead, so in equilibrium it is in the price and cannot carry a predictable excess return. The past cycles were real (Figure~\ref{fig:wedge}): realized returns swinging around the required return, which average out, as they have since 2018.
+\textbf{What about the halving cycle?} The four-year cycle does not enter the required return. The halving changes supply, which is not one of the risks a holder is paid for, and its schedule is known years ahead, so in equilibrium it is in the price and cannot carry a predictable excess return.
 
 \textbf{What about the upside stories?} The most common is monetary debasement. Returns in this paper are nominal, and the 5.0\% risk-free rate of equation~(\ref{eq:foc}) already contains the inflation that bond investors expect; only inflation beyond that would be news. Tokenization, payments by AI agents and a flight from government debt under fiscal dominance are claims about future demand, and the equation prices risk. A story that investors already believe is in today's price and does not raise the return. If the market underestimates one and it arrives, Bitcoin will return more than required, once. Afterward its required return is lower, not higher: less concentrated ownership shrinks the concentration term, and an asset valued as a hedge is one that investors accept a lower return to hold, as with gold (Appendix E).
 
@@ -469,7 +469,7 @@ Today, if Bitcoin is priced in equilibrium, the equation gives about 18\% a year
 
 The age rule's 32\% lies above the whole range, and the equation says why. Bitcoin's required return did not fall because Bitcoin grew older. It fell because Bitcoin was integrated into mainstream portfolios, and integration moves two terms in opposite directions. It lowers the concentration term, through both of its inputs: volatility falls as markets deepen, and the holder weight falls as diversified investors come in. It raises the market term, because those investors also own equities: Bitcoin's correlation with equities rose from about 0.2 to about 0.5. The mortality term has no trend. Of today's 18\%, the concentration term is about 4.5 points and can still shrink; the market term, about 7 points, is there to stay.
 
-\textbf{For practitioners.} First, where Bitcoin is heading. As its holders diversify, equation~(\ref{eq:foc}) collapses to the CAPM, and the CAPM's advice is the familiar one (Tobin 1958; Sharpe 1964): hold the market portfolio and the risk-free asset, in proportions set by one's taste for risk. In that world Bitcoin is an ordinary high-beta asset that belongs in a portfolio at its market weight, under 1\%, with a required return of 12--15\%. Second, where it is today. Its holders are still concentrated, so it offers about 18\% a year (15--22\%), 3--6 points more than a diversified investor needs. An investor willing to hold more than market weight, and to rebalance, can collect that premium, up to about 8\% of financial wealth at a risk aversion of 3; it is a rent that shrinks as less concentrated holders come in. Third, what a position that is bought and never rebalanced should expect: about 9.5\% a year compounded, little more than a global equity index offers, at three times the volatility, and not the 22--28\% compounded that its price trend extrapolates to. Throughout, do not treat Bitcoin as uncorrelated (its beta to equities is about 1.75), and charge for mortality explicitly.
+\textbf{For practitioners.} First, where Bitcoin is heading. As its holders diversify, equation~(\ref{eq:foc}) collapses to the CAPM, and the CAPM's advice is the familiar one (Tobin 1958; Sharpe 1964): hold the market portfolio and the risk-free asset, in proportions set by one's taste for risk. In that world Bitcoin is an ordinary high-beta asset that belongs in a portfolio at its market weight, under 1\%, with a required return of 12--15\%. Second, where it is today. Its holders are still concentrated, so it offers about 18\% a year (15--22\%), 3--6 points more than a diversified investor needs. An investor willing to hold more than market weight, and to rebalance, can collect that premium, up to about 8\% of financial wealth at a risk aversion of 3; it is a rent that shrinks as less concentrated holders come in. Third, what a position that is bought and never rebalanced should expect: about 9.5\% a year compounded, little more than a global equity index offers, at three times the volatility, and not the 22--28\% compounded that its price trend extrapolates to.
 
 \textbf{Beyond Bitcoin.} The MCM equation is not specific to Bitcoin: we offer it as a template for any new asset that is volatile, held by few, and able to fail. Applying it takes the asset's volatility and beta, the share of their wealth its holders keep in it, and the rate at which assets of its kind fail. Whatever leads holders to concentrate, whether barriers, information or belief, reaches the required return through one number, their weight. The applications to Ether, smaller cryptoassets and gold rest partly on assumed inputs, so the template is validated on one asset only; tokenized assets, private credit and early-stage equity are natural next tests.
 
@@ -653,11 +653,11 @@ Since 2012 & 173 & 1.77 & 0.45 & 0.29 \\
 
 \emph{When and why.} The co-movement with equities began in March 2020, not with the spot ETFs of January 2024: Bitcoin's monthly correlation with the S\&P 500 was 0.16 over 2012--19, 0.56 over 2020--23 and 0.49 from 2024 to May 2026, with betas of 2.0 (standard error 0.4) and 1.8 (0.6) in the last two periods. We read the cause as the holder, not the vehicle. Between the 2018 and 2021 surveys the share of adults owning crypto rose from 1.2\% to 11\% (Appendix B), and investors who hold both crypto and equities sell both when their wealth or their appetite for risk falls. The same retail investors' net purchases of stocks and of crypto became positively correlated from March 2020 (Didisheim and Somoza 2022), the correlation follows the participation of institutional investors (Copestake, Furceri, and Terracciano 2024), and spillovers between the two markets rose with the pandemic (Iyer 2022). Two other channels can be set aside: use of the network (since 2020 the growth of active addresses has a correlation of 0.18 with equity returns, and adding it to the regression leaves the equity coefficient at 1.9) and the fund wrapper (gold ETFs have traded since 2004, yet gold's beta is 0.10, because investors buy gold as a refuge when equities fall; Baur and Lucey 2010).
 
-\emph{A test on holdings.} Figure~\ref{fig:holders} sets the correlation against the share of the Bitcoin supply held through funds and by public companies, the holders most likely to own equities as well. The share was about 1\% from 2014 to 2019, rose to 3.8\% during 2020, stayed at 3.8--4.6\% to the end of 2023 and reached 12\% in May 2026; the correlation was 0.09, 0.56 and 0.49 over 2014--19, 2020--23 and since. The first rise in holdings coincides with the rise in correlation; the second and larger one brought no further rise: a step, not a proportion. March 2020 was a shock to every risky asset, but the correlation over 2020--23 is 0.52 without that month.
+\emph{A test on holdings.} Figure~\ref{fig:holders} sets the correlation against the share of the Bitcoin supply held through funds and by public companies, the holders most likely to own equities as well. The share was about 1\% from 2014 to 2018 and 1.5\% at the end of 2019, rose to 3.8\% during 2020, stayed at 3.8--4.6\% to the end of 2023 and reached 12\% in May 2026; the correlation was 0.09, 0.56 and 0.49 over 2014--19, 2020--23 and since. The first rise in holdings coincides with the rise in correlation; the second and larger one brought no further rise: a step, not a proportion. March 2020 was a shock to every risky asset, but the correlation over 2020--23 is 0.52 without that month.
 
 \begin{figure}[ht]\centering
 \includegraphics[width=0.88\textwidth]{fig_holders_comovement.pdf}
-\caption{Bitcoin's correlation with the S\&P 500 and the Bitcoin held through funds and by public companies. (a) Correlation of monthly log returns over the previous 24 months, with the average of each period. (b) Share of the Bitcoin supply held by the Grayscale trust and, from January 2024, the US spot ETFs (funds), and by public companies. Dotted lines: March 2020 and spot-ETF approval. Sources: Appendix B.}
+\caption{Bitcoin's correlation with the S\&P 500 and the Bitcoin held through funds and by public companies. (a) Solid line: correlation of monthly log returns over the previous 24 months. Dashed segments: the correlation over each whole period (2014--19, 2020--23, and 2024 to May 2026). (b) Share of the Bitcoin supply held by funds (the Grayscale trust and, from January 2024, the US spot ETFs) and by public companies, stacked; 12\% in total in May 2026. Dotted lines: March 2020 and the approval of the spot ETFs in January 2024. Sources: A.1 for returns, Appendix B for holdings.}
 \label{fig:holders}
 \end{figure}
 
@@ -674,7 +674,7 @@ Since 2012 & 173 & 1.77 & 0.45 & 0.29 \\
 \label{tab:volwin}
 \begin{tabular}{lccccc}
 \toprule
- & 2012--2026 & Last 5 years & Last 3 years & Last year & Recent-weighted \\
+ & Whole sample & Last 5 years & Last 3 years & Last 12 months & Recent-weighted \\
 \midrule
 \multicolumn{6}{l}{\emph{In US dollars}} \\
 Global equities & \textbf{13.8} & 14.9 & 12.2 & 12.7 & 14.5 \\
@@ -690,7 +690,7 @@ Global equities & 12.6 & 13.0 & 11.2 & 9.9 & 12.9 \\
 S\&P 500 & 13.8 & 14.7 & 13.0 & 11.1 & 14.4 \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.92\textwidth}{\footnotesize Standard deviation of monthly log returns times $\sqrt{12}$; windows end in April 2026, and the first column starts in January 2012. Global equities: the MSCI ACWI. Recent-weighted: squared returns, exponentially weighted with a half-life of nine months. In bold, the basis used in Table~\ref{tab:compound}; for Bitcoin the paper uses the same measure one month later, 41.8\% in May 2026, rounded to 42\%. Ether's series begins in August 2015. Euro figures convert each monthly return at the month-end exchange rate.}
+\par\smallskip\parbox{0.92\textwidth}{\footnotesize Standard deviation of monthly log returns times $\sqrt{12}$; windows end in April 2026, and the first column starts in January 2012. Global equities: the MSCI ACWI. Recent-weighted: squared returns, exponentially weighted with a half-life of nine months. In bold, the measure used in Table~\ref{tab:compound}; for Bitcoin the paper uses it one month later, 41.8\% in May 2026, rounded to 42\%. This table ends in April 2026 so that every asset is measured over the same months. Ether's series begins in August 2015. Euro figures convert each monthly return at the month-end exchange rate.}
 \end{table}
 
 \section{Concentration Risk}
@@ -738,17 +738,17 @@ End of 2015 & 0.141 & & 0.141 & End of 2022 & 0.632 & 0.225 & 0.857 \\
 End of 2016 & 0.172 & & 0.172 & End of 2023 & 0.620 & 0.281 & 0.901 \\
 End of 2017 & 0.176 & & 0.176 & Mid-2024 & & & 1.15 \\
 End of 2018 & 0.204 & & 0.204 & Mid-2025 & & & 2.10 \\
-End of 2019 & 0.261 & 0.020 & 0.281 & Mid-2026 & 1.25 & 1.26 & 2.5 \\
+End of 2019 & 0.261 & 0.020 & 0.281 & Mid-2026 & 1.25 & 1.26 & 2.51 \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.86\textwidth}{\footnotesize Funds: the Grayscale Bitcoin Trust to 2023, from its filings; US spot ETFs from 2024. Companies in 2022 and 2023: MicroStrategy's reported 132,500 and 189,150 BTC plus the other companies at their 2021 level. The path is linear between these dates and zero before the trust began in September 2013. Halving or doubling the company figures before 2024 moves the lower edge of the band of Section 5 by at most one point and the gaps of Table~\ref{tab:monthly} by 0.1.}
+\par\smallskip\parbox{0.86\textwidth}{\footnotesize Funds: the Grayscale Bitcoin Trust to 2023, from its filings; US spot ETFs from 2024. Companies in 2022 and 2023: MicroStrategy's reported 132,500 and 189,150 BTC plus the other companies at their 2021 level. A blank under Companies before 2019 means that none are counted; for mid-2024 and mid-2025 only the total is used. The path is linear between these dates and zero before the trust began in September 2013. Halving or doubling the company figures before 2024 moves the lower edge of the band of Section 5 by at most one point and the gaps of Table~\ref{tab:monthly} by 0.1.}
 \end{table}
 
 \textbf{B.3 The weight: $w_t$.} With $q_t$, $k_t$ and $I_t$ in hand, equation~(\ref{eq:wavg}) gives the average owner's weight. $I_t$ is the Bitcoin of Table~\ref{tab:funds}, linear between its dates, valued at the month-end price. Without $I_t$ the weight counts surveyed owners only; with it, both classes; each is capped at 0.9. The two coincide until the trust begins and form a band afterwards: 15--17\% in mid-2017, 20--25\% in mid-2019 and 12--19\% in 2021Q3. A worked example: in June 2017 capitalization was 4.9\% of its 2021Q3 level, the number of owners 8.3\% and wealth per owner two-thirds, so $w = 0.19 \times 0.049 / (0.083 \times 0.67) \approx 17\%$. Three things should be kept in mind. Only capitalization is observed monthly; ownership is observed at five survey dates, and the wealth ramp and the 1.5\% are assumptions. The path spikes at the 2013, 2017 and 2021 peaks, because capitalization moves with the price while participation is smooth (D.3). And coins that are permanently lost, an estimated 3--4 million BTC, are not removed from capitalization; removing them would lower every weight by 15--20\%.
 
 \begin{figure}[!htbp]\centering
 \includegraphics[width=0.95\textwidth]{fig_w.pdf}
-\caption{Constructing the holder weight. (a) Share of US adults owning crypto: survey points, the log-linear path used, and the address-count alternative not used. (b) Wealth of surveyed owners, Bitcoin's capitalization, and the 2026 totals once fund and treasury investors are added at weights of 1.5\% and 3\%. Logarithmic scales. The weight itself is panel (d) of Figure~\ref{fig:inputs}.}
+\caption{Constructing the holder weight. (a) Share of US adults owning crypto. Dots: the surveyed ownership rates. Solid line: the path used, which grows at a constant rate between surveys, follows the address count before the first survey and is flat after the last (equation~\ref{eq:q}). Dashed line: the address count scaled to the 2021Q3 survey, not used. (b) Wealth of surveyed owners and Bitcoin's capitalization; the weight is the ratio of the two. Orange markers: surveyed owners' wealth plus that of fund and treasury investors in May 2026, at weights of 1.5\% and 3\%. Logarithmic scales; top axis: calendar year. The weight itself is panel (d) of Figure~\ref{fig:inputs}.}
 \label{fig:w}
 \end{figure}
 
@@ -757,31 +757,31 @@ End of 2019 & 0.261 & 0.020 & 0.281 & Mid-2026 & 1.25 & 1.26 & 2.5 \\
 \textbf{C.1 Hazard and age.} The hazard rate at a given age is the fraction of the assets alive at that age that die within the next year, with assets still alive treated as censored. The age rule's most natural defense was mortality: under the ``Lindy effect'' the hazard falls like $k$ divided by age, and with $k$ near 5.6 the age rule would be fair payment for a risk of death that declines with age. The census does not support it (Table~\ref{tab:hazard}).
 
 \begin{table}[ht]\centering\small
-\caption{Mortality hazard by age, curated death definition (1,815 assets, 520 deaths, 2010--2026).}
+\caption{Death rate of cryptoassets by age. Census of July 2010 to May 2026: 1,815 assets and 520 deaths, on the final (curated) definition of death.}
 \label{tab:hazard}
 \begin{tabular}{lccc}
 \toprule
-Age (years) & Deaths & Exposure (asset-yrs) & Hazard (per yr) \\
+Age, years & Deaths & Exposure, asset-years & Death rate a year \\
 \midrule
 0.1--0.5 & 6 & 693 & 0.9\% \\
 0.5--1 & 37 & 770 & 4.8\% \\
-1--2 & 111 & 1{,}213 & 9.2\% \\
+1--2 & 111 & 1{,}213 & 9.1\% \\
 2--3 & 106 & 905 & 11.7\% \\
 3--4 & 82 & 661 & 12.4\% \\
 4--5 & 78 & 488 & 16.0\% \\
-5--7 & 63 & 502 & 12.6\% \\
+5--7 & 63 & 502 & 12.5\% \\
 7--9 & 33 & 198 & 16.7\% \\
 9--12 & 4 & 53 & 7.5\% \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.8\textwidth}{\footnotesize Buckets begin at age 0.1 (the first weeks of a listing are definitionally alive) and the sparse 12--17 bucket (7 asset-years, no deaths, Bitcoin the main occupant) is omitted; total exposure across all ages is about 5,640 asset-years.}
+\par\smallskip\parbox{0.8\textwidth}{\footnotesize Deaths and exposure are counted from age 0.1, because an asset cannot meet the definition of death in its first weeks. Exposure: asset-years observed in the age bracket. Death rate: deaths divided by exposure. The 12--17 bracket (7 asset-years, no deaths, mostly Bitcoin) is omitted. The brackets shown sum to 5,483 asset-years; with the first 0.1 year of each asset and the 12--17 bracket the census totals about 5,640.}
 \end{table}
 
-Among tracked assets the hazard \emph{rises} with age through at least age nine (Figure~\ref{fig:hazard}). A Poisson regression of monthly deaths on log age gives an age elasticity of \textbf{+0.42 (s.e.\ 0.04)}, where Lindy requires $-1$ (C.4). A Lindy constant of 5.6 would have implied that a three-year-old cryptoasset had roughly a 1-in-20,000 chance of reaching Bitcoin's current age; the measured elite hazard, held constant, implies a 14-year survival probability around 0.6. Three caveats apply. First, in the oldest populated bucket (ages 9--12) the raw hazard falls back to 7.5\%, on 4 deaths and 53 asset-years; the data's support ends near age twelve, and Bitcoin is 17.4. The result describes the asset class over its observed life span, which is why the pricing uses the elite hazard \emph{level} and not an age extrapolation. Second, elite deaths cluster in calendar time (2022, 2024--25): the three jump-collapses sit within six months of one another and were causally linked (Terra propagated through Celsius to FTX), so the Poisson confidence interval, which assumes independent events, understates the uncertainty. Third, twelve of the 36 elite deaths fall in 2025, most of them delistings; C.3 gives the hazard without them.
+Among tracked assets the hazard \emph{rises} with age through at least age nine (Figure~\ref{fig:hazard}). A Poisson regression of monthly deaths on log age gives an age elasticity of \textbf{+0.42 (s.e.\ 0.04)}, where Lindy requires $-1$ (C.4). A Lindy constant of 5.6 would have implied that a three-year-old cryptoasset had roughly a 1-in-20,000 chance of reaching Bitcoin's current age; the measured elite hazard, held constant, implies a 14-year survival probability around 0.6. Three caveats apply. First, in the oldest populated bucket (ages 9--12) the raw hazard falls back to 7.5\%, on 4 deaths and 53 asset-years; the data's support ends near age twelve, and Bitcoin is 17.4. The result describes the asset class over its observed life span, which is why the pricing uses the elite hazard \emph{level} and not an age extrapolation. Second, top-twenty deaths cluster in calendar time (nine in 2022 and twelve in 2025): the three jump-collapses sit within six months of one another and were causally linked (Terra propagated through Celsius to FTX), so the Poisson confidence interval, which assumes independent events, understates the uncertainty. Third, twelve of the 36 elite deaths fall in 2025, most of them delistings; C.3 gives the hazard without them.
 
 \begin{figure}[!htbp]\centering
 \includegraphics[width=0.72\textwidth]{fig1_hazard_age.pdf}
-\caption{The death rate of cryptoassets by age (1,815 assets, 520 deaths, 2010--2026; Table~\ref{tab:hazard}). Each bar is the share of the assets alive at that age that die within a year; the number at its foot is the count of deaths. The thin vertical line on each bar is its margin of error: the range within which the true death rate lies with 95\% confidence, wider where deaths are fewer. Dashed line: the path the death rate would follow if it fell in proportion to age, as the Lindy effect requires, drawn through the bar for ages 2--3. The bars rise instead through age nine; the two pale bars rest on fewer than ten deaths.}
+\caption{The death rate of cryptoassets by age (1,815 assets, 520 deaths, 2010--2026; Table~\ref{tab:hazard}). Each bar is the number of deaths per asset-year in an age bracket; the brackets are of unequal length, and the number at the foot of each bar is the count of deaths. Vertical lines: 95\% confidence intervals, computed as if deaths were independent, wider where deaths are fewer. Dashed line: the path the death rate would follow if it fell in proportion to age, as the Lindy effect requires, drawn through the bar for ages 2--3. The bars rise instead to ages 4--5 and stay at 12--17\% through age nine; the two pale bars rest on fewer than ten deaths.}
 \label{fig:hazard}
 \end{figure}
 
@@ -789,14 +789,14 @@ Among tracked assets the hazard \emph{rises} with age through at least age nine 
 
 \begin{figure}[!htbp]\centering
 \includegraphics[width=0.74\textwidth]{fig5_km_size.pdf}
-\caption{How long cryptoassets survive, by size. Each line shows the share of a group still alive at each age (Kaplan--Meier estimates). The four solid lines are the quartiles of the 1,806 assets sorted by peak trading volume; the dashed line is the 219 assets that ever ranked in the top twenty. Circles mark the age at which half of a group is dead: 3.3 years for the smallest quartile, 4.6 and 5.7 for the next two. The largest quartile and the top twenty stay above 60\% alive past age ten.}
+\caption{How long cryptoassets survive, by size. Each line shows the share of a group still alive at each age (Kaplan--Meier estimates, from each asset's first appearance in the data). The four solid lines are the quartiles of the 1,806 assets sorted by peak trading volume; the dashed line is the 219 assets that ever ranked in the top twenty. Both groupings use information known only afterwards, and a top-twenty asset is followed here from birth, so the dashed line is not the 3.5\% a year of Table~\ref{tab:size}, which counts an asset from the month it enters the top twenty. Circles mark the age at which half of a group is dead: 3.3 years for the smallest quartile, 4.6 for the second and 5.7 for the third. The largest quartile and the top twenty are still above 60\% alive at age ten, beyond which few assets remain under observation.}
 \label{fig:km}
 \end{figure}
 
 \emph{Adoption, not age.} The death rate falls as an asset is adopted. Table~\ref{tab:adoption} places every asset-month in a band by the asset's average daily trading volume over the previous twelve months, and asks whether the asset is dead two years later. The share falls from 29\% below \$100,000 a day to 3\% above \$100 million, and the pattern holds when assets whose volume has already fallen far below its earlier peak are left out. Within each band the death rate still rises with age. Bitcoin passed through these bands between 2011 and 2017: its volume was about \$0.1 million a day in mid-2011, \$4 million in mid-2013, \$23 million in mid-2014 and \$236 million in mid-2017. Read off the table, its own risk of failure was some 8--14\% a year in 2011--13 and about 3\% in 2014--16. This is a rough reading, since an asset that leads its market differs from a later one of the same size, and the band of Section 5 does not use it.
 
 \begin{table}[ht]\centering\small
-\caption{Cryptoassets dead within two years, by trading volume.}
+\caption{Share of cryptoassets dead within two years, by average daily trading volume. Asset-months of the census, July 2010 to May 2024.}
 \label{tab:adoption}
 \begin{tabular}{lcccc}
 \toprule
@@ -811,21 +811,21 @@ Average daily volume & Dead within 2 years & Rate a year & Dead within 2 years &
 \$100 million to \$1 billion & 3\% & 2\% & 4\% & 2\% \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.9\textwidth}{\footnotesize Volume: the average daily dollar volume of the previous twelve months, known at the start of the month. Dead within 2 years: the share of asset-months followed by the asset's death within 24 months (curated definition); asset-months in the last 24 months of data are left out for every asset, so that each outcome is observed in full. Rate a year: the constant annual death rate that gives that share. Assets near their peak volume: only months in which the asset's volume is at least a third of the highest it had reached before. An asset whose volume has already collapsed is close to our definition of death, so leaving such months out shows that the pattern is not produced by that definition. 39,115 asset-months in all.}
+\par\smallskip\parbox{0.9\textwidth}{\footnotesize Volume: the average daily dollar volume of the previous twelve months, known at the start of the month. Dead within 2 years: the share of asset-months followed by the asset's death within 24 months (the final definition of death, Section 3); asset-months in the last 24 months of data are left out for every asset, so that each outcome is observed in full. Rate a year: the constant death rate per asset-year that gives that share, $-\ln(1-\text{share})/2$, comparable with Tables~\ref{tab:size} and~\ref{tab:hazard}. Assets near their peak volume: only months in which the asset's volume is at least a third of the highest it had reached before. An asset whose volume has already collapsed is close to our definition of death, so leaving such months out shows that the pattern is not produced by that definition. 34,155 asset-months in all.}
 \end{table}
 
 \textbf{C.3 The curated elite death table.} Table~\ref{tab:elite} lists all 36 deaths among the 219 ever-top-20 assets. \emph{Type}: jump = sudden, value-destroying collapse; exchange = failure of the issuing exchange; fade = gradual abandonment and loss of listings; contested = flagged by a mechanical rule although the chain still operates. $\delta$ is the approximate fraction of pre-event value recoverable by a holder, an estimate and not an accounting figure. \emph{Conf.}\ flags classification confidence (H/M/L). The collapses of LUNA, UST and FTT are dated from the public record. LUNA and UST: May 12, 2022, the day Terra's validators halted the blockchain after LUNA had lost over 99\% of its value (Melinek 2022), inside the run of May 7 to 13 documented by Liu, Makarov, and Schoar (2023). FTT: November 10, 2022, the day the Securities Commission of The Bahamas froze the assets of FTX Digital Markets (Securities Commission of The Bahamas 2022); the token had lost three quarters of its value on November 8, and FTX filed for bankruptcy on November 11 (Vidal-Tom\'as, Briola, and Aste 2023). Dating the three deaths at either end of these windows changes no hazard, confidence interval or elasticity reported here.
 
 \begin{center}\footnotesize
 \begin{longtable}{llllp{5.4cm}l}
-\caption{The 36 deaths among the 219 ever-top-20 assets.}\label{tab:elite}\\
+\caption{The 36 deaths among the 219 cryptoassets that ever ranked in the top twenty by monthly trading volume, July 2010 to May 2026. Recovery: the approximate share of value a holder could recover (n/a where the death is contested). Confidence in the classification: high (H), medium (M) or low (L). Bold: the three sudden collapses and the four contested cases.}\label{tab:elite}\\
 \toprule
-Asset & Death date & Type & $\delta$ & Note & Conf. \\
+Asset & Death date & Type & Recovery & Note & Conf. \\
 \midrule
 \endhead
 LTL & 2014-12 & fade & $\sim$0 & minor 2013-era coin & M \\
 FCT (Factom) & 2021-07 & fade & $\sim$0.05 & sponsor company bankrupt 2020; chain stalled & H \\
-LBC (LBRY) & 2021-09 & fade/regulatory & $\sim$0.05 & SEC action 2021; project wound down & H \\
+LBC (LBRY) & 2021-09 & fade & $\sim$0.05 & SEC action 2021; project wound down & H \\
 PPT (Populous) & 2021-11 & fade & $\sim$0 & abandoned & M \\
 ETP (Metaverse) & 2022-01 & fade & $\sim$0 & abandoned & M \\
 NCASH (Nucleus Vision) & 2022-01 & fade & $\sim$0 & delisted majors 2021 & H \\
@@ -852,13 +852,13 @@ BTG (Bitcoin Gold) & 2025-06 & fade & $\sim$0.02 & Binance delisting & H \\
 LINA (Linear) & 2025-06 & fade & $\sim$0 & project shut down & M \\
 PDA (PlayDapp) & 2025-06 & fade & $\sim$0.02 & post-2024-exploit decline (PLA$\to$PDA swap preceded) & M \\
 YFII (DFI.Money) & 2025-07 & fade & $\sim$0 & abandoned fork & M \\
-FLOW & 2025-09 & \textbf{contested} & n/a & chain operating; $>$99\% below ATH & H \\
+FLOW & 2025-09 & \textbf{contested} & n/a & chain operating; more than 99\% below its peak price & H \\
 MXC & 2025-09 & fade & $\sim$0.02 & rebranding/decline & L \\
 STMX (StormX) & 2025-10 & fade & $\sim$0 & abandoned & M \\
 NANO & 2025-12 & \textbf{contested} & n/a & active community; lost major listings & M \\
-ICP (Internet Computer) & 2026-01 & \textbf{contested} & n/a & alive, top-100; ``death'' is an artifact of the listing-day price-spike ATH & H \\
+ICP (Internet Computer) & 2026-01 & \textbf{contested} & n/a & alive, in the top 100; counted as dead only because its listing-day price spike set the peak & H \\
 HIFI & 2026-01 & fade & $\sim$0 & delisted & L \\
-SUSHI (SushiSwap) & 2026-03 & \textbf{contested} & n/a & protocol operating; $>$99\% below ATH & H \\
+SUSHI (SushiSwap) & 2026-03 & \textbf{contested} & n/a & protocol operating; more than 99\% below its peak price & H \\
 \bottomrule
 \end{longtable}
 \end{center}
@@ -870,22 +870,22 @@ SUSHI (SushiSwap) & 2026-03 & \textbf{contested} & n/a & protocol operating; $>$
 \textbf{C.4 The Lindy regression.} Table~\ref{tab:lindy} reports Poisson regressions of monthly death indicators on log age, with offset $\log(1/12)$ and standard errors clustered by asset, without and with calendar-year fixed effects (FE), which absorb market-wide waves. Lindy requires a coefficient of $-1$. Studies of all listed coins find the opposite sign for young coins: about a third are delisted in their first year (Lansky 2020, as summarized by Aldhahi and Alsamaani 2026), and the odds of a deep, lasting drawdown fall by about a sixth with each year of age (Aldhahi and Alsamaani 2026). Our panel differs in two ways. It holds an asset only from the time the data provider adds it (Section 3). And most of its deaths are abandonments, which a rule based on a fall in volume or price cannot register in an asset's first months. The census therefore says nothing about the infant mortality of new listings. It shows that, among assets significant enough to be tracked, having survived to a given age does not lower the death rate afterwards, which is what a Lindy defense of Bitcoin's returns would need. A Weibull fit to the curated durations agrees: a shape of 1.57 (95\% CI 1.47--1.67), where a hazard that falls with age needs a value below 1, and a median lifetime of 6.4 years.
 
 \begin{table}[ht]\centering\small
-\caption{Age elasticity of the death rate, by death definition.}
+\caption{Elasticity of the death rate of cryptoassets to age, by definition of death and by sample. Census of July 2010 to May 2026.}
 \label{tab:lindy}
 \begin{tabular}{lccc}
 \toprule
-Death definition & Deaths & Age elasticity, no FE & Age elasticity, year FE \\
+Definition of death or sample & Deaths & No year effects & With year effects \\
 \midrule
 Strict (feed termination) & 234 & $+0.56$** (0.07) & $+0.44$** (0.06) \\
-Broad (feed + price) & 263 & $+0.69$** (0.07) & $+0.56$** (0.07) \\
+Broad (feed or price) & 263 & $+0.69$** (0.07) & $+0.56$** (0.07) \\
 Abandonment (all mechanical) & 588 & -- & $+0.51$** (0.04) \\
-\textbf{Curated (final)} & \textbf{520} & -- & $\boldsymbol{+0.42}$** \textbf{(0.04)} \\
-Curated, 2025 feed-wall removed & -- & -- & $+0.65$** (0.08) \\
-Curated, birth-cohort FE in place of year FE & 520 & -- & $+1.62$** (0.10) \\
-Elite (ever top-20) subsample & 36 & -- & $+0.68$** (0.21) \\
+\textbf{Curated (final)} & \textbf{520} & -- & \textbf{+0.42** (0.04)} \\
+Curated, without the 2025 deaths dated by the end of a data feed & -- & -- & $+0.65$** (0.08) \\
+Curated, birth-year effects in place of calendar-year effects & 520 & -- & $+1.62$** (0.10) \\
+Top-twenty assets only & 36 & -- & $+0.68$** (0.21) \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.9\textwidth}{\footnotesize Standard errors in parentheses, clustered by asset. ** significant at the 1\% level; * at the 5\% level. Every coefficient differs from the Lindy value of $-1$ at the 1\% level.}
+\par\smallskip\parbox{0.9\textwidth}{\footnotesize Regressions of a monthly death indicator on the logarithm of age; the coefficient is the elasticity of the death rate to age, and the Lindy effect requires $-1$. Year effects are calendar-year effects unless the row says otherwise. Standard errors in parentheses, clustered by asset. ** significant at the 1\% level. A dash: not estimated. Strict: the data feed ended. Broad: the feed ended or the price fell for good. Abandonment: any of the mechanical rules of Section 3. Curated: the final definition. Every coefficient differs from $-1$ at the 1\% level.}
 \end{table}
 
 \textbf{C.5 Risks the census cannot see, and the option-implied check.} The census measures a backward-looking frequency, and some risks have never yet struck any asset. The clearest is a quantum computer able to break the elliptic-curve signatures that secure Bitcoin. The census cannot price such a risk, and option prices give only a rough indication. On November 12, 2026, with Bitcoin at \$73,500, the Deribit put struck at \$30,000 and expiring on June 25, 2027 was offered at 0.0035 BTC, about \$257 or 0.86\% of its strike (Deribit 2026): protection against a fall of 60\% cost about 1.4\% of the amount protected a year. This is not a cap on the probability of a collapse to zero, because the contract is settled in Bitcoin and would pay in a worthless asset. It shows that the market put a low price on a very large fall, which is consistent with the census's 0.30\% a year. An investor who assigns, say, a 1\% annual probability to a quantum break with half of value lost should add 0.5 points to the mortality term.
@@ -899,7 +899,7 @@ Elite (ever top-20) subsample & 36 & -- & $+0.68$** (0.21) \\
 \label{tab:sens}
 \begin{tabular}{lcc}
 \toprule
-Case & Median & 90\% range \\
+Case & Required return, median & 90\% range \\
 \midrule
 Baseline & 18.3 & 15.4--21.9 \\
 \addlinespace
@@ -916,14 +916,14 @@ Beta normal, mean 1.75, standard error 0.45 & 18.4 & 14.2--22.9 \\
 Holder weight 0.12--0.19 & 19.0 & 16.0--22.4 \\
 Holder weight 0.08--0.15 (whole asset class, D.4) & 17.7 & 15.1--20.6 \\
 Holder weight 0.08--0.12 (combined share below the survey average) & 17.2 & 14.8--19.7 \\
-Holder weight 0.04--0.06 (ownership of 3\% at the anchor, D.4) & 15.7 & 13.7--17.7 \\
+Holder weight 0.042--0.063 (ownership of 3\% at the anchor, D.4) & 15.7 & 13.7--17.7 \\
 \addlinespace
 Risk aversion and holder weight move together & 18.5 & 14.9--23.1 \\
 Risk aversion and holder weight move oppositely & 18.1 & 16.3--20.0 \\
 All four inputs move together & 18.4 & 13.2--25.1 \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.8\textwidth}{\footnotesize Each row changes one assumption of the baseline and leaves the others as they are. In the last three rows the inputs are drawn with perfect dependence instead of independently.}
+\par\smallskip\parbox{0.8\textwidth}{\footnotesize Percent a year. Baseline: the inputs and ranges of D.1. Median and 90\% range: of the required returns drawn; the range reflects uncertainty about the inputs and is not a confidence interval. Each row changes one assumption of the baseline and leaves the others as they are. In the last three rows the inputs are drawn with perfect dependence instead of independently.}
 \end{table}
 
 \textbf{D.2 The band and the monthly test.} \emph{The band.} The lower edge of Section 5 is $r_f + 0.85\,\beta\,\mathrm{ERP} + \sigma^2 w_{lo} + 0.3$ points, and the upper edge is the larger of $r_f + 1.15\,\beta\,\mathrm{ERP} + 2.8\,\sigma^2 w_{hi} + 3.5$ points and $r_f + w^{\text{early}}_t\sigma^2$, where $w_{lo}$ and $w_{hi}$ are the average owner's weight with and without fund and treasury investors. Ending the fully invested era at the 2014 survey (0.4\% of adults) raises the full-sample gap to the upper edge from $+7$ to $+14$ points. \emph{The test.} At each month-end $t$ from January 2012 to April 2026 the required return $\mu^{req}_t$ is converted to an expected one-month simple return, $e^{\mu^{req}_t/12} - 1$, and subtracted from Bitcoin's simple return over the following month; Table~\ref{tab:monthly} reports twelve times the average difference and its standard error. Converting before averaging puts the early band averages slightly above a plain average of the values plotted in Figure~\ref{fig:wedge}, 157 against 147 for the 2012--14 midpoint and less than half a point after 2020. Standard errors are conventional (172 observations); robust errors with six lags give the same $t$-statistics to within 0.3. The age rule enters in its one-month form, $((A + 1/12)/A)^{5.62} - 1$ at age $A$. With the exponent re-estimated each month from the prices then available (5.5--8.2 over 2012--14, 6.0--6.8 in 2015 and 5.6--6.0 from 2016), the age-rule gaps of Table~\ref{tab:monthly} become $+41$ over the full sample ($+48$ with the fixed exponent), $+121$ over 2012--14 ($+143$), $+77$ over 2015--17 ($+82$), and change by two points or less since 2018. Returns are heavily right-skewed: the largest month (November 2013, $+451\%$) contributes 31 points to the full-sample mean of 118, and excluding calendar 2013 the delivered average is 69\%, the midpoint 57\%, and the gaps $+50$ (lower edge, $t = 2.5$), $+12$ (midpoint) and $-30$ (upper edge). \emph{The regression.} The alphas of Section 5 come from ordinary least squares of Bitcoin's simple return over the following month, less the one-month risk-free return, on the same for the S\&P 500; for the MCM alpha the left side is also less the midpoint's concentration and mortality terms at the month-end. The slopes are 2.06 and 2.07 over the whole sample and 1.63 and 1.65 since 2018. With robust errors (six lags) the $t$-statistics are 2.5 and 1.1 over the whole sample and 1.0 and 0.1 since 2018. By period the CAPM and MCM alphas are $+185$ and $+40$ (2012--14), $+141$ and $+93$ (2015--17), $+53$ and $+20$ (2018--20), $+10$ and $-7$ (2021--23) and $-1$ and $-15$ (2024--26); only the CAPM alpha of 2015--17 ($t = 3.0$) differs from zero at the 5\% level. The lines of panel (d) of Figure~\ref{fig:gap} use, for each month, the four-year beta known at the start of that month, so they are out of sample; their averages are 91 and 38 points a year over the whole sample and 24 and 2 since 2018, close to the regression alphas. Consecutive points share 35 of their 36 months, so the lines are for display, and the dip of late 2016 is the month of November 2013 leaving the window. Panel (e) shows the share each model explains: one minus its unexplained return over Bitcoin's average excess return for the same three years. By period the CAPM and the MCM equation explain 13\% and 65\% (2012--14), 18\% and 49\% (2015--17), 18\% and 67\% (2018--20), 57\% and 120\% (2021--23) and 104\% and 148\% (2024--26). A share above 100\% means that the model required more than Bitcoin delivered; the panel shows such months at 100\%, and in the last two periods neither model's unexplained return differs from zero. \emph{Grouping.} The three-year periods of Table~\ref{tab:monthly} are a judgment: long enough to average over most of a boom and a bust, short enough to leave five periods. By calendar year Bitcoin's average return lies inside the band in 3 of the 15 years, above it in 7 and below it in 5, with gaps to the midpoint of $-281$ to $+625$ points. In two-year periods the midpoint is rejected in 2014--15 (gap $-147$, $t = -2.9$) and in 2016--17 ($+154$, $t = 2.5$), and in no period since 2018. In four-year periods, about one cycle, the gaps are $+87$, $+64$, $+38$ and $+10$, none significant.
@@ -933,11 +933,11 @@ All four inputs move together & 18.4 & 13.2--25.1 \\
 \textbf{D.4 Other paths for the holder weight.} Three judgments in the back-cast of Appendix B can be made differently (Table~\ref{tab:paths}). \emph{Wealth per owner.} Replacing the ramp with the growth of US household net worth per adult (Federal Reserve Z.1, about \$80 trillion in 2013 to \$170 trillion in 2026) assumes that early holders were as wealthy as the average American, and lowers the early weights and the lower edge. \emph{Ownership in 2021.} With the path of the Weber et al.\ panel, 3\% in 2021Q3 and 11\% by mid-2022, every weight but the anchor is lower: 5\% in 2017 (baseline 17\%) and 4--6\% in 2026, at which the 2026 required return would be 15.7\%. We do not use this path. It implies that owners' portfolio share fell by two-thirds between 2021 and 2025, where the survey reports the two as similar, and it gives the owners of 2021 about \$560,000 of financial assets each, against \$150,000 on the baseline. \emph{The whole asset class.} The back-cast clears Bitcoin's own capitalization against owners' wealth, which assumes that Bitcoin's share of the asset class stayed at its 2021Q3 value. It did not: 95\% in 2013, 38\% in mid-2017, 48\% in 2021Q3 and 74\% in May 2026. Clearing the whole class gives a weight of 1.7\% in 2013 (baseline 3.4\%) and 21\% in 2017 (17\%), and 15\% in place of 19\% as the upper end of $w$ for 2026, at which the required return is 17.7\% (90\% range 15.1--20.6\%). We keep 19\% because it is a survey number that the 2025 wave confirms. On every path the gap to the midpoint since 2018 is within one standard error (24).
 
 \begin{table}[ht]\centering\small
-\caption{Other paths for the holder weight.}
+\caption{The holder weight in 2026, the required-return band and the gap between delivered and required returns under other paths for the holder weight.}
 \label{tab:paths}
 \begin{tabular}{lccccc}
 \toprule
- & Weight & \multicolumn{2}{c}{Band, \% a year} & \multicolumn{2}{c}{Gap to the midpoint} \\
+ & Weight & \multicolumn{2}{c}{Band, \% a year} & \multicolumn{2}{c}{Gap to the midpoint, points} \\
 \cmidrule(lr){3-4}\cmidrule(lr){5-6}
 Path & in 2026, \% & 2013 & 2026 & 2012--26 & 2018--26 \\
 \midrule
@@ -947,7 +947,7 @@ Ownership of 3\% in 2021Q3 & 4--6 & 15--231 & 11--19 & $+61$ & $+21$ \\
 The whole asset class & 8--15 & 17--231 & 12--23 & $+55$ & $+14$ \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.86\textwidth}{\footnotesize Weight: the average owner's, with and without fund and treasury investors. Band: mid-2013 and May 2026. Gap: delivered minus required, as in Table~\ref{tab:monthly}.}
+\par\smallskip\parbox{0.86\textwidth}{\footnotesize Weight: the average owner's, with and without fund and treasury investors. Band: mid-2013 and May 2026. Gap: delivered minus required return at the midpoint of the band, points a year, as in Table~\ref{tab:monthly}.}
 \end{table}
 
 \section{Extensions}
@@ -961,7 +961,7 @@ The whole asset class & 8--15 & 17--231 & 12--23 & $+55$ & $+14$ \\
 \textbf{E.4 Table~\ref{tab:compound} for a euro investor.} Table~\ref{tab:compoundeur} restates Table~\ref{tab:compound} for an investor whose money is in euros and who does not hedge the currency. \emph{The risk-free rate} is the ten-year German Bund yield, 3.4\%: 3.6\% at the end of September 2026 and 3.3\% at the end of October and on November 11--12 (Investing.com 2026; Trading Economics 2026). \emph{The premium} of each asset is the one of Table~\ref{tab:compound}. A euro investor who hedges the dollar earns the dollar premium on top of the euro rate (covered interest parity). One who does not hedge earns the same on average if the dollar is expected to lose the difference between the two rates, 1.6\% a year, against the euro. This is uncovered interest parity, which holds better over long horizons than over short ones (Chinn and Meredith 2004); it is an assumption, and the table rests on it. \emph{Volatility} is measured on returns converted to euros at month-end exchange rates. For equities and gold it is lower than in dollars, by 0.3 to 1.2 points: the euro's monthly change against the dollar has a correlation of 0.2 to 0.4 with their dollar returns, so the dollar tends to rise when equities fall. For Bitcoin and Ether the volatility is the same in both currencies: the euro's volatility against the dollar, 7\% a year, is small beside theirs, and its correlation with Bitcoin's return is 0.05.
 
 \begin{table}[ht]\centering\small
-\caption{Average and compound required returns in 2026, for a euro investor.}
+\caption{Average and compound required returns in 2026 for a euro investor who does not hedge the dollar. Percent a year, in euros.}
 \label{tab:compoundeur}
 \setlength{\tabcolsep}{4.5pt}\begin{tabular}{lcccccc@{\hskip 1em}c}
 \toprule
@@ -973,7 +973,7 @@ Global equities (MSCI ACWI) & 0.95 & 7.2 & 12.6 & 0.8 & 6.4 & 0.30 & $\phantom{-
 S\&P 500 & 1.00 & 7.4 & 13.8 & 1.0 & 6.4 & 0.29 & $\phantom{-}0.22$ \\
 Nasdaq-100 & 1.12 & 7.9 & 16.9 & 1.4 & 6.5 & 0.27 & $\phantom{-}0.18$ \\
 Russell 2000 & 1.18 & 8.1 & 18.8 & 1.8 & 6.3 & 0.25 & $\phantom{-}0.16$ \\
-Gold & 0.0 & 3.9 & 14.5 & 1.1 & 2.8 & 0.03 & $-0.04$ \\
+Gold & 0.00 & 3.9 & 14.5 & 1.1 & 2.8 & 0.03 & $-0.04$ \\
 Bitcoin & 1.75 & 16.7 & 42 & 8.8 & 7.9 & 0.32 & $\phantom{-}0.11$ \\
 Ether & 2.35 & 21.8 & 64 & 20.5 & 1.3 & 0.29 & $-0.03$ \\
 \bottomrule

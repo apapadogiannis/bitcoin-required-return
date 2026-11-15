@@ -1,6 +1,6 @@
 # Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24003938.svg)](https://doi.org/10.5281/zenodo.24003938)
+[![Zenodo](https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.24003938-007ec6)](https://doi.org/10.5281/zenodo.24003938)
 [![SSRN](https://img.shields.io/badge/SSRN-10.2139%2Fssrn.7705239-1f4e79)](https://doi.org/10.2139/ssrn.7705239)
 [![replication](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml/badge.svg)](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml)
 

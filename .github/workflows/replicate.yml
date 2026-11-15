@@ -37,11 +37,9 @@ jobs:
           if grep -q "^CHECK" run.log; then echo "Audit mismatches:"; grep "^CHECK" run.log; exit 1; fi
           if grep -q "^FAIL" run.log; then echo "Model audit mismatches:"; grep "^FAIL" run.log; exit 1; fi
 
-      - name: Verify tables match the committed results
-        # Figures embed timestamps; every CSV in outputs/ must be identical.
-        run: |
-          git diff --exit-code --stat -- 'outputs/*.csv'
-          echo "All result tables reproduce byte-for-byte."
+      - name: Verify the stored results are reproduced
+        # Number-by-number comparison with a tight tolerance; see check_outputs.py.
+        run: python3 check_outputs.py --no-run
 
       - name: Upload regenerated outputs
         if: always()

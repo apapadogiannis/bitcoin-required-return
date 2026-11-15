@@ -1,11 +1,13 @@
 # Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24003938.svg)](https://doi.org/10.5281/zenodo.24003938)
-[![SSRN](https://img.shields.io/badge/SSRN-7705239-154881)](https://ssrn.com/abstract=7705239)
+[![SSRN](https://img.shields.io/badge/SSRN-10.2139%2Fssrn.7705239-1f4e79)](https://doi.org/10.2139/ssrn.7705239)
 [![replication](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml/badge.svg)](https://github.com/apapadogiannis/bitcoin-required-return/actions/workflows/replicate.yml)
 
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
-Paper: `paper/manuscript.pdf`. Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record). Current version: paper 1.0 (November 14, 2026); replication package 1.0.1, which adds the input data to the repository. Also on SSRN: [ssrn.com/abstract=7705239](https://ssrn.com/abstract=7705239).
+Paper: `paper/manuscript.pdf`; preprint on SSRN: [doi:10.2139/ssrn.7705239](https://doi.org/10.2139/ssrn.7705239).
+Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record).
+Current version: paper 1.0 (November 14, 2026); replication package 1.0.1, which adds the input data to the repository.
 
 ## What this is
 
@@ -127,7 +129,12 @@ dates. The table of every top-twenty death: paper Appendix C.3; machine-readable
 
 ## Citation
 
-> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper, version 1.0. SSRN 7705239.
+> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper, version 1.0.
+> SSRN: https://doi.org/10.2139/ssrn.7705239
+
+Code and data:
+
+> Papadogiannis, A. (2026). "Bitcoin's Required Return: replication package." Zenodo.
 > https://doi.org/10.5281/zenodo.24003938
 
 ## Disclaimer

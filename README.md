@@ -96,6 +96,26 @@ badge above shows the latest run.
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables
 `DATA_DIR`, `OUT_DIR`, `FIG_DIR` and `CM_CSV_DIR` override them.
 
+## How the check works
+
+1. The result tables in `outputs/` are stored in this repository exactly as they were when the
+   paper's numbers were taken from them.
+2. `./run_all.sh` reruns every script on the files in `data/` and overwrites those tables with
+   freshly computed ones.
+3. `git diff --exit-code -- 'outputs/*.csv'` then compares each fresh table with the
+   stored version, character by character. If nothing is printed, they are identical; any
+   difference is listed and counts as a failure.
+
+The workflow behind the badge does exactly these three steps on a new machine with the pinned
+package versions, on every push and once a month, so a green badge means the stored
+tables still follow from the data and code. The stored tables are also frozen in the Zenodo
+archive, which cannot be altered after release.
+
+Two limits. The comparison is between regenerated and stored tables, not with the paper's
+PDF: to connect the two, use the script table above, which says where each output appears in
+the paper. And figures are redrawn from the same values but not compared byte for byte, because
+image files can differ slightly between versions of the plotting library.
+
 ## Data and licensing
 
 - Crypto price, volume and network data (`data/cmdata/csv`, 2,258 asset files): the

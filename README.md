@@ -133,7 +133,8 @@ differ slightly between versions of the plotting library.
   with attribution; licence notice in `data/cmdata/LICENSE`). The files are an unmodified copy of
   the `csv/` directory at upstream commit `f1a36afb962731c387bb03982758ab0103063da5`
   ("Update CSV 2026-05-24", data ending 2026-05-24), kept here so that the paper's results do not
-  depend on the upstream archive, which is updated daily. `data/cmdata/MANIFEST.sha256` lists
+  depend on the upstream archive. The archive stopped updating on 24 May 2026, and this snapshot is
+  its last commit. `data/cmdata/MANIFEST.sha256` lists
   the checksum of every file: `cd data/cmdata && sha256sum --quiet -c MANIFEST.sha256`.
 - ETF prices (`data/voo_monthly.csv`, `data/acwi_monthly.csv`, `data/vt_monthly.csv`,
   `data/qqq_monthly.csv`, `data/iwm_monthly.csv`, `data/gld_monthly.csv`): monthly adjusted close

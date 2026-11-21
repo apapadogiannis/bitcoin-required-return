@@ -26,4 +26,7 @@ done
 
 # 3. The audit of every number quoted in the paper against the regenerated results.
 echo "== 13_model_audit"; python3 -I scripts/13_model_audit.py
+
+# 4. The checks as data (outputs/results.json) and the guide for programs and AI agents (llms.txt).
+echo "== make_guide"; python3 -I scripts/make_guide.py
 rm -f "$FIG_DIR"/fig_wedge.* "$FIG_DIR"/fig2_size.* "$FIG_DIR"/fig4_timeline.* "$FIG_DIR"/fig6_eth.*   # earlier figures, not in the paper

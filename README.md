@@ -7,7 +7,18 @@
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
 Paper: `paper/manuscript.pdf`; preprint on SSRN: [doi:10.2139/ssrn.7705239](https://doi.org/10.2139/ssrn.7705239).
 Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record).
-Current version: paper 1.0 (November 14, 2026); replication package 1.0.1, which adds the input data to the repository.
+Current version: paper 1.0 (November 14, 2026); replication package 1.1.0, which adds the checks as data (`outputs/results.json`) and a guide for programs (`llms.txt`). No result has changed.
+
+## For AI agents and programs
+
+Read [`llms.txt`](llms.txt) first. It says what the package holds, what it adds over reading the
+paper or recomputing, which file to use and what not to use it for. To quote a number of the paper,
+use [`outputs/results.json`](outputs/results.json): it lists every figure the paper quotes that the
+code recomputes (1,218 of them), each with the computed value and the paper's figure, and carries
+the paper, the identifiers, the version, the licence and the citation under its `package` key. Both
+files are written by the pipeline (`12_audit.py`, `13_model_audit.py`, `make_guide.py`) and both are
+covered by the check. The same equation, recomputed each month from live sources, is at the
+[Crypto Observatory](https://apapadogiannis.github.io/crypto-observatory/).
 
 ## What this is
 
@@ -37,6 +48,7 @@ scripts/    numbered pipeline (see below)
 outputs/    asset-level panel and all result tables used in the paper
 figures/    the paper's figures
 paper/      the manuscript (PDF and LaTeX source)
+llms.txt    guide for AI agents and programs, generated; guide.toml holds its statements about this package
 data/       all input data: the Coin Metrics snapshot the paper used (data/cmdata), ETF price files (VOO, ACWI, VT, QQQ, IWM,
             GLD), EUR/USD and the Treasury yield (see Data and licensing)
 ```
@@ -91,6 +103,8 @@ badge above shows the latest run.
 | `46_adoption_hazard.py` | Death within two years by trading volume, as a measure of adoption | Appendix C.2 |
 | **3. The audit** | | |
 | `13_model_audit.py` | 1,185 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| **4. For programs** | | |
+| `make_guide.py` | The `package` header of `outputs/results.json` (the checks of `12_audit.py` and `13_model_audit.py` as data) and `llms.txt` | not in the paper |
 
 `24_terms_fig.py`, `25_wedge_log.py`, `32_eth_fig.py` and `42_beta_fig.py` draw earlier figures that are not in the paper. All scripts
 locate `data/`, `outputs/` and `figures/` relative to the repository; the environment variables
@@ -99,7 +113,7 @@ locate `data/`, `outputs/` and `figures/` relative to the repository; the enviro
 ## How the check works
 
 ```bash
-python3 check_outputs.py    # reruns ./run_all.sh, then compares
+python3 check_outputs.py --also llms.txt    # reruns ./run_all.sh, then compares
 ```
 
 1. The result tables and audit files in `outputs/` are stored in this repository exactly as they were when the

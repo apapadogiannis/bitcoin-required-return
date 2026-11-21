@@ -1,0 +1,50 @@
+# The statements of llms.txt and of the header of outputs/results.json that are specific to this
+# package. scripts/make_guide.py combines them with CITATION.cff and the results. No result of the
+# paper is written here.
+
+ssrn = "10.2139/ssrn.7705239"
+data_as_of = "Coin Metrics community data to 2026-05-24. ETF prices, EUR/USD and the Treasury yield retrieved November 2026."
+units = "In outputs/results.json each check states its own unit in its label, mostly percent a year. In the CSV files rates are fractions (0.18 is 18% a year)."
+describe_as = "Papadogiannis (2026), \"Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold\", working paper, with its replication package."
+what = "Code, data and stored results of a working paper that asks what return Bitcoin's holders should require for the market, concentration and mortality risk they carry (the MCM equation), tests the answer against delivered returns month by month, and takes a census of cryptoasset deaths. The manuscript is in paper/."
+third_party = "The cryptoasset data in data/cmdata are an unmodified copy of the Coin Metrics community dataset, licensed CC BY-NC 4.0 (non-commercial use, with attribution). They keep that licence and are not covered by the licence above. ETF prices, the euro/dollar rate and the Treasury yield are from Yahoo Finance and are included for replication only."
+results_file = "every number the paper quotes that the code recomputes, as a list of checks. `census_checks`: claim, computed value, the paper's figure. `model_checks`: the same with the part of the paper (`section`) and the tolerance, which reflects the rounding of the printed figure."
+
+coverage = [
+  "The required return on Bitcoin at every month-end from January 2012 to the end of the data: lower edge, midpoint and upper edge of the band, with the inputs (outputs/required_band_monthly.csv).",
+  "The monthly test: the required return against the return of the following month, by period (outputs/monthly_test.txt).",
+  "The census: every cryptoasset in the Coin Metrics community dataset from 2010 to 24 May 2026, with birth, death, kind of death and size (outputs/panel_v3.csv; assets ever in the top twenty in outputs/elite_top20_curated.csv).",
+  "The same equation for Ether and other cryptoassets, with equity indices and gold for comparison, and the table restated for a euro investor (outputs/cross_section_terms.txt, outputs/euro_table.txt).",
+  "The robustness results of the appendices, one text file each in outputs/. The README lists which script writes which file and where it appears in the paper.",
+]
+adds = [
+  "The death of an asset is not in any data feed. The census classifies each one by a stated rule (end of the feed, price collapse without recovery, volume collapse without recovery), treats ticker migrations as survivals, and enters the known sudden collapses at their public-record dates. The flags for every asset are in outputs/panel_v3.csv.",
+  "The share of wealth that holders keep in Bitcoin, which drives the concentration term, is built from household surveys and documented fund and company holdings. The paper gives the sources; the construction is in scripts/22_pretty_figs.py and scripts/26_holder_weight.py.",
+  "Dates are kept honest. A required return is dated at the month-end it is set and compared with the return of the following month.",
+  "The input data are stored in the repository with a checksum for every Coin Metrics file. The upstream archive stopped updating on 24 May 2026, so this copy is its last state and the run needs no download.",
+]
+files = [
+  "outputs/required_band_monthly.csv: one row per month-end: age, risk-free rate, volatility, beta, holder weight at both edges, the band and the age rule.",
+  "outputs/panel_v3.csv: one row per asset: birth, last observation, the death flags and dates under each definition.",
+  "outputs/*.txt: the result tables as printed for the paper. Use results.json to quote a number and these to see its table.",
+  "paper/manuscript.pdf: the working paper.",
+  "data/: all inputs. data/cmdata/MANIFEST.sha256 lists the checksums.",
+]
+read = [
+  "A required return is what holders should require for the risk they carry. It is not a forecast of what Bitcoin will return.",
+  "Quote the midpoint together with its band. The band is wide in the early years because the holder's weight was high and volatility extreme.",
+  "In results.json `paper` is the figure as printed, usually rounded; `computed` is the value from the code at full precision. Quote `paper` when citing the paper and `computed` when precision matters.",
+  "In required_band_monthly.csv rates are fractions a year, not percent.",
+  "Realized averages over short periods have large standard errors, which outputs/monthly_test.txt reports beside each one.",
+]
+not_for = [
+  "A forecast, a price target or a view on whether to hold Bitcoin.",
+  "Anything after 24 May 2026. The data end there and the package is not updated.",
+  "Commercial reuse of the Coin Metrics data.",
+  "The fate of a single asset. The census gives rates for groups of assets.",
+]
+
+[live_tool]
+name = "Crypto Observatory"
+url = "https://apapadogiannis.github.io/crypto-observatory/"
+what = "the same equation recomputed each month from live sources, with the differences from this paper's sources stated; guide at https://apapadogiannis.github.io/crypto-observatory/llms.txt"

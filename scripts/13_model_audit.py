@@ -7,8 +7,11 @@ FIG = os.environ.get("FIG_DIR", os.path.join(_ROOT, "figures")); CSV = os.enviro
 import numpy as np, pandas as pd, importlib.util, sys
 src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
-res=[]
+res=[]; records=[]     # records: every check, for outputs/results.json
+_headings=[(i,l[2:].strip()) for i,l in enumerate(open(os.path.abspath(__file__),encoding="utf-8"),1) if l.startswith("# ")]
+def _section(line): return next((h for i,h in reversed(_headings) if i<=line),"")
 def chk(label,val,claim,tol):
+    records.append({"section":_section(sys._getframe(1).f_lineno),"claim":label,"computed":float(val),"paper":claim,"tolerance":tol})
     ok=abs(val-claim)<=tol; res.append(ok); print(f"{'PASS' if ok else 'FAIL':5s} {label}: computed {val:.3g} vs paper {claim}")
 def at(d): return px.index.get_indexer([pd.Timestamp(d)],method="nearest")[0]
 sig=np.sqrt(sig2); qpart=q.copy()
@@ -188,7 +191,7 @@ import io as _io3, contextlib as _cl3
 with _cl3.redirect_stdout(_io3.StringIO()): _qo=u.run("o",0.42,1.5,2.0,0.042,0.063,0.003,0.035)*100; _qc=u.run("c",0.42,1.5,2.0,0.08,0.15,0.003,0.035)*100
 chk("D.1 table: w 0.04-0.06 median",_qo[2],15.7,0.1); chk("D.1 table: w 0.04-0.06 5%",_qo[0],13.7,0.1); chk("D.1 table: w 0.04-0.06 95%",_qo[4],17.7,0.1); chk("D.1 table: w 0.08-0.15 median",_qc[2],17.7,0.1); chk("D.1 table: w 0.08-0.15 5%",_qc[0],15.1,0.1); chk("D.1 table: w 0.08-0.15 95%",_qc[4],20.6,0.1)
 chk("A.4 required return at a 7-point premium",18.3+1.75*(7-4),24,0.5); chk("A.4 required return at an 8-point premium",18.3+1.75*(8-4),25,0.4); chk("A.4 Sharpe at 7",(18.3+1.75*3-5)/42,0.44,0.006); chk("A.4 Sharpe at 8",(18.3+1.75*4-5)/42,0.48,0.006)
-# Item 6: beta by window (Table in Appendix A.2) and the two beta sensitivities of D.1
+# Beta by window (Table in Appendix A.2) and the two beta sensitivities of D.1
 def _seB(x):
     b=B(x); a_=x.b.mean()-b*x.s.mean(); e_=x.b-a_-b*x.s; return np.sqrt(e_.var(ddof=2)/((x.s-x.s.mean())**2).sum())
 for _lab,_x,_cb,_cs,_cc in (("2y",_d.iloc[-24:],1.26,0.64,0.39),("3y",_d.iloc[-36:],1.38,0.54,0.40),("4y",_d.iloc[-48:],1.75,0.43,0.52),("5y",_d.iloc[-60:],1.81,0.38,0.53),("since 2020",_d["2020":],1.93,0.35,0.54),("since 2016",_d["2016":],1.51,0.38,0.34),("since 2012",_d["2012":],1.77,0.45,0.29)):
@@ -385,7 +388,7 @@ for _sk,_sv in (("whole sample",(21,67)),("since 2018",(45,96))): chk(f"S5 share
 _shp={l.split()[2].rstrip(":"):l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("share explained ")}
 for _sk,_sv in (("2012–14",(13,65)),("2015–17",(18,49)),("2018–20",(18,67)),("2021–23",(57,120)),("2024–26",(104,148))): chk(f"D.2 share explained {_sk}: CAPM",float(_shp[_sk].split("CAPM ")[1].split("%")[0]),_sv[0],0.5); chk(f"D.2 share explained {_sk}: MCM",float(_shp[_sk].split("MCM ")[1].split("%")[0]),_sv[1],0.5)
 _shD=pd.DataFrame({"r":px.shift(-1)/px-1}); _shD["rf"]=np.exp(rf/12)-1; _shD["ex"]=_shD.r-_shD.rf
-# review fixes: Sharpe decomposition, rebalanced example, net-of-death figures, compound at 55% volatility
+# Sharpe decomposition, rebalanced example, net-of-death figures, compound at 55% volatility
 chk("RV Sharpe units: market term 7/42",7/42,0.17,0.005); chk("RV Sharpe units: sum",7/42+1.9*0.42*0.135+1.9/42,0.32,0.005); chk("RV Sharpe units: diluted",7/42+1.9/42,0.21,0.005)
 _rvv=((0.95*0.141)**2+(0.05*0.42)**2+2*0.95*0.05*1.75*0.141**2)**0.5
 chk("RV rebalanced 5%: return added",0.05*(18.3-9.0),0.46,0.006); chk("RV rebalanced 5%: portfolio volatility",100*_rvv,14.7,0.05); chk("RV rebalanced 5%: extra drag",100*(_rvv**2-0.141**2)/2,0.09,0.005)
@@ -553,3 +556,9 @@ _pt_o=open(os.path.join(OUT,"ownership_sensitivity.txt")).read().split("alternat
 chk("D.4 table, ownership 3%: band 2013 low",float(_pt_o.split("2013-06:")[1].split("band")[1].split("-")[0]),15,0.5); chk("D.4 table, ownership 3%: gap since 2018",float(_pt_o.split("2018-26:")[1].split("midpoint")[2].split("(")[0]),21,0.5)
 chk("D.4 table, baseline band 2013 low",100*foc_lo.iloc[at("2013-06-30")],21,0.5); chk("D.4 table, baseline band 2026 high",100*req_hi.iloc[-1],27,0.5)
 for _dd,_tt in (("2019-12-31",0.281),("2020-12-31",0.703),("2021-12-31",0.861),("2022-12-31",0.857),("2023-12-31",0.901)): chk(f"B table: total {_dd[:4]}",inst_btc.iloc[at(_dd)]/1e6,_tt,0.001)
+
+# Every check above, as data, added to the census checks written by 12_audit.py.
+import json
+_path=os.path.join(OUT,"results.json"); _doc=json.load(open(_path,encoding="utf-8")) if os.path.exists(_path) else {}
+_doc["model_checks"]=records
+with open(_path,"w",encoding="utf-8") as _f: json.dump(_doc,_f,indent=2,ensure_ascii=False)

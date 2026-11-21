@@ -10,8 +10,13 @@ core = panel[~panel["stable2"] & ~panel["tokstock"] & ~panel["wrapped_like"]].co
 core = core[(core["last"] - core["birth"]).dt.days >= 30]
 dataset_end = panel["last"].max()
 
+records = []          # every check, for outputs/results.json
+def _plain(v):
+    return v.item() if hasattr(v, "item") else v
+
 def chk(label, got, claimed):
     ok = "PASS" if str(got) == str(claimed) else "** CHECK **"
+    records.append({"claim": label, "computed": _plain(got), "paper": _plain(claimed)})
     print(f"{ok:12s} {label}: computed={got}  manuscript={claimed}")
 
 chk("core universe", len(core), 1815)
@@ -96,3 +101,8 @@ import pandas as pd
 PM = pd.read_pickle(f"{OUT}/prices_monthly.pkl")
 btc = PM["btc"].dropna(); mult10 = btc.iloc[120] / btc.iloc[0]
 print(f"{'INFO':12s} BTC CAGR @10y from first price: {mult10**(1/10)-1:+.0%} (manuscript +233%)")
+
+# The checks above, as data: outputs/results.json (13_model_audit.py adds the model's checks to it).
+import json
+with open(f"{OUT}/results.json", "w", encoding="utf-8") as _f:
+    json.dump({"census_checks": records}, _f, indent=2, ensure_ascii=False)

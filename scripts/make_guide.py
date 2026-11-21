@@ -9,6 +9,7 @@ package) and the results themselves, so that no number in them is typed in. Run 
 of ./run_all.sh. The script is the same in every replication package; only guide.toml differs.
 Standard library only (Python 3.11+).
 """
+import csv
 import json
 import os
 import re
@@ -65,10 +66,49 @@ def checks(results):
     return lines
 
 
+def cell(h, column):
+    """One figure from a stored result table: the row of `file` whose cells equal `row`, column `column`."""
+    path = os.path.join(OUT, h["file"])
+    with open(path, encoding="utf-8", newline="") as f:
+        rows = [r for r in csv.DictReader(f) if all(r[k] == str(v) for k, v in h["row"].items())]
+    if len(rows) != 1:
+        raise SystemExit(f"headline '{h['what']}': {len(rows)} rows of {h['file']} match {h['row']}; one is needed")
+    value = float(rows[0][column]) * h.get("scale", 1)
+    if "decimals" not in h:
+        return value
+    return int(round(value)) if h["decimals"] == 0 else round(value, h["decimals"])
+
+
+def tables(g):
+    """The stored result tables, with what each holds and the meaning of its columns, checked against the files."""
+    out = []
+    for t in g.get("table", []):
+        with open(os.path.join(OUT, t["file"]), encoding="utf-8", newline="") as f:
+            header = next(csv.reader(f))
+            n = sum(1 for _ in f)
+        unknown = [c for c in t.get("columns", {}) if c not in header]
+        missing = [c for c in header if t.get("columns") and c not in t["columns"]]
+        if unknown or missing:
+            raise SystemExit(f"{t['file']}: columns described but absent {unknown}; present but not described {missing}")
+        out.append({"file": "outputs/" + t["file"], "what": t["what"], "rows": n,
+                    **({"columns": t["columns"]} if t.get("columns") else {"column_names": header})})
+    return out
+
+
 def headline(results, g):
-    """The few figures most often asked for, each taken from a named check so that none is typed in."""
+    """The few figures most often asked for, each taken from a named check or from a cell of a stored
+    table, so that none is typed in."""
     out = []
     for h in g.get("headline", []):
+        if "file" in h:
+            row = {"what": h["what"], "value": cell(h, h["column"]), "unit": h["unit"]}
+            if "low_column" in h:
+                row["range"] = [cell(h, h["low_column"]), cell(h, h["high_column"])]
+                row["range_is"] = h["range_is"]
+            out.append({**row, "where": h["where"],
+                        "source": {"file": "outputs/" + h["file"], "row": h["row"], "column": h["column"],
+                                   **({"multiplied_by": h["scale"]} if "scale" in h else {})}})
+            continue
         find = lambda claim: next(r for r in results[h["checks"]] if r["claim"] == claim)
         row = {"what": h["what"], "value": find(h["claim"])["paper"], "unit": h["unit"]}
         if "low" in h:
@@ -102,15 +142,17 @@ def main():
     published = "volume" in paper                      # printed, with volume and pages
     forthcoming = "journal" in paper and not published   # accepted, not yet printed
     if forthcoming:
-        cite = (f"Papadogiannis, A. ({paper['year']}). {title}. {paper['journal']}, forthcoming. "
-                f"https://doi.org/{g['ssrn']}")
-        article = {"journal": paper["journal"], "year": int(paper["year"]), "status": "forthcoming"}
+        year = paper.get("year", "forthcoming")
+        cite = f"Papadogiannis, A. ({year}). {title}. {paper['journal']}, forthcoming. https://doi.org/{g['ssrn']}"
+        article = {"journal": paper["journal"], "status": "forthcoming", **({"year": int(year)} if "year" in paper else {})}
     elif published:
-        pages = f"{paper['start']}-{paper['end']}"
-        cite = (f"Papadogiannis, A. ({paper['year']}). {title}. {paper['journal']}, {paper['volume']}({paper['issue']}), "
-                f"{pages}. {paper['url']}")
-        article = {"journal": paper["journal"], "volume": int(paper["volume"]), "issue": int(paper["issue"]),
-                   "pages": pages, "year": int(paper["year"]), "doi": paper["url"]}
+        place = str(paper["volume"]) + (f"({paper['issue']})" if "issue" in paper else "")
+        pages = f"{paper['start']}-{paper['end']}" if "end" in paper else str(paper["start"])
+        link = paper.get("url") or "https://doi.org/" + paper["doi"]
+        cite = f"Papadogiannis, A. ({paper['year']}). {title}. {paper['journal']}, {place}, {pages}. {link}"
+        article = {"journal": paper["journal"], "volume": int(paper["volume"]),
+                   **({"issue": int(paper["issue"])} if "issue" in paper else {}),
+                   ("pages" if "end" in paper else "article_number"): pages, "year": int(paper["year"]), "doi": link}
     else:
         cite = f"Papadogiannis, A. ({paper['year']}). {title}. Working paper. https://doi.org/{g['ssrn']}"
         article = None
@@ -132,13 +174,19 @@ def main():
         **({"fields": g["fields"]} if g.get("fields") else {}),     # what each key of the results means
     }
     path = os.path.join(OUT, "results.json")
-    with open(path, encoding="utf-8") as f:
-        results = json.load(f)
+    results = {}
+    if not g.get("table"):        # a package whose results are tables builds the file from them each time
+        with open(path, encoding="utf-8") as f:
+            results = json.load(f)
     results.pop("package", None)
     results.pop("headline", None)
     results.pop("glossary", None)
+    listed = tables(g)
+    if listed:
+        results["tables"] = listed
     n_checks = sum(len(v) for k, v in results.items() if k.endswith("_checks"))
-    count = f"{n_checks:,} checks" if n_checks else f"{numbers(results):,} numbers"
+    count = (f"{n_checks:,} checks" if n_checks else f"a description of {len(listed)} result tables" if listed
+             else f"{numbers(results):,} numbers")
     top = headline(results, g)
     if top:
         results = {"headline": top, **results}
@@ -152,9 +200,10 @@ def main():
 
     item = lambda t: wrap(t, first="- ", rest="  ")
     step = lambda i, t: wrap(t, first=f"{i}. ", rest="   ")
-    status = (f"Published in {paper['journal']}, {paper['volume']}({paper['issue']}), {paper['year']}, pp. {pages}: {paper['url']}"
+    status = (f"Published in {paper['journal']}, {place}, {paper['year']}, {'pp. ' if 'end' in paper else 'article '}{pages}: {link}"
               if published else
-              f"Forthcoming in {paper['journal']} ({paper['year']}). Preprint: https://doi.org/{g['ssrn']}"
+              f"Forthcoming in {paper['journal']}{' (' + paper['year'] + ')' if 'year' in paper else ''}. "
+              f"Preprint: https://doi.org/{g['ssrn']}"
               if forthcoming else f"Working paper: https://doi.org/{g['ssrn']}")
     adds = list(g["adds"]) + checks(results) + [
         f"The results are stored as they were when the paper's numbers were taken from them. A check "
@@ -186,7 +235,9 @@ def main():
         "release, and a release that changes a reported number gets a new major version.",
         "This file is written for AI agents and other programs. People should start at the README.", "",
         "## Coverage", "", *[item(t) for t in g["coverage"]], "",
-        *(["## Headline figures", "", "As printed in the paper. Each is one of the checks in outputs/results.json.", "",
+        *(["## Headline figures", "",
+           ("Each is read from one cell of a stored result table, named in outputs/results.json."
+            if listed else "As printed in the paper. Each is one of the checks in outputs/results.json."), "",
            *[line(h) for h in top], ""] if top else []),
         "## What this adds over reading the paper or recomputing", "",
         *[step(i, t) for i, t in enumerate(adds, 1)], "",
@@ -195,6 +246,8 @@ def main():
            *[item(f"{k}: {v}") for k, v in glossary.items()], ""] if glossary else []),
         *(["## Fields of outputs/results.json", "", *[item(f"`{k}`: {v}") for k, v in g["fields"].items()], ""]
           if g.get("fields") else []),
+        *(["## Result tables", "", "One CSV file each in outputs/. The columns of each are described in outputs/results.json, under `tables`.", "",
+           *[item(f"{t['file']} ({t['rows']} rows): {t['what']}") for t in listed], ""] if listed else []),
         "## Files", "", *[item(t) for t in files], "",
         f"Raw files: {raw}<path>, for example {raw}outputs/results.json", "",
         "## How to read the figures", "", *[item(t) for t in g["read"]], "",

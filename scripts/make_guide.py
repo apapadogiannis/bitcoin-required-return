@@ -99,8 +99,13 @@ def main():
 
     repo, archive = cff["repository-code"], "https://doi.org/" + cff["doi"]
     title = paper["title"]
-    published = "journal" in paper
-    if published:
+    published = "volume" in paper                      # printed, with volume and pages
+    forthcoming = "journal" in paper and not published   # accepted, not yet printed
+    if forthcoming:
+        cite = (f"Papadogiannis, A. ({paper['year']}). {title}. {paper['journal']}, forthcoming. "
+                f"https://doi.org/{g['ssrn']}")
+        article = {"journal": paper["journal"], "year": int(paper["year"]), "status": "forthcoming"}
+    elif published:
         pages = f"{paper['start']}-{paper['end']}"
         cite = (f"Papadogiannis, A. ({paper['year']}). {title}. {paper['journal']}, {paper['volume']}({paper['issue']}), "
                 f"{pages}. {paper['url']}")
@@ -114,8 +119,8 @@ def main():
 
     header = {
         "title": title, "author": AUTHOR,
-        "status": "published article" if published else "working paper",
-        **({"article": article} if published else {}),
+        "status": "published article" if published else "forthcoming article" if forthcoming else "working paper",
+        **({"article": article} if article else {}),
         "preprint": "https://doi.org/" + g["ssrn"],
         "repository": repo, "archive": archive, "version": cff["version"], "released": cff["date-released"],
         "data_as_of": g["data_as_of"], "units": g["units"],
@@ -124,6 +129,7 @@ def main():
                     "code": "MIT", "third_party_data": g["third_party"]},
         "cite_as": cite, "cite_package": cite_package, "describe_as": g["describe_as"],
         "guide": "llms.txt",
+        **({"fields": g["fields"]} if g.get("fields") else {}),     # what each key of the results means
     }
     path = os.path.join(OUT, "results.json")
     with open(path, encoding="utf-8") as f:
@@ -147,7 +153,9 @@ def main():
     item = lambda t: wrap(t, first="- ", rest="  ")
     step = lambda i, t: wrap(t, first=f"{i}. ", rest="   ")
     status = (f"Published in {paper['journal']}, {paper['volume']}({paper['issue']}), {paper['year']}, pp. {pages}: {paper['url']}"
-              if published else f"Working paper: https://doi.org/{g['ssrn']}")
+              if published else
+              f"Forthcoming in {paper['journal']} ({paper['year']}). Preprint: https://doi.org/{g['ssrn']}"
+              if forthcoming else f"Working paper: https://doi.org/{g['ssrn']}")
     adds = list(g["adds"]) + checks(results) + [
         f"The results are stored as they were when the paper's numbers were taken from them. A check "
         f"reruns the code on the stored data and compares every stored result file with the fresh one, "
@@ -185,6 +193,8 @@ def main():
         *(["## Labels of the checks", "",
            "The checks keep the audit script's short labels. What the recurring words and prefixes mean:", "",
            *[item(f"{k}: {v}") for k, v in glossary.items()], ""] if glossary else []),
+        *(["## Fields of outputs/results.json", "", *[item(f"`{k}`: {v}") for k, v in g["fields"].items()], ""]
+          if g.get("fields") else []),
         "## Files", "", *[item(t) for t in files], "",
         f"Raw files: {raw}<path>, for example {raw}outputs/results.json", "",
         "## How to read the figures", "", *[item(t) for t in g["read"]], "",

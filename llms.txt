@@ -31,8 +31,9 @@ This file is written for AI agents and other programs. People should start at th
 
 As printed in the paper. Each is one of the checks in outputs/results.json.
 
-- Required return on Bitcoin for its current holders, 2026: 18.3 percent a year, arithmetic average
-  (90% range of the input uncertainty 15.4 to 21.9). Section 4 and Appendix D.1.
+- Required return on Bitcoin for its current holders, 2026: 18.3 percent a year (the median over
+  the input ranges; a simple yearly rate, not a compound one) (90% range of the input uncertainty
+  15.4 to 21.9). Section 4 and Appendix D.1.
 - Monthly band for Bitcoin at the end of May 2026, midpoint: 20 percent a year (band 12 to 27).
   Section 5, Table 4.
 - Required return on Ether for the average crypto owner: 23 percent a year (90% range 19 to 29).
@@ -147,6 +148,16 @@ Raw files: https://raw.githubusercontent.com/apapadogiannis/bitcoin-required-ret
   read from a printed table. Quote `paper` when citing the paper.
 - A check whose claim is a statement and not a quantity has `paper` 1 and `computed` 1: read it as
   true.
+- Not every `paper` value is a printed figure. Where a check tests an identity or a formula,
+  `paper` holds the other side of the identity at full precision; where the paper says "about",
+  `paper` holds the round figure and the tolerance is wide. A wide tolerance means the paper's
+  statement is approximate, so quote `computed` for the exact value.
+- The same quantity can appear in more than one check, at different rounding or from different
+  tables (a beta of 1.5 in the text and 1.51 in a table; for Ether a median of 23, an average of
+  23.4 and a sum of terms of 23.7). Prefer the headline list; otherwise say which table the figure
+  is from.
+- Outside the headline list, the printed tables in outputs/*.txt, with their row and column
+  headings, are often the clearer source; the checks tell you the figure was recomputed.
 - The paper's 2026 figure for Bitcoin is the median when the uncertain inputs are drawn across
   their ranges. The monthly band's midpoint (the T4 checks, required_band_monthly.csv, and the
   Crypto Observatory) averages the two edges of the band and stands about two points higher at the

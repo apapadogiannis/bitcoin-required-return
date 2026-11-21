@@ -12,7 +12,11 @@ dataset_end = panel["last"].max()
 
 records = []          # every check, for outputs/results.json
 def _plain(v):
-    return v.item() if hasattr(v, "item") else v
+    v = v.item() if hasattr(v, "item") else v
+    try:
+        return float(v) if isinstance(v, str) else v      # "16.0" is a number; "2.48-4.90" stays text
+    except ValueError:
+        return v
 
 def chk(label, got, claimed):
     ok = "PASS" if str(got) == str(claimed) else "** CHECK **"

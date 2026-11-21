@@ -121,6 +121,71 @@ claim = "jump hazard %"
 unit = "percent a year"
 where = "Section 3"
 
+[[headline]]
+what = "Bitcoin's volatility used for May 2026"
+checks = "model_checks"
+claim = "T4 2026-05 volatility"
+unit = "percent a year"
+where = "Section 5, Table 4"
+
+[[headline]]
+what = "Bitcoin's beta to the US equity market, May 2026"
+checks = "model_checks"
+claim = "T4 2026-05 beta"
+unit = "(a ratio)"
+where = "Section 5, Table 4"
+
+[[headline]]
+what = "Required return on Bitcoin for a holder with a negligible weight (the floor)"
+checks = "model_checks"
+claim = "S6 required Bitcoin, diversified holder (w=0)"
+low = "S6 required Bitcoin, diversified holder (w=0) 5%"
+high = "S6 required Bitcoin, diversified holder (w=0) 95%"
+range_is = "90% range"
+unit = "percent a year"
+where = "Section 6, Table 6"
+
+[[headline]]
+what = "Death rate of the smallest quarter of assets by size"
+checks = "census_checks"
+claim = "size Q1 hazard %"
+unit = "percent a year"
+where = "Section 3"
+
+[[headline]]
+what = "Death rate of the largest quarter of assets by size"
+checks = "census_checks"
+claim = "size Q4 hazard %"
+unit = "percent a year"
+where = "Section 3"
+
+[glossary]
+"lo, mid, hi" = "lower edge, midpoint and upper edge of the required-return band"
+"gap" = "delivered return less required return, in points a year"
+"se" = "standard error"
+"MC" = "the propagation of the input ranges by random draws (Section 4, Appendix D.1): median and percentiles of the required return"
+"T3, T4, T5" = "Tables 3, 4 and 5 of the paper"
+"Table 6, S6" = "Table 6 and Section 6: Ether and other cryptoassets"
+"S5, S7" = "Sections 5 and 7"
+"monthly" = "the monthly test of Section 5: the required return at a month-end against the return of the following month"
+"grouping" = "the monthly test with the months grouped in other ways (Appendix D)"
+"compound" = "the table of compound returns: the arithmetic required return less the drag of volatility"
+"RV, Sharpe, sizing, rebalanced" = "what the required return means for an investor: return per unit of risk, a small rebalanced position, and returns net of the death rate"
+"w" = "the share of wealth a holder keeps in the asset, the weight of the concentration term"
+"kappa" = "correlation of an asset with the crypto market times market volatility over asset volatility; it scales the crypto share into the asset's weight"
+"gamma" = "risk aversion"
+"conc" = "the concentration term"
+"rf, TNX" = "the risk-free rate; TNX is the ten-year Treasury yield"
+"elite" = "an asset that was ever in the top twenty by trading volume"
+"jump" = "a sudden collapse, as against a slow death by abandonment or delisting"
+"core universe" = "the census after stablecoins, tokenised stocks and wrapped assets are set aside"
+"curated" = "deaths after ticker migrations are removed and the known collapses are entered at their public dates"
+"exposure" = "asset-years at risk"
+"size Q1 to Q4" = "quarters of assets by size, Q1 the smallest"
+"n" = "a count of assets, months or windows"
+"letter and number prefixes (A.3, D.4, E.4 and so on)" = "an appendix section of the paper. A few follow the numbering of an earlier draft (D.5, D.6, E.2, Fig6) and do not match a section of the current paper; for those, the README's table of scripts says where the result appears"
+"age rule" = "the rule of thumb that the expected return falls as one over Bitcoin's age, which the paper compares with the required return"
+
 [live_tool]
 name = "Crypto Observatory"
 url = "https://apapadogiannis.github.io/crypto-observatory/"

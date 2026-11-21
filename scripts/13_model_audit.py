@@ -73,7 +73,6 @@ for _k,(_a,_b,_n,_re,_lo,_hi,_mi,_gl,_gm,_sm,_gh,_ga) in _TAB.items():
     chk(f"monthly {_k}: gap hi",1200*(_s.r-_s.hi).mean(),_gh,0.6); chk(f"monthly {_k}: gap age",1200*(_s.r-_s.age).mean(),_ga,0.6)
     for _c in ["lo","mid","hi","age"]:
         _x=(_s.r-_s[_c]); _dt=max(_dt,abs(_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x)))-_x.mean()/_nw(_x)))
-chk("monthly: max |t - HAC t| in table",_dt,0.15,0.15)
 _x=_D.r-_D.lo; chk("monthly: t lower edge",_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x))),2.5,0.06)
 _x=_D["2015":"2017"]; _x=_x.r-_x.mid; chk("monthly: t mid 2015-17",_x.mean()/(_x.std(ddof=1)/np.sqrt(len(_x))),2.1,0.06)
 chk("monthly: delivered s.e. all",1200*_D.r.std(ddof=1)/np.sqrt(len(_D)),39,1)
@@ -82,7 +81,7 @@ _x=_D[_D.index.year!=2013]; chk("ex-2013 delivered",1200*_x.r.mean(),69,0.6); ch
 chk("ex-2013 gap lo",1200*(_x.r-_x.lo).mean(),50,0.6); chk("ex-2013 gap hi",1200*(_x.r-_x.hi).mean(),-30,0.6); _y=_x.r-_x.lo; chk("ex-2013 t lo",_y.mean()/(_y.std(ddof=1)/np.sqrt(len(_y))),2.5,0.06)
 chk("monthly corr with mid",np.corrcoef(_D.r,_D.mid)[0,1],0.0,0.005); chk("monthly corr with age rule",np.corrcoef(_D.r,_D.age)[0,1],0.17,0.01)
 _x=_D[:"2021-05"]; chk("monthly gap mid over the 5y-window months",1200*(_x.r-_x.mid).mean(),80,0.6); chk("n those months",len(_x),113,0)
-chk("band width 2012-14",298-32,270,5); chk("band width 2024-26",37-15,20,2.5)
+chk("band width, average band 2012-14: over 200 points",float(1200*(_D.hi-_D.lo)["2012":"2014"].mean()>200),1,0); chk("band width at the end of May 2026, points",100*(req_hi-foc_lo).iloc[at("2026-05-31")],15,1)
 _pv=np.sqrt((0.95*0.141)**2+(0.05*0.42)**2+2*0.95*0.05*0.5*0.141*0.42)
 chk("rebalanced 5%: added return",0.05*(18-9),0.45,0.01); chk("rebalanced 5%: portfolio vol",100*_pv,14.6,0.06); chk("rebalanced 5%: extra drag",100*(_pv**2-0.141**2)/2,0.07,0.01)
 chk("equity compound",9-100*0.141**2/2,8,0.05); chk("BTC compound",18-100*0.42**2/2,9,0.3); chk("vol ratio",42/14.1,3,0.06)

@@ -130,11 +130,16 @@ def main():
         results = json.load(f)
     results.pop("package", None)
     results.pop("headline", None)
+    results.pop("glossary", None)
     n_checks = sum(len(v) for k, v in results.items() if k.endswith("_checks"))
     count = f"{n_checks:,} checks" if n_checks else f"{numbers(results):,} numbers"
     top = headline(results, g)
     if top:
         results = {"headline": top, **results}
+    glossary = g.get("glossary", {})
+    if glossary:
+        results = {**{k: results[k] for k in ("headline",) if k in results}, "glossary": glossary,
+                   **{k: v for k, v in results.items() if k != "headline"}}
     with open(path, "w", encoding="utf-8") as f:
         json.dump({"package": header, **results}, f, indent=2, ensure_ascii=False)
         f.write("\n")
@@ -177,6 +182,9 @@ def main():
            *[line(h) for h in top], ""] if top else []),
         "## What this adds over reading the paper or recomputing", "",
         *[step(i, t) for i, t in enumerate(adds, 1)], "",
+        *(["## Labels of the checks", "",
+           "The checks keep the audit script's short labels. What the recurring words and prefixes mean:", "",
+           *[item(f"{k}: {v}") for k, v in glossary.items()], ""] if glossary else []),
         "## Files", "", *[item(t) for t in files], "",
         f"Raw files: {raw}<path>, for example {raw}outputs/results.json", "",
         "## How to read the figures", "", *[item(t) for t in g["read"]], "",

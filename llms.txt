@@ -46,6 +46,12 @@ As printed in the paper. Each is one of the checks in outputs/results.json.
 - Death rate of assets that were ever in the top twenty by trading volume, any cause: 3.54 percent
   a year. Section 3.
 - Death rate of those assets by sudden collapse: 0.3 percent a year. Section 3.
+- Bitcoin's volatility used for May 2026: 42 percent a year. Section 5, Table 4.
+- Bitcoin's beta to the US equity market, May 2026: 1.75 (a ratio). Section 5, Table 4.
+- Required return on Bitcoin for a holder with a negligible weight (the floor): 14 percent a year
+  (90% range 12 to 16). Section 6, Table 6.
+- Death rate of the smallest quarter of assets by size: 17.4 percent a year. Section 3.
+- Death rate of the largest quarter of assets by size: 3.2 percent a year. Section 3.
 
 ## What this adds over reading the paper or recomputing
 
@@ -63,12 +69,51 @@ As printed in the paper. Each is one of the checks in outputs/results.json.
    needs no download.
 5. `census_checks`: 33 figures quoted in the paper, recomputed from the data and compared with the
    paper's figure; 33 agree exactly. The run fails if any does not.
-6. `model_checks`: 1,174 figures quoted in the paper, recomputed from the data and compared with
-   the paper's figure; 1,174 agree within the stated tolerance. The run fails if any does not.
+6. `model_checks`: 1,173 figures quoted in the paper, recomputed from the data and compared with
+   the paper's figure; 1,173 agree within the stated tolerance. The run fails if any does not.
 7. The results are stored as they were when the paper's numbers were taken from them. A check
    reruns the code on the stored data and compares every stored result file with the fresh one,
    number by number (relative tolerance 1e-9; text and whole numbers exactly). It runs on every
    change and once a month, and the badge in the README shows the last run.
+
+## Labels of the checks
+
+The checks keep the audit script's short labels. What the recurring words and prefixes mean:
+
+- lo, mid, hi: lower edge, midpoint and upper edge of the required-return band
+- gap: delivered return less required return, in points a year
+- se: standard error
+- MC: the propagation of the input ranges by random draws (Section 4, Appendix D.1): median and
+  percentiles of the required return
+- T3, T4, T5: Tables 3, 4 and 5 of the paper
+- Table 6, S6: Table 6 and Section 6: Ether and other cryptoassets
+- S5, S7: Sections 5 and 7
+- monthly: the monthly test of Section 5: the required return at a month-end against the return of
+  the following month
+- grouping: the monthly test with the months grouped in other ways (Appendix D)
+- compound: the table of compound returns: the arithmetic required return less the drag of
+  volatility
+- RV, Sharpe, sizing, rebalanced: what the required return means for an investor: return per unit
+  of risk, a small rebalanced position, and returns net of the death rate
+- w: the share of wealth a holder keeps in the asset, the weight of the concentration term
+- kappa: correlation of an asset with the crypto market times market volatility over asset
+  volatility; it scales the crypto share into the asset's weight
+- gamma: risk aversion
+- conc: the concentration term
+- rf, TNX: the risk-free rate; TNX is the ten-year Treasury yield
+- elite: an asset that was ever in the top twenty by trading volume
+- jump: a sudden collapse, as against a slow death by abandonment or delisting
+- core universe: the census after stablecoins, tokenised stocks and wrapped assets are set aside
+- curated: deaths after ticker migrations are removed and the known collapses are entered at their
+  public dates
+- exposure: asset-years at risk
+- size Q1 to Q4: quarters of assets by size, Q1 the smallest
+- n: a count of assets, months or windows
+- letter and number prefixes (A.3, D.4, E.4 and so on): an appendix section of the paper. A few
+  follow the numbering of an earlier draft (D.5, D.6, E.2, Fig6) and do not match a section of the
+  current paper; for those, the README's table of scripts says where the result appears
+- age rule: the rule of thumb that the expected return falls as one over Bitcoin's age, which the
+  paper compares with the required return
 
 ## Files
 
@@ -78,7 +123,7 @@ As printed in the paper. Each is one of the checks in outputs/results.json.
   the rounding of the printed figure. The labels are the audit script's own short names (T4 is
   Table 4, S6 Section 6, A.7 Appendix A.7, MC the propagation of the input ranges, elite an asset
   ever in the top twenty, jump a sudden collapse); the README says which script and table each
-  group belongs to. It holds 1,207 checks, and under `package` the paper, the identifiers, the
+  group belongs to. It holds 1,206 checks, and under `package` the paper, the identifiers, the
   version, the licence and the citation. Start with its `headline` list, which is repeated below.
 - outputs/required_band_monthly.csv: one row per month-end: age, risk-free rate, volatility, beta,
   holder weight at both edges, the band and the age rule.

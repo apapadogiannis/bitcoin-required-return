@@ -7,14 +7,14 @@
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
 Paper: `paper/manuscript.pdf`; preprint on SSRN: [doi:10.2139/ssrn.7705239](https://doi.org/10.2139/ssrn.7705239).
 Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record).
-Current version: paper 1.0 (November 14, 2026); replication package 1.1.1. Version 1.1.0 added the checks as data (`outputs/results.json`) and a guide for programs (`llms.txt`); 1.1.1 adds a headline list to them and removes eleven audit lines that compared the code with figures of an earlier draft, not of this paper. No result has changed.
+Current version: paper 1.0 (November 14, 2026); replication package 1.1.1. Version 1.1.0 added the checks as data (`outputs/results.json`) and a guide for programs (`llms.txt`); 1.1.1 adds a headline list to them and brings the audit in line with the current paper: eleven lines that compared the code with figures of an earlier draft are removed, one internal check that is not a figure of the paper is removed, and two lines on the width of the band are restated as the paper states them. No result has changed.
 
 ## For AI agents and programs
 
 Read [`llms.txt`](llms.txt) first. It says what the package holds, what it adds over reading the
 paper or recomputing, which file to use and what not to use it for. To quote a number of the paper,
 use [`outputs/results.json`](outputs/results.json): it lists every figure the paper quotes that the
-code recomputes (1,207 of them), each with the computed value and the paper's figure, opens with a
+code recomputes (1,206 of them), each with the computed value and the paper's figure, opens with a
 short `headline` list of the figures most often asked for, and carries
 the paper, the identifiers, the version, the licence and the citation under its `package` key. Both
 files are written by the pipeline (`12_audit.py`, `13_model_audit.py`, `make_guide.py`) and both are
@@ -103,7 +103,7 @@ badge above shows the latest run.
 | `45_euro_table.py` | Table 7 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
 | `46_adoption_hazard.py` | Death within two years by trading volume, as a measure of adoption | Appendix C.2 |
 | **3. The audit** | | |
-| `13_model_audit.py` | 1,174 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
+| `13_model_audit.py` | 1,173 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 | **4. For programs** | | |
 | `make_guide.py` | The `package` header of `outputs/results.json` (the checks of `12_audit.py` and `13_model_audit.py` as data) and `llms.txt` | not in the paper |
 

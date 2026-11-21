@@ -8,7 +8,7 @@
 Replication package by Agisilaos Papadogiannis (https://github.com/apapadogiannis).
 Working paper: https://doi.org/10.2139/ssrn.7705239
 Code and data: https://github.com/apapadogiannis/bitcoin-required-return  Archive: https://doi.org/10.5281/zenodo.24003938
-Version 1.1.1, released 2026-11-21. A package is a fixed record: it changes only by a new
+Version 1.1.2, released 2026-11-21. A package is a fixed record: it changes only by a new
 release, and a release that changes a reported number gets a new major version.
 This file is written for AI agents and other programs. People should start at the README.
 
@@ -194,7 +194,7 @@ Yahoo Finance and are included for replication only.
 
 Cite as: Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Working paper. https://doi.org/10.2139/ssrn.7705239
 
-The package itself: Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 1.1.1. Zenodo. https://doi.org/10.5281/zenodo.24003938
+The package itself: Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 1.1.2. Zenodo. https://doi.org/10.5281/zenodo.24003938
 
 To describe the source in a sentence: Papadogiannis (2026), "Bitcoin's Required Return: Pricing a
 New Asset Beside Equities and Gold", working paper, with its replication package.

@@ -10,7 +10,7 @@
     "preprint": "https://doi.org/10.2139/ssrn.7705239",
     "repository": "https://github.com/apapadogiannis/bitcoin-required-return",
     "archive": "https://doi.org/10.5281/zenodo.24003938",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "released": "2026-11-21",
     "data_as_of": "Cryptoasset data to 2026-05-24; the last required return in the monthly test is dated 2026-04-30. ETF prices, the euro/dollar rate, the Treasury yield and the option quotes run to November 2026.",
     "units": "The headline list in outputs/results.json states the unit of each figure. The labels of the checks mostly do not: returns, rates, gaps and volatilities are in percent or percentage points a year, counts are whole numbers, betas, correlations and ratios are plain numbers. In the CSV files rates are fractions (0.18 is 18% a year).",
@@ -22,7 +22,7 @@
       "third_party_data": "The cryptoasset data in data/cmdata are an unmodified copy of the Coin Metrics community dataset, licensed CC BY-NC 4.0 (non-commercial use, with attribution). They keep that licence and are not covered by the licence above. ETF prices, the euro/dollar rate and the Treasury yield are from Yahoo Finance and are included for replication only."
     },
     "cite_as": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Working paper. https://doi.org/10.2139/ssrn.7705239",
-    "cite_package": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 1.1.1. Zenodo. https://doi.org/10.5281/zenodo.24003938",
+    "cite_package": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 1.1.2. Zenodo. https://doi.org/10.5281/zenodo.24003938",
     "describe_as": "Papadogiannis (2026), \"Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold\", working paper, with its replication package.",
     "guide": "llms.txt"
   },

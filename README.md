@@ -7,7 +7,7 @@
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
 Paper: `paper/manuscript.pdf`; preprint on SSRN: [doi:10.2139/ssrn.7705239](https://doi.org/10.2139/ssrn.7705239).
 Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record).
-Current version: paper 1.0 (November 14, 2026); replication package 1.1.1. Version 1.1.0 added the checks as data (`outputs/results.json`) and a guide for programs (`llms.txt`); 1.1.1 adds a headline list to them and brings the audit in line with the current paper: eleven lines that compared the code with figures of an earlier draft are removed, one internal check that is not a figure of the paper is removed, and two lines on the width of the band are restated as the paper states them. No result has changed.
+Current version: paper 1.0 (November 14, 2026); replication package 1.1.2. Version 1.1.0 added the checks as data (`outputs/results.json`) and a guide for programs (`llms.txt`); 1.1.1 adds a headline list to them and brings the audit in line with the current paper: eleven lines that compared the code with figures of an earlier draft are removed, one internal check that is not a figure of the paper is removed, and two lines on the width of the band are restated as the paper states them. No result has changed.
 
 ## For AI agents and programs
 

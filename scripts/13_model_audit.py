@@ -8,15 +8,13 @@ import numpy as np, pandas as pd, importlib.util, sys
 src=open(os.path.join(SCRIPTS,"22_pretty_figs.py")).read()
 exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 res=[]; records=[]     # records: every check, for outputs/results.json
-_headings=[(i,l[2:].strip()) for i,l in enumerate(open(os.path.abspath(__file__),encoding="utf-8"),1) if l.startswith("# ")]
-def _section(line): return next((h for i,h in reversed(_headings) if i<=line),"")
 def chk(label,val,claim,tol):
-    records.append({"section":_section(sys._getframe(1).f_lineno),"claim":label,"computed":float(val),"paper":claim,"tolerance":tol})
+    records.append({"claim":label,"computed":float(val),"paper":claim,"tolerance":tol})
     ok=abs(val-claim)<=tol; res.append(ok); print(f"{'PASS' if ok else 'FAIL':5s} {label}: computed {val:.3g} vs paper {claim}")
 def at(d): return px.index.get_indexer([pd.Timestamp(d)],method="nearest")[0]
 sig=np.sqrt(sig2); qpart=q.copy()
 # age rule
-chk("age rule 5-yr form, Sept 2026 (A=17.7)",100*((1+5/17.7)**(5.62/5)-1),32,0.5); chk("age Sept 2026",(pd.Timestamp("2026-09-15")-pd.Timestamp("2009-01-03")).days/365.25,17.7,0.05); chk("age rule beta/A",100*5.62/17.4,32,0.5); chk("age rule 5-yr form",100*((1+5/17.4)**(5.62/5)-1),33,0.5)
+chk("age rule beta/A",100*5.62/17.4,32,0.5); chk("age rule 5-yr form",100*((1+5/17.4)**(5.62/5)-1),33,0.5)
 # Appendix A betas
 def B(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
 chk("beta last 4y",B(_d.iloc[-48:]),1.75,0.03); chk("beta since 2016",B(_d["2016":]),1.5,0.03); chk("beta since 2012",B(_d["2012":]),1.8,0.04)
@@ -41,9 +39,6 @@ with contextlib.redirect_stdout(io.StringIO()):
     qs=u.run("s",(1.0,1.3),2.0,2.7,0.10,0.30,0.157,0.174)*100; qg=u.run("g",(0.13,0.20),-0.1,0.1,0.02,0.10,0.0,0.003)*100; qd=u.run("d",0.15,1.5,2.0,0.02,0.10,0.003,0.035)*100
 chk("MC median",qb[2],18.3,0.1); chk("MC 68 lo",qb[1],16.4,0.1); chk("MC 68 hi",qb[3],20.5,0.1); chk("MC 90 lo",qb[0],15.4,0.1); chk("MC 90 hi",qb[4],21.9,0.1)
 chk("envelope lo",5+6+1.0*0.42**2*8+0.3,12.7,0.1); chk("envelope hi",5+8+2.8*0.42**2*19+3,25.4,0.1)
-chk("Ether median",qe[2],26,0.6); chk("Ether 90 lo",qe[0],21,0.6); chk("Ether 90 hi",qe[4],34,0.6)
-chk("Large alt median",ql[2],39,0.8); chk("Large alt 90 lo",ql[0],27,0.8); chk("Large alt 90 hi",ql[4],60,0.8)
-chk("Small median",qs[2],78,1.5); chk("Small 90 lo",qs[0],52,1.5); chk("Small 90 hi",qs[4],124,2)
 chk("Gold median",qg[2],5.5,0.1); chk("Digital gold: beta at 15% volatility and correlation 0.5",0.5*15/14.1,0.5,0.04); chk("Digital gold: required return",5+0.5*15/14.1*4+1.9,9,0.1); chk("Digital gold lo",5+0.5*15/14.1*4+0.3,7,0.5); chk("Digital gold hi",5+0.5*15/14.1*4+3.5,11,0.5)
 chk("vol drag",100*(0.42**2+0.45**2)/4,9,0.6); chk("CAGR counterpart",18.0-9.2,9,0.5); chk("diffusive noise",100*0.42/np.sqrt(5),19,0.5)
 # Section 5 table

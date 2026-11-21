@@ -6,16 +6,19 @@ authors:
     given-names: Agisilaos
     orcid: "https://orcid.org/0009-0002-7753-7052"
 date-released: 2026-11-21
-version: "1.1.0"
+version: "1.1.1"
 doi: "10.5281/zenodo.24003938"
-license: MIT
+license:
+  - MIT
+  - CC-BY-4.0
 repository-code: "https://github.com/apapadogiannis/bitcoin-required-return"
 preferred-citation:
-  type: article
+  type: unpublished
   title: "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold"
   authors:
     - family-names: Papadogiannis
       given-names: Agisilaos
   year: 2026
-  doi: "10.5281/zenodo.24003938"
+  doi: "10.2139/ssrn.7705239"
+  url: "https://doi.org/10.2139/ssrn.7705239"
   notes: "Working paper"

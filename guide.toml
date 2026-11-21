@@ -3,12 +3,12 @@
 # paper is written here.
 
 ssrn = "10.2139/ssrn.7705239"
-data_as_of = "Coin Metrics community data to 2026-05-24. ETF prices, EUR/USD and the Treasury yield retrieved November 2026."
-units = "In outputs/results.json each check states its own unit in its label, mostly percent a year. In the CSV files rates are fractions (0.18 is 18% a year)."
+data_as_of = "Cryptoasset data to 2026-05-24; the last required return in the monthly test is dated 2026-04-30. ETF prices, the euro/dollar rate, the Treasury yield and the option quotes run to November 2026."
+units = "The headline list in outputs/results.json states the unit of each figure. The labels of the checks mostly do not: returns, rates, gaps and volatilities are in percent or percentage points a year, counts are whole numbers, betas, correlations and ratios are plain numbers. In the CSV files rates are fractions (0.18 is 18% a year)."
 describe_as = "Papadogiannis (2026), \"Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold\", working paper, with its replication package."
 what = "Code, data and stored results of a working paper that asks what return Bitcoin's holders should require for the market, concentration and mortality risk they carry (the MCM equation), tests the answer against delivered returns month by month, and takes a census of cryptoasset deaths. The manuscript is in paper/."
 third_party = "The cryptoasset data in data/cmdata are an unmodified copy of the Coin Metrics community dataset, licensed CC BY-NC 4.0 (non-commercial use, with attribution). They keep that licence and are not covered by the licence above. ETF prices, the euro/dollar rate and the Treasury yield are from Yahoo Finance and are included for replication only."
-results_file = "every number the paper quotes that the code recomputes, as a list of checks. `census_checks`: claim, computed value, the paper's figure. `model_checks`: the same with the part of the paper (`section`) and the tolerance, which reflects the rounding of the printed figure."
+results_file = "a `headline` list with the figures most often asked for, then every number the paper quotes that the code recomputes, as two lists of checks. `census_checks`: claim, computed value, the paper's figure. `model_checks`: the same with the tolerance, which reflects the rounding of the printed figure. The labels are the audit script's own short names (T4 is Table 4, S6 Section 6, A.7 Appendix A.7, MC the propagation of the input ranges, elite an asset ever in the top twenty, jump a sudden collapse); the README says which script and table each group belongs to."
 
 coverage = [
   "The required return on Bitcoin at every month-end from January 2012 to the end of the data: lower edge, midpoint and upper edge of the band, with the inputs (outputs/required_band_monthly.csv).",
@@ -32,17 +32,94 @@ files = [
 ]
 read = [
   "A required return is what holders should require for the risk they carry. It is not a forecast of what Bitcoin will return.",
-  "Quote the midpoint together with its band. The band is wide in the early years because the holder's weight was high and volatility extreme.",
-  "In results.json `paper` is the figure as printed, usually rounded; `computed` is the value from the code at full precision. Quote `paper` when citing the paper and `computed` when precision matters.",
+  "For the monthly path, quote the midpoint together with its band. The band is wide in the early years because the holder's weight was high and volatility extreme.",
+  "In results.json `paper` is the figure as printed, usually rounded; `computed` is the value the code gives, at full precision where it is calculated and with the table's rounding where it is read from a printed table. Quote `paper` when citing the paper.",
+  "A check whose claim is a statement and not a quantity has `paper` 1 and `computed` 1: read it as true.",
+  "The paper's 2026 figure for Bitcoin is the median when the uncertain inputs are drawn across their ranges. The monthly band's midpoint (the T4 checks, required_band_monthly.csv, and the Crypto Observatory) averages the two edges of the band and stands about two points higher at the same date. They are different figures; say which one you quote.",
+  "The many checks labelled as sensitivities (other weights, other premia, other windows, the crypto-wide back-cast) are robustness results, not the paper's headline.",
   "In required_band_monthly.csv rates are fractions a year, not percent.",
   "Realized averages over short periods have large standard errors, which outputs/monthly_test.txt reports beside each one.",
 ]
 not_for = [
   "A forecast, a price target or a view on whether to hold Bitcoin.",
-  "Anything after 24 May 2026. The data end there and the package is not updated.",
+  "Anything after the paper's dates. The cryptoasset data end on 24 May 2026 and the package is not updated.",
   "Commercial reuse of the Coin Metrics data.",
   "The fate of a single asset. The census gives rates for groups of assets.",
 ]
+
+[[headline]]
+what = "Required return on Bitcoin for its current holders, 2026"
+checks = "model_checks"
+claim = "MC median"
+low = "MC 90 lo"
+high = "MC 90 hi"
+range_is = "90% range of the input uncertainty"
+unit = "percent a year, arithmetic average"
+where = "Section 4 and Appendix D.1"
+
+[[headline]]
+what = "Monthly band for Bitcoin at the end of May 2026, midpoint"
+checks = "model_checks"
+claim = "T4 2026-05 midpoint"
+low = "T4 2026-05 lower edge"
+high = "T4 2026-05 upper (a)"
+range_is = "band"
+unit = "percent a year"
+where = "Section 5, Table 4"
+
+[[headline]]
+what = "Required return on Ether for the average crypto owner"
+checks = "model_checks"
+claim = "S6 required Ether, average crypto owner (kappa 0.7)"
+low = "S6 required Ether, average crypto owner (kappa 0.7) 5%"
+high = "S6 required Ether, average crypto owner (kappa 0.7) 95%"
+range_is = "90% range"
+unit = "percent a year"
+where = "Section 6, Table 6"
+
+[[headline]]
+what = "Delivered less required return at the midpoint, 2012 to 2026"
+checks = "model_checks"
+claim = "monthly all: gap mid"
+se = "monthly all: se mid"
+unit = "points a year, average of monthly returns"
+where = "Section 5, Table 5"
+
+[[headline]]
+what = "Delivered less required return at the midpoint, 2018 to 2026"
+checks = "model_checks"
+claim = "monthly 2018-26: gap mid"
+se = "monthly 2018-26: se mid"
+unit = "points a year, average of monthly returns"
+where = "Section 5, Table 5"
+
+[[headline]]
+what = "Cryptoassets in the census"
+checks = "census_checks"
+claim = "core universe"
+unit = "assets"
+where = "Section 3"
+
+[[headline]]
+what = "Of which died"
+checks = "census_checks"
+claim = "curated deaths"
+unit = "assets"
+where = "Section 3"
+
+[[headline]]
+what = "Death rate of assets that were ever in the top twenty by trading volume, any cause"
+checks = "census_checks"
+claim = "elite all-cause %"
+unit = "percent a year"
+where = "Section 3"
+
+[[headline]]
+what = "Death rate of those assets by sudden collapse"
+checks = "census_checks"
+claim = "jump hazard %"
+unit = "percent a year"
+where = "Section 3"
 
 [live_tool]
 name = "Crypto Observatory"

@@ -60,9 +60,24 @@ def checks(results):
         ok = sum(abs(r["computed"] - r["paper"]) <= r["tolerance"] if "tolerance" in r
                  else str(r["computed"]) == str(r["paper"]) for r in rows)
         how = "within the stated tolerance" if "tolerance" in rows[0] else "exactly"
-        lines.append(f"`{key}`: {len(rows):,} numbers quoted in the paper, recomputed from the data and compared with the "
+        lines.append(f"`{key}`: {len(rows):,} figures quoted in the paper, recomputed from the data and compared with the "
                      f"paper's figure; {ok:,} agree {how}. The run fails if any does not.")
     return lines
+
+
+def headline(results, g):
+    """The few figures most often asked for, each taken from a named check so that none is typed in."""
+    out = []
+    for h in g.get("headline", []):
+        find = lambda claim: next(r for r in results[h["checks"]] if r["claim"] == claim)
+        row = {"what": h["what"], "value": find(h["claim"])["paper"], "unit": h["unit"]}
+        if "low" in h:
+            row["range"] = [find(h["low"])["paper"], find(h["high"])["paper"]]
+            row["range_is"] = h["range_is"]
+        if "se" in h:
+            row["standard_error"] = find(h["se"])["paper"]
+        out.append({**row, "where": h["where"], "check": h["claim"]})
+    return out
 
 
 def wrap(text, width=100, first="", rest=""):
@@ -114,7 +129,12 @@ def main():
     with open(path, encoding="utf-8") as f:
         results = json.load(f)
     results.pop("package", None)
-    count = numbers(results)
+    results.pop("headline", None)
+    n_checks = sum(len(v) for k, v in results.items() if k.endswith("_checks"))
+    count = f"{n_checks:,} checks" if n_checks else f"{numbers(results):,} numbers"
+    top = headline(results, g)
+    if top:
+        results = {"headline": top, **results}
     with open(path, "w", encoding="utf-8") as f:
         json.dump({"package": header, **results}, f, indent=2, ensure_ascii=False)
         f.write("\n")
@@ -130,8 +150,18 @@ def main():
         f"every change and once a month, and the badge in the README shows the last run."]
     live = g.get("live_tool")
     not_for = list(g["not_for"]) + ([f"Current figures. Use the live tool: {live['name']}, {live['url']} ({live['what']})"] if live else [])
-    files = [f"outputs/results.json: {g['results_file']} It holds {count:,} numbers, and under `package` the "
-             f"paper, the identifiers, the version, the licence and the citation. Start here."] + list(g["files"])
+    files = [f"outputs/results.json: {g['results_file']} It holds {count}, and under `package` the paper, the "
+             f"identifiers, the version, the licence and the citation."
+             + (" Start with its `headline` list, which is repeated below." if top else " Start here.")] + list(g["files"])
+    raw = repo.replace("https://github.com/", "https://raw.githubusercontent.com/") + "/main/"
+
+    def line(h):
+        text = f"{h['what']}: {h['value']} {h['unit']}"
+        if "range" in h:
+            text += f" ({h['range_is']} {h['range'][0]} to {h['range'][1]})"
+        if "standard_error" in h:
+            text += f" (standard error {h['standard_error']})"
+        return item(f"{text}. {h['where']}.")
 
     guide = "\n".join([
         f"# {title}", "",
@@ -143,9 +173,12 @@ def main():
         "release, and a release that changes a reported number gets a new major version.",
         "This file is written for AI agents and other programs. People should start at the README.", "",
         "## Coverage", "", *[item(t) for t in g["coverage"]], "",
+        *(["## Headline figures", "", "As printed in the paper. Each is one of the checks in outputs/results.json.", "",
+           *[line(h) for h in top], ""] if top else []),
         "## What this adds over reading the paper or recomputing", "",
         *[step(i, t) for i, t in enumerate(adds, 1)], "",
         "## Files", "", *[item(t) for t in files], "",
+        f"Raw files: {raw}<path>, for example {raw}outputs/results.json", "",
         "## How to read the figures", "", *[item(t) for t in g["read"]], "",
         "## Do not use this for", "", *[item(t) for t in not_for], "",
         "## Source, licence and credit", "",
@@ -159,7 +192,7 @@ def main():
         "The same licence and citation are inside outputs/results.json, under `package`.", ""])
     with open(os.path.join(ROOT, "llms.txt"), "w", encoding="utf-8") as f:
         f.write(guide)
-    print(f"results.json: header written, {count:,} numbers. llms.txt written.")
+    print(f"results.json: header written, {count}. llms.txt written.")
 
 
 if __name__ == "__main__":

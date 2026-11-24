@@ -7,6 +7,8 @@ OUT = os.environ.get("OUT_DIR","outputs")
 YR = 365.25
 
 ISO_FIAT = set("""aed afn all amd ang aoa ars aud awg azn bam bbd bdt bgn bhd bif bmd bnd bob brl bsd btn bwp byn bzd cad cdf chf clp cny cop crc cup cve czk djf dkk dop dzd egp ern etb eur fjd fkp gbp gel ghs gip gmd gnf gtq gyd hkd hnl hrk htg huf idr ils inr iqd irr isk jmd jod jpy kes kgs khr kmf kpw krw kwd kyd kzt lak lbp lkr lrd lsl lyd mad mdl mga mkd mmk mnt mop mru mur mvr mwk mxn myr mzn nad ngn nio nok npr nzd omr pab pen pgk php pkr pln pyg qar ron rsd rub rwf sar sbd scr sdg sek sgd shp sll sos srd ssp stn svc syp szl thb tjs tmt tnd top try ttd twd tzs uah ugx usd uyu uzs ves vnd vuv wst xaf xcd xof xpf yer zar zmw zwl xau xag xpt xpd""".split())
+# currencies that no longer exist but appear in the archive as exchange rates (the Lithuanian litas, replaced by the euro in 2015)
+ISO_FIAT |= {"ltl"}
 
 rows = []
 monthly = {}
@@ -91,9 +93,27 @@ STEMS = "aal aapl abbv abnb abt acn adbe amd amzn avgo axp ba bac brk brkb cat c
 tok = set()
 for s in STEMS:
     tok.add(s + "x"); tok.add(s + "on")
-panel["tokstock"] = panel["asset"].isin(tok)
+# Tokenized shares and funds outside the stem list above, and tokenized gold. Most were listed in 2025 and 2026 and have
+# only a few days of prices in the archive, so they are named one by one (issuer suffix 'on' or 'x').
+TOKENIZED = set("""achron aggon amaton aneton appon armon asmlon babaon bacon_bankofamerica bbaion biduon bilion blkon bmnron
+ btgoon cegon cmgon cohron copon copxon coston cpngon crwdon crwvon cvnaon enphon eqixon figon fon futuon geon gevon gson
+ himson iefaon iemgon ijhon intuon irenon isrgon itoton ivvon iwmon jdon klacon lmton lrcxon maraon melion mpon muon nbison
+ nowon okloon ondson oxyon pallon panwon pbron pddon psqon pyplon qcomon rddton rioton rivnon rklbon rtxon sbeton sbuxon
+ sgovon shopon smcion sndkon snowon sofion sounon spgion spoton tipon tlton tmoon tmuson tsmon uberon usfron vrton wdcon
+ ambrx appx bmnrx btgox cmcsax copxx crwdx dhrx gsx iemgx iwmx kraqx max_mastercardxstock mdtx metax_metaxstock openx
+ pallx pmx ppltx schfx strcx tbllx tmox tonxx vtx
+ paxg xaut dgx""".split())
+panel["tokstock"] = panel["asset"].isin(tok | TOKENIZED)
 WRAPPED = set("wbtc weth wsteth steth cbbtc cbeth reth rseth wbeth frxeth sfrxeth tbtc renbtc hbtc btcb wbnb wsol bnsol jitosol msol ezeth weeth rsweth sweth oseth lseth meth ankreth btse cmeth stsol solvbtc wavax wmatic wpol".split())
+# further wrapped or staked copies, and second files for an asset already in the census (one per chain)
+WRAPPED |= set("lbtc ubtc_unitbitcoin ueth usol beth steth_lido wluna wust ustc.t_eth_wh waxl wcfg avaxc avaxp avaxx flow_evm flow_native leo_eos".split())
 panel["wrapped_like"] = panel["asset"].isin(WRAPPED)
+# Stablecoins without a price history in the archive, which the price test above cannot identify, named one by one.
+# TerraUSD (ust) is not in the list: its collapse in May 2022 is one of the dated catastrophes of the census.
+STABLE = set("""aeur audd ausd bfusd bidr brz buidl ceur crvusd cusd eurc eurcv euri eurm_lmax euroc europ eurq eurr eurs eurt
+ fdusd fei frax gbpt gho gyen idrt lusd mim musd ousd pyusd rlusd rsv susd tryb u_unitedstables usat usd1 usdcv usdd usde
+ usdf usdg usdh usdm usdm_lmax usdn usdp usdq usdr usds usdy vchf veur xsgd xusd""".split())
+panel["stable"] = panel["stable"] | panel["asset"].isin(STABLE)
 
 panel.to_csv(f"{OUT}/panel_full.csv", index=False)
 pd.DataFrame(monthly).to_pickle(f"{OUT}/prices_monthly.pkl")

@@ -1,0 +1,30 @@
+Death rate by calendar year: deaths dated in the year, asset-years lived in the year, percent a year
+  2018:    0     167   0.0
+  2019:    1     240   0.4
+  2020:    3     318   0.9
+  2021:   14     490   2.9
+  2022:   31     637   4.9
+  2023:   26     800   3.2
+  2024:   62    1010   6.1
+  2025:  240    1189  20.2
+  2026:   78     467  16.7
+
+Death rates with the census ended at December 2024, and at the end of the data: deaths, percent a year
+  all assets          :  137   3.6 |  471   8.6
+  smallest quarter    :   40   6.7 |  158  16.2
+  second quarter      :   42   5.5 |  148  12.8
+  third quarter       :   40   4.1 |  110   7.9
+  largest quarter     :   15   1.0 |   55   2.8
+  ever top twenty     :   20  2.58 |   35  3.46   (asset-years 775 | 1,011)
+    sudden collapses  :    3  0.39 |    3  0.30   (asset-years 775 | 1,011)
+
+The rules as written here reproduce the census at the end of the data: True (471 deaths)
+Census retaken at earlier dates: assets, deaths, of which alive again at the end of the data; deaths dated in the 17 months before, of which alive again
+  2022-05-24:   660   43   4 ( 9%) |   40   4 (10%)
+  2023-05-24:   871   78   4 ( 5%) |   57   3 ( 5%)
+  2023-12-31:   956   89   5 ( 6%) |   42   3 ( 7%)
+  2024-05-24:  1060  102   7 ( 7%) |   46   5 (11%)
+  2024-12-31:  1252  149   6 ( 4%) |   82   4 ( 5%)
+  2025-05-24:  1380  197   8 ( 4%) |  118   6 ( 5%)
+  2025-11-24:  1507  302   4 ( 1%) |  212   2 ( 1%)
+Deaths dated 2025 or 2026: 334 of 471; feed ended 107; resting on the volume rule alone 214, with a median volume of $8,373 a day over the last three months

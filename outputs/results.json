@@ -10,8 +10,8 @@
     "preprint": "https://doi.org/10.2139/ssrn.7705239",
     "repository": "https://github.com/apapadogiannis/bitcoin-required-return",
     "archive": "https://doi.org/10.5281/zenodo.24003938",
-    "version": "1.1.2",
-    "released": "2026-11-21",
+    "version": "2.0.0",
+    "released": "2026-11-24",
     "data_as_of": "Cryptoasset data to 2026-05-24; the last required return in the monthly test is dated 2026-04-30. ETF prices, the euro/dollar rate, the Treasury yield and the option quotes run to November 2026.",
     "units": "The headline list in outputs/results.json states the unit of each figure. The labels of the checks mostly do not: returns, rates, gaps and volatilities are in percent or percentage points a year, counts are whole numbers, betas, correlations and ratios are plain numbers. In the CSV files rates are fractions (0.18 is 18% a year).",
     "licence": {
@@ -22,7 +22,7 @@
       "third_party_data": "The cryptoasset data in data/cmdata are an unmodified copy of the Coin Metrics community dataset, licensed CC BY-NC 4.0 (non-commercial use, with attribution). They keep that licence and are not covered by the licence above. ETF prices, the euro/dollar rate and the Treasury yield are from Yahoo Finance and are included for replication only."
     },
     "cite_as": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Working paper. https://doi.org/10.2139/ssrn.7705239",
-    "cite_package": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 1.1.2. Zenodo. https://doi.org/10.5281/zenodo.24003938",
+    "cite_package": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 2.0.0. Zenodo. https://doi.org/10.5281/zenodo.24003938",
     "describe_as": "Papadogiannis (2026), \"Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold\", working paper, with its replication package.",
     "guide": "llms.txt"
   },
@@ -81,21 +81,21 @@
     },
     {
       "what": "Cryptoassets in the census",
-      "value": 1815,
+      "value": 1624,
       "unit": "assets",
       "where": "Section 3",
       "check": "core universe"
     },
     {
       "what": "Of which died",
-      "value": 520,
+      "value": 471,
       "unit": "assets",
       "where": "Section 3",
       "check": "curated deaths"
     },
     {
       "what": "Death rate of assets that were ever in the top twenty by trading volume, any cause",
-      "value": 3.54,
+      "value": 3.46,
       "unit": "percent a year",
       "where": "Section 3",
       "check": "elite all-cause %"
@@ -135,14 +135,14 @@
     },
     {
       "what": "Death rate of the smallest quarter of assets by size",
-      "value": 17.4,
+      "value": 16.2,
       "unit": "percent a year",
       "where": "Section 3",
       "check": "size Q1 hazard %"
     },
     {
       "what": "Death rate of the largest quarter of assets by size",
-      "value": 3.2,
+      "value": 2.8,
       "unit": "percent a year",
       "where": "Section 3",
       "check": "size Q4 hazard %"
@@ -178,13 +178,13 @@
   "census_checks": [
     {
       "claim": "core universe",
-      "computed": 1815,
-      "paper": 1815
+      "computed": 1624,
+      "paper": 1624
     },
     {
       "claim": "curated deaths",
-      "computed": 520,
-      "paper": 520
+      "computed": 471,
+      "paper": 471
     },
     {
       "claim": "death share %",
@@ -198,108 +198,108 @@
     },
     {
       "claim": "deaths age 1-2",
-      "computed": 111,
-      "paper": 111
+      "computed": 104,
+      "paper": 104
     },
     {
       "claim": "exposure age 1-2",
-      "computed": 1213,
-      "paper": 1213
+      "computed": 1169,
+      "paper": 1169
     },
     {
       "claim": "bucket 2.0-3.0 deaths",
-      "computed": 106,
-      "paper": 106
+      "computed": 100,
+      "paper": 100
     },
     {
       "claim": "bucket 2.0-3.0 hazard %",
-      "computed": 11.7,
-      "paper": 11.7
+      "computed": 11.4,
+      "paper": 11.4
     },
     {
       "claim": "bucket 4.0-5.0 deaths",
-      "computed": 78,
-      "paper": 78
+      "computed": 69,
+      "paper": 69
     },
     {
       "claim": "bucket 4.0-5.0 hazard %",
-      "computed": 16.0,
-      "paper": 16.0
+      "computed": 14.3,
+      "paper": 14.3
     },
     {
       "claim": "bucket 7.0-9.0 deaths",
-      "computed": 33,
-      "paper": 33
+      "computed": 31,
+      "paper": 31
     },
     {
       "claim": "bucket 7.0-9.0 hazard %",
-      "computed": 16.7,
-      "paper": 16.7
+      "computed": 15.1,
+      "paper": 15.1
     },
     {
       "claim": "size Q1 hazard %",
-      "computed": 17.4,
-      "paper": 17.4
+      "computed": 16.2,
+      "paper": 16.2
     },
     {
       "claim": "size Q1 n",
-      "computed": 452,
-      "paper": 452
+      "computed": 406,
+      "paper": 406
     },
     {
       "claim": "size Q2 hazard %",
-      "computed": 13.0,
-      "paper": 13.0
+      "computed": 12.8,
+      "paper": 12.8
     },
     {
       "claim": "size Q2 n",
-      "computed": 451,
-      "paper": 451
+      "computed": 406,
+      "paper": 406
     },
     {
       "claim": "size Q3 hazard %",
-      "computed": 9.8,
-      "paper": 9.8
+      "computed": 7.9,
+      "paper": 7.9
     },
     {
       "claim": "size Q3 n",
-      "computed": 451,
-      "paper": 451
+      "computed": 405,
+      "paper": 405
     },
     {
       "claim": "size Q4 hazard %",
-      "computed": 3.2,
-      "paper": 3.2
+      "computed": 2.8,
+      "paper": 2.8
     },
     {
       "claim": "size Q4 n",
-      "computed": 452,
-      "paper": 452
+      "computed": 406,
+      "paper": 406
     },
     {
       "claim": "elite n",
-      "computed": 219,
-      "paper": 219
+      "computed": 216,
+      "paper": 216
     },
     {
       "claim": "elite exposure",
-      "computed": 1017,
-      "paper": 1017
+      "computed": 1011,
+      "paper": 1011
     },
     {
       "claim": "elite deaths",
-      "computed": 36,
-      "paper": 36
+      "computed": 35,
+      "paper": 35
     },
     {
       "claim": "elite all-cause %",
-      "computed": 3.54,
-      "paper": 3.54
+      "computed": 3.46,
+      "paper": 3.46
     },
     {
       "claim": "elite CI",
-      "computed": "2.48-4.90",
-      "paper": "2.48-4.90"
+      "computed": "2.41-4.81",
+      "paper": "2.41-4.81"
     },
     {
       "claim": "jump deaths",
@@ -313,33 +313,338 @@
     },
     {
       "claim": "jump CI",
-      "computed": "0.06-0.86",
-      "paper": "0.06-0.86"
+      "computed": "0.06-0.87",
+      "paper": "0.06-0.87"
     },
     {
       "claim": "excl contested deaths",
-      "computed": 32,
-      "paper": 32
+      "computed": 31,
+      "paper": 31
     },
     {
       "claim": "excl contested hazard %",
-      "computed": 3.15,
-      "paper": 3.15
+      "computed": 3.07,
+      "paper": 3.07
     },
     {
       "claim": "top50 n",
-      "computed": 499,
-      "paper": 499
+      "computed": 493,
+      "paper": 493
     },
     {
       "claim": "top50 hazard %",
-      "computed": 5.5,
-      "paper": 5.5
+      "computed": 5.0,
+      "paper": 5.0
     },
     {
       "claim": "top50 jump hazard %",
       "computed": 0.23,
       "paper": 0.23
+    },
+    {
+      "claim": "S3 assets with a price history of 90 days or more",
+      "computed": 79,
+      "paper": 79
+    },
+    {
+      "claim": "S3 feed ended, before curation",
+      "computed": 220,
+      "paper": 220
+    },
+    {
+      "claim": "S3 price below 1% of its peak, before curation",
+      "computed": 25,
+      "paper": 25
+    },
+    {
+      "claim": "S3 volume collapsed, before curation",
+      "computed": 374,
+      "paper": 374
+    },
+    {
+      "claim": "S3 asset-months, rounded to hundreds",
+      "computed": 65400,
+      "paper": 65400
+    },
+    {
+      "claim": "Table 1 quarters: assets",
+      "computed": 1623,
+      "paper": 1623
+    },
+    {
+      "claim": "Table 1 quarters: deaths",
+      "computed": 471,
+      "paper": 471
+    },
+    {
+      "claim": "size Q1 deaths",
+      "computed": 158,
+      "paper": 158
+    },
+    {
+      "claim": "size Q2 deaths",
+      "computed": 148,
+      "paper": 148
+    },
+    {
+      "claim": "size Q3 deaths",
+      "computed": 110,
+      "paper": 110
+    },
+    {
+      "claim": "size Q4 deaths",
+      "computed": 55,
+      "paper": 55
+    },
+    {
+      "claim": "bucket 0.1-0.5 deaths",
+      "computed": 4,
+      "paper": 4
+    },
+    {
+      "claim": "bucket 0.1-0.5 exposure",
+      "computed": 641,
+      "paper": 641
+    },
+    {
+      "claim": "bucket 0.1-0.5 hazard %",
+      "computed": 0.6,
+      "paper": 0.6
+    },
+    {
+      "claim": "bucket 0.5-1.0 deaths",
+      "computed": 36,
+      "paper": 36
+    },
+    {
+      "claim": "bucket 0.5-1.0 exposure",
+      "computed": 736,
+      "paper": 736
+    },
+    {
+      "claim": "bucket 0.5-1.0 hazard %",
+      "computed": 4.9,
+      "paper": 4.9
+    },
+    {
+      "claim": "bucket 3.0-4.0 deaths",
+      "computed": 71,
+      "paper": 71
+    },
+    {
+      "claim": "bucket 3.0-4.0 exposure",
+      "computed": 643,
+      "paper": 643
+    },
+    {
+      "claim": "bucket 3.0-4.0 hazard %",
+      "computed": 11.0,
+      "paper": 11.0
+    },
+    {
+      "claim": "bucket 5.0-7.0 deaths",
+      "computed": 52,
+      "paper": 52
+    },
+    {
+      "claim": "bucket 5.0-7.0 exposure",
+      "computed": 501,
+      "paper": 501
+    },
+    {
+      "claim": "bucket 5.0-7.0 hazard %",
+      "computed": 10.4,
+      "paper": 10.4
+    },
+    {
+      "claim": "bucket 9.0-12.0 deaths",
+      "computed": 4,
+      "paper": 4
+    },
+    {
+      "claim": "bucket 9.0-12.0 exposure",
+      "computed": 53,
+      "paper": 53
+    },
+    {
+      "claim": "bucket 9.0-12.0 hazard %",
+      "computed": 7.5,
+      "paper": 7.5
+    },
+    {
+      "claim": "bucket 1-2 hazard %",
+      "computed": 8.9,
+      "paper": 8.9
+    },
+    {
+      "claim": "C.1 exposure in the brackets shown, rounded to tens",
+      "computed": 5300,
+      "paper": 5300
+    },
+    {
+      "claim": "C.1 exposure of the census, rounded to tens",
+      "computed": 5450,
+      "paper": 5450
+    },
+    {
+      "claim": "C.1 top-twenty deaths in 2025",
+      "computed": 11,
+      "paper": 11
+    },
+    {
+      "claim": "C.1 top-twenty deaths in 2022",
+      "computed": 9,
+      "paper": 9
+    },
+    {
+      "claim": "C.3 excl contested CI",
+      "computed": "2.08-4.35",
+      "paper": "2.08-4.35"
+    },
+    {
+      "claim": "C.3 without the 2025 deaths, hazard %",
+      "computed": 2.37,
+      "paper": 2.37
+    },
+    {
+      "claim": "C.3 without the 2025 deaths, CI",
+      "computed": "1.52-3.53",
+      "paper": "1.52-3.53"
+    },
+    {
+      "claim": "C.3 without TerraUSD, hazard %",
+      "computed": 3.36,
+      "paper": 3.36
+    },
+    {
+      "claim": "C.3 without TerraUSD, sudden collapses %",
+      "computed": 0.2,
+      "paper": 0.2
+    },
+    {
+      "claim": "C.2 top50 deaths",
+      "computed": 109,
+      "paper": 109
+    },
+    {
+      "claim": "C.2 top50 CI",
+      "computed": "4.1-6.1",
+      "paper": "4.1-6.1"
+    },
+    {
+      "claim": "C.3 left out: tokenized shares, funds and gold",
+      "computed": 228,
+      "paper": 228
+    },
+    {
+      "claim": "C.3 left out: wrapped, staked and second files",
+      "computed": 38,
+      "paper": 38
+    },
+    {
+      "claim": "C.3 left out: stablecoins",
+      "computed": 73,
+      "paper": 73
+    },
+    {
+      "claim": "C.3 left out: observed for less than thirty days",
+      "computed": 54,
+      "paper": 54
+    },
+    {
+      "claim": "C.4 deaths dated 2025",
+      "computed": 240,
+      "paper": 240
+    },
+    {
+      "claim": "C.4 deaths dated 2026",
+      "computed": 94,
+      "paper": 94
+    },
+    {
+      "claim": "S3 migrations among the assets the rules count as dead",
+      "computed": 48,
+      "paper": 48
+    },
+    {
+      "claim": "Table 1, census to December 2024: smallest quarter",
+      "computed": 6.7,
+      "paper": 6.7
+    },
+    {
+      "claim": "Table 1, census to December 2024: second quarter",
+      "computed": 5.5,
+      "paper": 5.5
+    },
+    {
+      "claim": "Table 1, census to December 2024: third quarter",
+      "computed": 4.1,
+      "paper": 4.1
+    },
+    {
+      "claim": "Table 1, census to December 2024: largest quarter",
+      "computed": 1.0,
+      "paper": 1.0
+    },
+    {
+      "claim": "Table 1, census to December 2024: ever top twenty",
+      "computed": 2.58,
+      "paper": 2.58
+    },
+    {
+      "claim": "Table 1, census to December 2024: sudden collapses",
+      "computed": 0.39,
+      "paper": 0.39
+    },
+    {
+      "claim": "Table 1, census to December 2024: all assets",
+      "computed": 3.6,
+      "paper": 3.6
+    },
+    {
+      "claim": "C.4 all assets, whole census, % a year",
+      "computed": 8.6,
+      "paper": 8.6
+    },
+    {
+      "claim": "C.4 deaths to December 2024",
+      "computed": 137.0,
+      "paper": 137.0
+    },
+    {
+      "claim": "C.3 top-twenty deaths to December 2024",
+      "computed": 20.0,
+      "paper": 20.0
+    },
+    {
+      "claim": "C.4 death rate 2025, % a year",
+      "computed": 20.2,
+      "paper": 20.2
+    },
+    {
+      "claim": "C.4 death rate 2026, % a year",
+      "computed": 16.7,
+      "paper": 16.7
+    },
+    {
+      "claim": "C.4 highest yearly death rate to 2024",
+      "computed": 6.1,
+      "paper": 6.1
+    },
+    {
+      "claim": "C.4 late deaths",
+      "computed": 334.0,
+      "paper": 334.0
+    },
+    {
+      "claim": "C.4 late deaths: feed ended",
+      "computed": 107.0,
+      "paper": 107.0
+    },
+    {
+      "claim": "C.4 late deaths: volume alone",
+      "computed": 214.0,
+      "paper": 214.0
     }
   ],
   "model_checks": [
@@ -891,13 +1196,13 @@
     },
     {
       "claim": "gap vs mid",
-      "computed": 23.759930476026405,
+      "computed": 23.750458291614716,
       "paper": 23.8,
       "tolerance": 0.6
     },
     {
       "claim": "gap vs lower",
-      "computed": 81.06887469485274,
+      "computed": 81.04993032602937,
       "paper": 81,
       "tolerance": 1
     },
@@ -921,7 +1226,7 @@
     },
     {
       "claim": "MAE mid",
-      "computed": 57.98381282537336,
+      "computed": 57.974340640961664,
       "paper": 58,
       "tolerance": 0.6
     },
@@ -945,7 +1250,7 @@
     },
     {
       "claim": "monthly all: band lo",
-      "computed": 19.959434322952635,
+      "computed": 19.97201183918346,
       "paper": 20,
       "tolerance": 0.6
     },
@@ -957,25 +1262,25 @@
     },
     {
       "claim": "monthly all: mid",
-      "computed": 63.96641320257206,
+      "computed": 63.97384544408334,
       "paper": 64,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: gap lo",
-      "computed": 98.29010052288858,
+      "computed": 98.27752300665776,
       "paper": 98,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: gap mid",
-      "computed": 54.28312164326916,
+      "computed": 54.2756894017579,
       "paper": 54,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: se mid",
-      "computed": 39.02943743559906,
+      "computed": 39.03001995057329,
       "paper": 39,
       "tolerance": 0.6
     },
@@ -1005,7 +1310,7 @@
     },
     {
       "claim": "monthly 2012-14: band lo",
-      "computed": 30.517824073946965,
+      "computed": 30.577916651494235,
       "paper": 31,
       "tolerance": 0.6
     },
@@ -1017,25 +1322,25 @@
     },
     {
       "claim": "monthly 2012-14: mid",
-      "computed": 157.4335666598559,
+      "computed": 157.46907625818753,
       "paper": 157,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-14: gap lo",
-      "computed": 247.180206449951,
+      "computed": 247.12011387240378,
       "paper": 247,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-14: gap mid",
-      "computed": 120.26446386404203,
+      "computed": 120.2289542657104,
       "paper": 120,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-14: se mid",
-      "computed": 169.339531289231,
+      "computed": 169.34306047570777,
       "paper": 169,
       "tolerance": 0.6
     },
@@ -1305,7 +1610,7 @@
     },
     {
       "claim": "monthly 2012-17: band lo",
-      "computed": 25.268597450560375,
+      "computed": 25.29864373933401,
       "paper": 25,
       "tolerance": 0.6
     },
@@ -1317,25 +1622,25 @@
     },
     {
       "claim": "monthly 2012-17: mid",
-      "computed": 109.5189860767018,
+      "computed": 109.53674087586762,
       "paper": 110,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: gap lo",
-      "computed": 193.3822029653644,
+      "computed": 193.35215667659077,
       "paper": 193,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: gap mid",
-      "computed": 109.13181433922303,
+      "computed": 109.1140595400572,
       "paper": 109,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: se mid",
-      "computed": 87.16610511849254,
+      "computed": 87.16776312337363,
       "paper": 87,
       "tolerance": 0.6
     },
@@ -1413,7 +1718,7 @@
     },
     {
       "claim": "monthly: t lower edge",
-      "computed": 2.5262033800061414,
+      "computed": 2.525836630770297,
       "paper": 2.5,
       "tolerance": 0.06
     },
@@ -1455,25 +1760,25 @@
     },
     {
       "claim": "ex-2013 mid",
-      "computed": 57.106475367962084,
+      "computed": 57.1144650275867,
       "paper": 57,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 gap mid",
-      "computed": 11.516126016892581,
+      "computed": 11.508136357267963,
       "paper": 12,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 se mid",
-      "computed": 20.742081244732944,
+      "computed": 20.74324484149653,
       "paper": 21,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 gap lo",
-      "computed": 50.08525123314977,
+      "computed": 50.07173040320163,
       "paper": 50,
       "tolerance": 0.6
     },
@@ -1485,13 +1790,13 @@
     },
     {
       "claim": "ex-2013 t lo",
-      "computed": 2.509486639312489,
+      "computed": 2.5086452295483403,
       "paper": 2.5,
       "tolerance": 0.06
     },
     {
       "claim": "monthly corr with mid",
-      "computed": -0.0025272404706560545,
+      "computed": -0.002614063924778797,
       "paper": 0.0,
       "tolerance": 0.005
     },
@@ -1503,7 +1808,7 @@
     },
     {
       "claim": "monthly gap mid over the 5y-window months",
-      "computed": 79.70275162415615,
+      "computed": 79.6914388317673,
       "paper": 80,
       "tolerance": 0.6
     },
@@ -1671,13 +1976,13 @@
     },
     {
       "claim": "D.6 monthly gap 2012-2026",
-      "computed": 54.95760822042858,
+      "computed": 54.95017996174632,
       "paper": 55,
       "tolerance": 0.6
     },
     {
       "claim": "D.6 monthly gap 2012-2017",
-      "computed": 111.65091411729657,
+      "computed": 111.6331688326667,
       "paper": 112,
       "tolerance": 0.6
     },
@@ -2181,7 +2486,7 @@
     },
     {
       "claim": "grouping: four-year gap 2012-2015",
-      "computed": 86.64571179380037,
+      "computed": 86.61907959505164,
       "paper": 87,
       "tolerance": 0.6
     },
@@ -2343,7 +2648,7 @@
     },
     {
       "claim": "D.4 ownership alt: gap to midpoint, full",
-      "computed": 60.74607581428866,
+      "computed": 60.738649167085384,
       "paper": 61,
       "tolerance": 0.6
     },
@@ -2709,13 +3014,13 @@
     },
     {
       "claim": "D.5 5y gap",
-      "computed": 24.48290066073178,
+      "computed": 24.473428476320095,
       "paper": 24.5,
       "tolerance": 0.6
     },
     {
       "claim": "D.5 monthly gap",
-      "computed": 54.33730119506877,
+      "computed": 54.32987263984977,
       "paper": 54,
       "tolerance": 0.6
     },
@@ -3015,7 +3320,7 @@
     },
     {
       "claim": "corr realized, mid",
-      "computed": 0.28421163201267063,
+      "computed": 0.28437754131548915,
       "paper": 0.28,
       "tolerance": 0.006
     },
@@ -3747,7 +4052,7 @@
     },
     {
       "claim": "T5 2012-2026 band lo",
-      "computed": 19.959418459290493,
+      "computed": 19.972050472727496,
       "paper": 20,
       "tolerance": 0.6
     },
@@ -3759,25 +4064,25 @@
     },
     {
       "claim": "T5 2012-2026 mid",
-      "computed": 63.96647056973693,
+      "computed": 63.973835317209335,
       "paper": 64,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 gap lo",
-      "computed": 98.29011638655075,
+      "computed": 98.27748437311372,
       "paper": 98,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 gap mid",
-      "computed": 54.28306427610429,
+      "computed": 54.27569952863189,
       "paper": 54,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 se mid",
-      "computed": 39.02945415414986,
+      "computed": 39.0300379091768,
       "paper": 39,
       "tolerance": 0.6
     },
@@ -3801,7 +4106,7 @@
     },
     {
       "claim": "T5 2012-2014 band lo",
-      "computed": 30.518033521919225,
+      "computed": 30.578386475007164,
       "paper": 31,
       "tolerance": 0.6
     },
@@ -3813,25 +4118,25 @@
     },
     {
       "claim": "T5 2012-2014 mid",
-      "computed": 157.43407295231654,
+      "computed": 157.46926007912913,
       "paper": 157,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2014 gap lo",
-      "computed": 247.17999700197876,
+      "computed": 247.11964404889082,
       "paper": 247,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2014 gap mid",
-      "computed": 120.26395757158146,
+      "computed": 120.22877044476884,
       "paper": 120,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2014 se mid",
-      "computed": 169.33961932945678,
+      "computed": 169.34315159597307,
       "paper": 169,
       "tolerance": 0.6
     },
@@ -4071,7 +4376,7 @@
     },
     {
       "claim": "T5 2012-2017 band lo",
-      "computed": 25.268822062769207,
+      "computed": 25.298998539313175,
       "paper": 25,
       "tolerance": 0.6
     },
@@ -4083,25 +4388,25 @@
     },
     {
       "claim": "T5 2012-2017 mid",
-      "computed": 109.51927566052944,
+      "computed": 109.53686922393572,
       "paper": 110,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 gap lo",
-      "computed": 193.38197835315566,
+      "computed": 193.35180187661166,
       "paper": 193,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 gap mid",
-      "computed": 109.1315247553954,
+      "computed": 109.11393119198908,
       "paper": 109,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 se mid",
-      "computed": 87.16614342913104,
+      "computed": 87.1678031991982,
       "paper": 87,
       "tolerance": 0.6
     },
@@ -4179,7 +4484,7 @@
     },
     {
       "claim": "T5 note: plain average midpoint 2012-14",
-      "computed": 146.84611111111113,
+      "computed": 146.87555555555556,
       "paper": 147,
       "tolerance": 0.6
     },
@@ -4191,7 +4496,7 @@
     },
     {
       "claim": "implied gamma*w 2012-17",
-      "computed": 1.1580010046278748,
+      "computed": 1.1578028312395165,
       "paper": 1.2,
       "tolerance": 0.06
     },
@@ -4299,32 +4604,32 @@
     },
     {
       "claim": "kappa BTC 4y",
-      "computed": 1.037376443148652,
+      "computed": 1.036204298854427,
       "paper": 1.04,
       "tolerance": 0.006
     },
     {
       "claim": "kappa BTC since 2018",
-      "computed": 0.9917486730010314,
+      "computed": 0.9917037318570081,
       "paper": 0.99,
       "tolerance": 0.006
     },
     {
       "claim": "kappa ETH 4y",
-      "computed": 0.7045233416671464,
+      "computed": 0.7033368116881111,
       "paper": 0.7,
       "tolerance": 0.006
     },
     {
       "claim": "kappa ETH since 2018",
-      "computed": 0.6777493358611771,
+      "computed": 0.6771106831664871,
       "paper": 0.68,
       "tolerance": 0.03
     },
     {
       "claim": "alive altcoins with 4y prices",
-      "computed": 57.0,
-      "paper": 57,
+      "computed": 51.0,
+      "paper": 51,
       "tolerance": 0
     },
     {
@@ -4335,43 +4640,43 @@
     },
     {
       "claim": "alt vol q1",
-      "computed": 65.84534618702762,
-      "paper": 66,
+      "computed": 68.07165446245227,
+      "paper": 68,
       "tolerance": 0.6
     },
     {
       "claim": "alt vol q3",
-      "computed": 87.62729944147426,
+      "computed": 88.20236682432837,
       "paper": 88,
       "tolerance": 0.6
     },
     {
       "claim": "alt beta q1",
-      "computed": 1.5253179116076439,
-      "paper": 1.5,
+      "computed": 1.6148559295745144,
+      "paper": 1.6,
       "tolerance": 0.06
     },
     {
       "claim": "alt beta q3",
-      "computed": 2.705854523747977,
+      "computed": 2.6938711741485504,
       "paper": 2.7,
       "tolerance": 0.06
     },
     {
       "claim": "alt kappa median",
-      "computed": 0.4692156768726091,
+      "computed": 0.4710510911974275,
       "paper": 0.47,
       "tolerance": 0.006
     },
     {
       "claim": "alt kappa q1",
-      "computed": 0.412327573768731,
+      "computed": 0.4107680209516136,
       "paper": 0.41,
       "tolerance": 0.006
     },
     {
       "claim": "alt kappa q3",
-      "computed": 0.5601891836965991,
+      "computed": 0.5595968913032793,
       "paper": 0.56,
       "tolerance": 0.006
     },
@@ -4425,20 +4730,20 @@
     },
     {
       "claim": "S6 delivered alt basket average",
-      "computed": 36.81918251087124,
+      "computed": 36.75235976698912,
       "paper": 37,
       "tolerance": 0.6
     },
     {
       "claim": "S6 delivered alt basket se",
-      "computed": 33.139606467633364,
+      "computed": 33.46673102686578,
       "paper": 33,
       "tolerance": 0.6
     },
     {
       "claim": "S6 delivered alt basket compound",
-      "computed": -1.8554365274538243,
-      "paper": -2,
+      "computed": -2.784905793999448,
+      "paper": -3,
       "tolerance": 0.6
     },
     {
@@ -4449,8 +4754,8 @@
     },
     {
       "claim": "S6 basket compound, feed deaths at -100%",
-      "computed": -3.1890596911662183,
-      "paper": -3,
+      "computed": -4.245726121542159,
+      "paper": -4,
       "tolerance": 0.6
     },
     {
@@ -4467,32 +4772,32 @@
     },
     {
       "claim": "S6 altcoins in basket",
-      "computed": 84.0,
-      "paper": 84,
+      "computed": 77.0,
+      "paper": 77,
       "tolerance": 0
     },
     {
       "claim": "S6 dead in basket",
-      "computed": 25.0,
-      "paper": 25,
+      "computed": 24.0,
+      "paper": 24,
       "tolerance": 0
     },
     {
       "claim": "S6 median altcoin compound",
-      "computed": -27.070032513055192,
-      "paper": -27,
+      "computed": -27.540377832197095,
+      "paper": -28,
       "tolerance": 0.6
     },
     {
       "claim": "S6 share losing money",
-      "computed": 77.38095238095238,
-      "paper": 77,
+      "computed": 83.11688311688312,
+      "paper": 83,
       "tolerance": 0.6
     },
     {
       "claim": "S6 basket max assets",
-      "computed": 84.0,
-      "paper": 84,
+      "computed": 77.0,
+      "paper": 77,
       "tolerance": 0
     },
     {
@@ -4551,79 +4856,79 @@
     },
     {
       "claim": "S6 required Large altcoin, average crypto owner",
-      "computed": 22.4,
-      "paper": 22,
+      "computed": 22.8,
+      "paper": 23,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, average crypto owner 5%",
-      "computed": 17.8,
+      "computed": 18.3,
       "paper": 18,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, average crypto owner 95%",
-      "computed": 29.1,
+      "computed": 29.5,
       "paper": 29,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, diversified holder (w=0)",
-      "computed": 15.4,
-      "paper": 15,
+      "computed": 15.6,
+      "paper": 16,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, diversified holder (w=0) 5%",
-      "computed": 13.0,
+      "computed": 13.3,
       "paper": 13,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, diversified holder (w=0) 95%",
-      "computed": 17.8,
+      "computed": 17.9,
       "paper": 18,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Small coin, diversified holder (w=0)",
+      "computed": 24.7,
+      "paper": 25,
+      "tolerance": 0.6
+    },
+    {
+      "claim": "S6 required Small coin, diversified holder (w=0) 5%",
+      "computed": 19.5,
+      "paper": 20,
+      "tolerance": 0.6
+    },
+    {
+      "claim": "S6 required Small coin, diversified holder (w=0) 95%",
       "computed": 29.9,
       "paper": 30,
       "tolerance": 0.6
     },
     {
-      "claim": "S6 required Small coin, diversified holder (w=0) 5%",
-      "computed": 27.6,
-      "paper": 28,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "S6 required Small coin, diversified holder (w=0) 95%",
-      "computed": 32.3,
-      "paper": 32,
-      "tolerance": 0.6
-    },
-    {
       "claim": "S6 index April 2026: Bitcoin",
-      "computed": 72.94929388802599,
+      "computed": 73.46598326370982,
       "paper": 73,
       "tolerance": 0.5
     },
     {
       "claim": "S6 index April 2026: Ether",
-      "computed": 13.654522135096078,
+      "computed": 13.751235155075042,
       "paper": 14,
       "tolerance": 0.5
     },
     {
       "claim": "S6 index April 2026: other coins",
-      "computed": 13.396183976877932,
+      "computed": 12.782781581215136,
       "paper": 13,
       "tolerance": 0.5
     },
     {
       "claim": "S6 crypto market volatility, four years",
-      "computed": 57.162162899558744,
+      "computed": 57.06141645191802,
       "paper": 57,
       "tolerance": 0.5
     },
@@ -4635,31 +4940,31 @@
     },
     {
       "claim": "S6 Ether correlation with the market",
-      "computed": 0.9085348225765827,
+      "computed": 0.9086060932400839,
       "paper": 0.91,
       "tolerance": 0.005
     },
     {
       "claim": "S6 kappa = correlation x market volatility / asset volatility, Ether",
-      "computed": 0.7045233416671464,
-      "paper": 0.7045233416671464,
+      "computed": 0.7033368116881108,
+      "paper": 0.7033368116881111,
       "tolerance": 0.005
     },
     {
       "claim": "S6 kappa identity, Bitcoin",
-      "computed": 1.037376443148652,
-      "paper": 1.037376443148652,
+      "computed": 1.036204298854427,
+      "paper": 1.036204298854427,
       "tolerance": 0.005
     },
     {
       "claim": "S6 market moves 7% when Ether moves 10%",
-      "computed": 7.045233416671463,
+      "computed": 7.033368116881111,
       "paper": 7,
       "tolerance": 0.05
     },
     {
       "claim": "S6 altcoin median correlation",
-      "computed": 0.7443591960742187,
+      "computed": 0.7422822477451759,
       "paper": 0.74,
       "tolerance": 0.005
     },
@@ -4767,8 +5072,8 @@
     },
     {
       "claim": "Table 6 large altcoin: market term",
-      "computed": 8.4,
-      "paper": 8.4,
+      "computed": 8.6,
+      "paper": 8.6,
       "tolerance": 0.001
     },
     {
@@ -4779,8 +5084,8 @@
     },
     {
       "claim": "Table 6 large altcoin: floor",
-      "computed": 15.4,
-      "paper": 15,
+      "computed": 15.6,
+      "paper": 16,
       "tolerance": 0.5
     },
     {
@@ -4791,26 +5096,26 @@
     },
     {
       "claim": "Table 6 large altcoin: sum of the terms",
-      "computed": 22.363256800000002,
-      "paper": 22.4,
+      "computed": 22.563256799999998,
+      "paper": 22.6,
       "tolerance": 0.05
     },
     {
       "claim": "Table 6 small coin: market term",
-      "computed": 8.4,
-      "paper": 8.4,
+      "computed": 8.6,
+      "paper": 8.6,
       "tolerance": 0.001
     },
     {
       "claim": "Table 6 small coin: mortality term",
-      "computed": 16.55,
-      "paper": 16.6,
+      "computed": 11.1,
+      "paper": 11.1,
       "tolerance": 0.051
     },
     {
       "claim": "Table 6 small coin: floor",
-      "computed": 29.950000000000003,
-      "paper": 30,
+      "computed": 24.7,
+      "paper": 25,
       "tolerance": 0.5
     },
     {
@@ -4821,24 +5126,24 @@
     },
     {
       "claim": "Table 6 mortality midpoints: small coin",
-      "computed": 16.549999999999997,
-      "paper": 16.6,
+      "computed": 11.1,
+      "paper": 11.1,
       "tolerance": 0.051
     },
     {
-      "claim": "Table 6 Bitcoin: median at most 0.3 below the sum of the terms",
+      "claim": "Table 6 Bitcoin: median within 0.3 of the sum of the terms",
       "computed": 1.0,
       "paper": 1,
       "tolerance": 0
     },
     {
-      "claim": "Table 6 Ether: median at most 0.3 below the sum of the terms",
+      "claim": "Table 6 Ether: median within 0.3 of the sum of the terms",
       "computed": 1.0,
       "paper": 1,
       "tolerance": 0
     },
     {
-      "claim": "Table 6 large altcoin: median at most 0.3 below the sum of the terms",
+      "claim": "Table 6 large altcoin: median within 0.3 of the sum of the terms",
       "computed": 1.0,
       "paper": 1,
       "tolerance": 0
@@ -4857,8 +5162,8 @@
     },
     {
       "claim": "Table 6 against the script output: Large altcoin sum",
-      "computed": 22.4,
-      "paper": 22.4,
+      "computed": 22.6,
+      "paper": 22.6,
       "tolerance": 0.001
     },
     {
@@ -4899,8 +5204,8 @@
     },
     {
       "claim": "S6 priced cryptoassets with a capitalization",
-      "computed": 84.0,
-      "paper": 84,
+      "computed": 77.0,
+      "paper": 77,
       "tolerance": 0
     },
     {
@@ -5103,14 +5408,14 @@
     },
     {
       "claim": "S5 cumulative unexplained return 2012-2026: CAPM",
-      "computed": 1307.0,
-      "paper": 1307,
+      "computed": 1304.0,
+      "paper": 1304,
       "tolerance": 0.5
     },
     {
       "claim": "S5 cumulative unexplained return 2012-2026: MCM",
-      "computed": 546.0,
-      "paper": 546,
+      "computed": 543.0,
+      "paper": 543,
       "tolerance": 0.5
     },
     {
@@ -5151,14 +5456,14 @@
     },
     {
       "claim": "C.2 adoption table, $100,000 to $1 million: dead in 2y",
-      "computed": 24.0,
-      "paper": 24,
+      "computed": 23.0,
+      "paper": 23,
       "tolerance": 0.01
     },
     {
       "claim": "C.2 adoption table, $100,000 to $1 million: rate",
-      "computed": 14.0,
-      "paper": 14,
+      "computed": 13.0,
+      "paper": 13,
       "tolerance": 0.01
     },
     {
@@ -5175,50 +5480,50 @@
     },
     {
       "claim": "C.2 adoption table, $1 to $10 million: dead in 2y",
-      "computed": 14.0,
-      "paper": 14,
+      "computed": 13.0,
+      "paper": 13,
       "tolerance": 0.01
     },
     {
       "claim": "C.2 adoption table, $1 to $10 million: rate",
+      "computed": 7.0,
+      "paper": 7,
+      "tolerance": 0.01
+    },
+    {
+      "claim": "C.2 adoption table, $1 to $10 million: not fading: dead in 2y",
       "computed": 8.0,
       "paper": 8,
       "tolerance": 0.01
     },
     {
-      "claim": "C.2 adoption table, $1 to $10 million: not fading: dead in 2y",
-      "computed": 10.0,
-      "paper": 10,
+      "claim": "C.2 adoption table, $1 to $10 million: not fading: rate",
+      "computed": 4.0,
+      "paper": 4,
       "tolerance": 0.01
     },
     {
-      "claim": "C.2 adoption table, $1 to $10 million: not fading: rate",
+      "claim": "C.2 adoption table, $10 to $100 million: dead in 2y",
       "computed": 5.0,
       "paper": 5,
       "tolerance": 0.01
     },
     {
-      "claim": "C.2 adoption table, $10 to $100 million: dead in 2y",
-      "computed": 6.0,
-      "paper": 6,
-      "tolerance": 0.01
-    },
-    {
       "claim": "C.2 adoption table, $10 to $100 million: rate",
-      "computed": 3.0,
-      "paper": 3,
+      "computed": 2.0,
+      "paper": 2,
       "tolerance": 0.01
     },
     {
       "claim": "C.2 adoption table, $10 to $100 million: not fading: dead in 2y",
-      "computed": 6.0,
-      "paper": 6,
+      "computed": 4.0,
+      "paper": 4,
       "tolerance": 0.01
     },
     {
       "claim": "C.2 adoption table, $10 to $100 million: not fading: rate",
-      "computed": 3.0,
-      "paper": 3,
+      "computed": 2.0,
+      "paper": 2,
       "tolerance": 0.01
     },
     {
@@ -5247,13 +5552,13 @@
     },
     {
       "claim": "C.2 adoption table: asset-months",
-      "computed": 34155.0,
-      "paper": 34155,
+      "computed": 33055.0,
+      "paper": 33055,
       "tolerance": 0
     },
     {
       "claim": "S3 under $1m a day: one in four dead within two years",
-      "computed": 25.297676457693992,
+      "computed": 25.274383511225615,
       "paper": 25,
       "tolerance": 1.0
     },
@@ -7281,7 +7586,7 @@
     },
     {
       "claim": "D.4 table, US wealth: gap 2012-26",
-      "computed": 54.33730119506877,
+      "computed": 54.32987263984977,
       "paper": 54,
       "tolerance": 0.6
     },

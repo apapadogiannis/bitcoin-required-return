@@ -21,7 +21,7 @@ if __name__ == "__main__":
     run("Bitcoin, w 0.075-0.139 (crypto-wide back-cast)", 0.42, 1.5, 2.0, 0.075, 0.139, 0.003, 0.035)
     run("Ether", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.035)
     run("Large altcoin", 0.80, 2.0, 2.7, 0.10, 0.30, 0.01, 0.03)
-    run("Small coin", (1.0, 1.3), 2.0, 2.7, 0.10, 0.30, 0.157, 0.174)
+    run("Small coin", (1.0, 1.3), 2.0, 2.7, 0.10, 0.30, 0.060, 0.162)
     run("Gold", (0.13, 0.20), -0.1, 0.1, 0.02, 0.10, 0.0, 0.003)
     run("Bitcoin at gold sigma and w", 0.15, 1.5, 2.0, 0.02, 0.10, 0.003, 0.035)
     run("Bitcoin, sigma 0.35-0.50", (0.35, 0.50), 1.5, 2.0, 0.08, 0.19, 0.003, 0.035)
@@ -30,9 +30,9 @@ if __name__ == "__main__":
     run("Bitcoin, diversified holder (w=0)", 0.42, 1.5, 2.0, 0.0, 0.0, 0.003, 0.035)
     run("Ether, average crypto owner (kappa 0.7)", 0.64, 2.0, 2.7, 0.08, 0.19, 0.003, 0.035, kap=0.7)
     run("Ether, diversified holder (w=0)", 0.64, 2.0, 2.7, 0.0, 0.0, 0.003, 0.035)
-    run("Large altcoin, average crypto owner", (0.66, 0.88), 1.5, 2.7, 0.08, 0.19, 0.01, 0.03, kap=(0.41, 0.56))
-    run("Large altcoin, diversified holder (w=0)", (0.66, 0.88), 1.5, 2.7, 0.0, 0.0, 0.01, 0.03)
-    run("Small coin, diversified holder (w=0)", (1.0, 1.3), 1.5, 2.7, 0.0, 0.0, 0.157, 0.174)
+    run("Large altcoin, average crypto owner", (0.68, 0.88), 1.6, 2.7, 0.08, 0.19, 0.01, 0.03, kap=(0.41, 0.56))
+    run("Large altcoin, diversified holder (w=0)", (0.68, 0.88), 1.6, 2.7, 0.0, 0.0, 0.01, 0.03)
+    run("Small coin, diversified holder (w=0)", (1.0, 1.3), 1.6, 2.7, 0.0, 0.0, 0.060, 0.162)
     # The survey's 19% is an equal-weighted mean of household shares; a wealth-weighted share of 12% as the upper bound.
     run("Bitcoin, w 0.08-0.12 (wealth-weighted share)", 0.42, 1.5, 2.0, 0.08, 0.12, 0.003, 0.035)
     # Dependence between inputs (Appendix D.1): the baseline draws them independently.

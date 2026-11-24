@@ -1,0 +1,22 @@
+core: 1624 deaths: 471
+
+=== Poisson hazard regressions (curated deaths) ===
+age only          : gamma_age = +0.506 (0.045)
+age + period FE   : gamma_age = +0.357 (0.040)
+age + cohort FE   : gamma_age = +1.648 (0.096)
+
+=== Age elasticity by definition of death (same assets) ===
+strict (feed ended)           : deaths  220 | no year effects +0.548 (0.071) | with year effects +0.418 (0.064)
+broad (feed or price)         : deaths  243 | no year effects +0.662 (0.076) | with year effects +0.520 (0.068)
+abandonment (all mechanical)  : deaths  537 | no year effects +0.619 (0.048) | with year effects +0.465 (0.042)
+curated (final)               : deaths  471 | no year effects +0.506 (0.045) | with year effects +0.357 (0.040)
+curated, months to December 2024: deaths  137 | with year effects +0.743 (0.103)
+curated deaths by year: {2019: 1, 2020: 3, 2021: 14, 2022: 31, 2023: 26, 2024: 62, 2025: 240, 2026: 94}
+
+=== Parametric survival fits ===
+Weibull: lambda_=8.55, rho_=1.527 (rho>1 => hazard RISES with age; Lindy needs rho<1)
+  rho 95% CI: 1.421-1.632
+Log-logistic: alpha_=6.55, beta_=1.827 (beta>1 => hazard hump-shaped rising then falling)
+AIC: Weibull 3134 | LogLogistic 3109
+Weibull median lifetime: 6.7 yr
+KM median:  6.95687885010267

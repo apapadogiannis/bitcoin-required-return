@@ -7,14 +7,35 @@
 Replication package for the working paper by Agisilaos Papadogiannis (November 2026).
 Paper: `paper/manuscript.pdf`; preprint on SSRN: [doi:10.2139/ssrn.7705239](https://doi.org/10.2139/ssrn.7705239).
 Archived on Zenodo: [doi:10.5281/zenodo.24003938](https://doi.org/10.5281/zenodo.24003938) (concept DOI, always resolves to the latest version; each release also has its own DOI, listed on the Zenodo record).
-Current version: paper 1.0 (November 14, 2026); replication package 1.1.2. Version 1.1.0 added the checks as data (`outputs/results.json`) and a guide for programs (`llms.txt`); 1.1.1 adds a headline list to them and brings the audit in line with the current paper: eleven lines that compared the code with figures of an earlier draft are removed, one internal check that is not a figure of the paper is removed, and two lines on the width of the band are restated as the paper states them. No result has changed.
+Current version: 2.0.0 (November 24, 2026), paper and replication package.
+
+## Changes since version 1.1.2
+
+Version 2.0.0 corrects the census of cryptoasset deaths, so printed numbers change. The required
+return for Bitcoin and the tables of Sections 4, 5 and 7 are unchanged.
+
+- The census now leaves out what the paper says it leaves out. Assets without a price history could
+  not be identified by the price test and are named one by one: the Lithuanian litas (a national
+  currency), 116 tokenized shares and funds, three gold tokens, 57 stablecoins, and 17 wrapped copies
+  or second files of an asset. A further 27 ticker changes and token swaps, each confirmed by an
+  announcement, are no longer counted as deaths. The census has 1,624 assets and 471 deaths (it had
+  1,815 and 520); among the assets ever in the top twenty, 35 deaths in 216 assets, 3.46% a year
+  (36 in 219, 3.54%). The mortality term stays at 0.3 to 3.5 points.
+- Affected: Table 1 (which gains the rates with the census ended at December 2024), Section 6 and
+  Table 6 (77 priced cryptoassets instead of 84; the altcoin columns), and the tables and figures of
+  Appendix C. The age elasticity of the death rate is +0.36 (it was +0.42).
+- The rolling beta is estimated from January 2012 on the months available. Before, the estimate of
+  July 2012 was also used for the six months before it. No printed number of the monthly test changes.
+- New results: `outputs/age_elasticity.txt` (the table of age elasticities, now reproduced in full)
+  and `outputs/earlier_censuses.txt` (death rates by calendar year, and the census retaken at earlier
+  dates).
 
 ## For AI agents and programs
 
 Read [`llms.txt`](llms.txt) first. It says what the package holds, what it adds over reading the
 paper or recomputing, which file to use and what not to use it for. To quote a number of the paper,
 use [`outputs/results.json`](outputs/results.json): it lists every figure the paper quotes that the
-code recomputes (1,206 of them), each with the computed value and the paper's figure, opens with a
+code recomputes (1,267 of them), each with the computed value and the paper's figure, opens with a
 short `headline` list of the figures most often asked for, and carries
 the paper, the identifiers, the version, the licence and the citation under its `package` key. Both
 files are written by the pipeline (`12_audit.py`, `13_model_audit.py`, `make_guide.py`) and both are
@@ -30,7 +51,7 @@ The paper asks what return Bitcoin's holders should require, given the risks the
    aversion times variance times the share of wealth that holders keep in the asset, from Federal
    Reserve and Cleveland Fed household surveys) and mortality risk (from the census below).
    For 2026: about 18% a year on average (90% range 15–22%), about 9.5% compounded.
-2. **The census of deaths.** Survival analysis of 1,815 cryptoassets (2010–2026, 520
+2. **The census of deaths.** Survival analysis of 1,624 cryptoassets (2010–2026, 498
    deaths) from the Coin Metrics community dataset: the hazard by age (tracked assets do not
    become safer with age; the Lindy hypothesis is rejected), by size, and for assets that
    were ever in the top twenty (3.5% a year by any cause; 0.30% a year for sudden collapses:
@@ -78,7 +99,7 @@ badge above shows the latest run.
 | `06_voldeath.py` | Volume-collapse deaths; unified death definition | Section 3, Appendix C |
 | `07_curated.py` | Migrations and dated collapses; `panel_v3.csv`, hazards, the elite death table | Section 3, Appendix C.3 |
 | `08_cohorts.py` | Buy-at-birth cohort returns | Appendix C |
-| `10_robustness.py` | Cohort fixed effects, Weibull and log-logistic fits | Appendix C.4 |
+| `10_robustness.py` | The age elasticity under each definition of death, cohort fixed effects, Weibull and log-logistic fits (`outputs/age_elasticity.txt`) | Appendix C.4 |
 | `12_audit.py` | 33 checks of the census numbers quoted in the paper | Section 3, Appendix C |
 | `09_figures.py`, `11_km_figure.py`, `21_final_figs.py` | Draft figures and `wedge_table.csv` from an earlier calibration, kept for the record | not in the paper |
 | **2. The required-return model** | | |
@@ -102,6 +123,7 @@ badge above shows the latest run.
 | `44_holders_and_comovement.py` | Bitcoin's correlation with the S&P 500 against the share of supply held through funds and by public companies | Appendix A.3 |
 | `45_euro_table.py` | Table 7 for a euro investor: euro risk-free rate, same premia, volatility in euros | Appendix E.4 |
 | `46_adoption_hazard.py` | Death within two years by trading volume, as a measure of adoption | Appendix C.2 |
+| `48_earlier_censuses.py` | Death rates by calendar year, the rates of Table 1 with the census ended at December 2024, and the census retaken at earlier dates (`outputs/earlier_censuses.txt`) | Table 1, Appendix C.4 |
 | **3. The audit** | | |
 | `13_model_audit.py` | 1,173 checks: recomputes every number the paper quotes from the model (prints PASS or FAIL per claim) | all sections |
 | **4. For programs** | | |
@@ -174,7 +196,7 @@ dates. The table of every top-twenty death: paper Appendix C.3; machine-readable
 
 ## Citation
 
-> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper, version 1.0.
+> Papadogiannis, A. (2026). "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold." Working paper, version 2.0.
 > SSRN: https://doi.org/10.2139/ssrn.7705239
 
 Code and data:

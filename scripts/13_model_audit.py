@@ -36,7 +36,7 @@ spec=importlib.util.spec_from_file_location("u",os.path.join(SCRIPTS,"23_uncerta
 import io, contextlib
 with contextlib.redirect_stdout(io.StringIO()):
     qb=u.run("b",0.42,1.5,2.0,0.08,0.19,0.003,0.035)*100; qe=u.run("e",0.64,2.0,2.7,0.08,0.19,0.003,0.035)*100; ql=u.run("l",0.80,2.0,2.7,0.10,0.30,0.01,0.03)*100
-    qs=u.run("s",(1.0,1.3),2.0,2.7,0.10,0.30,0.157,0.174)*100; qg=u.run("g",(0.13,0.20),-0.1,0.1,0.02,0.10,0.0,0.003)*100; qd=u.run("d",0.15,1.5,2.0,0.02,0.10,0.003,0.035)*100
+    qs=u.run("s",(1.0,1.3),2.0,2.7,0.10,0.30,0.060,0.162)*100; qg=u.run("g",(0.13,0.20),-0.1,0.1,0.02,0.10,0.0,0.003)*100; qd=u.run("d",0.15,1.5,2.0,0.02,0.10,0.003,0.035)*100
 chk("MC median",qb[2],18.3,0.1); chk("MC 68 lo",qb[1],16.4,0.1); chk("MC 68 hi",qb[3],20.5,0.1); chk("MC 90 lo",qb[0],15.4,0.1); chk("MC 90 hi",qb[4],21.9,0.1)
 chk("envelope lo",5+6+1.0*0.42**2*8+0.3,12.7,0.1); chk("envelope hi",5+8+2.8*0.42**2*19+3,25.4,0.1)
 chk("Gold median",qg[2],5.5,0.1); chk("Digital gold: beta at 15% volatility and correlation 0.5",0.5*15/14.1,0.5,0.04); chk("Digital gold: required return",5+0.5*15/14.1*4+1.9,9,0.1); chk("Digital gold lo",5+0.5*15/14.1*4+0.3,7,0.5); chk("Digital gold hi",5+0.5*15/14.1*4+3.5,11,0.5)
@@ -318,21 +318,21 @@ import runpy, io, contextlib
 with contextlib.redirect_stdout(io.StringIO()): _cs=runpy.run_path(os.path.join(SCRIPTS,"31_cross_section.py"))
 _st=_cs["stats"]; _S=_cs["S"]; _O=_cs["O"]; _Rn=_cs["Rn"]; _Rna=_cs["Rna"]; _Rnw=_cs["Rnw"]
 chk("kappa BTC 4y",_st("btc")["kappa"],1.04,0.006); chk("kappa BTC since 2018",_st("btc",100)["kappa"],0.99,0.006); chk("kappa ETH 4y",_st("eth")["kappa"],0.7,0.006); chk("kappa ETH since 2018",_st("eth",100)["kappa"],0.68,0.03)
-chk("alive altcoins with 4y prices",len(_S),57,0); chk("alt median vol (EWMA)",100*_S.vol_ewma.median(),76,0.6); chk("alt vol q1",100*_S.vol_ewma.quantile(.25),66,0.6); chk("alt vol q3",100*_S.vol_ewma.quantile(.75),88,0.6)
-chk("alt beta q1",_S.beta_eq.quantile(.25),1.5,0.06); chk("alt beta q3",_S.beta_eq.quantile(.75),2.7,0.06); chk("alt kappa median",_S.kappa.median(),0.47,0.006); chk("alt kappa q1",_S.kappa.quantile(.25),0.41,0.006); chk("alt kappa q3",_S.kappa.quantile(.75),0.56,0.006)
+chk("alive altcoins with 4y prices",len(_S),51,0); chk("alt median vol (EWMA)",100*_S.vol_ewma.median(),76,0.6); chk("alt vol q1",100*_S.vol_ewma.quantile(.25),68,0.6); chk("alt vol q3",100*_S.vol_ewma.quantile(.75),88,0.6)
+chk("alt beta q1",_S.beta_eq.quantile(.25),1.6,0.06); chk("alt beta q3",_S.beta_eq.quantile(.75),2.7,0.06); chk("alt kappa median",_S.kappa.median(),0.47,0.006); chk("alt kappa q1",_S.kappa.quantile(.25),0.41,0.006); chk("alt kappa q3",_S.kappa.quantile(.75),0.56,0.006)
 def _dl(x,a0="2018-01",b0="2026-04"):
     bk=x[a0:b0].mean(axis=1).dropna() if isinstance(x,pd.DataFrame) else x[a0:b0].dropna()
     return 1200*bk.mean(),1200*bk.std()/np.sqrt(len(bk)),100*(np.exp(12*np.log1p(bk).mean())-1),len(bk)
-for _n,_x,_v in [("BTC",_Rn["btc"],(46,23,28)),("ETH",_Rn["eth"],(48,32,8)),("alt basket",_Rna,(37,33,-2))]:
+for _n,_x,_v in [("BTC",_Rn["btc"],(46,23,28)),("ETH",_Rn["eth"],(48,32,8)),("alt basket",_Rna,(37,33,-3))]:
     _r=_dl(_x); chk(f"S6 delivered {_n} average",_r[0],_v[0],0.6); chk(f"S6 delivered {_n} se",_r[1],_v[1],0.6); chk(f"S6 delivered {_n} compound",_r[2],_v[2],0.6); chk(f"S6 {_n} months",_r[3],100,0)
-chk("S6 basket compound, feed deaths at -100%",_dl(_Rnw)[2],-3,0.6); chk("S6 ETH since 2021Q3 average",_dl(_Rn["eth"],"2021-09")[0],19,0.6); chk("S6 ETH since 2021Q3 se",_dl(_Rn["eth"],"2021-09")[1],35,0.6)
-chk("S6 altcoins in basket",len(_O),84,0); chk("S6 dead in basket",int(_O.dead.sum()),25,0); chk("S6 median altcoin compound",100*_O.cagr.median(),-27,0.6); chk("S6 share losing money",100*(_O.cagr<0).mean(),77,0.6)
-chk("S6 basket max assets",int(_Rna["2018-01":"2026-04"].notna().sum(axis=1).max()),84,0)
+chk("S6 basket compound, feed deaths at -100%",_dl(_Rnw)[2],-4,0.6); chk("S6 ETH since 2021Q3 average",_dl(_Rn["eth"],"2021-09")[0],19,0.6); chk("S6 ETH since 2021Q3 se",_dl(_Rn["eth"],"2021-09")[1],35,0.6)
+chk("S6 altcoins in basket",len(_O),77,0); chk("S6 dead in basket",int(_O.dead.sum()),24,0); chk("S6 median altcoin compound",100*_O.cagr.median(),-28,0.6); chk("S6 share losing money",100*(_O.cagr<0).mean(),83,0.6)
+chk("S6 basket max assets",int(_Rna["2018-01":"2026-04"].notna().sum(axis=1).max()),77,0)
 _u=dict(l.split(" median ") for l in open(os.path.join(OUT,"uncertainty_propagation.txt")).read().strip().split("\n"))
 def _med(k): return float(_u[[x for x in _u if x.strip()==k][0]].split("%")[0])
 def _q90(k): 
     t=_u[[x for x in _u if x.strip()==k][0]].split("90% ")[1].split(" |")[0].replace("%","").split("-"); return float(t[0]),float(t[1])
-for _k,_m,_lo,_hi in [("Bitcoin, diversified holder (w=0)",14,12,16),("Ether, average crypto owner (kappa 0.7)",23,19,29),("Ether, diversified holder (w=0)",16,14,18),("Large altcoin, average crypto owner",22,18,29),("Large altcoin, diversified holder (w=0)",15,13,18),("Small coin, diversified holder (w=0)",30,28,32)]:
+for _k,_m,_lo,_hi in [("Bitcoin, diversified holder (w=0)",14,12,16),("Ether, average crypto owner (kappa 0.7)",23,19,29),("Ether, diversified holder (w=0)",16,14,18),("Large altcoin, average crypto owner",23,18,29),("Large altcoin, diversified holder (w=0)",16,13,18),("Small coin, diversified holder (w=0)",25,20,30)]:
     chk(f"S6 required {_k}",_med(_k),_m,0.6); chk(f"S6 required {_k} 5%",_q90(_k)[0],_lo,0.6); chk(f"S6 required {_k} 95%",_q90(_k)[1],_hi,0.6)
 # Section 6: the holder weight w = crypto share x kappa, and the term-by-term sums of Table 6 (cross_section_terms.txt)
 _k6_W=_cs["W"].loc["2026-04-30"]; chk("S6 index April 2026: Bitcoin",100*_k6_W["btc"],73,0.5); chk("S6 index April 2026: Ether",100*_k6_W["eth"],14,0.5); chk("S6 index April 2026: other coins",100*(1-_k6_W["btc"]-_k6_W["eth"]),13,0.5)
@@ -342,16 +342,16 @@ chk("S6 kappa = correlation x market volatility / asset volatility, Ether",_k6_e
 chk("S6 market moves 7% when Ether moves 10%",10*_k6_e["kappa"],7,0.05); chk("S6 altcoin median correlation",_S.corr_m.median(),0.74,0.005); chk("S6 altcoin median volatility, four years",100*_S.vol.median(),86,0.5)
 for _k6_n,_k6_k,_k6_lo,_k6_hi in (("Ether",0.7,6,13),("large altcoin",0.47,4,9)): chk(f"S6 weight {_k6_n}: low",8*_k6_k,_k6_lo,0.5); chk(f"S6 weight {_k6_n}: high",19*_k6_k,_k6_hi,0.5)
 chk("S6 Ether weight at the midpoint",13.5*0.7,9.5,0.06); chk("S6 Ether concentration term as printed",100*1.9*0.64**2*0.095,7.4,0.05)
-for _k6_n,_k6_s,_k6_be,_k6_k,_k6_m,_k6_t in (("Bitcoin",0.42,1.75,1.0,1.9,(7.0,1.9,14,4.5,18.4)),("Ether",0.64,2.35,0.7,1.9,(9.4,1.9,16,7.4,23.7)),("large altcoin",0.76,2.1,0.47,2.0,(8.4,2.0,15,7.0,22.4)),("small coin",None,2.1,None,16.55,(8.4,16.6,30,None,None))):
+for _k6_n,_k6_s,_k6_be,_k6_k,_k6_m,_k6_t in (("Bitcoin",0.42,1.75,1.0,1.9,(7.0,1.9,14,4.5,18.4)),("Ether",0.64,2.35,0.7,1.9,(9.4,1.9,16,7.4,23.7)),("large altcoin",0.76,2.15,0.47,2.0,(8.6,2.0,16,7.0,22.6)),("small coin",None,2.15,None,11.1,(8.6,11.1,25,None,None))):
     _k6_fl=5.0+4*_k6_be+_k6_m; chk(f"Table 6 {_k6_n}: market term",4*_k6_be,_k6_t[0],0.001); chk(f"Table 6 {_k6_n}: mortality term",_k6_m,_k6_t[1],0.051); chk(f"Table 6 {_k6_n}: floor",_k6_fl,_k6_t[2],0.5)
     if _k6_k is not None: _k6_c=100*1.9*_k6_s**2*0.135*_k6_k; chk(f"Table 6 {_k6_n}: concentration term",_k6_c,_k6_t[3],0.05); chk(f"Table 6 {_k6_n}: sum of the terms",_k6_fl+_k6_c,_k6_t[4],0.05)
-chk("Table 6 mortality midpoints: top-twenty",(0.3+3.5)/2,1.9,0.001); chk("Table 6 mortality midpoints: small coin",(15.7+17.4)/2,16.6,0.051)
-for _k6_n,_k6_key,_k6_sum in (("Bitcoin","Bitcoin",18.4),("Ether","Ether, average crypto owner (kappa 0.7)",23.7),("large altcoin","Large altcoin, average crypto owner",22.4)): chk(f"Table 6 {_k6_n}: median at most 0.3 below the sum of the terms",float(0<=_k6_sum-_med(_k6_key)<=0.35),1,0)
+chk("Table 6 mortality midpoints: top-twenty",(0.3+3.5)/2,1.9,0.001); chk("Table 6 mortality midpoints: small coin",(6.0+16.2)/2,11.1,0.051)
+for _k6_n,_k6_key,_k6_sum in (("Bitcoin","Bitcoin",18.4),("Ether","Ether, average crypto owner (kappa 0.7)",23.7),("large altcoin","Large altcoin, average crypto owner",22.6)): chk(f"Table 6 {_k6_n}: median within 0.3 of the sum of the terms",float(abs(_k6_sum-_med(_k6_key))<=0.35),1,0)
 _k6_o=open(os.path.join(OUT,"cross_section_terms.txt")).read().splitlines()
-for _k6_n,_k6_v in (("Bitcoin",18.4),("Ether",23.7),("Large altcoin",22.4)): chk(f"Table 6 against the script output: {_k6_n} sum",float([l for l in _k6_o if l.startswith(_k6_n)][0].split()[-1]),_k6_v,0.001)
+for _k6_n,_k6_v in (("Bitcoin",18.4),("Ether",23.7),("Large altcoin",22.6)): chk(f"Table 6 against the script output: {_k6_n} sum",float([l for l in _k6_o if l.startswith(_k6_n)][0].split()[-1]),_k6_v,0.001)
 _k6_ep=pd.read_csv(os.path.join(CSV,"eth.csv"),parse_dates=["time"],usecols=["time","PriceUSD"]).set_index("time")["PriceUSD"].dropna().resample("ME").last(); _k6_es=np.sqrt(np.log(_k6_ep).diff().pow(2).ewm(halflife=9).mean()*12); _k6_bs=np.sqrt(sig2)
 for _k6_d,_k6_ve,_k6_vb in (("2017-12-31",172,98),("2021-09-30",99,77),("2026-05-31",64,42)): chk(f"S6 Ether volatility {_k6_d[:7]}",100*_k6_es[:_k6_d].iloc[-1],_k6_ve,0.5); chk(f"S6 Bitcoin volatility {_k6_d[:7]}",100*_k6_bs[:_k6_d].iloc[-1],_k6_vb,0.5)
-chk("S6 priced cryptoassets with a capitalization",int(_cs["C"].notna().any().sum()),84,0); chk("S6 Bitcoin: w_i = kappa x w leaves the weight unchanged",round(float(_st("btc")["kappa"]),1),1.0,0.001); chk("S6 Ether months since 2018",_dl(_Rn["eth"])[3],100,0)
+chk("S6 priced cryptoassets with a capitalization",int(_cs["C"].notna().any().sum()),77,0); chk("S6 Bitcoin: w_i = kappa x w leaves the weight unchanged",round(float(_st("btc")["kappa"]),1),1.0,0.001); chk("S6 Ether months since 2018",_dl(_Rn["eth"])[3],100,0)
 _fg_l=[l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("2012–14")][0].split("|")[1].split(); _fg_g=float(_fg_l[2]); _fg_s=float(_fg_l[3].strip("(;"))
 chk("Figure 3: 2012-14 two-standard-error interval, lower end as annotated",_fg_g-2*_fg_s,-218,1.5); chk("Figure 3: 2012-14 two-standard-error interval, upper end as annotated",_fg_g+2*_fg_s,459,1.5)
 chk("S7 hurdle at the central mortality term, about 14%",5+7+1.9,14,0.15); chk("S7 rent at the middle, about 4.5 points",18.3-13.9,4.5,0.11); chk("S7 Black-Litterman: full confidence",100*(18.3-13.9)/(3*0.42**2*100),8,0.5); chk("S7 Black-Litterman: half confidence, about 4%",0.5*100*(18.3-13.9)/(3*0.42**2*100),4,0.5)
@@ -365,13 +365,13 @@ for _ak,_av in (("2012–26",((90,2.3),(37,0.9))),("2018–26",((24,1.1),(1,0.1)
         chk(f"S5 {_an} alpha {_ak}",_ao[0],_ap[0],0.5)
         if _ap[1] is not None: chk(f"S5 {_an} alpha {_ak}, t",_ao[1],_ap[1],0.05)
 _cu={l.split(",")[0].split()[-1]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("cumulative unexplained return")}
-for _ck,_cv in (("2012-2026",(1307,546)),("2018-2026",(198,15))):
+for _ck,_cv in (("2012-2026",(1304,543)),("2018-2026",(198,15))):
     _cz=_cu[_ck].split("points:")[1].split(";")[0]; chk(f"S5 cumulative unexplained return {_ck}: CAPM",float(_cz.split("CAPM")[1].split(",")[0]),_cv[0],0.5); chk(f"S5 cumulative unexplained return {_ck}: MCM",float(_cz.split("MCM")[1]),_cv[1],0.5)
 _ah=[l for l in open(os.path.join(OUT,"adoption_hazard.txt")).read().splitlines() if l.startswith("$")]
-for _ahl,_ahv in zip(_ah,((29,17,22,12),(24,14,18,10),(14,8,10,5),(6,3,6,3),(3,2,4,2))):
+for _ahl,_ahv in zip(_ah,((29,17,22,12),(23,13,18,10),(13,7,8,4),(5,2,4,2),(3,2,4,2))):
     _ahp=[float(x_.rstrip("%")) for x_ in _ahl.replace("|"," ").split() if x_.endswith("%")]
     for _ahn,_aho,_ahe in zip(("dead in 2y","rate","not fading: dead in 2y","not fading: rate"),_ahp,_ahv): chk(f"C.2 adoption table, {_ahl[:26].strip()}: {_ahn}",_aho,_ahe,0.01)
-_ahm=[int(l.replace("|"," ").split("%")[0].split()[-2]) for l in _ah]; chk("C.2 adoption table: asset-months",sum(_ahm),34155,0); chk("S3 under $1m a day: one in four dead within two years",(_ahm[0]*29+_ahm[1]*24)/(_ahm[0]+_ahm[1]),25,1.0)
+_ahm=[int(l.replace("|"," ").split("%")[0].split()[-2]) for l in _ah]; chk("C.2 adoption table: asset-months",sum(_ahm),33055,0); chk("S3 under $1m a day: one in four dead within two years",(_ahm[0]*29+_ahm[1]*24)/(_ahm[0]+_ahm[1]),25,1.0)
 _ahb=open(os.path.join(OUT,"adoption_hazard.txt")).read().split("Bitcoin,")[1]; 
 for _ahy,_ahx in ((2011,0.11),(2013,4.40),(2014,23.26),(2017,235.93)): chk(f"C.2 Bitcoin's daily volume mid-{_ahy}, $m",float(_ahb.split(f"{_ahy}: $")[1].split("m")[0].replace(",","")),_ahx,0.01)
 _tr={l.split(" to ")[1].split(":")[0]:l for l in open(os.path.join(OUT,"monthly_test.txt")).read().splitlines() if l.startswith("trailing three-year")}

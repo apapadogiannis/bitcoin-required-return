@@ -23,6 +23,13 @@ MIGRATIONS={"matic","eos","ftm","gnt","rndr","btt","nu","strat","maid","ht",
             "mith2","erd","hot_old","dgd","lend","ant","mln_old","sai",
             "ven","poly","grin_?","tomo","nxs?","xem_sym?"}
 MIGRATIONS={m for m in MIGRATIONS if "?" not in m and "_old" not in m}
+# Further ticker changes and token swaps, each confirmed by an announcement of the issuer or of an exchange:
+# old ticker -> the ticker its holders received (None where the successor is not in the archive).
+SUCCESSOR={"quick":"quick_new","dyp":"dyp_new","fxs":"frax_frax","gal":"g","keep":"t","bzrx":"ooki","cqt":"cxt","tvk":"vanry",
+           "rbn":"aevo","dar":"d","front":"slf","pla":"pda","cocos":"combo","agi":"agix","bit":None,"mpl":"syrup","noia":"synt",
+           "orn":"lumia","mft":"hifi","lit":"hei","chsb":"borg","mco":"cro","loki":None,"yamv2":None,"rgt":"tribe","gxs":"rei",
+           "key":"sfi"}
+MIGRATIONS|=set(SUCCESSOR)
 # note: dgd = wind-down with ETH treasury refund (value preserved) -> treated as migration-equivalent
 # tomo = TomoChain->Viction rebrand
 
@@ -57,6 +64,7 @@ for a,d in CATASTROPHE.items():
     panel.loc[i,"death_cur_date"]=pd.Timestamp(d)
 panel.loc[~panel["dead_cur"],"death_cur_date"]=pd.NaT
 panel["catastrophe"]=panel["asset"].isin(CATASTROPHE)
+panel["migration"]=panel["asset"].isin(MIGRATIONS)
 
 core=panel[~panel["stable2"]&~panel["tokstock"]&~panel["wrapped_like"]].copy()
 core=core[(core["last"]-core["birth"]).dt.days>=30].reset_index(drop=True)
@@ -117,6 +125,10 @@ for TOPN in (20,50):
         if a not in core2.index: continue
         r=core2.loc[a]
         dead=bool(r["dead_cur"]); dd=r["death_cur_date"]
+        # an asset swapped for a successor that later died, and that is not itself in this group, dies at the successor's date
+        suc=SUCCESSOR.get(a)
+        if suc and suc in core2.index and suc not in ever and bool(core2.loc[suc,"dead_cur"]):
+            dead=True; dd=core2.loc[suc,"death_cur_date"]
         end=dd if dead else dataset_end
         if dead and pd.notna(dd) and dd<=t0: continue
         expo=(end-t0).days/YR

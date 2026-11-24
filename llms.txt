@@ -8,7 +8,7 @@
 Replication package by Agisilaos Papadogiannis (https://github.com/apapadogiannis).
 Working paper: https://doi.org/10.2139/ssrn.7705239
 Code and data: https://github.com/apapadogiannis/bitcoin-required-return  Archive: https://doi.org/10.5281/zenodo.24003938
-Version 1.1.2, released 2026-11-21. A package is a fixed record: it changes only by a new
+Version 2.0.0, released 2026-11-24. A package is a fixed record: it changes only by a new
 release, and a release that changes a reported number gets a new major version.
 This file is written for AI agents and other programs. People should start at the README.
 
@@ -42,17 +42,17 @@ As printed in the paper. Each is one of the checks in outputs/results.json.
   monthly returns (standard error 39). Section 5, Table 5.
 - Delivered less required return at the midpoint, 2018 to 2026: 15 points a year, average of
   monthly returns (standard error 24). Section 5, Table 5.
-- Cryptoassets in the census: 1815 assets. Section 3.
-- Of which died: 520 assets. Section 3.
-- Death rate of assets that were ever in the top twenty by trading volume, any cause: 3.54 percent
+- Cryptoassets in the census: 1624 assets. Section 3.
+- Of which died: 471 assets. Section 3.
+- Death rate of assets that were ever in the top twenty by trading volume, any cause: 3.46 percent
   a year. Section 3.
 - Death rate of those assets by sudden collapse: 0.3 percent a year. Section 3.
 - Bitcoin's volatility used for May 2026: 42 percent a year. Section 5, Table 4.
 - Bitcoin's beta to the US equity market, May 2026: 1.75 (a ratio). Section 5, Table 4.
 - Required return on Bitcoin for a holder with a negligible weight (the floor): 14 percent a year
   (90% range 12 to 16). Section 6, Table 6.
-- Death rate of the smallest quarter of assets by size: 17.4 percent a year. Section 3.
-- Death rate of the largest quarter of assets by size: 3.2 percent a year. Section 3.
+- Death rate of the smallest quarter of assets by size: 16.2 percent a year. Section 3.
+- Death rate of the largest quarter of assets by size: 2.8 percent a year. Section 3.
 
 ## What this adds over reading the paper or recomputing
 
@@ -68,8 +68,8 @@ As printed in the paper. Each is one of the checks in outputs/results.json.
 4. The input data are stored in the repository with a checksum for every Coin Metrics file. The
    upstream archive stopped updating on 24 May 2026, so this copy is its last state and the run
    needs no download.
-5. `census_checks`: 33 figures quoted in the paper, recomputed from the data and compared with the
-   paper's figure; 33 agree exactly. The run fails if any does not.
+5. `census_checks`: 94 figures quoted in the paper, recomputed from the data and compared with the
+   paper's figure; 94 agree exactly. The run fails if any does not.
 6. `model_checks`: 1,173 figures quoted in the paper, recomputed from the data and compared with
    the paper's figure; 1,173 agree within the stated tolerance. The run fails if any does not.
 7. The results are stored as they were when the paper's numbers were taken from them. A check
@@ -124,7 +124,7 @@ The checks keep the audit script's short labels. What the recurring words and pr
   the rounding of the printed figure. The labels are the audit script's own short names (T4 is
   Table 4, S6 Section 6, A.7 Appendix A.7, MC the propagation of the input ranges, elite an asset
   ever in the top twenty, jump a sudden collapse); the README says which script and table each
-  group belongs to. It holds 1,206 checks, and under `package` the paper, the identifiers, the
+  group belongs to. It holds 1,267 checks, and under `package` the paper, the identifiers, the
   version, the licence and the citation. Start with its `headline` list, which is repeated below.
 - outputs/required_band_monthly.csv: one row per month-end: age, risk-free rate, volatility, beta,
   holder weight at both edges, the band and the age rule.
@@ -194,7 +194,7 @@ Yahoo Finance and are included for replication only.
 
 Cite as: Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Working paper. https://doi.org/10.2139/ssrn.7705239
 
-The package itself: Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 1.1.2. Zenodo. https://doi.org/10.5281/zenodo.24003938
+The package itself: Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 2.0.0. Zenodo. https://doi.org/10.5281/zenodo.24003938
 
 To describe the source in a sentence: Papadogiannis (2026), "Bitcoin's Required Return: Pricing a
 New Asset Beside Equities and Gold", working paper, with its replication package.

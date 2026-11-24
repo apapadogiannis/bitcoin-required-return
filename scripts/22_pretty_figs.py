@@ -214,12 +214,13 @@ w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # surveyed owner
 w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # with fund and treasury investors, counted at a 1.5% weight
 w_hi_cw=(capc/Wp_cw).clip(upper=0.9); w_lo_cw=(capc/(Wp_cw+inst_val/0.015)).clip(upper=0.9)
 wbar=w_hi
-# market-risk term: rolling 48-month beta on the S&P 500 (VOO total return, month-end), expanding window before 48 months exist
+# market-risk term: beta on the S&P 500 (VOO total return, month-end) over the previous 48 months, or over all the months
+# available where fewer exist (at least 12). Every estimate uses returns up to its own month only.
 _v=pd.read_csv(os.path.join(DATA,"voo_monthly.csv"),parse_dates=["Date"]).set_index("Date").sort_index(); _v.index=_v.index+pd.offsets.MonthEnd(0)
 _d=pd.DataFrame({"b":np.log(px).diff(),"s":np.log(_v["AdjClose"]).diff()}).dropna()
 def _beta(x): return np.cov(x.b,x.s)[0,1]/x.s.var()
-beta_roll=pd.Series({_d.index[i]:_beta(_d.iloc[max(0,i-47):i+1]) for i in range(17,len(_d))}).reindex(px.index).bfill().ffill().clip(0,3)
-corr_roll=pd.Series({_d.index[i]:_d.iloc[max(0,i-47):i+1].corr().iloc[0,1] for i in range(17,len(_d))}).reindex(px.index).bfill().ffill()
+beta_roll=pd.Series({_d.index[i]:_beta(_d.iloc[max(0,i-47):i+1]) for i in range(11,len(_d))}).reindex(px.index).ffill().clip(0,3)
+corr_roll=pd.Series({_d.index[i]:_d.iloc[max(0,i-47):i+1].corr().iloc[0,1] for i in range(11,len(_d))}).reindex(px.index).ffill()
 ERP=0.04
 beta_term=beta_roll*ERP
 foc_lo=rf+0.85*beta_term+G_LO*sig2*w_lo+0.003

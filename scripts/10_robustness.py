@@ -57,6 +57,50 @@ for name, f in specs.items():
                 ).fit(cov_type="cluster", cov_kwds={"groups": pp["asset"]})
     print(f"{name:18s}: gamma_age = {m.params['logage']:+.3f} ({m.bse['logage']:.3f})")
 
+# ---- the other rows of the table of age elasticities (Appendix C.4), on the same assets ----
+# Each definition of death gives its own death date; an asset alive under a definition is followed to the end of the data.
+def person_months(df, dead, date, end=dataset_end):
+    rows = []
+    for a, b, d, t in zip(df["asset"], df["birth"], df[dead], df[date]):
+        stop = t if d else end
+        if pd.isna(stop) or stop < b:
+            continue
+        n0 = len(rows)
+        for m in pd.period_range(b, stop, freq="M"):
+            age = ((m.to_timestamp() + pd.Timedelta(days=14)) - b).days / YR
+            if age > 0:
+                rows.append([a, str(m), age, 0])
+        if d and len(rows) > n0:
+            rows[-1][3] = 1
+    q = pd.DataFrame(rows, columns=["asset", "month", "age", "death"])
+    q["logage"] = np.log(q["age"]); q["off"] = np.log(1 / 12)
+    q["period"] = q["month"].str[:4].astype(int).clip(lower=2016).astype(str)
+    return q
+
+def elasticity(q, year_effects):
+    m = smf.glm("death ~ logage" + (" + C(period)" if year_effects else ""), data=q, family=sm.families.Poisson(),
+                offset=q["off"]).fit(cov_type="cluster", cov_kwds={"groups": q["asset"]})
+    return m.params["logage"], m.bse["logage"]
+
+full = pd.read_csv(f"{OUT}/panel_v3.csv", parse_dates=["birth", "last", "death_cur_date", "death_strict_date",
+                                                        "death_broad_date", "death_any_date"])
+full = full[full["asset"].isin(core["asset"])].copy()
+full["dead_any"] = full["dead_any"].astype(bool)
+print("\n=== Age elasticity by definition of death (same assets) ===")
+for name, dead, date in (("strict (feed ended)", "feed_dead", "death_strict_date"),
+                         ("broad (feed or price)", "dead_broad", "death_broad_date"),
+                         ("abandonment (all mechanical)", "dead_any", "death_any_date"),
+                         ("curated (final)", "dead_cur", "death_cur_date")):
+    q = person_months(full, dead, date)
+    g0, s0 = elasticity(q, False); g1, s1 = elasticity(q, True)
+    print(f"{name:30s}: deaths {int(q['death'].sum()):4d} | no year effects {g0:+.3f} ({s0:.3f}) | with year effects {g1:+.3f} ({s1:.3f})")
+# the census ended at December 2024: later months are dropped, so the deaths of 2025 and 2026 do not count
+q = person_months(full, "dead_cur", "death_cur_date"); q = q[q["month"] <= "2024-12"]
+g1, s1 = elasticity(q, True)
+print(f"{'curated, months to December 2024':30s}: deaths {int(q['death'].sum()):4d} | with year effects {g1:+.3f} ({s1:.3f})")
+by_year = pd.to_datetime(full.loc[full["dead_cur"], "death_cur_date"]).dt.year.value_counts().sort_index()
+print("curated deaths by year:", {int(k): int(v) for k, v in by_year.items()})
+
 # parametric fits on duration data
 T = np.where(core["dead_cur"],
              (pd.to_datetime(core["death_cur_date"]) - core["birth"]).dt.days / YR,

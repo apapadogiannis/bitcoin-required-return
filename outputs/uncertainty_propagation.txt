@@ -5,7 +5,7 @@ Bitcoin, gamma 1.7-2.8 (household range) median 19.2% | 68% 17.4%-21.2% | 90% 16
 Bitcoin, w 0.075-0.139 (crypto-wide back-cast) median 17.4% | 68% 15.8%-19.1% | 90% 14.9%-20.2% | envelope 12.6%-23.4%
 Ether                          median 26.3% | 68% 22.7%-31.1% | 90% 20.9%-34.2% | envelope 16.6%-41.1%
 Large altcoin                  median 39.1% | 68% 30.8%-51.6% | 90% 26.9%-59.5% | envelope 20.4%-72.6%
-Small coin                     median 77.6% | 68% 59.8%-104.3% | 90% 51.9%-123.5% | envelope 38.7%-175.2%
+Small coin                     median 72.2% | 68% 54.2%-99.0% | 90% 46.1%-118.3% | envelope 29.0%-174.0%
 Gold                           median  5.5% | 68%  5.1%- 5.8% | 90%  5.0%- 6.0% | envelope  4.6%- 6.8%
 Bitcoin at gold sigma and w    median 14.2% | 68% 13.0%-15.3% | 90% 12.3%-16.0% | envelope 11.3%-17.1%
 Bitcoin, sigma 0.35-0.50       median 18.3% | 68% 16.4%-20.8% | 90% 15.3%-22.7% | envelope 12.3%-29.8%
@@ -13,9 +13,9 @@ Bitcoin, sigma 0.40-0.55 (option-implied) median 19.4% | 68% 17.1%-22.4% | 90% 1
 Bitcoin, diversified holder (w=0) median 13.9% | 68% 12.7%-15.1% | 90% 12.1%-15.7% | envelope 11.3%-16.5%
 Ether, average crypto owner (kappa 0.7) median 23.4% | 68% 20.7%-26.8% | 90% 19.3%-29.0% | envelope 15.6%-34.6%
 Ether, diversified holder (w=0) median 16.3% | 68% 15.0%-17.6% | 90% 14.2%-18.4% | envelope 13.3%-19.3%
-Large altcoin, average crypto owner median 22.4% | 68% 19.5%-26.3% | 90% 17.8%-29.1% | envelope 13.4%-41.9%
-Large altcoin, diversified holder (w=0) median 15.4% | 68% 13.7%-17.1% | 90% 13.0%-17.8% | envelope 12.0%-18.8%
-Small coin, diversified holder (w=0) median 29.9% | 68% 28.3%-31.6% | 90% 27.6%-32.3% | envelope 26.7%-33.2%
+Large altcoin, average crypto owner median 22.8% | 68% 19.9%-26.6% | 90% 18.3%-29.5% | envelope 13.9%-41.9%
+Large altcoin, diversified holder (w=0) median 15.6% | 68% 14.1%-17.1% | 90% 13.3%-17.9% | envelope 12.4%-18.8%
+Small coin, diversified holder (w=0) median 24.7% | 68% 21.2%-28.2% | 90% 19.5%-29.9% | envelope 17.4%-32.0%
 Bitcoin, w 0.08-0.12 (wealth-weighted share) median 17.2% | 68% 15.7%-18.8% | 90% 14.8%-19.7% | envelope 12.7%-22.4%
 Dependence: gamma and w move together          median 18.5% | 90% 14.9%-23.1%
 Dependence: gamma and w move oppositely        median 18.1% | 90% 16.3%-20.0%

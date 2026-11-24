@@ -5,9 +5,6 @@ ada,-0.0808,False
 algo,-0.3053,False
 alpha,-0.4721,True
 ant,0.0074,False
-avaxc,0.1465,False
-avaxp,0.1465,False
-avaxx,0.1465,False
 bal,-0.5124,True
 bat,-0.1773,False
 bch,-0.1561,False
@@ -28,7 +25,6 @@ elf,-0.3242,False
 eos,-0.4412,False
 etc,-0.1277,False
 flow,-0.7036,True
-flow_native,-0.7036,True
 ftt,-0.1713,True
 fun,-0.4303,True
 gas,-0.3519,False
@@ -41,7 +37,6 @@ icp,-0.5309,True
 knc,-0.3277,False
 ldo,-0.4299,False
 lend,0.2512,False
-leo_eos,0.3144,False
 link,0.3896,False
 loom,-0.5766,True
 lpt,-0.043,False
@@ -52,7 +47,6 @@ mkr,0.0251,True
 neo,-0.3732,False
 nxm,-0.0251,False
 omg,-0.4831,True
-paxg,0.1816,False
 pay,-0.6326,True
 perp,-0.6339,True
 poly,-0.3128,False
@@ -73,7 +67,6 @@ uni,-0.0323,False
 vtc,-0.5385,True
 wnxm,-0.0251,False
 wtc,-0.7687,True
-xaut,0.1782,False
 xem,-0.5767,True
 xlm,-0.1408,False
 xmr,0.0448,False

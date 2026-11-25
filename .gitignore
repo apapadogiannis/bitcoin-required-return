@@ -1,5 +1,7 @@
 data/*
 !data/*_monthly.csv
+!data/holder_surveys.csv
+!data/holder_surveys_SOURCE.md
 !data/cmdata/
 __pycache__/
 # *.pkl intermediates kept in outputs/

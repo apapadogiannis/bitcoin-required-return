@@ -21,7 +21,7 @@ INK="#0b0b0b"; INK2="#52514e"; MUT="#898781"; GRID="#e1e0d9"; BASE="#c3c2b7"
 BLUE="#2a78d6"; ORANGE="#eb6834"; AQUA="#1baf7a"; RED="#e34948"; VIOLET="#6250d6"
 SEQ={100:"#cde2fb",200:"#9ec5f4",250:"#86b6ef",350:"#5598e7",450:"#2a78d6",550:"#1c5cab",650:"#104281"}
 plt.rcParams.update({
-    "font.family":"Carlito","font.size":9.5,"axes.titlesize":11,"axes.titleweight":"bold",
+    "font.family":"Carlito","pdf.fonttype":42,"font.size":9.5,"axes.titlesize":11,"axes.titleweight":"bold",
     "axes.labelsize":9.5,"axes.labelcolor":INK2,"axes.edgecolor":BASE,"axes.linewidth":0.8,
     "axes.spines.top":False,"axes.spines.right":False,
     "xtick.color":MUT,"ytick.color":MUT,"xtick.labelsize":8.5,"ytick.labelsize":8.5,
@@ -166,7 +166,7 @@ adr=btcf["AdrBalCnt"].dropna().resample("ME").mean().reindex(px.index).interpola
 lr=np.log(px).diff(); sig2=lr.pow(2).ewm(halflife=9).mean()*12
 GEN=pd.Timestamp("2009-01-03"); age=pd.Series((px.index-GEN).days/365.25,index=px.index)
 i21=px.index.get_indexer([pd.Timestamp("2021-09-30")],method="nearest")[0]
-# participation share of US adults: log-linear through the survey anchors (Fed SHED/SCPC, Pew; Candia et al. 2026),
+# participation share of US adults (used for the early holder's weight, and for the constructed path of Appendix D.4): log-linear through the survey anchors (Fed SHED/SCPC, Pew; Candia et al. 2026),
 # address counts carry the shape only before the first survey point (2014)
 _pts={pd.Timestamp("2014-06-30"):0.004,pd.Timestamp("2018-06-30"):0.012,pd.Timestamp("2021-09-30"):0.11,
       pd.Timestamp("2023-06-30"):0.12,pd.Timestamp("2025-06-30"):0.12}
@@ -180,22 +180,17 @@ def interp(d):
     return pd.Series(np.interp(age,xs,[d[y] for y in sorted(d)]),index=px.index)
 _t=pd.read_csv(os.path.join(DATA,"tnx_monthly.csv"),parse_dates=["Date"]).set_index("Date")["Close"]; _t.index=_t.index+pd.offsets.MonthEnd(0)
 rf=(_t/100).reindex(px.index).ffill().bfill()   # ten-year Treasury yield, month-end (CBOE TNX)
-# capitalization of the whole asset class (panel assets with a reported capitalization, excluding stablecoins and wrapped or tokenized
-# claims), used for the crypto-wide alternative back-cast of Appendix D.6.
-import glob as _glob, os as _os
-_STABLE=("usdt","usdc","dai","busd","tusd","pax","usdp","gusd","husd","susd","fdusd","pyusd","usdd","eurs","eurt","usdk","lusd","frax","ust","xaut","paxg","wbtc","renbtc","steth","wsteth","weth")
-_caps={}
-for _f in _glob.glob(f"{CSV}/*.csv"):
-    _n=_os.path.basename(_f)[:-4]
-    if _n.startswith(_STABLE) or "CapMrktCurUSD" not in pd.read_csv(_f,nrows=0).columns: continue
-    _c=pd.read_csv(_f,usecols=["time","CapMrktCurUSD"],parse_dates=["time"]).set_index("time")["CapMrktCurUSD"].dropna()
-    if len(_c): _caps[_n]=_c.resample("ME").last()
-capc=pd.DataFrame(_caps).reindex(px.index).sum(axis=1)          # all cryptoassets
-dom=cap.reindex(px.index)/capc                                   # Bitcoin's share of the class
 G_LO,G_HI=1.0,2.8                                                # risk aversion: log utility to the upper household estimate
+# The surveyed owners' weight. Baseline: the survey value, held in every month (W_OWNERS, 19% of owners' financial wealth,
+# the mean of Weber et al. 2026). Surveys that measure holdings directly show holdings per owner moving little with the price
+# (scripts/49_holder_surveys.py), so the weight is treated as a property of the holder; owners' wealth is then the market value
+# divided by the weight. W_OWNERS=0.12 and 0.08 are the sensitivities of Appendix D.4.
+# W_PATH=constructed gives the alternative of Appendix D.4: owners' wealth carried from its 2021Q3 value with the ownership
+# rate and an assumed path of wealth per owner (_ramp), so that the weight follows the market value.
+W_OWNERS=float(os.environ.get("W_OWNERS","0.19")); W_PATH=os.environ.get("W_PATH","fixed")
 _ramp=interp({2012:0.25,2021:1.0,2026:1.4})
-Wp=cap.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp                     # baseline: Bitcoin's capitalization against participating wealth
-Wp_cw=capc.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp                 # crypto-wide alternative (Appendix D.6)
+Wp_constructed=cap.iloc[i21]/0.19*(q/q.iloc[i21])*_ramp
+Wp=Wp_constructed if W_PATH=="constructed" else cap.reindex(px.index)/W_OWNERS
 # Fund and treasury investors: Bitcoin held through funds and by public companies (million BTC), whose investors are not
 # 'crypto owners' in household surveys and hold small weights (1.5% assumed for the lower edge). Documented anchors, linear in between:
 #   Grayscale Bitcoin Trust, year-end balances from its SEC filings (Form S-1 of January 2017; Forms 10-K for 2019, 2020 and 2023);
@@ -212,7 +207,6 @@ inst_btc=pd.Series(np.interp(age,_ix,[1e6*v for v in _INST.values()]),index=px.i
 inst_val=inst_btc*px.reindex(px.index)
 w_hi=(cap.reindex(px.index)/Wp).clip(upper=0.9)                 # surveyed owners only
 w_lo=(cap.reindex(px.index)/(Wp+inst_val/0.015)).clip(upper=0.9) # with fund and treasury investors, counted at a 1.5% weight
-w_hi_cw=(capc/Wp_cw).clip(upper=0.9); w_lo_cw=(capc/(Wp_cw+inst_val/0.015)).clip(upper=0.9)
 wbar=w_hi
 # market-risk term: beta on the S&P 500 (VOO total return, month-end) over the previous 48 months, or over all the months
 # available where fewer exist (at least 12). Every estimate uses returns up to its own month only.

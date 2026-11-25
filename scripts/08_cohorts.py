@@ -96,8 +96,8 @@ mE=smf.glm("death ~ logage + C(period)",data=ppE,family=sm.families.Poisson(),
            offset=ppE["off"]).fit(cov_type="cluster",cov_kwds={"groups":ppE["asset"]})
 print(f"\n[elite top-20 subsample] deaths={ppE['death'].sum()}  gamma(FE)={mE.params['logage']:.3f} ({mE.bse['logage']:.3f})")
 # cumulative survival over BTC-like life at measured elite hazard
-lam=0.0354
+lam=0.0346
 import math
 print(f"implied 14-yr survival at elite all-cause hazard {lam:.3f}: {math.exp(-lam*14):.2f}")
 print(f"implied 14-yr survival at jump hazard 0.0030: {math.exp(-0.0030*14):.3f}")
-print(f"survival needed for k=5.6 Lindy over age 3->17.7: {(3/17.7)**5.6:.1e}")
+print(f"survival needed for k=5.6 Lindy over age 3->17.4: {(3/17.4)**5.6:.1e}")

@@ -1,0 +1,10 @@
+country,survey,wave,fieldwork,price_from,price_to,ownership_pct,owners_million,median_holding,mean_holding,currency
+UK,FCA cryptoasset consumer research,wave 2,December 2019,2019-12,2019-12,3.9,1.9,260,1575,GBP
+UK,FCA cryptoasset consumer research,wave 3,January 2021,2021-01,2021-01,4.4,2.3,300,1775,GBP
+UK,FCA cryptoasset consumer research,wave 4,August 2022,2022-08,2022-08,9,4.97,175.5,1595,GBP
+UK,FCA cryptoasset consumer research,wave 5,August 2024,2024-08,2024-08,12,7.0,375.5,1845,GBP
+Canada,Bank of Canada Bitcoin Omnibus Survey,2018,December 2018,2018-12,2018-12,5.2,,500,,CAD
+Canada,Bank of Canada Bitcoin Omnibus Survey,2019,December 2019,2019-12,2019-12,5.1,,250,,CAD
+Canada,Bank of Canada Bitcoin Omnibus Survey,2021,November to December 2021,2021-11,2021-12,13.1,,503,,CAD
+Canada,Bank of Canada Bitcoin Omnibus Survey,2022,December 2022,2022-12,2022-12,10.1,,500,,CAD
+Canada,Bank of Canada Bitcoin Omnibus Survey,2023,December 2023,2023-12,2023-12,9.9,,500,,CAD

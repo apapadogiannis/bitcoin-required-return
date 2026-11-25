@@ -45,7 +45,7 @@ kmf.plot_survival_function(ax=ax, color="black", lw=2.0, ls="--", ci_alpha=0.10)
 ax.set_xlabel("age (years)"); ax.set_ylabel("fraction surviving, S(age)")
 ax.set_xlim(0, 13); ax.set_ylim(0, 1.02)
 ax.set_title("Survival by size: Kaplan–Meier curves by peak-volume quartile\n"
-             "1,815 cryptoassets, curated deaths, 2010–2026")
+             "1,624 cryptoassets, curated deaths, 2010–2026")
 ax.legend(fontsize=8, loc="lower left", frameon=False)
 ax.grid(alpha=0.22)
 # annotate medians

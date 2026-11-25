@@ -1,0 +1,80 @@
+Baseline: owners' weight held at 19% (survey mean)
+  2013-06: owners' weight  19.0%  with funds  19.0%  early holder 1.00  band  56.5-231.3%  midpoint 143.9%
+  2017-06: owners' weight  19.0%  with funds  16.8%  early holder 1.00  band  20.7- 66.6%  midpoint  43.7%
+  2017-12: owners' weight  19.0%  with funds  16.8%  early holder 1.00  band  25.4- 99.3%  midpoint  62.3%
+  2019-06: owners' weight  19.0%  with funds  16.2%  early holder 0.51  band  17.7- 51.4%  midpoint  34.5%
+  2021-09: owners' weight  19.0%  with funds  12.2%  early holder 0.11  band  13.5- 42.6%  midpoint  28.1%
+  2022-12: owners' weight  19.0%  with funds  12.2%  early holder 0.10  band  15.8- 41.4%  midpoint  28.6%
+  2025-06: owners' weight  19.0%  with funds   8.1%  early holder 0.10  band  13.3- 30.5%  midpoint  21.9%
+  2026-05: owners' weight  19.0%  with funds   7.4%  early holder 0.10  band  12.0- 25.3%  midpoint  18.6%
+  May 2026 weights, whole percent: 7-19%; owners' wealth $8.08 trillion
+  2012-26: delivered  118  band  27-109  midpoint  67  gaps: lower  +91  midpoint  +51 (se 39)  upper   +9 | MCM alpha  +34 (se 39)  share of excess return explained: CAPM 21%, MCM 70%
+  2012-17: delivered  219  band  44-198  midpoint 118  gaps: lower +175  midpoint +101 (se 87)  upper  +21 | MCM alpha  +63 (se 93)  share of excess return explained: CAPM 15%, MCM 63%
+  2018-26: delivered   46  band  16- 45  midpoint  30  gaps: lower  +30  midpoint  +15 (se 23)  upper   +1 | MCM alpha   +2 (se 22)  share of excess return explained: CAPM 45%, MCM 94%
+  correlation of the monthly return with the midpoint 0.03
+  five-year windows (113): the midpoint misses the delivered average by 51 points on average; correlation 0.43; age rule closer in 81% of windows
+
+Owners' weight held at 12%
+  2013-06: owners' weight  12.0%  with funds  12.0%  early holder 1.00  band  40.4-231.3%  midpoint 135.9%
+  2017-06: owners' weight  12.0%  with funds  11.1%  early holder 1.00  band  17.0- 66.6%  midpoint  41.8%
+  2017-12: owners' weight  12.0%  with funds  11.1%  early holder 1.00  band  19.8- 99.3%  midpoint  59.5%
+  2019-06: owners' weight  12.0%  with funds  10.8%  early holder 0.51  band  13.3- 42.6%  midpoint  28.0%
+  2021-09: owners' weight  12.0%  with funds   8.9%  early holder 0.11  band  11.5- 31.0%  midpoint  21.2%
+  2022-12: owners' weight  12.0%  with funds   8.8%  early holder 0.10  band  14.2- 31.7%  midpoint  22.9%
+  2025-06: owners' weight  12.0%  with funds   6.5%  early holder 0.10  band  12.9- 25.4%  midpoint  19.1%
+  2026-05: owners' weight  12.0%  with funds   6.0%  early holder 0.10  band  11.8- 21.9%  midpoint  16.8%
+  May 2026 weights, whole percent: 6-12%; owners' wealth $12.79 trillion
+  2012-26: delivered  118  band  21-105  midpoint  61  gaps: lower  +97  midpoint  +57 (se 39)  upper  +14 | MCM alpha  +39 (se 39)  share of excess return explained: CAPM 21%, MCM 65%
+  2012-17: delivered  219  band  32-198  midpoint 111  gaps: lower +187  midpoint +107 (se 87)  upper  +21 | MCM alpha  +69 (se 93)  share of excess return explained: CAPM 15%, MCM 60%
+  2018-26: delivered   46  band  14- 37  midpoint  25  gaps: lower  +32  midpoint  +21 (se 23)  upper   +9 | MCM alpha   +7 (se 22)  share of excess return explained: CAPM 45%, MCM 83%
+  correlation of the monthly return with the midpoint 0.03
+  five-year windows (113): the midpoint misses the delivered average by 53 points on average; correlation 0.44; age rule closer in 81% of windows
+
+Owners' weight held at 8% (about the survey median)
+  2013-06: owners' weight   8.0%  with funds   8.0%  early holder 1.00  band  31.3-231.3%  midpoint 131.3%
+  2017-06: owners' weight   8.0%  with funds   7.6%  early holder 1.00  band  14.8- 66.6%  midpoint  40.7%
+  2017-12: owners' weight   8.0%  with funds   7.6%  early holder 1.00  band  16.5- 99.3%  midpoint  57.9%
+  2019-06: owners' weight   8.0%  with funds   7.5%  early holder 0.51  band  10.6- 42.6%  midpoint  26.6%
+  2021-09: owners' weight   8.0%  with funds   6.5%  early holder 0.11  band  10.1- 24.3%  midpoint  17.2%
+  2022-12: owners' weight   8.0%  with funds   6.5%  early holder 0.10  band  13.0- 26.1%  midpoint  19.6%
+  2025-06: owners' weight   8.0%  with funds   5.1%  early holder 0.10  band  12.5- 22.5%  midpoint  17.5%
+  2026-05: owners' weight   8.0%  with funds   4.8%  early holder 0.10  band  11.5- 19.9%  midpoint  15.7%
+  May 2026 weights, whole percent: 5-8%; owners' wealth $19.19 trillion
+  2012-26: delivered  118  band  18-102  midpoint  58  gaps: lower +101  midpoint  +60 (se 39)  upper  +16 | MCM alpha  +42 (se 39)  share of excess return explained: CAPM 21%, MCM 62%
+  2012-17: delivered  219  band  25-198  midpoint 108  gaps: lower +193  midpoint +111 (se 87)  upper  +21 | MCM alpha  +73 (se 93)  share of excess return explained: CAPM 15%, MCM 59%
+  2018-26: delivered   46  band  12- 34  midpoint  23  gaps: lower  +34  midpoint  +23 (se 24)  upper  +12 | MCM alpha  +10 (se 22)  share of excess return explained: CAPM 45%, MCM 76%
+  correlation of the monthly return with the midpoint 0.04
+  five-year windows (113): the midpoint misses the delivered average by 54 points on average; correlation 0.44; age rule closer in 81% of windows
+
+Owners' wealth carried from 2021Q3 (the weight follows the market value)
+  2013-06: owners' weight   3.4%  with funds   3.4%  early holder 1.00  band  20.7-231.3%  midpoint 126.0%
+  2017-06: owners' weight  16.8%  with funds  15.0%  early holder 1.00  band  19.6- 66.6%  midpoint  43.1%
+  2017-12: owners' weight  79.8%  with funds  51.2%  early holder 1.00  band  58.7-230.9%  midpoint 144.8%
+  2019-06: owners' weight  24.8%  with funds  20.2%  early holder 0.51  band  20.9- 64.3%  midpoint  42.6%
+  2021-09: owners' weight  18.6%  with funds  12.1%  early holder 0.11  band  13.4- 42.0%  midpoint  27.7%
+  2022-12: owners' weight   6.1%  with funds   5.2%  early holder 0.10  band  12.4- 23.5%  midpoint  18.0%
+  2025-06: owners' weight  34.1%  with funds  10.0%  early holder 0.10  band  13.8- 41.4%  midpoint  27.6%
+  2026-05: owners' weight  23.3%  with funds   8.0%  early holder 0.10  band  12.1- 27.4%  midpoint  19.7%
+  May 2026 weights, whole percent: 8-23%; owners' wealth $6.60 trillion
+  2012-26: delivered  118  band  20-111  midpoint  64  gaps: lower  +98  midpoint  +54 (se 39)  upper   +7 | MCM alpha  +37 (se 40)  share of excess return explained: CAPM 21%, MCM 67%
+  2012-17: delivered  219  band  25-202  midpoint 110  gaps: lower +193  midpoint +109 (se 87)  upper  +17 | MCM alpha  +72 (se 93)  share of excess return explained: CAPM 15%, MCM 59%
+  2018-26: delivered   46  band  16- 46  midpoint  31  gaps: lower  +30  midpoint  +15 (se 24)  upper   -1 | MCM alpha   +1 (se 22)  share of excess return explained: CAPM 45%, MCM 96%
+  correlation of the monthly return with the midpoint -0.00
+  five-year windows (113): the midpoint misses the delivered average by 58 points on average; correlation 0.28; age rule closer in 90% of windows
+
+Baseline with ownership of 3% in 2021Q3 and 11% by mid-2022 (moves the early holder only)
+  2013-06: owners' weight  19.0%  with funds  19.0%  early holder 1.00  band  56.5-231.3%  midpoint 143.9%
+  2017-06: owners' weight  19.0%  with funds  16.8%  early holder 1.00  band  20.7- 66.6%  midpoint  43.7%
+  2017-12: owners' weight  19.0%  with funds  16.8%  early holder 1.00  band  25.4- 99.3%  midpoint  62.3%
+  2019-06: owners' weight  19.0%  with funds  16.2%  early holder 0.75  band  17.7- 62.5%  midpoint  40.1%
+  2021-09: owners' weight  19.0%  with funds  12.2%  early holder 0.40  band  13.5- 42.6%  midpoint  28.1%
+  2022-12: owners' weight  19.0%  with funds  12.2%  early holder 0.10  band  15.8- 41.4%  midpoint  28.6%
+  2025-06: owners' weight  19.0%  with funds   8.1%  early holder 0.10  band  13.3- 30.5%  midpoint  21.9%
+  2026-05: owners' weight  19.0%  with funds   7.4%  early holder 0.10  band  12.0- 25.3%  midpoint  18.6%
+  May 2026 weights, whole percent: 7-19%; owners' wealth $8.08 trillion
+  2012-26: delivered  118  band  27-110  midpoint  67  gaps: lower  +91  midpoint  +51 (se 39)  upper   +8 | MCM alpha  +33 (se 39)  share of excess return explained: CAPM 21%, MCM 70%
+  2012-17: delivered  219  band  44-198  midpoint 118  gaps: lower +175  midpoint +101 (se 87)  upper  +21 | MCM alpha  +63 (se 93)  share of excess return explained: CAPM 15%, MCM 63%
+  2018-26: delivered   46  band  16- 47  midpoint  31  gaps: lower  +30  midpoint  +15 (se 23)  upper   -1 | MCM alpha   +1 (se 22)  share of excess return explained: CAPM 45%, MCM 96%
+  correlation of the monthly return with the midpoint 0.03
+  five-year windows (113): the midpoint misses the delivered average by 50 points on average; correlation 0.43; age rule closer in 81% of windows
+

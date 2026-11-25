@@ -1,0 +1,25 @@
+UK: FCA cryptoasset consumer research (4 waves; holdings in GBP, Bitcoin's price in US dollars, average of the fieldwork months)
+  wave                          own, %  owners, m   median    mean  Bitcoin, $   price, first wave = 100
+  December 2019                    3.9       1.90    260.0    1575        7246                       100
+  January 2021                     4.4       2.30    300.0    1775       34753                       480
+  August 2022                      9.0       4.97    175.5    1595       22362                       309
+  August 2024                     12.0       7.00    375.5    1845       59963                       828
+  first wave to last: Bitcoin's price times 8.3; median holding +44%; mean holding +17%; number of owners times 3.7
+  lowest to highest price among the waves: times 8.3; median holding between 175.5 and 375.5; mean holding between 1575 and 1845
+  elasticity of the median holding to Bitcoin's price across the waves: +0.17
+  elasticity of the mean holding to Bitcoin's price across the waves: +0.08
+  owners times mean holding: 3.0 to 12.9 billion GBP; of the growth (in logs), 89% is more owners and 11% is more per owner
+
+Canada: Bank of Canada Bitcoin Omnibus Survey (5 waves; holdings in CAD, Bitcoin's price in US dollars, average of the fieldwork months)
+  wave                          own, %  owners, m   median    mean  Bitcoin, $   price, first wave = 100
+  December 2018                    5.2          -    500.0       -        3666                       100
+  December 2019                    5.1          -    250.0       -        7246                       198
+  November to December 2021       13.1          -    503.0       -       54928                      1498
+  December 2022                   10.1          -    500.0       -       16937                       462
+  December 2023                    9.9          -    500.0       -       42548                      1161
+  first wave to last: Bitcoin's price times 11.6; median holding +0%; ownership rate times 1.9
+  lowest to highest price among the waves: times 15.0; median holding between 250 and 503
+  elasticity of the median holding to Bitcoin's price across the waves: +0.11
+
+Bitcoin's price, September 2021 to June 2025: times 2.30. A holder at 19% who neither bought nor sold, other wealth unchanged, would be at 35%.
+Median owner's share in 2021Q3, interpolated between 5% (40% of owners below) and 15% (70% below): 8.3%

@@ -1,28 +1,28 @@
-Bitcoin                        median 18.3% | 68% 16.4%-20.5% | 90% 15.4%-21.9% | envelope 12.7%-25.9%
-Bitcoin, mortality 0.3-1.5     median 17.2% | 68% 15.6%-19.3% | 90% 14.8%-20.7% | envelope 12.7%-23.9%
-Bitcoin, w 0.12-0.19           median 19.0% | 68% 17.1%-21.1% | 90% 16.0%-22.4% | envelope 13.4%-25.9%
-Bitcoin, gamma 1.7-2.8 (household range) median 19.2% | 68% 17.4%-21.2% | 90% 16.3%-22.4% | envelope 13.7%-25.9%
-Bitcoin, w 0.075-0.139 (crypto-wide back-cast) median 17.4% | 68% 15.8%-19.1% | 90% 14.9%-20.2% | envelope 12.6%-23.4%
-Ether                          median 26.3% | 68% 22.7%-31.1% | 90% 20.9%-34.2% | envelope 16.6%-41.1%
-Large altcoin                  median 39.1% | 68% 30.8%-51.6% | 90% 26.9%-59.5% | envelope 20.4%-72.6%
-Small coin                     median 72.2% | 68% 54.2%-99.0% | 90% 46.1%-118.3% | envelope 29.0%-174.0%
+Bitcoin                        median 18.1% | 68% 16.2%-20.3% | 90% 15.2%-21.8% | envelope 12.5%-25.9%
+Bitcoin, mortality 0.3-1.5     median 17.0% | 68% 15.4%-19.2% | 90% 14.6%-20.6% | envelope 12.5%-23.9%
+Bitcoin, w 0.11-0.19 (fund and treasury investors at 3%) median 18.8% | 68% 16.9%-20.9% | 90% 15.9%-22.3% | envelope 13.2%-25.9%
+Bitcoin, gamma 1.7-2.8 (household range) median 19.0% | 68% 17.1%-21.0% | 90% 16.0%-22.3% | envelope 13.4%-25.9%
+Ether                          median 25.9% | 68% 22.3%-30.8% | 90% 20.5%-34.0% | envelope 16.2%-41.1%
+Large altcoin                  median 39.0% | 68% 30.8%-51.5% | 90% 26.9%-59.5% | envelope 20.4%-72.6%
+Small coin                     median 72.6% | 68% 54.6%-99.4% | 90% 46.5%-119.0% | envelope 29.7%-174.0%
 Gold                           median  5.5% | 68%  5.1%- 5.8% | 90%  5.0%- 6.0% | envelope  4.6%- 6.8%
 Bitcoin at gold sigma and w    median 14.2% | 68% 13.0%-15.3% | 90% 12.3%-16.0% | envelope 11.3%-17.1%
-Bitcoin, sigma 0.35-0.50       median 18.3% | 68% 16.4%-20.8% | 90% 15.3%-22.7% | envelope 12.3%-29.8%
-Bitcoin, sigma 0.40-0.55 (option-implied) median 19.4% | 68% 17.1%-22.4% | 90% 15.9%-24.7% | envelope 12.6%-32.6%
+Bitcoin, sigma 0.35-0.50       median 18.1% | 68% 16.2%-20.7% | 90% 15.1%-22.6% | envelope 12.2%-29.8%
+Bitcoin, sigma 0.40-0.55 (option-implied) median 19.2% | 68% 16.9%-22.2% | 90% 15.7%-24.5% | envelope 12.4%-32.6%
 Bitcoin, diversified holder (w=0) median 13.9% | 68% 12.7%-15.1% | 90% 12.1%-15.7% | envelope 11.3%-16.5%
-Ether, average crypto owner (kappa 0.7) median 23.4% | 68% 20.7%-26.8% | 90% 19.3%-29.0% | envelope 15.6%-34.6%
-Ether, diversified holder (w=0) median 16.3% | 68% 15.0%-17.6% | 90% 14.2%-18.4% | envelope 13.3%-19.3%
-Large altcoin, average crypto owner median 22.8% | 68% 19.9%-26.6% | 90% 18.3%-29.5% | envelope 13.9%-41.9%
+Ether, average crypto owner (kappa 0.7) median 23.0% | 68% 20.4%-26.6% | 90% 18.9%-28.9% | envelope 15.3%-34.6%
+Ether, diversified holder (w=0) median 16.3% | 68% 15.0%-17.6% | 90% 14.3%-18.4% | envelope 13.3%-19.3%
+Large altcoin, average crypto owner median 22.5% | 68% 19.6%-26.4% | 90% 18.0%-29.3% | envelope 13.7%-41.9%
 Large altcoin, diversified holder (w=0) median 15.6% | 68% 14.1%-17.1% | 90% 13.3%-17.9% | envelope 12.4%-18.8%
-Small coin, diversified holder (w=0) median 24.7% | 68% 21.2%-28.2% | 90% 19.5%-29.9% | envelope 17.4%-32.0%
-Bitcoin, w 0.08-0.12 (wealth-weighted share) median 17.2% | 68% 15.7%-18.8% | 90% 14.8%-19.7% | envelope 12.7%-22.4%
-Dependence: gamma and w move together          median 18.5% | 90% 14.9%-23.1%
-Dependence: gamma and w move oppositely        median 18.1% | 90% 16.3%-20.0%
-Dependence: all four inputs move together      median 18.4% | 90% 13.2%-25.1%
-Bitcoin, beta 1.3-2.2 (every window) median 18.3% | 68% 16.2%-20.7% | 90% 15.0%-22.2% | envelope 11.9%-26.7%
-Bitcoin, beta normal (1.75, s.e. 0.45)         median 18.4% | 90% 14.2%-22.9%
-Bitcoin, w 0.042-0.063 (ownership 3% at anchor) median 15.7% | 68% 14.4%-16.9% | 90% 13.7%-17.7% | envelope 12.0%-19.6%
-Bitcoin, mortality 0.3-2.4 (2025 deaths set aside) median 17.7% | 68% 16.0%-19.8% | 90% 15.1%-21.2% | envelope 12.7%-24.8%
-Bitcoin, mortality fixed at 3.5 (high reading) median 19.8% | 68% 18.3%-21.9% | 90% 17.5%-23.2% | envelope 15.9%-25.9%
-Bitcoin, mortality fixed at 0.3 (low reading) median 16.6% | 68% 15.0%-18.7% | 90% 14.3%-20.0% | envelope 12.7%-22.7%
+Small coin, diversified holder (w=0) median 25.1% | 68% 21.8%-28.3% | 90% 20.1%-30.0% | envelope 18.1%-32.0%
+Bitcoin, w 0.06-0.12 (owners' weight 12%) median 16.9% | 68% 15.4%-18.4% | 90% 14.5%-19.5% | envelope 12.4%-22.4%
+Bitcoin, w 0.05-0.08 (owners' weight 8%) median 16.1% | 68% 14.7%-17.4% | 90% 14.0%-18.2% | envelope 12.2%-20.5%
+Dependence: gamma and w move together          median 18.3% | 90% 14.7%-23.1%
+Dependence: gamma and w move oppositely        median 17.9% | 90% 16.1%-19.8%
+Dependence: all four inputs move together      median 18.3% | 90% 13.0%-25.0%
+Bitcoin, beta 1.3-2.2 (every window) median 18.1% | 68% 16.0%-20.5% | 90% 14.8%-22.1% | envelope 11.7%-26.7%
+Bitcoin, beta normal (1.75, s.e. 0.45)         median 18.2% | 90% 14.0%-22.7%
+Bitcoin, mortality 0.3-2.4 (2025 deaths set aside) median 17.5% | 68% 15.8%-19.7% | 90% 14.9%-21.1% | envelope 12.5%-24.8%
+Bitcoin, mortality fixed at 3.5 (high reading) median 19.6% | 68% 18.1%-21.8% | 90% 17.3%-23.2% | envelope 15.7%-25.9%
+Bitcoin, mortality fixed at 0.3 (low reading) median 16.4% | 68% 14.9%-18.6% | 90% 14.1%-20.0% | envelope 12.5%-22.7%
+Bitcoin, w 0.08-0.19 (owners' wealth carried from 2021Q3) median 18.3% | 68% 16.4%-20.5% | 90% 15.4%-21.9% | envelope 12.7%-25.9%

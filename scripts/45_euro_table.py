@@ -29,7 +29,7 @@ v_usd, v_eur = vols(D), vols(D.sub(fx.reindex(D.index), axis=0))
 w = D["2012-01":"2026-04"]; sp = w["S&P 500"]
 beta = {c: w[c].cov(sp) / sp.var() for c in D.columns[:4]}
 # premia over the risk-free rate, as in Table 7: CAPM for the equity indices; the MCM equation for gold (upper bound), Bitcoin and Ether
-prem = {c: ERP_PTS * round(beta[c], 2) for c in beta}; prem.update({"Gold": 5.5 - RF_USD, "Bitcoin": 18.3 - RF_USD, "Ether": 23.4 - RF_USD})
+prem = {c: ERP_PTS * round(beta[c], 2) for c in beta}; prem.update({"Gold": 5.5 - RF_USD, "Bitcoin": 18.1 - RF_USD, "Ether": 23.0 - RF_USD})
 out = open(os.path.join(OUT, "euro_table.txt"), "w")
 def line(s=""):
     print(s); out.write(s + "\n")

@@ -1,7 +1,7 @@
 crypto market, April 2026: Bitcoin 73%, Ether 14%, everything else 13%
 four years to April 2026: volatility of the crypto market 57%, Bitcoin 54%, Ether 74%; correlation with the market: Bitcoin 0.98, Ether 0.91; median altcoin: correlation 0.74, volatility 86%
                   kappa  w low  w mid w high |    rf  market mortality  floor concentration    sum
-Bitcoin            1.00    8.0  13.50   19.0 |   5.0     7.0      1.90   13.9           4.5   18.4
-Ether              0.70    5.6   9.45   13.3 |   5.0     9.4      1.90   16.3           7.4   23.7
-Large altcoin      0.47    3.8   6.34    8.9 |   5.0     8.6      2.00   15.6           7.0   22.6
-Small coin                                   |   5.0     8.6     11.10   24.7
+Bitcoin            1.00    7.0  13.00   19.0 |   5.0     7.0      1.90   13.9           4.4   18.3
+Ether              0.70    4.9   9.10   13.3 |   5.0     9.4      1.90   16.3           7.1   23.4
+Large altcoin      0.47    3.3   6.11    8.9 |   5.0     8.6      2.00   15.6           6.7   22.3
+Small coin                                   |   5.0     8.6     11.45   25.0

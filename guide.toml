@@ -5,7 +5,7 @@
 ssrn = "10.2139/ssrn.7705239"
 data_as_of = "Cryptoasset data to 2026-05-24; the last required return in the monthly test is dated 2026-04-30. ETF prices, the euro/dollar rate, the Treasury yield and the option quotes run to November 2026."
 units = "The headline list in outputs/results.json states the unit of each figure. The labels of the checks mostly do not: returns, rates, gaps and volatilities are in percent or percentage points a year, counts are whole numbers, betas, correlations and ratios are plain numbers. In the CSV files rates are fractions (0.18 is 18% a year)."
-describe_as = "Papadogiannis (2026), \"Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold\", working paper, with its replication package."
+describe_as = "Papadogiannis (2026), \"Bitcoin's Required Return: Market Risk, Concentration and Mortality\", working paper, with its replication package."
 what = "Code, data and stored results of a working paper that asks what return Bitcoin's holders should require for the market, concentration and mortality risk they carry (the MCM equation), tests the answer against delivered returns month by month, and takes a census of cryptoasset deaths. The manuscript is in paper/."
 third_party = "The cryptoasset data in data/cmdata are an unmodified copy of the Coin Metrics community dataset, licensed CC BY-NC 4.0 (non-commercial use, with attribution). They keep that licence and are not covered by the licence above. ETF prices, the euro/dollar rate and the Treasury yield are from Yahoo Finance and are included for replication only."
 results_file = "a `headline` list with the figures most often asked for, then every number the paper quotes that the code recomputes, as two lists of checks. `census_checks`: claim, computed value, the paper's figure. `model_checks`: the same with the tolerance, which reflects the rounding of the printed figure. The labels are the audit script's own short names (T4 is Table 4, S6 Section 6, A.7 Appendix A.7, MC the propagation of the input ranges, elite an asset ever in the top twenty, jump a sudden collapse); the README says which script and table each group belongs to."
@@ -19,7 +19,7 @@ coverage = [
 ]
 adds = [
   "The death of an asset is not in any data feed. The census classifies each one by a stated rule (end of the feed, price collapse without recovery, volume collapse without recovery), treats ticker migrations as survivals, and enters the known sudden collapses at their public-record dates. The flags for every asset are in outputs/panel_v3.csv.",
-  "The share of wealth that holders keep in Bitcoin, which drives the concentration term, is built from household surveys and documented fund and company holdings. The paper gives the sources; the construction is in scripts/22_pretty_figs.py and scripts/26_holder_weight.py.",
+  "The share of wealth that holders keep in Bitcoin, which drives the concentration term, is taken from a household survey and held at that value, because repeated surveys of what owners hold show holdings per owner moving little with the price (data/holder_surveys.csv, with its sources). Documented fund and company holdings are added. The construction is in scripts/22_pretty_figs.py; scripts/49_holder_surveys.py and scripts/50_holder_weight_variants.py give the survey evidence and the other choices for the weight.",
   "Dates are kept honest. A required return is dated at the month-end it is set and compared with the return of the following month.",
   "The input data are stored in the repository with a checksum for every Coin Metrics file. The upstream archive stopped updating on 24 May 2026, so this copy is its last state and the run needs no download.",
 ]
@@ -28,7 +28,8 @@ files = [
   "outputs/panel_v3.csv: one row per asset: birth, last observation, the death flags and dates under each definition.",
   "outputs/*.txt: the result tables as printed for the paper. Use results.json to quote a number and these to see its table.",
   "paper/manuscript.pdf: the working paper.",
-  "data/: all inputs. data/cmdata/MANIFEST.sha256 lists the checksums.",
+  "outputs/holder_weight_variants.txt: the band and the monthly test with the owners' weight held at 19% (the paper's choice), at 12% and at 8%, and with a weight that follows the market value.",
+  "data/: all inputs. data/cmdata/MANIFEST.sha256 lists the checksums; data/holder_surveys.csv holds the survey figures on what owners hold, with its sources in data/holder_surveys_SOURCE.md.",
 ]
 read = [
   "A required return is what holders should require for the risk they carry. It is not a forecast of what Bitcoin will return.",
@@ -36,10 +37,10 @@ read = [
   "In results.json `paper` is the figure as printed, usually rounded; `computed` is the value the code gives, at full precision where it is calculated and with the table's rounding where it is read from a printed table. Quote `paper` when citing the paper.",
   "A check whose claim is a statement and not a quantity has `paper` 1 and `computed` 1: read it as true.",
   "Not every `paper` value is a printed figure. Where a check tests an identity or a formula, `paper` holds the other side of the identity at full precision; where the paper says \"about\", `paper` holds the round figure and the tolerance is wide. A wide tolerance means the paper's statement is approximate, so quote `computed` for the exact value.",
-  "The same quantity can appear in more than one check, at different rounding or from different tables (a beta of 1.5 in the text and 1.51 in a table; for Ether a median of 23, an average of 23.4 and a sum of terms of 23.7). Prefer the headline list; otherwise say which table the figure is from.",
+  "The same quantity can appear in more than one check, at different rounding or from different tables (a beta of 1.5 in the text and 1.51 in a table; for Ether a median of 23.0 and a sum of terms of 23.4). Prefer the headline list; otherwise say which table the figure is from.",
   "Outside the headline list, the printed tables in outputs/*.txt, with their row and column headings, are often the clearer source; the checks tell you the figure was recomputed.",
-  "The paper's 2026 figure for Bitcoin is the median when the uncertain inputs are drawn across their ranges. The monthly band's midpoint (the T4 checks, required_band_monthly.csv, and the Crypto Observatory) averages the two edges of the band and stands about two points higher at the same date. They are different figures; say which one you quote.",
-  "The many checks labelled as sensitivities (other weights, other premia, other windows, the crypto-wide back-cast) are robustness results, not the paper's headline.",
+  "The paper's 2026 figure for Bitcoin is the median when the uncertain inputs are drawn across their ranges. The monthly band's midpoint (the T4 checks, required_band_monthly.csv, and the Crypto Observatory) averages the two edges of the band at that month's risk-free rate and can differ from it by a point or so at the same date. They are different figures; say which one you quote.",
+  "The many checks labelled as sensitivities (other weights, other premia, other windows) are robustness results, not the paper's headline.",
   "In required_band_monthly.csv rates are fractions a year, not percent.",
   "Realized averages over short periods have large standard errors, which outputs/monthly_test.txt reports beside each one.",
 ]
@@ -186,7 +187,7 @@ where = "Section 3"
 "exposure" = "asset-years at risk"
 "size Q1 to Q4" = "quarters of assets by size, Q1 the smallest"
 "n" = "a count of assets, months or windows"
-"letter and number prefixes (A.3, D.4, E.4 and so on)" = "an appendix section of the paper. A few follow the numbering of an earlier draft (D.5, D.6, E.2, Fig6) and do not match a section of the current paper; for those, the README's table of scripts says where the result appears"
+"letter and number prefixes (A.3, D.4, E.4 and so on)" = "an appendix section of the paper. A few follow the numbering of an earlier draft (E.2, Fig6) and do not match a section of the current paper; for those, the README's table of scripts says where the result appears"
 "age rule" = "the rule of thumb that the expected return falls as one over Bitcoin's age, which the paper compares with the required return"
 
 [live_tool]

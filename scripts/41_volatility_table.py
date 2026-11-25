@@ -13,7 +13,7 @@ def etf(f):
 src = open(os.path.join(SCRIPTS, "22_pretty_figs.py")).read(); exec(src.split("# ============ FIG 1")[0]); exec(src[src.index("# ============ FIG 5"):src.index("fig,ax=plt.subplots(figsize=(7.6,4.9))")])
 with contextlib.redirect_stdout(io.StringIO()): cs = runpy.run_path(os.path.join(SCRIPTS, "31_cross_section.py"))
 D = pd.DataFrame({"Global equities (ACWI)": etf(os.path.join(DATA, "acwi_monthly.csv")), "S&P 500": etf(os.path.join(DATA, "voo_monthly.csv")), "Nasdaq-100": etf(os.path.join(DATA, "qqq_monthly.csv")),
-                  "Russell 2000": etf(os.path.join(DATA, "iwm_monthly.csv")), "Gold": etf(os.path.join(DATA, "gld_monthly.csv")), "Bitcoin": np.log(px).diff(), "Ether": np.log1p(cs["Rn"]["eth"])})
+                  "Russell 2000": etf(os.path.join(DATA, "iwm_monthly.csv")), "Gold": etf(os.path.join(DATA, "gld_monthly.csv")), "Bitcoin": np.log(px).diff(), "Ether": np.log1p(cs["R"]["eth"])})
 fx = etf(os.path.join(DATA, "eurusd_monthly.csv"))                      # log change of the dollar price of one euro
 def table(X, end="2026-04"):
     X = X[:end]; o = {"2012-01 to 2026-04": X["2012-01":].std() * 12**.5}
@@ -26,6 +26,7 @@ def line(s=""):
 line("US dollars"); line(table(D).to_string())
 line(); line("Euros"); line(table(D.sub(fx.reindex(D.index), axis=0)).iloc[:2].to_string())
 line(); line(f"Bitcoin, recent months weighted, May 2026: {100*np.sqrt(D['Bitcoin'][:'2026-05'].pow(2).ewm(halflife=9).mean().iloc[-1]*12):.1f}")
+line(f"Ether, recent months weighted, May 2026: {100*np.sqrt(D['Ether'][:'2026-05'].pow(2).ewm(halflife=9).mean().iloc[-1]*12):.1f}")
 X = D["2012-01":"2026-04"]
 line(f"EUR/USD volatility 2012-01 to 2026-04: {100*fx['2012-01':'2026-04'].std()*12**.5:.1f}; correlation of the euro's monthly change with returns: ACWI {X.iloc[:,0].corr(fx):.2f}, S&P 500 {X.iloc[:,1].corr(fx):.2f}")
 for lab, x in (("2012-01 to 2026-04", X), ("since 2020", X["2020":])):

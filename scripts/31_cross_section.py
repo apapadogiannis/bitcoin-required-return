@@ -77,7 +77,7 @@ O=pd.DataFrame(out,columns=["asset","cagr","dead"])
 print("per-asset compound return, January 2018 (or listing) to May 2026: assets",len(O),"| median %.0f%% a year"%(100*O.cagr.median()),"| share negative %.0f%%"%(100*(O.cagr<0).mean()),"| share above Bitcoin's %.0f%%"%(100*(O.cagr>((P['btc']['2026-05'].iloc[-1]/P['btc']['2018-01'].iloc[0])**(1/8.33)-1)).mean()),"| dead",int(O.dead.sum()))
 O.round(4).to_csv(f"{OUT}/cross_section_cagr.csv",index=False)
 # ---------- Table 6: the holder weight w = crypto share x kappa, and the four terms at the midpoint of each input's range ----------
-C_LO, C_HI, G_MID, ERP_PTS, RF_PTS = 0.08, 0.19, 1.9, 4.0, 5.0; C_MID = (C_LO + C_HI) / 2
+C_LO, C_HI, G_MID, ERP_PTS, RF_PTS = 0.07, 0.19, 1.9, 4.0, 5.0; C_MID = (C_LO + C_HI) / 2
 wi = W.loc[END]; sb, se_ = stats("btc"), stats("eth")
 with open(f"{OUT}/cross_section_terms.txt", "w") as fh:
     def say(t=""):
@@ -86,7 +86,7 @@ with open(f"{OUT}/cross_section_terms.txt", "w") as fh:
     say(f"four years to April 2026: volatility of the crypto market {100*np.log1p(rcm[:END]).iloc[-48:].std()*12**.5:.0f}%, Bitcoin {100*sb['vol']:.0f}%, Ether {100*se_['vol']:.0f}%; "
         f"correlation with the market: Bitcoin {sb['corr_m']:.2f}, Ether {se_['corr_m']:.2f}; median altcoin: correlation {S.corr_m.median():.2f}, volatility {100*S.vol.median():.0f}%")
     say(f"{'':16s}{'kappa':>7s}{'w low':>7s}{'w mid':>7s}{'w high':>7s} |{'rf':>6s}{'market':>8s}{'mortality':>10s}{'floor':>7s}{'concentration':>14s}{'sum':>7s}")
-    for nm, sg, beta, kap, mort in (("Bitcoin", 0.42, 1.75, 1.0, 1.9), ("Ether", 0.64, 2.35, 0.7, 1.9), ("Large altcoin", 0.76, 2.15, 0.47, 2.0), ("Small coin", None, 2.15, None, 11.1)):
+    for nm, sg, beta, kap, mort in (("Bitcoin", 0.42, 1.75, 1.0, 1.9), ("Ether", 0.64, 2.35, 0.7, 1.9), ("Large altcoin", 0.76, 2.15, 0.47, 2.0), ("Small coin", None, 2.15, None, 11.45)):
         mk = beta * ERP_PTS; fl = RF_PTS + mk + mort
         if kap is None: say(f"{nm:16s}{'':28s} |{RF_PTS:6.1f}{mk:8.1f}{mort:10.2f}{fl:7.1f}"); continue
         cn = 100 * G_MID * sg**2 * C_MID * kap

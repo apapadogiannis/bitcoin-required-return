@@ -1,6 +1,6 @@
 {
   "package": {
-    "title": "Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold",
+    "title": "Bitcoin's Required Return: Market Risk, Concentration and Mortality",
     "author": {
       "name": "Agisilaos Papadogiannis",
       "orcid": "https://orcid.org/0009-0002-7753-7052",
@@ -10,8 +10,8 @@
     "preprint": "https://doi.org/10.2139/ssrn.7705239",
     "repository": "https://github.com/apapadogiannis/bitcoin-required-return",
     "archive": "https://doi.org/10.5281/zenodo.24003938",
-    "version": "2.0.0",
-    "released": "2026-11-24",
+    "version": "3.0.0",
+    "released": "2026-11-25",
     "data_as_of": "Cryptoasset data to 2026-05-24; the last required return in the monthly test is dated 2026-04-30. ETF prices, the euro/dollar rate, the Treasury yield and the option quotes run to November 2026.",
     "units": "The headline list in outputs/results.json states the unit of each figure. The labels of the checks mostly do not: returns, rates, gaps and volatilities are in percent or percentage points a year, counts are whole numbers, betas, correlations and ratios are plain numbers. In the CSV files rates are fractions (0.18 is 18% a year).",
     "licence": {
@@ -21,19 +21,19 @@
       "code": "MIT",
       "third_party_data": "The cryptoasset data in data/cmdata are an unmodified copy of the Coin Metrics community dataset, licensed CC BY-NC 4.0 (non-commercial use, with attribution). They keep that licence and are not covered by the licence above. ETF prices, the euro/dollar rate and the Treasury yield are from Yahoo Finance and are included for replication only."
     },
-    "cite_as": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Working paper. https://doi.org/10.2139/ssrn.7705239",
-    "cite_package": "Papadogiannis, A. (2026). Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold. Replication package, version 2.0.0. Zenodo. https://doi.org/10.5281/zenodo.24003938",
-    "describe_as": "Papadogiannis (2026), \"Bitcoin's Required Return: Pricing a New Asset Beside Equities and Gold\", working paper, with its replication package.",
+    "cite_as": "Papadogiannis, A. (2026). Bitcoin's Required Return: Market Risk, Concentration and Mortality. Working paper. https://doi.org/10.2139/ssrn.7705239",
+    "cite_package": "Papadogiannis, A. (2026). Bitcoin's Required Return: Market Risk, Concentration and Mortality. Replication package, version 3.0.0. Zenodo. https://doi.org/10.5281/zenodo.24003938",
+    "describe_as": "Papadogiannis (2026), \"Bitcoin's Required Return: Market Risk, Concentration and Mortality\", working paper, with its replication package.",
     "guide": "llms.txt"
   },
   "headline": [
     {
       "what": "Required return on Bitcoin for its current holders, 2026",
-      "value": 18.3,
+      "value": 18.1,
       "unit": "percent a year (the median over the input ranges; a simple yearly rate, not a compound one)",
       "range": [
-        15.4,
-        21.9
+        15.2,
+        21.8
       ],
       "range_is": "90% range of the input uncertainty",
       "where": "Section 4 and Appendix D.1",
@@ -41,11 +41,11 @@
     },
     {
       "what": "Monthly band for Bitcoin at the end of May 2026, midpoint",
-      "value": 20,
+      "value": 19,
       "unit": "percent a year",
       "range": [
         12,
-        27
+        25
       ],
       "range_is": "band",
       "where": "Section 5, Table 4",
@@ -65,7 +65,7 @@
     },
     {
       "what": "Delivered less required return at the midpoint, 2012 to 2026",
-      "value": 54,
+      "value": 51,
       "unit": "points a year, average of monthly returns",
       "standard_error": 39,
       "where": "Section 5, Table 5",
@@ -75,7 +75,7 @@
       "what": "Delivered less required return at the midpoint, 2018 to 2026",
       "value": 15,
       "unit": "points a year, average of monthly returns",
-      "standard_error": 24,
+      "standard_error": 23,
       "where": "Section 5, Table 5",
       "check": "monthly 2018-26: gap mid"
     },
@@ -172,7 +172,7 @@
     "exposure": "asset-years at risk",
     "size Q1 to Q4": "quarters of assets by size, Q1 the smallest",
     "n": "a count of assets, months or windows",
-    "letter and number prefixes (A.3, D.4, E.4 and so on)": "an appendix section of the paper. A few follow the numbering of an earlier draft (D.5, D.6, E.2, Fig6) and do not match a section of the current paper; for those, the README's table of scripts says where the result appears",
+    "letter and number prefixes (A.3, D.4, E.4 and so on)": "an appendix section of the paper. A few follow the numbering of an earlier draft (E.2, Fig6) and do not match a section of the current paper; for those, the README's table of scripts says where the result appears",
     "age rule": "the rule of thumb that the expected return falls as one over Bitcoin's age, which the paper compares with the required return"
   },
   "census_checks": [
@@ -721,10 +721,10 @@
       "tolerance": 0.05
     },
     {
-      "claim": "rolling beta 2025Q2",
-      "computed": 1.979350455713492,
-      "paper": 2.0,
-      "tolerance": 0.08
+      "claim": "T2 beta, May 2025",
+      "computed": 1.98095161986446,
+      "paper": 1.98,
+      "tolerance": 0.005
     },
     {
       "claim": "rolling beta min since mid-2022",
@@ -787,10 +787,34 @@
       "tolerance": 0.01
     },
     {
-      "claim": "vol 2025Q2",
-      "computed": 0.5241455175380993,
+      "claim": "T2 volatility, May 2025",
+      "computed": 0.527005021378448,
       "paper": 0.53,
-      "tolerance": 0.015
+      "tolerance": 0.005
+    },
+    {
+      "claim": "T2 risk-free rate, May 2025",
+      "computed": 4.416,
+      "paper": 4.4,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "T2 risk-free rate, September 2021",
+      "computed": 1.529,
+      "paper": 1.5,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "T2 market term 2025",
+      "computed": 7.92,
+      "paper": 7.9,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "T2 risk-free plus market term 2025",
+      "computed": 12.3,
+      "paper": 12.3,
+      "tolerance": 0.001
     },
     {
       "claim": "T3 2021 req low",
@@ -801,20 +825,20 @@
     {
       "claim": "T3 2021 req high",
       "computed": 38.54228,
-      "paper": 38,
-      "tolerance": 0.7
+      "paper": 39,
+      "tolerance": 0.5
     },
     {
       "claim": "T3 2025 req low",
-      "computed": 17.8371,
+      "computed": 17.9371,
       "paper": 18,
-      "tolerance": 0.6
+      "tolerance": 0.5
     },
     {
       "claim": "T3 2025 req high",
-      "computed": 27.44388,
+      "computed": 27.415270843548672,
       "paper": 27,
-      "tolerance": 0.7
+      "tolerance": 0.5
     },
     {
       "claim": "T3 gamma 2021",
@@ -824,51 +848,51 @@
     },
     {
       "claim": "T3 gamma 2025",
-      "computed": 0.24357797305652906,
+      "computed": 0.22484120589833453,
       "paper": 0.2,
-      "tolerance": 0.06
+      "tolerance": 0.05
     },
     {
       "claim": "MC median",
-      "computed": 18.286973882016344,
-      "paper": 18.3,
-      "tolerance": 0.1
+      "computed": 18.105279658267857,
+      "paper": 18.1,
+      "tolerance": 0.05
     },
     {
       "claim": "MC 68 lo",
-      "computed": 16.420974202711484,
-      "paper": 16.4,
-      "tolerance": 0.1
+      "computed": 16.229371274208653,
+      "paper": 16.2,
+      "tolerance": 0.05
     },
     {
       "claim": "MC 68 hi",
-      "computed": 20.48258656230875,
-      "paper": 20.5,
-      "tolerance": 0.1
+      "computed": 20.34904610884455,
+      "paper": 20.3,
+      "tolerance": 0.05
     },
     {
       "claim": "MC 90 lo",
-      "computed": 15.37285852512974,
-      "paper": 15.4,
-      "tolerance": 0.1
+      "computed": 15.184776736305794,
+      "paper": 15.2,
+      "tolerance": 0.05
     },
     {
       "claim": "MC 90 hi",
-      "computed": 21.92772254841648,
-      "paper": 21.9,
-      "tolerance": 0.1
+      "computed": 21.84005964118346,
+      "paper": 21.8,
+      "tolerance": 0.05
     },
     {
       "claim": "envelope lo",
-      "computed": 12.7112,
-      "paper": 12.7,
-      "tolerance": 0.1
+      "computed": 12.5348,
+      "paper": 13,
+      "tolerance": 0.5
     },
     {
       "claim": "envelope hi",
-      "computed": 25.384479999999996,
-      "paper": 25.4,
-      "tolerance": 0.1
+      "computed": 25.884479999999996,
+      "paper": 26,
+      "tolerance": 0.5
     },
     {
       "claim": "Gold median",
@@ -932,8 +956,8 @@
     },
     {
       "claim": "T4 2013 band lo",
-      "computed": 20.74291690596823,
-      "paper": 21,
+      "computed": 56.45539970702501,
+      "paper": 56,
       "tolerance": 0.7
     },
     {
@@ -944,8 +968,8 @@
     },
     {
       "claim": "T4 2013 mid",
-      "computed": 126.02466820831306,
-      "paper": 126,
+      "computed": 143.88090960884145,
+      "paper": 144,
       "tolerance": 0.7
     },
     {
@@ -980,8 +1004,8 @@
     },
     {
       "claim": "T4 2015 band lo",
-      "computed": 17.259543144829887,
-      "paper": 17,
+      "computed": 35.07325116964488,
+      "paper": 35,
       "tolerance": 0.7
     },
     {
@@ -992,8 +1016,8 @@
     },
     {
       "claim": "T4 2015 mid",
-      "computed": 76.38974149062932,
-      "paper": 76,
+      "computed": 85.29659550303683,
+      "paper": 85,
       "tolerance": 0.7
     },
     {
@@ -1028,8 +1052,8 @@
     },
     {
       "claim": "T4 2017 band lo",
-      "computed": 19.5643428164922,
-      "paper": 20,
+      "computed": 20.683403273670407,
+      "paper": 21,
       "tolerance": 0.7
     },
     {
@@ -1040,8 +1064,8 @@
     },
     {
       "claim": "T4 2017 mid",
-      "computed": 43.09738510533587,
-      "paper": 43,
+      "computed": 43.65691533392497,
+      "paper": 44,
       "tolerance": 0.7
     },
     {
@@ -1076,20 +1100,20 @@
     },
     {
       "claim": "T4 2019 band lo",
-      "computed": 20.881975047195827,
-      "paper": 21,
+      "computed": 17.66468420134814,
+      "paper": 18,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2019 band hi",
-      "computed": 64.32239363779765,
-      "paper": 64,
+      "computed": 51.38319989969219,
+      "paper": 51,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2019 mid",
-      "computed": 42.60218434249674,
-      "paper": 43,
+      "computed": 34.52394205052016,
+      "paper": 35,
       "tolerance": 0.7
     },
     {
@@ -1112,19 +1136,19 @@
     },
     {
       "claim": "T4 2021Q3 band lo",
-      "computed": 13.420025292487342,
-      "paper": 13,
+      "computed": 13.513172559109806,
+      "paper": 14,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2021Q3 band hi",
-      "computed": 41.96836171725668,
-      "paper": 42,
+      "computed": 42.59239181694659,
+      "paper": 43,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2021Q3 mid",
-      "computed": 27.69419350487201,
+      "computed": 28.052782188028196,
       "paper": 28,
       "tolerance": 0.7
     },
@@ -1148,38 +1172,38 @@
     },
     {
       "claim": "T4 2023 band lo",
-      "computed": 14.662766005294214,
-      "paper": 15,
+      "computed": 16.3551402758546,
+      "paper": 16,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2023 band hi",
-      "computed": 29.81501535167801,
-      "paper": 30,
+      "computed": 39.69289057752188,
+      "paper": 40,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2023 mid",
-      "computed": 22.23889067848611,
-      "paper": 22,
+      "computed": 28.024015426688237,
+      "paper": 28,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2026 band lo",
-      "computed": 12.096613225968683,
+      "computed": 11.996689786227238,
       "paper": 12,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2026 band hi",
-      "computed": 27.360960621115403,
-      "paper": 27,
+      "computed": 25.276339066668076,
+      "paper": 25,
       "tolerance": 0.7
     },
     {
       "claim": "T4 2026 mid",
-      "computed": 19.728786923542042,
-      "paper": 20,
+      "computed": 18.636514426447658,
+      "paper": 19,
       "tolerance": 0.7
     },
     {
@@ -1195,46 +1219,16 @@
       "tolerance": 0
     },
     {
-      "claim": "gap vs mid",
-      "computed": 23.750458291614716,
-      "paper": 23.8,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "gap vs lower",
-      "computed": 81.04993032602937,
-      "paper": 81,
-      "tolerance": 1
-    },
-    {
-      "claim": "gap vs upper",
-      "computed": -33.549013742799914,
-      "paper": -33,
-      "tolerance": 1
-    },
-    {
-      "claim": "median gap vs mid",
-      "computed": 40.478709298665706,
-      "paper": 40,
-      "tolerance": 1
-    },
-    {
-      "claim": "inside band share",
-      "computed": 47.78761061946903,
-      "paper": 48,
-      "tolerance": 1
-    },
-    {
       "claim": "MAE mid",
-      "computed": 57.974340640961664,
-      "paper": 58,
-      "tolerance": 0.6
+      "computed": 50.798282676110226,
+      "paper": 51,
+      "tolerance": 0.5
     },
     {
       "claim": "MAE age rule",
       "computed": 27.472780622050134,
-      "paper": 28,
-      "tolerance": 1
+      "paper": 27,
+      "tolerance": 0.5
     },
     {
       "claim": "monthly all: n",
@@ -1250,44 +1244,44 @@
     },
     {
       "claim": "monthly all: band lo",
-      "computed": 19.97201183918346,
-      "paper": 20,
+      "computed": 27.44623181019616,
+      "paper": 27,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: band hi",
-      "computed": 111.45581885504731,
-      "paper": 111,
+      "computed": 109.32108164910365,
+      "paper": 109,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: mid",
-      "computed": 63.97384544408334,
-      "paper": 64,
+      "computed": 67.01025520995796,
+      "paper": 67,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: gap lo",
-      "computed": 98.27752300665776,
-      "paper": 98,
+      "computed": 90.80330303564506,
+      "paper": 91,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: gap mid",
-      "computed": 54.2756894017579,
-      "paper": 54,
+      "computed": 51.23927963588327,
+      "paper": 51,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: se mid",
-      "computed": 39.03001995057329,
+      "computed": 38.89852980400757,
       "paper": 39,
       "tolerance": 0.6
     },
     {
       "claim": "monthly all: gap hi",
-      "computed": 6.793715990793908,
-      "paper": 7,
+      "computed": 8.928453196737578,
+      "paper": 9,
       "tolerance": 0.6
     },
     {
@@ -1310,8 +1304,8 @@
     },
     {
       "claim": "monthly 2012-14: band lo",
-      "computed": 30.577916651494235,
-      "paper": 31,
+      "computed": 60.15507578564534,
+      "paper": 60,
       "tolerance": 0.6
     },
     {
@@ -1322,25 +1316,25 @@
     },
     {
       "claim": "monthly 2012-14: mid",
-      "computed": 157.46907625818753,
-      "paper": 157,
+      "computed": 173.6251370965611,
+      "paper": 174,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-14: gap lo",
-      "computed": 247.12011387240378,
-      "paper": 247,
+      "computed": 217.5429547382526,
+      "paper": 218,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-14: gap mid",
-      "computed": 120.2289542657104,
-      "paper": 120,
+      "computed": 104.0728934273369,
+      "paper": 104,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-14: se mid",
-      "computed": 169.34306047570777,
+      "computed": 169.1884528555925,
       "paper": 169,
       "tolerance": 0.6
     },
@@ -1370,44 +1364,44 @@
     },
     {
       "claim": "monthly 2015-17: band lo",
-      "computed": 20.019370827173784,
-      "paper": 20,
+      "computed": 27.20261237820456,
+      "paper": 27,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2015-17: band hi",
-      "computed": 105.00407982950077,
-      "paper": 105,
+      "computed": 97.80217078957298,
+      "paper": 98,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2015-17: mid",
-      "computed": 61.60440549354768,
+      "computed": 61.89940085883058,
       "paper": 62,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2015-17: gap lo",
-      "computed": 139.5841994807779,
-      "paper": 140,
+      "computed": 132.4009579297471,
+      "paper": 132,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2015-17: gap mid",
-      "computed": 97.99916481440395,
+      "computed": 97.70416944912108,
       "paper": 98,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2015-17: se mid",
-      "computed": 46.291770759615694,
+      "computed": 46.1028031452775,
       "paper": 46,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2015-17: gap hi",
-      "computed": 54.59949047845086,
-      "paper": 55,
+      "computed": 61.80139951837866,
+      "paper": 62,
       "tolerance": 0.6
     },
     {
@@ -1430,44 +1424,44 @@
     },
     {
       "claim": "monthly 2018-20: band lo",
-      "computed": 19.20813903645819,
-      "paper": 19,
+      "computed": 17.412292275171033,
+      "paper": 17,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-20: band hi",
-      "computed": 60.25225401718855,
-      "paper": 60,
+      "computed": 57.021828164419645,
+      "paper": 57,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-20: mid",
-      "computed": 39.47350401592363,
-      "paper": 39,
+      "computed": 37.02541767313764,
+      "paper": 37,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-20: gap lo",
-      "computed": 50.11997897501465,
-      "paper": 50,
+      "computed": 51.915825736301805,
+      "paper": 52,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-20: gap mid",
-      "computed": 29.854613995549197,
-      "paper": 30,
+      "computed": 32.3027003383352,
+      "paper": 32,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-20: se mid",
-      "computed": 47.79002480336393,
-      "paper": 48,
+      "computed": 46.80761404465074,
+      "paper": 47,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-20: gap hi",
-      "computed": 9.07586399428429,
-      "paper": 9,
+      "computed": 12.30628984705319,
+      "paper": 12,
       "tolerance": 0.6
     },
     {
@@ -1490,44 +1484,44 @@
     },
     {
       "claim": "monthly 2021-23: band lo",
-      "computed": 14.3625588319593,
-      "paper": 14,
+      "computed": 15.36650439052878,
+      "paper": 15,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2021-23: band hi",
-      "computed": 38.970560133696246,
-      "paper": 39,
+      "computed": 43.72863392028315,
+      "paper": 44,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2021-23: mid",
-      "computed": 26.587699404197522,
-      "paper": 27,
+      "computed": 29.464034457266916,
+      "paper": 29,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2021-23: gap lo",
-      "computed": 15.608662661346006,
-      "paper": 16,
+      "computed": 14.60471710277653,
+      "paper": 15,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2021-23: gap mid",
-      "computed": 3.3835220891077746,
-      "paper": 3,
+      "computed": 0.5071870360383923,
+      "paper": 1,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2021-23: se mid",
-      "computed": 38.615208004581966,
-      "paper": 39,
+      "computed": 38.45209107031113,
+      "paper": 38,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2021-23: gap hi",
-      "computed": -8.999338640390942,
-      "paper": -9,
+      "computed": -13.757412426977844,
+      "paper": -14,
       "tolerance": 0.6
     },
     {
@@ -1550,44 +1544,44 @@
     },
     {
       "claim": "monthly 2024-26: band lo",
-      "computed": 14.469234423017026,
+      "computed": 14.137086338926801,
       "paper": 14,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2024-26: band hi",
-      "computed": 38.41348289883456,
-      "paper": 38,
+      "computed": 32.59557577017888,
+      "paper": 33,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2024-26: mid",
-      "computed": 26.380455364125098,
-      "paper": 26,
+      "computed": 23.330723322289455,
+      "paper": 23,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2024-26: gap lo",
-      "computed": 22.005270625771946,
+      "computed": 22.33741870986217,
       "paper": 22,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2024-26: gap mid",
-      "computed": 10.094049684663869,
-      "paper": 10,
+      "computed": 13.143781726499514,
+      "paper": 13,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2024-26: se mid",
-      "computed": 32.934886930018365,
+      "computed": 32.73089801790115,
       "paper": 33,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2024-26: gap hi",
-      "computed": -1.9389778500455852,
-      "paper": -2,
+      "computed": 3.878929278610088,
+      "paper": 4,
       "tolerance": 0.6
     },
     {
@@ -1610,44 +1604,44 @@
     },
     {
       "claim": "monthly 2012-17: band lo",
-      "computed": 25.29864373933401,
-      "paper": 25,
+      "computed": 43.67884408192495,
+      "paper": 44,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: band hi",
-      "computed": 201.70558350651277,
-      "paper": 202,
+      "computed": 198.10462898654887,
+      "paper": 198,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: mid",
-      "computed": 109.53674087586762,
-      "paper": 110,
+      "computed": 117.76226897769585,
+      "paper": 118,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: gap lo",
-      "computed": 193.35215667659077,
-      "paper": 193,
+      "computed": 174.97195633399988,
+      "paper": 175,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: gap mid",
-      "computed": 109.1140595400572,
-      "paper": 109,
+      "computed": 100.88853143822895,
+      "paper": 101,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: se mid",
-      "computed": 87.16776312337363,
+      "computed": 87.05985138275462,
       "paper": 87,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2012-17: gap hi",
-      "computed": 16.945216909412064,
-      "paper": 17,
+      "computed": 20.546171429375953,
+      "paper": 21,
       "tolerance": 0.6
     },
     {
@@ -1670,44 +1664,44 @@
     },
     {
       "claim": "monthly 2018-26: band lo",
-      "computed": 16.13683687107506,
+      "computed": 15.758750974551436,
       "paper": 16,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-26: band hi",
-      "computed": 46.4759883059922,
-      "paper": 46,
+      "computed": 45.3969275661431,
+      "paper": 45,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-26: mid",
-      "computed": 31.16856073319864,
-      "paper": 31,
+      "computed": 30.46880529718668,
+      "paper": 30,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-26: gap lo",
-      "computed": 29.82378676430598,
+      "computed": 30.201872660829604,
       "paper": 30,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-26: gap mid",
-      "computed": 14.792062902182396,
+      "computed": 15.491818338194358,
       "paper": 15,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-26: se mid",
-      "computed": 23.76236679017606,
-      "paper": 24,
+      "computed": 23.466962450276995,
+      "paper": 23,
       "tolerance": 0.6
     },
     {
       "claim": "monthly 2018-26: gap hi",
-      "computed": -0.5153646706111594,
-      "paper": -1,
+      "computed": 0.563696069237948,
+      "paper": 1,
       "tolerance": 0.6
     },
     {
@@ -1717,14 +1711,20 @@
       "tolerance": 0.6
     },
     {
+      "claim": "D.2 robust errors (six lags): largest change in a t-statistic of Table 5",
+      "computed": 0.3568606404421639,
+      "paper": 0.4,
+      "tolerance": 0.05
+    },
+    {
       "claim": "monthly: t lower edge",
-      "computed": 2.525836630770297,
-      "paper": 2.5,
+      "computed": 2.345734763051752,
+      "paper": 2.3,
       "tolerance": 0.06
     },
     {
       "claim": "monthly: t mid 2015-17",
-      "computed": 2.1169888990268886,
+      "computed": 2.1192674367595226,
       "paper": 2.1,
       "tolerance": 0.06
     },
@@ -1760,44 +1760,44 @@
     },
     {
       "claim": "ex-2013 mid",
-      "computed": 57.1144650275867,
-      "paper": 57,
+      "computed": 59.5437765699551,
+      "paper": 60,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 gap mid",
-      "computed": 11.508136357267963,
-      "paper": 12,
+      "computed": 9.07882481489957,
+      "paper": 9,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 se mid",
-      "computed": 20.74324484149653,
+      "computed": 20.685642441866438,
       "paper": 21,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 gap lo",
-      "computed": 50.07173040320163,
-      "paper": 50,
+      "computed": 43.612942210540744,
+      "paper": 44,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 gap hi",
-      "computed": -29.912262369084342,
-      "paper": -30,
+      "computed": -27.6174198726949,
+      "paper": -28,
       "tolerance": 0.6
     },
     {
       "claim": "ex-2013 t lo",
-      "computed": 2.5086452295483403,
-      "paper": 2.5,
+      "computed": 2.1885389346359623,
+      "paper": 2.2,
       "tolerance": 0.06
     },
     {
       "claim": "monthly corr with mid",
-      "computed": -0.002614063924778797,
-      "paper": 0.0,
+      "computed": 0.031659989576445245,
+      "paper": 0.03,
       "tolerance": 0.005
     },
     {
@@ -1805,12 +1805,6 @@
       "computed": 0.16707960702378258,
       "paper": 0.17,
       "tolerance": 0.01
-    },
-    {
-      "claim": "monthly gap mid over the 5y-window months",
-      "computed": 79.6914388317673,
-      "paper": 80,
-      "tolerance": 0.6
     },
     {
       "claim": "n those months",
@@ -1826,27 +1820,9 @@
     },
     {
       "claim": "band width at the end of May 2026, points",
-      "computed": 15.264347395146721,
-      "paper": 15,
-      "tolerance": 1
-    },
-    {
-      "claim": "rebalanced 5%: added return",
-      "computed": 0.45,
-      "paper": 0.45,
-      "tolerance": 0.01
-    },
-    {
-      "claim": "rebalanced 5%: portfolio vol",
-      "computed": 14.55903585406671,
-      "paper": 14.6,
-      "tolerance": 0.06
-    },
-    {
-      "claim": "rebalanced 5%: extra drag",
-      "computed": 0.06577762500000003,
-      "paper": 0.07,
-      "tolerance": 0.01
+      "computed": 13.279649280440836,
+      "paper": 13,
+      "tolerance": 0.5
     },
     {
       "claim": "equity compound",
@@ -1903,126 +1879,6 @@
       "tolerance": 0.155
     },
     {
-      "claim": "D.6 BTC share 2013-06-30",
-      "computed": 95.28159797244585,
-      "paper": 95,
-      "tolerance": 1
-    },
-    {
-      "claim": "D.6 BTC share 2017-06-30",
-      "computed": 37.61490948384851,
-      "paper": 38,
-      "tolerance": 1
-    },
-    {
-      "claim": "D.6 BTC share 2021-09-30",
-      "computed": 48.22776649074899,
-      "paper": 48,
-      "tolerance": 1
-    },
-    {
-      "claim": "D.6 BTC share 2026-05-31",
-      "computed": 74.33757781618145,
-      "paper": 74,
-      "tolerance": 1
-    },
-    {
-      "claim": "D.6 w 2013-06-30",
-      "computed": 1.717572068853394,
-      "paper": 1.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.6 w 2017-06-30",
-      "computed": 21.530992481437742,
-      "paper": 21,
-      "tolerance": 0.8
-    },
-    {
-      "claim": "D.6 w 2021-09-30",
-      "computed": 18.62465106291604,
-      "paper": 19,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.6 w 2023-06-30",
-      "computed": 8.734251722168377,
-      "paper": 9,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.6 w 2026-05-31",
-      "computed": 15.097517920563899,
-      "paper": 15,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.6 w 2026 with institutions",
-      "computed": 7.857465112299157,
-      "paper": 8,
-      "tolerance": 0.2
-    },
-    {
-      "claim": "D.6 base w 2013",
-      "computed": 3.3933358988246525,
-      "paper": 3.4,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.6 base w 2023",
-      "computed": 10.780155681684814,
-      "paper": 11,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.6 monthly gap 2012-2026",
-      "computed": 54.95017996174632,
-      "paper": 55,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.6 monthly gap 2012-2017",
-      "computed": 111.6331688326667,
-      "paper": 112,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.6 monthly gap 2018-2026",
-      "computed": 14.13842797468366,
-      "paper": 14,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.6 2026 band lo",
-      "computed": 12.072572220451615,
-      "paper": 12,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.6 2026 band hi",
-      "computed": 23.371628648607963,
-      "paper": 23,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.1 required return 2026, crypto-wide back-cast: median",
-      "computed": 17.684395819466015,
-      "paper": 17.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 required return 2026, crypto-wide back-cast: 5%",
-      "computed": 15.078123759206402,
-      "paper": 15.1,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 required return 2026, crypto-wide back-cast: 95%",
-      "computed": 20.628070028969468,
-      "paper": 20.6,
-      "tolerance": 0.1
-    },
-    {
       "claim": "fn: all-in at 120% vol",
       "computed": 144.0,
       "paper": 144,
@@ -2030,7 +1886,7 @@
     },
     {
       "claim": "fn: conc term lo",
-      "computed": 1.4111999999999998,
+      "computed": 1.2348,
       "paper": 1,
       "tolerance": 0.5
     },
@@ -2066,13 +1922,13 @@
     },
     {
       "claim": "rent lo",
-      "computed": 2.6000000000000014,
-      "paper": 3,
+      "computed": 2.400000000000002,
+      "paper": 2,
       "tolerance": 0.5
     },
     {
       "claim": "rent hi",
-      "computed": 6.200000000000001,
+      "computed": 6.000000000000002,
       "paper": 6,
       "tolerance": 0.5
     },
@@ -2090,15 +1946,15 @@
     },
     {
       "claim": "required at gamma=1",
-      "computed": 16.2814,
+      "computed": 16.1932,
       "paper": 16,
       "tolerance": 0.3
     },
     {
       "claim": "required at central gamma 1.9",
-      "computed": 18.42466,
+      "computed": 18.257080000000002,
       "paper": 18.3,
-      "tolerance": 0.3
+      "tolerance": 0.05
     },
     {
       "claim": "required at gamma=0 (central)",
@@ -2107,136 +1963,130 @@
       "tolerance": 0.01
     },
     {
-      "claim": "2025 stated 13.8 inside the 12-15 floor",
-      "computed": 13.8,
-      "paper": 13.5,
-      "tolerance": 1.5
+      "claim": "gamma 1-2.8: median",
+      "computed": 18.105279658267857,
+      "paper": 18.1,
+      "tolerance": 0.05
     },
     {
-      "claim": "gamma 1-2.8: median",
-      "computed": 18.286973882016344,
+      "claim": "gamma 1-2.8: 5%",
+      "computed": 15.184776736305794,
+      "paper": 15.2,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "gamma 1-2.8: 95%",
+      "computed": 21.84005964118346,
+      "paper": 21.8,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "household gamma: median",
+      "computed": 18.983840834714588,
+      "paper": 19.0,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "household gamma: 5%",
+      "computed": 16.025029988927677,
+      "paper": 16.0,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "household gamma: 95%",
+      "computed": 22.326176145757607,
+      "paper": 22.3,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 mortality 0.3-1.5: median",
+      "computed": 17.042579984447812,
+      "paper": 17.0,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 mortality: 5%",
+      "computed": 14.59048523216501,
+      "paper": 14.6,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 mortality: 95%",
+      "computed": 20.604343544587337,
+      "paper": 20.6,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.11-0.19: median",
+      "computed": 18.84366151775954,
+      "paper": 18.8,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.11-0.19: 5%",
+      "computed": 15.880152281177578,
+      "paper": 15.9,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.11-0.19: 95%",
+      "computed": 22.244661638213394,
+      "paper": 22.3,
+      "tolerance": 0.06
+    },
+    {
+      "claim": "D.1 gamma,w together: median",
+      "computed": 18.334174121065868,
       "paper": 18.3,
       "tolerance": 0.1
     },
     {
-      "claim": "gamma 1-2.8: 5%",
-      "computed": 15.37285852512974,
-      "paper": 15.4,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "gamma 1-2.8: 95%",
-      "computed": 21.92772254841648,
-      "paper": 21.9,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "household gamma: median",
-      "computed": 19.189043577183636,
-      "paper": 19.2,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "household gamma: 5%",
-      "computed": 16.332203952368733,
-      "paper": 16.3,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "household gamma: 95%",
-      "computed": 22.406065521646823,
-      "paper": 22.4,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 mortality 0.3-1.5: median",
-      "computed": 17.231161525726375,
-      "paper": 17.2,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 mortality: 5%",
-      "computed": 14.780546581907867,
-      "paper": 14.8,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 mortality: 95%",
-      "computed": 20.685092355922805,
-      "paper": 20.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 w 0.12-0.19: median",
-      "computed": 19.027981594462585,
-      "paper": 19.0,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 w: 5%",
-      "computed": 16.03329728977034,
-      "paper": 16.0,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 w: 95%",
-      "computed": 22.370850231286664,
-      "paper": 22.4,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 gamma,w together: median",
-      "computed": 18.49946504557623,
-      "paper": 18.5,
-      "tolerance": 0.1
-    },
-    {
       "claim": "D.1 gamma,w together: 5%",
-      "computed": 14.86283315466815,
-      "paper": 14.9,
+      "computed": 14.675090690796146,
+      "paper": 14.7,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 gamma,w together: 95%",
-      "computed": 23.104003458351617,
+      "computed": 23.0615590780264,
       "paper": 23.1,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 gamma,w opposite: median",
-      "computed": 18.13725995304723,
-      "paper": 18.1,
+      "computed": 17.94269371175133,
+      "paper": 17.9,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 gamma,w opposite: 5%",
-      "computed": 16.268142755261533,
-      "paper": 16.3,
+      "computed": 16.085050648976424,
+      "paper": 16.1,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 gamma,w opposite: 95%",
-      "computed": 19.997755973471794,
-      "paper": 20.0,
+      "computed": 19.790794941012248,
+      "paper": 19.8,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 all together: 5%",
-      "computed": 13.208077397285445,
-      "paper": 13.2,
+      "computed": 13.02129760000113,
+      "paper": 13.0,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 all together: 95%",
-      "computed": 25.065065777945417,
-      "paper": 25.1,
+      "computed": 25.03600960000113,
+      "paper": 25.0,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 all together: median",
-      "computed": 18.438201899199292,
-      "paper": 18.4,
-      "tolerance": 0.1
+      "computed": 18.257080000005953,
+      "paper": 18.3,
+      "tolerance": 0.05
     },
     {
       "claim": "exponent real-time: min 2012-14",
@@ -2318,8 +2168,8 @@
     },
     {
       "claim": "D.3 real-time age rule: closer %",
-      "computed": 83.1858407079646,
-      "paper": 83,
+      "computed": 73.45132743362832,
+      "paper": 73,
       "tolerance": 0.6
     },
     {
@@ -2348,14 +2198,14 @@
     },
     {
       "claim": "example: midpoint Dec 2023, % a year",
-      "computed": 22.503156988766843,
-      "paper": 22.5,
+      "computed": 24.997193256658946,
+      "paper": 25.0,
       "tolerance": 0.05
     },
     {
       "claim": "example: required for the month, %",
-      "computed": 1.8929565672827664,
-      "paper": 1.9,
+      "computed": 2.1049473955804476,
+      "paper": 2.1,
       "tolerance": 0.05
     },
     {
@@ -2366,8 +2216,8 @@
     },
     {
       "claim": "example: gap, points",
-      "computed": -1.0110591936310254,
-      "paper": -1.0,
+      "computed": -1.2230500219287066,
+      "paper": -1.2,
       "tolerance": 0.05
     },
     {
@@ -2390,56 +2240,56 @@
     },
     {
       "claim": "grouping: yearly gap min",
-      "computed": -280.60375819977713,
-      "paper": -281,
+      "computed": -291.9801278317844,
+      "paper": -292,
       "tolerance": 0.6
     },
     {
       "claim": "grouping: yearly gap max",
-      "computed": 624.509729994957,
-      "paper": 625,
+      "computed": 613.3786772489991,
+      "paper": 613,
       "tolerance": 0.6
     },
     {
       "claim": "grouping: yearly se min",
-      "computed": 35.74864567329428,
+      "computed": 35.705713525653664,
       "paper": 36,
       "tolerance": 0.6
     },
     {
       "claim": "grouping: yearly se max",
-      "computed": 474.05021880315013,
+      "computed": 473.0709642115009,
       "paper": 474,
       "tolerance": 1
     },
     {
       "claim": "grouping: two-year gap from 2014",
-      "computed": -147.407151308351,
-      "paper": -147,
+      "computed": -157.94596828711707,
+      "paper": -158,
       "tolerance": 0.6
     },
     {
       "claim": "grouping: two-year t from 2014",
-      "computed": -2.884184720154603,
-      "paper": -2.9,
+      "computed": -3.1000140615476313,
+      "paper": -3.1,
       "tolerance": 0.06
     },
     {
       "claim": "grouping: two-year gap from 2016",
-      "computed": 154.10401943006835,
-      "paper": 154,
+      "computed": 158.5121585449065,
+      "paper": 159,
       "tolerance": 0.6
     },
     {
       "claim": "grouping: two-year t from 2016",
-      "computed": 2.497562437443572,
-      "paper": 2.5,
+      "computed": 2.6081613307618685,
+      "paper": 2.6,
       "tolerance": 0.06
     },
     {
       "claim": "grouping: two-year gap from 2018",
-      "computed": -25.312334967298494,
-      "paper": -25,
+      "computed": -18.43274365344824,
+      "paper": -18,
       "tolerance": 0.6
     },
     {
@@ -2450,7 +2300,7 @@
     },
     {
       "claim": "grouping: two-year gap from 2020",
-      "computed": 75.08588380732678,
+      "computed": 74.62735200004425,
       "paper": 75,
       "tolerance": 0.6
     },
@@ -2462,8 +2312,8 @@
     },
     {
       "claim": "grouping: two-year gap from 2022",
-      "computed": 0.08365528695716273,
-      "paper": 0,
+      "computed": -6.9797772850356266,
+      "paper": -7,
       "tolerance": 0.6
     },
     {
@@ -2474,8 +2324,8 @@
     },
     {
       "claim": "grouping: two-year gap from 2024",
-      "computed": 15.6076138194765,
-      "paper": 16,
+      "computed": 19.007047517389804,
+      "paper": 19,
       "tolerance": 0.6
     },
     {
@@ -2486,8 +2336,8 @@
     },
     {
       "claim": "grouping: four-year gap 2012-2015",
-      "computed": 86.61907959505164,
-      "paper": 87,
+      "computed": 72.0767178848902,
+      "paper": 72,
       "tolerance": 0.6
     },
     {
@@ -2498,8 +2348,8 @@
     },
     {
       "claim": "grouping: four-year gap 2016-2019",
-      "computed": 64.39584223138493,
-      "paper": 64,
+      "computed": 70.03970744572914,
+      "paper": 70,
       "tolerance": 0.6
     },
     {
@@ -2510,8 +2360,8 @@
     },
     {
       "claim": "grouping: four-year gap 2020-2023",
-      "computed": 37.584769547141974,
-      "paper": 38,
+      "computed": 33.823787357504315,
+      "paper": 34,
       "tolerance": 0.6
     },
     {
@@ -2522,8 +2372,8 @@
     },
     {
       "claim": "grouping: four-year gap 2024-2026",
-      "computed": 10.094049684663869,
-      "paper": 10,
+      "computed": 13.143781726499514,
+      "paper": 13,
       "tolerance": 0.6
     },
     {
@@ -2552,8 +2402,8 @@
     },
     {
       "claim": "B.2 w lower bound at 3%",
-      "computed": 11.901649269875584,
-      "paper": 12,
+      "computed": 10.67443393279297,
+      "paper": 11,
       "tolerance": 0.5
     },
     {
@@ -2570,8 +2420,8 @@
     },
     {
       "claim": "B.2 survey-type wealth ($tn)",
-      "computed": 6.595972892733577,
-      "paper": 7,
+      "computed": 8.078710986400639,
+      "paper": 8,
       "tolerance": 0.5
     },
     {
@@ -2599,142 +2449,82 @@
       "tolerance": 0.05
     },
     {
-      "claim": "D.4 ownership alt: w 2017",
-      "computed": 4.579894674134293,
-      "paper": 5,
+      "claim": "D.4 ownership alt: early holder mid-2019",
+      "computed": 0.754635595950895,
+      "paper": 0.75,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 ownership alt: early holder mid-2019, baseline",
+      "computed": 0.5062570272101286,
+      "paper": 0.51,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 ownership alt: upper edge mid-2019",
+      "computed": 62.54786141670158,
+      "paper": 63,
       "tolerance": 0.5
     },
     {
-      "claim": "D.4 ownership alt: w 2026 owners",
-      "computed": 6.346662146095635,
-      "paper": 6,
+      "claim": "D.4 ownership alt: upper edge mid-2019, baseline",
+      "computed": 51.38319989969219,
+      "paper": 51,
       "tolerance": 0.5
     },
     {
       "claim": "D.4 ownership alt: w 2026 with funds",
-      "computed": 4.172516101031265,
-      "paper": 4,
+      "computed": 7.422142480936945,
+      "paper": 7,
       "tolerance": 0.5
     },
     {
       "claim": "D.4 ownership alt: anchor weight unchanged",
-      "computed": 18.62465106291604,
-      "paper": 18.62465106291604,
+      "computed": 19.0,
+      "paper": 19.0,
       "tolerance": 0.01
     },
     {
-      "claim": "D.4 ownership alt: band 2017 lo",
-      "computed": 12.76094692853258,
-      "paper": 13,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 ownership alt: band 2017 hi",
-      "computed": 66.63042739417953,
-      "paper": 67,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 ownership alt: band 2026 lo",
-      "computed": 11.430237361607439,
-      "paper": 11,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 ownership alt: band 2026 hi",
-      "computed": 19.100540192263367,
-      "paper": 19,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 ownership alt: gap to midpoint, full",
-      "computed": 60.738649167085384,
-      "paper": 61,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 ownership alt: gap since 2018",
-      "computed": 20.67478145415596,
-      "paper": 21,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 ownership alt: se since 2018",
-      "computed": 23.508684690933162,
-      "paper": 24,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 wealth per owner 2021, baseline ($k)",
-      "computed": 152.89500464174242,
-      "paper": 150,
-      "tolerance": 8
-    },
-    {
-      "claim": "D.4 wealth per owner 2021, 3% ownership ($k)",
-      "computed": 560.6150170197221,
-      "paper": 560,
-      "tolerance": 25
-    },
-    {
-      "claim": "D.1 table: w 0.04-0.06 median",
-      "computed": 15.66016321424309,
-      "paper": 15.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 table: w 0.04-0.06 5%",
-      "computed": 13.670308466940057,
-      "paper": 13.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 table: w 0.04-0.06 95%",
-      "computed": 17.65619513666174,
-      "paper": 17.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 table: w 0.08-0.15 median",
-      "computed": 17.69996111401899,
-      "paper": 17.7,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 table: w 0.08-0.15 5%",
-      "computed": 15.091687685580812,
-      "paper": 15.1,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "D.1 table: w 0.08-0.15 95%",
-      "computed": 20.615059417967046,
-      "paper": 20.6,
-      "tolerance": 0.1
-    },
-    {
-      "claim": "A.4 required return at a 7-point premium",
-      "computed": 23.55,
-      "paper": 24,
+      "claim": "D.4 ownership alt: band 2013 lo",
+      "computed": 56.45539970702501,
+      "paper": 56,
       "tolerance": 0.5
     },
     {
-      "claim": "A.4 required return at an 8-point premium",
-      "computed": 25.3,
+      "claim": "D.4 ownership alt: band 2013 hi",
+      "computed": 231.30641951065792,
+      "paper": 231,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 ownership alt: band 2026 lo",
+      "computed": 11.996689786227238,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 ownership alt: band 2026 hi",
+      "computed": 25.276339066668076,
       "paper": 25,
-      "tolerance": 0.4
+      "tolerance": 0.5
     },
     {
-      "claim": "A.4 Sharpe at 7",
-      "computed": 0.4416666666666667,
-      "paper": 0.44,
-      "tolerance": 0.006
+      "claim": "D.4 ownership alt: gap 2012-17",
+      "computed": 100.88853143822895,
+      "paper": 101,
+      "tolerance": 0.5
     },
     {
-      "claim": "A.4 Sharpe at 8",
-      "computed": 0.48333333333333334,
-      "paper": 0.48,
-      "tolerance": 0.006
+      "claim": "D.4 ownership alt: gap since 2018",
+      "computed": 14.694562140048264,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 ownership alt: no gap moves by more than a point",
+      "computed": 1.0,
+      "paper": 1,
+      "tolerance": 0
     },
     {
       "claim": "beta table 2y: beta",
@@ -2882,39 +2672,39 @@
     },
     {
       "claim": "D.1 beta 1.3-2.2: median",
-      "computed": 18.32093379738379,
-      "paper": 18.3,
+      "computed": 18.140569494986792,
+      "paper": 18.1,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 beta 1.3-2.2: 5%",
-      "computed": 15.038755074132219,
-      "paper": 15.0,
+      "computed": 14.82685403246877,
+      "paper": 14.8,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 beta 1.3-2.2: 95%",
-      "computed": 22.180890471067954,
-      "paper": 22.2,
+      "computed": 22.081047977363756,
+      "paper": 22.1,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 beta normal: median",
-      "computed": 18.356862076951657,
-      "paper": 18.4,
+      "computed": 18.177914350014202,
+      "paper": 18.2,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 beta normal: 5%",
-      "computed": 14.235217307153425,
-      "paper": 14.2,
+      "computed": 14.046566643934828,
+      "paper": 14.0,
       "tolerance": 0.1
     },
     {
       "claim": "D.1 beta normal: 95%",
-      "computed": 22.84606181538648,
-      "paper": 22.9,
-      "tolerance": 0.11
+      "computed": 22.73316201137239,
+      "paper": 22.7,
+      "tolerance": 0.1
     },
     {
       "claim": "rolling corr min since mid-2022",
@@ -2929,38 +2719,68 @@
       "tolerance": 0.06
     },
     {
-      "claim": "D.1 w 0.08-0.12: median",
-      "computed": 17.23087401702531,
-      "paper": 17.2,
-      "tolerance": 0.1
+      "claim": "S8 rolling correlation, highest since 2012",
+      "computed": 0.5743068799875484,
+      "paper": 0.57,
+      "tolerance": 0.005
     },
     {
-      "claim": "D.1 w 0.08-0.12: 5%",
-      "computed": 14.837237662872976,
-      "paper": 14.8,
-      "tolerance": 0.1
+      "claim": "S8 rolling correlation, lowest since 2012 is about zero",
+      "computed": -0.04641823696233667,
+      "paper": 0.0,
+      "tolerance": 0.05
     },
     {
-      "claim": "D.1 w 0.08-0.12: 95%",
-      "computed": 19.72386624321168,
-      "paper": 19.7,
-      "tolerance": 0.1
+      "claim": "D.1 w 0.06-0.12: median",
+      "computed": 16.878634059846824,
+      "paper": 16.9,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.06-0.12: 5%",
+      "computed": 14.514490691903578,
+      "paper": 14.5,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.06-0.12: 95%",
+      "computed": 19.447949044473315,
+      "paper": 19.5,
+      "tolerance": 0.06
+    },
+    {
+      "claim": "D.1 w 0.05-0.08: median",
+      "computed": 16.075395609594462,
+      "paper": 16.1,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.05-0.08: 5%",
+      "computed": 13.981896247063522,
+      "paper": 14.0,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.1 w 0.05-0.08: 95%",
+      "computed": 18.197670105635115,
+      "paper": 18.2,
+      "tolerance": 0.05
     },
     {
       "claim": "compound range lo",
-      "computed": 6.6,
+      "computed": 6.399999999999999,
       "paper": 7,
-      "tolerance": 0.5
+      "tolerance": 0.61
     },
     {
       "claim": "compound range hi",
-      "computed": 13.099999999999998,
+      "computed": 13.0,
       "paper": 13,
       "tolerance": 0.5
     },
     {
       "claim": "compound envelope lo",
-      "computed": 3.8999999999999986,
+      "computed": 3.6999999999999993,
       "paper": 4,
       "tolerance": 0.5
     },
@@ -2978,8 +2798,8 @@
     },
     {
       "claim": "compound central",
-      "computed": 9.5,
-      "paper": 9.5,
+      "computed": 9.3,
+      "paper": 9.3,
       "tolerance": 0.05
     },
     {
@@ -2993,36 +2813,6 @@
       "computed": 4.6338,
       "paper": 4.6,
       "tolerance": 0.05
-    },
-    {
-      "claim": "D.5 2013 lo",
-      "computed": 17.830334843980946,
-      "paper": 18,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.5 2026 hi",
-      "computed": 30.012704038232375,
-      "paper": 30,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.5 2026 lo",
-      "computed": 12.193551116605072,
-      "paper": 12,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.5 5y gap",
-      "computed": 24.473428476320095,
-      "paper": 24.5,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.5 monthly gap",
-      "computed": 54.32987263984977,
-      "paper": 54,
-      "tolerance": 0.6
     },
     {
       "claim": "BTC share of global household wealth (about $510T) is well under 1%",
@@ -3218,14 +3008,14 @@
     },
     {
       "claim": "compound table btc: compound",
-      "computed": 9.48,
-      "paper": 9.5,
+      "computed": 9.280000000000001,
+      "paper": 9.3,
       "tolerance": 0.05
     },
     {
       "claim": "compound table btc: Sharpe",
-      "computed": 0.3166666666666667,
-      "paper": 0.32,
+      "computed": 0.31190476190476196,
+      "paper": 0.31,
       "tolerance": 0.006
     },
     {
@@ -3236,14 +3026,14 @@
     },
     {
       "claim": "compound table eth: compound",
-      "computed": 2.919999999999998,
-      "paper": 2.9,
+      "computed": 2.5199999999999996,
+      "paper": 2.5,
       "tolerance": 0.05
     },
     {
       "claim": "compound table eth: Sharpe",
-      "computed": 0.2875,
-      "paper": 0.29,
+      "computed": 0.28125,
+      "paper": 0.28,
       "tolerance": 0.006
     },
     {
@@ -3278,14 +3068,14 @@
     },
     {
       "claim": "compound table btc: Sharpe on the compound return",
-      "computed": 0.10666666666666667,
-      "paper": 0.11,
+      "computed": 0.10190476190476193,
+      "paper": 0.1,
       "tolerance": 0.0051
     },
     {
       "claim": "compound table eth: Sharpe on the compound return",
-      "computed": -0.03250000000000003,
-      "paper": -0.03,
+      "computed": -0.03875000000000001,
+      "paper": -0.04,
       "tolerance": 0.0051
     },
     {
@@ -3296,14 +3086,14 @@
     },
     {
       "claim": "drag share BTC about half",
-      "computed": 0.48087431693989074,
+      "computed": 0.4861878453038674,
       "paper": 0.5,
       "tolerance": 0.03
     },
     {
       "claim": "drag share ETH nearly nine-tenths",
-      "computed": 0.8760683760683762,
-      "paper": 0.88,
+      "computed": 0.8913043478260869,
+      "paper": 0.89,
       "tolerance": 0.01
     },
     {
@@ -3314,14 +3104,14 @@
     },
     {
       "claim": "age rule closer share",
-      "computed": 90.2654867256637,
-      "paper": 90,
+      "computed": 80.53097345132744,
+      "paper": 81,
       "tolerance": 0.6
     },
     {
       "claim": "corr realized, mid",
-      "computed": 0.28437754131548915,
-      "paper": 0.28,
+      "computed": 0.43203910828440295,
+      "paper": 0.43,
       "tolerance": 0.006
     },
     {
@@ -3332,51 +3122,51 @@
     },
     {
       "claim": "Fig6 2013 total",
-      "computed": 126.02466820831306,
-      "paper": 126,
-      "tolerance": 1
+      "computed": 143.88090960884145,
+      "paper": 144,
+      "tolerance": 0.5
     },
     {
       "claim": "Fig6 2013 conc share",
-      "computed": 87.00413162530377,
-      "paper": 87,
-      "tolerance": 1.5
+      "computed": 88.61697493814457,
+      "paper": 89,
+      "tolerance": 0.6
     },
     {
       "claim": "Fig6 2021 conc share (text: about 70%)",
-      "computed": 68.85672870667791,
-      "paper": 69,
-      "tolerance": 1.5
+      "computed": 69.25482200692157,
+      "paper": 70,
+      "tolerance": 1.0
     },
     {
       "claim": "Fig6 2026 total",
-      "computed": 20.38579945502543,
-      "paper": 20,
-      "tolerance": 0.7
+      "computed": 19.204207058401444,
+      "paper": 19.2,
+      "tolerance": 0.05
     },
     {
       "claim": "Fig6 2026 share rf",
-      "computed": 21.534598187748745,
-      "paper": 22,
-      "tolerance": 1.5
+      "computed": 22.85957439768108,
+      "paper": 23,
+      "tolerance": 0.51
     },
     {
       "claim": "Fig6 2026 share market",
-      "computed": 35.33053081203228,
-      "paper": 35,
-      "tolerance": 1.5
+      "computed": 37.50434025124699,
+      "paper": 38,
+      "tolerance": 0.51
     },
     {
       "claim": "Fig6 2026 share conc",
-      "computed": 33.81465766155779,
-      "paper": 34,
-      "tolerance": 1.5
+      "computed": 29.7424198942168,
+      "paper": 30,
+      "tolerance": 0.51
     },
     {
       "claim": "Fig6 2026 share mort",
-      "computed": 9.32021333866119,
-      "paper": 9,
-      "tolerance": 1.5
+      "computed": 9.893665456855139,
+      "paper": 10,
+      "tolerance": 0.51
     },
     {
       "claim": "ETH drift 2021Q3->",
@@ -3434,7 +3224,7 @@
     },
     {
       "claim": "sizing",
-      "computed": 8.31443688586546,
+      "computed": 7.93650793650794,
       "paper": 8,
       "tolerance": 0.5
     },
@@ -3446,45 +3236,33 @@
     },
     {
       "claim": "sizing across the hurdle range, low",
-      "computed": 4.913076341647773,
+      "computed": 4.535147392290255,
       "paper": 5,
       "tolerance": 0.5
     },
     {
       "claim": "sizing across the hurdle range, high",
-      "computed": 11.71579743008315,
-      "paper": 12,
+      "computed": 11.33786848072563,
+      "paper": 11,
       "tolerance": 0.5
     },
     {
       "claim": "Sharpe BTC",
-      "computed": 0.3166666666666667,
-      "paper": 0.32,
+      "computed": 0.31190476190476196,
+      "paper": 0.31,
       "tolerance": 0.006
     },
     {
       "claim": "Sharpe BTC ex mort",
-      "computed": 0.27142857142857146,
+      "computed": 0.2666666666666667,
       "paper": 0.27,
       "tolerance": 0.01
     },
     {
-      "claim": "Sharpe market term",
-      "computed": 0.16666666666666666,
-      "paper": 0.15,
-      "tolerance": 0.02
-    },
-    {
       "claim": "Sharpe conc",
-      "computed": 0.10772999999999999,
-      "paper": 0.11,
-      "tolerance": 0.01
-    },
-    {
-      "claim": "Sharpe sum",
-      "computed": 0.31,
-      "paper": 0.31,
-      "tolerance": 0.001
+      "computed": 0.10374,
+      "paper": 0.1,
+      "tolerance": 0.005
     },
     {
       "claim": "Sharpe mort",
@@ -3493,76 +3271,58 @@
       "tolerance": 0.005
     },
     {
-      "claim": "Sharpe diluted",
-      "computed": 0.2,
-      "paper": 0.2,
-      "tolerance": 0.001
-    },
-    {
-      "claim": "Sharpe units 2013",
-      "computed": 0.8167253908400892,
-      "paper": 0.8,
-      "tolerance": 0.05
-    },
-    {
-      "claim": "hist premium BTC required",
-      "computed": 25.0,
-      "paper": 25,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "hist premium BTC Sharpe",
-      "computed": 0.47619047619047616,
-      "paper": 0.48,
-      "tolerance": 0.01
-    },
-    {
-      "claim": "diluted Sharpe",
-      "computed": 0.19,
-      "paper": 0.19,
-      "tolerance": 0.01
-    },
-    {
       "claim": "B: wealth 2021Q3 $T",
       "computed": 4.33916023173265,
       "paper": 4.3,
       "tolerance": 0.2
     },
     {
-      "claim": "B: survey-holder wealth 2026 $T",
-      "computed": 6.595972892733577,
-      "paper": 7,
-      "tolerance": 0.45
+      "claim": "B: surveyed owners' wealth May 2026 $T",
+      "computed": 8.078710986400639,
+      "paper": 8,
+      "tolerance": 0.5
     },
     {
-      "claim": "B: w 2013",
-      "computed": 3.3933358988246525,
-      "paper": 3,
-      "tolerance": 0.6
+      "claim": "D.4 market-value path: w mid-2012",
+      "computed": 0.6832521520490793,
+      "paper": 0.7,
+      "tolerance": 0.05
     },
     {
-      "claim": "B: w 2017",
-      "computed": 16.792947138492416,
-      "paper": 17,
-      "tolerance": 0.8
+      "claim": "D.4 market-value path: w December 2017",
+      "computed": 79.7684614200997,
+      "paper": 80,
+      "tolerance": 0.5
     },
     {
-      "claim": "B: w 2021",
-      "computed": 17.983667517949232,
-      "paper": 18,
-      "tolerance": 0.8
+      "claim": "D.4 market-value path: w December 2022",
+      "computed": 6.147858396492342,
+      "paper": 6,
+      "tolerance": 0.5
     },
     {
-      "claim": "B: w 2026",
+      "claim": "D.4 market-value path: w mid-2025",
+      "computed": 34.10049343710655,
+      "paper": 34,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 market-value path: w May 2026",
       "computed": 23.271094535684,
       "paper": 23,
-      "tolerance": 0.8
+      "tolerance": 0.5
     },
     {
       "claim": "B: w 2026 with fund and treasury investors",
-      "computed": 7.995383642315433,
-      "paper": 8,
-      "tolerance": 0.6
+      "computed": 7.422142480936945,
+      "paper": 7.4,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.3 the same without 3.5 million lost coins",
+      "computed": 6.57410063746867,
+      "paper": 6.6,
+      "tolerance": 0.05
     },
     {
       "claim": "B: inst value $B",
@@ -3620,8 +3380,8 @@
     },
     {
       "claim": "equity Sharpe range hi",
-      "computed": 0.2857142857142857,
-      "paper": 0.29,
+      "computed": 0.28368794326241137,
+      "paper": 0.28,
       "tolerance": 0.005
     },
     {
@@ -3877,12 +3637,6 @@
       "tolerance": 0.5
     },
     {
-      "claim": "mortality hi: all elite deaths",
-      "computed": 3.54,
-      "paper": 3.5,
-      "tolerance": 0.05
-    },
-    {
       "claim": "beta x ERP lo",
       "computed": 6.0,
       "paper": 6,
@@ -3896,7 +3650,7 @@
     },
     {
       "claim": "conc lo",
-      "computed": 1.4111999999999998,
+      "computed": 1.2348,
       "paper": 1,
       "tolerance": 0.5
     },
@@ -3908,15 +3662,21 @@
     },
     {
       "claim": "early holder sets the upper edge, share of months",
-      "computed": 42.77456647398844,
-      "paper": 43,
+      "computed": 49.13294797687861,
+      "paper": 49,
       "tolerance": 1.0
     },
     {
-      "claim": "early holder last sets it 2019-04",
-      "computed": 201904.0,
-      "paper": 201904,
+      "claim": "early holder last sets it 2019-01",
+      "computed": 201901.0,
+      "paper": 201901,
       "tolerance": 0.1
+    },
+    {
+      "claim": "early holder sets the upper edge in every month of 2012-18",
+      "computed": 1.0,
+      "paper": 1,
+      "tolerance": 0
     },
     {
       "claim": "early weight mid-2018",
@@ -3956,50 +3716,50 @@
     },
     {
       "claim": "band table w_lo 2013-06-30",
-      "computed": 3.3933358988246525,
-      "paper": 3,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.6
     },
     {
       "claim": "band table w_hi 2013-06-30",
-      "computed": 3.3933358988246525,
-      "paper": 3,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.6
     },
     {
       "claim": "band table w_lo 2017-06-30",
-      "computed": 15.012427051649901,
-      "paper": 15,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "band table w_hi 2017-06-30",
-      "computed": 16.792947138492416,
+      "computed": 16.752031923880093,
       "paper": 17,
       "tolerance": 0.6
     },
     {
+      "claim": "band table w_hi 2017-06-30",
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.6
+    },
+    {
       "claim": "band table w_lo 2021-09-30",
-      "computed": 12.083175629369137,
+      "computed": 12.240052095908004,
       "paper": 12,
       "tolerance": 0.6
     },
     {
       "claim": "band table w_hi 2021-09-30",
-      "computed": 18.62465106291604,
+      "computed": 19.0,
       "paper": 19,
       "tolerance": 0.6
     },
     {
-      "claim": "band table w_lo 2026-04-30",
-      "computed": 8.065979988056583,
-      "paper": 8,
+      "claim": "band table w_lo 2026-05-31",
+      "computed": 7.422142480936945,
+      "paper": 7,
       "tolerance": 0.6
     },
     {
-      "claim": "band table w_hi 2026-04-30",
-      "computed": 23.274959088085865,
-      "paper": 23,
+      "claim": "band table w_hi 2026-05-31",
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.6
     },
     {
@@ -4052,44 +3812,44 @@
     },
     {
       "claim": "T5 2012-2026 band lo",
-      "computed": 19.972050472727496,
-      "paper": 20,
+      "computed": 27.44634614871292,
+      "paper": 27,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 band hi",
-      "computed": 111.4557561707328,
-      "paper": 111,
+      "computed": 109.32084263268206,
+      "paper": 109,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 mid",
-      "computed": 63.973835317209335,
-      "paper": 64,
+      "computed": 67.01036236826629,
+      "paper": 67,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 gap lo",
-      "computed": 98.27748437311372,
-      "paper": 98,
+      "computed": 90.80318869712832,
+      "paper": 91,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 gap mid",
-      "computed": 54.27569952863189,
-      "paper": 54,
+      "computed": 51.239172477574925,
+      "paper": 51,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 se mid",
-      "computed": 39.0300379091768,
+      "computed": 38.89854846162717,
       "paper": 39,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2026 gap hi",
-      "computed": 6.79377867510841,
-      "paper": 7,
+      "computed": 8.92869221315915,
+      "paper": 9,
       "tolerance": 0.6
     },
     {
@@ -4106,8 +3866,8 @@
     },
     {
       "claim": "T5 2012-2014 band lo",
-      "computed": 30.578386475007164,
-      "paper": 31,
+      "computed": 60.15565838348155,
+      "paper": 60,
       "tolerance": 0.6
     },
     {
@@ -4118,25 +3878,25 @@
     },
     {
       "claim": "T5 2012-2014 mid",
-      "computed": 157.46926007912913,
-      "paper": 157,
+      "computed": 173.62540341173525,
+      "paper": 174,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2014 gap lo",
-      "computed": 247.11964404889082,
-      "paper": 247,
+      "computed": 217.54237214041646,
+      "paper": 218,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2014 gap mid",
-      "computed": 120.22877044476884,
-      "paper": 120,
+      "computed": 104.07262711216273,
+      "paper": 104,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2014 se mid",
-      "computed": 169.34315159597307,
+      "computed": 169.1884990157389,
       "paper": 169,
       "tolerance": 0.6
     },
@@ -4160,44 +3920,44 @@
     },
     {
       "claim": "T5 2015-2017 band lo",
-      "computed": 20.019610603619185,
-      "paper": 20,
+      "computed": 27.202658838150413,
+      "paper": 27,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2015-2017 band hi",
-      "computed": 105.00402748473809,
-      "paper": 105,
+      "computed": 97.80157585054982,
+      "paper": 98,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2015-2017 mid",
-      "computed": 61.604478368742356,
+      "computed": 61.90017650148164,
       "paper": 62,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2015-2017 gap lo",
-      "computed": 139.58395970433244,
-      "paper": 140,
+      "computed": 132.40091146980123,
+      "paper": 132,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2015-2017 gap mid",
-      "computed": 97.99909193920926,
+      "computed": 97.70339380646999,
       "paper": 98,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2015-2017 se mid",
-      "computed": 46.29174435200961,
+      "computed": 46.10281368267553,
       "paper": 46,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2015-2017 gap hi",
-      "computed": 54.59954282321354,
-      "paper": 55,
+      "computed": 61.80199445740183,
+      "paper": 62,
       "tolerance": 0.6
     },
     {
@@ -4214,44 +3974,44 @@
     },
     {
       "claim": "T5 2018-2020 band lo",
-      "computed": 19.207804258597324,
-      "paper": 19,
+      "computed": 17.412461346604584,
+      "paper": 17,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2020 band hi",
-      "computed": 60.25131725071421,
-      "paper": 60,
+      "computed": 57.02144546143328,
+      "paper": 57,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2020 mid",
-      "computed": 39.47388845646151,
-      "paper": 39,
+      "computed": 37.02503822946846,
+      "paper": 37,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2020 gap lo",
-      "computed": 50.120313752875504,
-      "paper": 50,
+      "computed": 51.91565666486825,
+      "paper": 52,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2020 gap mid",
-      "computed": 29.85422955501132,
-      "paper": 30,
+      "computed": 32.303079782004374,
+      "paper": 32,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2020 se mid",
-      "computed": 47.79003419695828,
-      "paper": 48,
+      "computed": 46.807806290553124,
+      "paper": 47,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2020 gap hi",
-      "computed": 9.076800760758623,
-      "paper": 9,
+      "computed": 12.306672550039552,
+      "paper": 12,
       "tolerance": 0.6
     },
     {
@@ -4268,44 +4028,44 @@
     },
     {
       "claim": "T5 2021-2023 band lo",
-      "computed": 14.362643530803958,
-      "paper": 14,
+      "computed": 15.366017921193047,
+      "paper": 15,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2021-2023 band hi",
-      "computed": 38.97058885632835,
-      "paper": 39,
+      "computed": 43.72836706440069,
+      "paper": 44,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2021-2023 mid",
-      "computed": 26.587615488496663,
-      "paper": 27,
+      "computed": 29.46422375373347,
+      "paper": 29,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2021-2023 gap lo",
-      "computed": 15.608577962501343,
-      "paper": 16,
+      "computed": 14.605203572112254,
+      "paper": 15,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2021-2023 gap mid",
-      "computed": 3.383606004808637,
-      "paper": 3,
+      "computed": 0.5069977395718313,
+      "paper": 1,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2021-2023 se mid",
-      "computed": 38.61530349083505,
-      "paper": 39,
+      "computed": 38.45216015022324,
+      "paper": 38,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2021-2023 gap hi",
-      "computed": -8.999367363023044,
-      "paper": -9,
+      "computed": -13.757145571095394,
+      "paper": -14,
       "tolerance": 0.6
     },
     {
@@ -4322,44 +4082,44 @@
     },
     {
       "claim": "T5 2024-2026 band lo",
-      "computed": 14.468880930719116,
+      "computed": 14.137387998541337,
       "paper": 14,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2024-2026 band hi",
-      "computed": 38.41411282885919,
-      "paper": 38,
+      "computed": 32.595487800629215,
+      "paper": 33,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2024-2026 mid",
-      "computed": 26.379676729219184,
-      "paper": 26,
+      "computed": 23.330286395383084,
+      "paper": 23,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2024-2026 gap lo",
-      "computed": 22.005624118069846,
+      "computed": 22.337117050247624,
       "paper": 22,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2024-2026 gap mid",
-      "computed": 10.094828319569782,
-      "paper": 10,
+      "computed": 13.144218653405883,
+      "paper": 13,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2024-2026 se mid",
-      "computed": 32.93484001807349,
+      "computed": 32.73083300608129,
       "paper": 33,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2024-2026 gap hi",
-      "computed": -1.939607780070223,
-      "paper": -2,
+      "computed": 3.879017248159752,
+      "paper": 4,
       "tolerance": 0.6
     },
     {
@@ -4376,44 +4136,44 @@
     },
     {
       "claim": "T5 2012-2017 band lo",
-      "computed": 25.298998539313175,
-      "paper": 25,
+      "computed": 43.67915861081598,
+      "paper": 44,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 band hi",
-      "computed": 201.70564280978408,
-      "paper": 202,
+      "computed": 198.10441699268995,
+      "paper": 198,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 mid",
-      "computed": 109.53686922393572,
-      "paper": 110,
+      "computed": 117.76278995660844,
+      "paper": 118,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 gap lo",
-      "computed": 193.35180187661166,
-      "paper": 193,
+      "computed": 174.97164180510885,
+      "paper": 175,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 gap mid",
-      "computed": 109.11393119198908,
-      "paper": 109,
+      "computed": 100.88801045931638,
+      "paper": 101,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 se mid",
-      "computed": 87.1678031991982,
+      "computed": 87.05987499988953,
       "paper": 87,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2012-2017 gap hi",
-      "computed": 16.945157606140718,
-      "paper": 17,
+      "computed": 20.54638342323486,
+      "paper": 21,
       "tolerance": 0.6
     },
     {
@@ -4430,44 +4190,44 @@
     },
     {
       "claim": "T5 2018-2026 band lo",
-      "computed": 16.136647864785814,
+      "computed": 15.758721175998721,
       "paper": 16,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2026 band hi",
-      "computed": 46.47583779061589,
-      "paper": 46,
+      "computed": 45.396669093476405,
+      "paper": 45,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2026 mid",
-      "computed": 31.168450904366313,
-      "paper": 31,
+      "computed": 30.468614504659964,
+      "paper": 30,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2026 gap lo",
-      "computed": 29.823975770595233,
+      "computed": 30.201902459382328,
       "paper": 30,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2026 gap mid",
-      "computed": 14.792172731014725,
+      "computed": 15.492009130721083,
       "paper": 15,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2026 se mid",
-      "computed": 23.762382510437686,
-      "paper": 24,
+      "computed": 23.46702004015783,
+      "paper": 23,
       "tolerance": 0.6
     },
     {
       "claim": "T5 2018-2026 gap hi",
-      "computed": -0.5152141552348528,
-      "paper": -1,
+      "computed": 0.5639545419046286,
+      "paper": 1,
       "tolerance": 0.6
     },
     {
@@ -4484,8 +4244,8 @@
     },
     {
       "claim": "T5 note: plain average midpoint 2012-14",
-      "computed": 146.87555555555556,
-      "paper": 147,
+      "computed": 161.2586111111111,
+      "paper": 161,
       "tolerance": 0.6
     },
     {
@@ -4505,42 +4265,6 @@
       "computed": 0.4854189927082162,
       "paper": 0.5,
       "tolerance": 0.03
-    },
-    {
-      "claim": "back-cast w 2012-14 (surveyed owners)",
-      "computed": 6.2775,
-      "paper": 6,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "back-cast w 2015-17 (surveyed owners)",
-      "computed": 12.066388888888888,
-      "paper": 12,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "B.3 example: cap ratio",
-      "computed": 4.884897272398398,
-      "paper": 4.9,
-      "tolerance": 0.05
-    },
-    {
-      "claim": "B.3 example: ownership ratio",
-      "computed": 8.290674986444047,
-      "paper": 8.3,
-      "tolerance": 0.05
-    },
-    {
-      "claim": "B.3 example: ramp",
-      "computed": 0.6666413142683298,
-      "paper": 0.67,
-      "tolerance": 0.01
-    },
-    {
-      "claim": "B.3 example: w",
-      "computed": 16.741593238626145,
-      "paper": 17,
-      "tolerance": 0.5
     },
     {
       "claim": "corr BTC S&P since 2020",
@@ -4820,19 +4544,19 @@
     },
     {
       "claim": "S6 required Ether, average crypto owner (kappa 0.7)",
-      "computed": 23.4,
+      "computed": 23.0,
       "paper": 23,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Ether, average crypto owner (kappa 0.7) 5%",
-      "computed": 19.3,
+      "computed": 18.9,
       "paper": 19,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Ether, average crypto owner (kappa 0.7) 95%",
-      "computed": 29.0,
+      "computed": 28.9,
       "paper": 29,
       "tolerance": 0.6
     },
@@ -4844,7 +4568,7 @@
     },
     {
       "claim": "S6 required Ether, diversified holder (w=0) 5%",
-      "computed": 14.2,
+      "computed": 14.3,
       "paper": 14,
       "tolerance": 0.6
     },
@@ -4856,19 +4580,19 @@
     },
     {
       "claim": "S6 required Large altcoin, average crypto owner",
-      "computed": 22.8,
-      "paper": 23,
+      "computed": 22.5,
+      "paper": 22,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, average crypto owner 5%",
-      "computed": 18.3,
+      "computed": 18.0,
       "paper": 18,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Large altcoin, average crypto owner 95%",
-      "computed": 29.5,
+      "computed": 29.3,
       "paper": 29,
       "tolerance": 0.6
     },
@@ -4892,19 +4616,19 @@
     },
     {
       "claim": "S6 required Small coin, diversified holder (w=0)",
-      "computed": 24.7,
+      "computed": 25.1,
       "paper": 25,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Small coin, diversified holder (w=0) 5%",
-      "computed": 19.5,
+      "computed": 20.1,
       "paper": 20,
       "tolerance": 0.6
     },
     {
       "claim": "S6 required Small coin, diversified holder (w=0) 95%",
-      "computed": 29.9,
+      "computed": 30.0,
       "paper": 30,
       "tolerance": 0.6
     },
@@ -4976,8 +4700,8 @@
     },
     {
       "claim": "S6 weight Ether: low",
-      "computed": 5.6,
-      "paper": 6,
+      "computed": 4.8999999999999995,
+      "paper": 5,
       "tolerance": 0.5
     },
     {
@@ -4988,8 +4712,8 @@
     },
     {
       "claim": "S6 weight large altcoin: low",
-      "computed": 3.76,
-      "paper": 4,
+      "computed": 3.29,
+      "paper": 3,
       "tolerance": 0.5
     },
     {
@@ -5000,14 +4724,14 @@
     },
     {
       "claim": "S6 Ether weight at the midpoint",
-      "computed": 9.45,
-      "paper": 9.5,
-      "tolerance": 0.06
+      "computed": 9.1,
+      "paper": 9.1,
+      "tolerance": 0.001
     },
     {
       "claim": "S6 Ether concentration term as printed",
-      "computed": 7.39328,
-      "paper": 7.4,
+      "computed": 7.081983999999999,
+      "paper": 7.1,
       "tolerance": 0.05
     },
     {
@@ -5030,14 +4754,14 @@
     },
     {
       "claim": "Table 6 Bitcoin: concentration term",
-      "computed": 4.52466,
-      "paper": 4.5,
+      "computed": 4.35708,
+      "paper": 4.4,
       "tolerance": 0.05
     },
     {
       "claim": "Table 6 Bitcoin: sum of the terms",
-      "computed": 18.42466,
-      "paper": 18.4,
+      "computed": 18.257080000000002,
+      "paper": 18.3,
       "tolerance": 0.05
     },
     {
@@ -5060,14 +4784,14 @@
     },
     {
       "claim": "Table 6 Ether: concentration term",
-      "computed": 7.354367999999999,
-      "paper": 7.4,
+      "computed": 7.081983999999999,
+      "paper": 7.1,
       "tolerance": 0.05
     },
     {
       "claim": "Table 6 Ether: sum of the terms",
-      "computed": 23.654367999999998,
-      "paper": 23.7,
+      "computed": 23.381984,
+      "paper": 23.4,
       "tolerance": 0.05
     },
     {
@@ -5090,14 +4814,14 @@
     },
     {
       "claim": "Table 6 large altcoin: concentration term",
-      "computed": 6.9632568,
-      "paper": 7.0,
+      "computed": 6.705358400000001,
+      "paper": 6.7,
       "tolerance": 0.05
     },
     {
       "claim": "Table 6 large altcoin: sum of the terms",
-      "computed": 22.563256799999998,
-      "paper": 22.6,
+      "computed": 22.3053584,
+      "paper": 22.3,
       "tolerance": 0.05
     },
     {
@@ -5108,13 +4832,13 @@
     },
     {
       "claim": "Table 6 small coin: mortality term",
-      "computed": 11.1,
-      "paper": 11.1,
+      "computed": 11.45,
+      "paper": 11.45,
       "tolerance": 0.051
     },
     {
       "claim": "Table 6 small coin: floor",
-      "computed": 24.7,
+      "computed": 25.049999999999997,
       "paper": 25,
       "tolerance": 0.5
     },
@@ -5126,44 +4850,44 @@
     },
     {
       "claim": "Table 6 mortality midpoints: small coin",
-      "computed": 11.1,
-      "paper": 11.1,
+      "computed": 11.45,
+      "paper": 11.5,
       "tolerance": 0.051
     },
     {
-      "claim": "Table 6 Bitcoin: median within 0.3 of the sum of the terms",
+      "claim": "Table 6 Bitcoin: median within 0.4 of the sum of the terms",
       "computed": 1.0,
       "paper": 1,
       "tolerance": 0
     },
     {
-      "claim": "Table 6 Ether: median within 0.3 of the sum of the terms",
+      "claim": "Table 6 Ether: median within 0.4 of the sum of the terms",
       "computed": 1.0,
       "paper": 1,
       "tolerance": 0
     },
     {
-      "claim": "Table 6 large altcoin: median within 0.3 of the sum of the terms",
+      "claim": "Table 6 large altcoin: median within 0.4 of the sum of the terms",
       "computed": 1.0,
       "paper": 1,
       "tolerance": 0
     },
     {
       "claim": "Table 6 against the script output: Bitcoin sum",
-      "computed": 18.4,
-      "paper": 18.4,
+      "computed": 18.3,
+      "paper": 18.3,
       "tolerance": 0.001
     },
     {
       "claim": "Table 6 against the script output: Ether sum",
-      "computed": 23.7,
-      "paper": 23.7,
+      "computed": 23.4,
+      "paper": 23.4,
       "tolerance": 0.001
     },
     {
       "claim": "Table 6 against the script output: Large altcoin sum",
-      "computed": 22.6,
-      "paper": 22.6,
+      "computed": 22.3,
+      "paper": 22.3,
       "tolerance": 0.001
     },
     {
@@ -5222,14 +4946,14 @@
     },
     {
       "claim": "Figure 3: 2012-14 two-standard-error interval, lower end as annotated",
-      "computed": -218.0,
-      "paper": -218,
+      "computed": -234.0,
+      "paper": -234,
       "tolerance": 1.5
     },
     {
       "claim": "Figure 3: 2012-14 two-standard-error interval, upper end as annotated",
-      "computed": 458.0,
-      "paper": 459,
+      "computed": 442.0,
+      "paper": 442,
       "tolerance": 1.5
     },
     {
@@ -5239,20 +4963,20 @@
       "tolerance": 0.15
     },
     {
-      "claim": "S7 rent at the middle, about 4.5 points",
-      "computed": 4.4,
-      "paper": 4.5,
-      "tolerance": 0.11
+      "claim": "S7 rent at the middle, about 4 points",
+      "computed": 4.200000000000001,
+      "paper": 4,
+      "tolerance": 0.25
     },
     {
       "claim": "S7 Black-Litterman: full confidence",
-      "computed": 8.31443688586546,
+      "computed": 7.93650793650794,
       "paper": 8,
       "tolerance": 0.5
     },
     {
       "claim": "S7 Black-Litterman: half confidence, about 4%",
-      "computed": 4.15721844293273,
+      "computed": 3.96825396825397,
       "paper": 4,
       "tolerance": 0.5
     },
@@ -5264,8 +4988,8 @@
     },
     {
       "claim": "S5 gap of the Bitcoin midpoint to the S&P 500 required return 2013-06",
-      "computed": 119.54666820831305,
-      "paper": 120,
+      "computed": 137.40290960884144,
+      "paper": 137,
       "tolerance": 0.6
     },
     {
@@ -5276,8 +5000,8 @@
     },
     {
       "claim": "S5 gap of the Bitcoin midpoint to the S&P 500 required return 2021-09",
-      "computed": 22.165193504872008,
-      "paper": 22,
+      "computed": 22.523782188028193,
+      "paper": 23,
       "tolerance": 0.6
     },
     {
@@ -5288,8 +5012,8 @@
     },
     {
       "claim": "S5 gap of the Bitcoin midpoint to the S&P 500 required return 2026-05",
-      "computed": 11.275786923542045,
-      "paper": 11,
+      "computed": 10.183514426447656,
+      "paper": 10,
       "tolerance": 0.6
     },
     {
@@ -5306,8 +5030,8 @@
     },
     {
       "claim": "S5 MCM alpha 2012–26",
-      "computed": 37.0,
-      "paper": 37,
+      "computed": 34.0,
+      "paper": 34,
       "tolerance": 0.5
     },
     {
@@ -5330,8 +5054,8 @@
     },
     {
       "claim": "S5 MCM alpha 2018–26",
-      "computed": 1.0,
-      "paper": 1,
+      "computed": 2.0,
+      "paper": 2,
       "tolerance": 0.5
     },
     {
@@ -5348,8 +5072,8 @@
     },
     {
       "claim": "S5 MCM alpha 2012–14",
-      "computed": 40.0,
-      "paper": 40,
+      "computed": 24.0,
+      "paper": 24,
       "tolerance": 0.5
     },
     {
@@ -5366,8 +5090,8 @@
     },
     {
       "claim": "S5 MCM alpha 2015–17",
-      "computed": 93.0,
-      "paper": 93,
+      "computed": 91.0,
+      "paper": 91,
       "tolerance": 0.5
     },
     {
@@ -5378,8 +5102,8 @@
     },
     {
       "claim": "S5 MCM alpha 2018–20",
-      "computed": 20.0,
-      "paper": 20,
+      "computed": 23.0,
+      "paper": 23,
       "tolerance": 0.5
     },
     {
@@ -5390,8 +5114,8 @@
     },
     {
       "claim": "S5 MCM alpha 2021–23",
-      "computed": -7.0,
-      "paper": -7,
+      "computed": -10.0,
+      "paper": -10,
       "tolerance": 0.5
     },
     {
@@ -5402,8 +5126,8 @@
     },
     {
       "claim": "S5 MCM alpha 2024–26",
-      "computed": -15.0,
-      "paper": -15,
+      "computed": -12.0,
+      "paper": -12,
       "tolerance": 0.5
     },
     {
@@ -5414,8 +5138,8 @@
     },
     {
       "claim": "S5 cumulative unexplained return 2012-2026: MCM",
-      "computed": 543.0,
-      "paper": 543,
+      "computed": 500.0,
+      "paper": 500,
       "tolerance": 0.5
     },
     {
@@ -5426,8 +5150,8 @@
     },
     {
       "claim": "S5 cumulative unexplained return 2018-2026: MCM",
-      "computed": 15.0,
-      "paper": 15,
+      "computed": 21.0,
+      "paper": 21,
       "tolerance": 0.5
     },
     {
@@ -5594,8 +5318,8 @@
     },
     {
       "claim": "S5 trailing three-year unexplained return 2017-12-31: MCM",
-      "computed": 81.0,
-      "paper": 81,
+      "computed": 80.0,
+      "paper": 80,
       "tolerance": 0.5
     },
     {
@@ -5606,8 +5330,8 @@
     },
     {
       "claim": "S5 trailing three-year unexplained return 2020-12-31: MCM",
-      "computed": 22.0,
-      "paper": 22,
+      "computed": 25.0,
+      "paper": 25,
       "tolerance": 0.5
     },
     {
@@ -5618,8 +5342,8 @@
     },
     {
       "claim": "S5 trailing three-year unexplained return 2026-04-30: MCM",
-      "computed": -7.0,
-      "paper": -7,
+      "computed": -6.0,
+      "paper": -6,
       "tolerance": 0.5
     },
     {
@@ -5630,8 +5354,8 @@
     },
     {
       "claim": "S5 share explained, whole sample: MCM",
-      "computed": 67.0,
-      "paper": 67,
+      "computed": 70.0,
+      "paper": 70,
       "tolerance": 0.5
     },
     {
@@ -5642,8 +5366,8 @@
     },
     {
       "claim": "S5 share explained, since 2018: MCM",
-      "computed": 96.0,
-      "paper": 96,
+      "computed": 94.0,
+      "paper": 94,
       "tolerance": 0.5
     },
     {
@@ -5654,8 +5378,8 @@
     },
     {
       "claim": "D.2 share explained 2012–14: MCM",
-      "computed": 65.0,
-      "paper": 65,
+      "computed": 71.0,
+      "paper": 71,
       "tolerance": 0.5
     },
     {
@@ -5678,8 +5402,8 @@
     },
     {
       "claim": "D.2 share explained 2018–20: MCM",
-      "computed": 67.0,
-      "paper": 67,
+      "computed": 63.0,
+      "paper": 63,
       "tolerance": 0.5
     },
     {
@@ -5690,8 +5414,8 @@
     },
     {
       "claim": "D.2 share explained 2021–23: MCM",
-      "computed": 120.0,
-      "paper": 120,
+      "computed": 131.0,
+      "paper": 131,
       "tolerance": 0.5
     },
     {
@@ -5702,8 +5426,8 @@
     },
     {
       "claim": "D.2 share explained 2024–26: MCM",
-      "computed": 148.0,
-      "paper": 148,
+      "computed": 138.0,
+      "paper": 138,
       "tolerance": 0.5
     },
     {
@@ -5714,7 +5438,7 @@
     },
     {
       "claim": "RV Sharpe units: sum",
-      "computed": 0.31963476190476187,
+      "computed": 0.31564476190476193,
       "paper": 0.32,
       "tolerance": 0.005
     },
@@ -5726,7 +5450,7 @@
     },
     {
       "claim": "RV rebalanced 5%: return added",
-      "computed": 0.4650000000000001,
+      "computed": 0.45500000000000007,
       "paper": 0.46,
       "tolerance": 0.006
     },
@@ -5744,43 +5468,43 @@
     },
     {
       "claim": "RV net of death: Bitcoin average",
-      "computed": 16.400000000000002,
-      "paper": 16.4,
+      "computed": 16.200000000000003,
+      "paper": 16.2,
       "tolerance": 0.001
     },
     {
       "claim": "RV net of death: Bitcoin compound",
-      "computed": 7.6,
-      "paper": 7.6,
+      "computed": 7.4,
+      "paper": 7.4,
       "tolerance": 0.001
     },
     {
       "claim": "RV net of death: Ether average",
-      "computed": 21.5,
-      "paper": 21.5,
+      "computed": 21.1,
+      "paper": 21.1,
       "tolerance": 0.001
     },
     {
       "claim": "RV net of death: Ether compound",
-      "computed": 1.0,
-      "paper": 1.0,
+      "computed": 0.6000000000000001,
+      "paper": 0.6,
       "tolerance": 0.001
     },
     {
       "claim": "RV at 55% volatility: average",
-      "computed": 21.659125000000003,
-      "paper": 22,
+      "computed": 21.371750000000002,
+      "paper": 21,
       "tolerance": 0.5
     },
     {
       "claim": "RV at 55% volatility: compound",
-      "computed": 6.534125000000001,
-      "paper": 6.5,
-      "tolerance": 0.15
+      "computed": 6.2467500000000005,
+      "paper": 6,
+      "tolerance": 0.5
     },
     {
       "claim": "RV double count: w times beta times ERP, about one point",
-      "computed": 0.9450000000000001,
+      "computed": 0.91,
       "paper": 1,
       "tolerance": 0.1
     },
@@ -5792,8 +5516,8 @@
     },
     {
       "claim": "Table 7 Ether average",
-      "computed": 23.4,
-      "paper": 23.4,
+      "computed": 23.0,
+      "paper": 23.0,
       "tolerance": 0.05
     },
     {
@@ -5882,32 +5606,32 @@
     },
     {
       "claim": "D.1 Bitcoin, mortality 0.3-2.4 (2025 deaths set aside) median",
-      "computed": 17.7,
-      "paper": 17.7,
+      "computed": 17.5,
+      "paper": 17.5,
       "tolerance": 0.05
     },
     {
       "claim": "D.1 Bitcoin, mortality 0.3-2.4 (2025 deaths set aside) 5%",
-      "computed": 15.1,
-      "paper": 15.1,
+      "computed": 14.9,
+      "paper": 14.9,
       "tolerance": 0.05
     },
     {
       "claim": "D.1 Bitcoin, mortality 0.3-2.4 (2025 deaths set aside) 95%",
-      "computed": 21.2,
-      "paper": 21.2,
+      "computed": 21.1,
+      "paper": 21.1,
       "tolerance": 0.05
     },
     {
       "claim": "D.1 Bitcoin, mortality fixed at 3.5 (high reading) median",
-      "computed": 19.8,
-      "paper": 19.8,
+      "computed": 19.6,
+      "paper": 19.6,
       "tolerance": 0.05
     },
     {
       "claim": "D.1 Bitcoin, mortality fixed at 3.5 (high reading) 5%",
-      "computed": 17.5,
-      "paper": 17.5,
+      "computed": 17.3,
+      "paper": 17.3,
       "tolerance": 0.05
     },
     {
@@ -5918,14 +5642,14 @@
     },
     {
       "claim": "D.1 Bitcoin, mortality fixed at 0.3 (low reading) median",
-      "computed": 16.6,
-      "paper": 16.6,
+      "computed": 16.4,
+      "paper": 16.4,
       "tolerance": 0.05
     },
     {
       "claim": "D.1 Bitcoin, mortality fixed at 0.3 (low reading) 5%",
-      "computed": 14.3,
-      "paper": 14.3,
+      "computed": 14.1,
+      "paper": 14.1,
       "tolerance": 0.05
     },
     {
@@ -6122,32 +5846,32 @@
     },
     {
       "claim": "A.7 vol USD Ether col 1",
-      "computed": 111.2,
-      "paper": 111.2,
+      "computed": 111.6,
+      "paper": 111.6,
       "tolerance": 0.051
     },
     {
       "claim": "A.7 vol USD Ether col 2",
-      "computed": 73.1,
-      "paper": 73.1,
+      "computed": 73.0,
+      "paper": 73.0,
       "tolerance": 0.051
     },
     {
       "claim": "A.7 vol USD Ether col 3",
-      "computed": 64.1,
-      "paper": 64.1,
+      "computed": 63.9,
+      "paper": 63.9,
       "tolerance": 0.051
     },
     {
       "claim": "A.7 vol USD Ether col 4",
-      "computed": 62.2,
-      "paper": 62.2,
+      "computed": 71.4,
+      "paper": 71.4,
       "tolerance": 0.051
     },
     {
       "claim": "A.7 vol USD Ether col 5",
-      "computed": 64.0,
-      "paper": 64.0,
+      "computed": 66.2,
+      "paper": 66.2,
       "tolerance": 0.051
     },
     {
@@ -6295,6 +6019,12 @@
       "tolerance": 0.05
     },
     {
+      "claim": "A.7 Ether recent-weighted May 2026",
+      "computed": 64.03045906892302,
+      "paper": 64.0,
+      "tolerance": 0.05
+    },
+    {
       "claim": "A.7 BTC recent-weighted May 2026",
       "computed": 41.75081948505594,
       "paper": 41.8,
@@ -6386,8 +6116,8 @@
     },
     {
       "claim": "T3 surveyed owners' wealth, $tn",
-      "computed": 6.595972892733577,
-      "paper": 7,
+      "computed": 8.078710986400639,
+      "paper": 8,
       "tolerance": 0.5
     },
     {
@@ -6398,9 +6128,9 @@
     },
     {
       "claim": "T3 combined weight, %",
-      "computed": 7.995383642315434,
-      "paper": 8,
-      "tolerance": 0.1
+      "computed": 7.422142480936947,
+      "paper": 7,
+      "tolerance": 0.5
     },
     {
       "claim": "A.7 weight of the latest 9 months, %",
@@ -6446,14 +6176,14 @@
     },
     {
       "claim": "T4 2013-06 average owner's weight, low",
-      "computed": 3.3933358988246525,
-      "paper": 3,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2013-06 average owner's weight, high",
-      "computed": 3.3933358988246525,
-      "paper": 3,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.5
     },
     {
@@ -6464,14 +6194,14 @@
     },
     {
       "claim": "T4 2013-06 lower edge",
-      "computed": 20.74291690596823,
-      "paper": 21,
+      "computed": 56.45539970702501,
+      "paper": 56,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2013-06 upper (a)",
-      "computed": 41.51976733671104,
-      "paper": 42,
+      "computed": 141.51471917967,
+      "paper": 142,
       "tolerance": 0.5
     },
     {
@@ -6488,20 +6218,20 @@
     },
     {
       "claim": "T4 2013-06 midpoint",
-      "computed": 126.02466820831306,
-      "paper": 126,
+      "computed": 143.88090960884145,
+      "paper": 144,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2013-06 lower edge from its formula",
-      "computed": 20.74291690596823,
-      "paper": 20.74291690596823,
+      "computed": 56.45539970702501,
+      "paper": 56.45539970702501,
       "tolerance": 0.01
     },
     {
       "claim": "T4 2013-06 upper (a) from its formula",
-      "computed": 41.51976733671104,
-      "paper": 41.51976733671104,
+      "computed": 141.51471917967,
+      "paper": 141.51471917967,
       "tolerance": 0.01
     },
     {
@@ -6524,14 +6254,14 @@
     },
     {
       "claim": "T4 2017-06 average owner's weight, low",
-      "computed": 15.012427051649901,
-      "paper": 15,
+      "computed": 16.752031923880093,
+      "paper": 17,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2017-06 average owner's weight, high",
-      "computed": 16.792947138492416,
-      "paper": 17,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.5
     },
     {
@@ -6542,14 +6272,14 @@
     },
     {
       "claim": "T4 2017-06 lower edge",
-      "computed": 19.5643428164922,
-      "paper": 20,
+      "computed": 20.683403273670407,
+      "paper": 21,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2017-06 upper (a)",
-      "computed": 45.93273838703327,
-      "paper": 46,
+      "computed": 49.90807310021827,
+      "paper": 50,
       "tolerance": 0.5
     },
     {
@@ -6566,20 +6296,20 @@
     },
     {
       "claim": "T4 2017-06 midpoint",
-      "computed": 43.09738510533587,
-      "paper": 43,
+      "computed": 43.65691533392497,
+      "paper": 44,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2017-06 lower edge from its formula",
-      "computed": 19.564342816492196,
-      "paper": 19.5643428164922,
+      "computed": 20.683403273670407,
+      "paper": 20.683403273670407,
       "tolerance": 0.01
     },
     {
       "claim": "T4 2017-06 upper (a) from its formula",
-      "computed": 45.93273838703327,
-      "paper": 45.93273838703327,
+      "computed": 49.90807310021827,
+      "paper": 49.90807310021827,
       "tolerance": 0.01
     },
     {
@@ -6602,14 +6332,14 @@
     },
     {
       "claim": "T4 2019-06 average owner's weight, low",
-      "computed": 20.21314949096035,
-      "paper": 20,
+      "computed": 16.20329325822821,
+      "paper": 16,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2019-06 average owner's weight, high",
-      "computed": 24.759538197912477,
-      "paper": 25,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.5
     },
     {
@@ -6620,14 +6350,14 @@
     },
     {
       "claim": "T4 2019-06 lower edge",
-      "computed": 20.881975047195827,
-      "paper": 21,
+      "computed": 17.66468420134814,
+      "paper": 18,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2019-06 upper (a)",
-      "computed": 64.32239363779765,
-      "paper": 64,
+      "computed": 51.38319989969219,
+      "paper": 51,
       "tolerance": 0.5
     },
     {
@@ -6638,26 +6368,26 @@
     },
     {
       "claim": "T4 2019-06 upper edge is the larger",
-      "computed": 64.32239363779765,
-      "paper": 64,
+      "computed": 51.38319989969219,
+      "paper": 51,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2019-06 midpoint",
-      "computed": 42.60218434249674,
-      "paper": 43,
+      "computed": 34.52394205052016,
+      "paper": 35,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2019-06 lower edge from its formula",
-      "computed": 20.881975047195827,
-      "paper": 20.881975047195827,
+      "computed": 17.66468420134814,
+      "paper": 17.66468420134814,
       "tolerance": 0.01
     },
     {
       "claim": "T4 2019-06 upper (a) from its formula",
-      "computed": 64.32239363779765,
-      "paper": 64.32239363779765,
+      "computed": 51.38319989969219,
+      "paper": 51.38319989969219,
       "tolerance": 0.01
     },
     {
@@ -6680,13 +6410,13 @@
     },
     {
       "claim": "T4 2021-09 average owner's weight, low",
-      "computed": 12.083175629369137,
+      "computed": 12.240052095908004,
       "paper": 12,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2021-09 average owner's weight, high",
-      "computed": 18.62465106291604,
+      "computed": 19.0,
       "paper": 19,
       "tolerance": 0.5
     },
@@ -6698,14 +6428,14 @@
     },
     {
       "claim": "T4 2021-09 lower edge",
-      "computed": 13.420025292487342,
-      "paper": 13,
+      "computed": 13.513172559109806,
+      "paper": 14,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2021-09 upper (a)",
-      "computed": 41.96836171725668,
-      "paper": 42,
+      "computed": 42.59239181694659,
+      "paper": 43,
       "tolerance": 0.5
     },
     {
@@ -6716,26 +6446,26 @@
     },
     {
       "claim": "T4 2021-09 upper edge is the larger",
-      "computed": 41.96836171725668,
-      "paper": 42,
+      "computed": 42.59239181694659,
+      "paper": 43,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2021-09 midpoint",
-      "computed": 27.69419350487201,
+      "computed": 28.052782188028196,
       "paper": 28,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2021-09 lower edge from its formula",
-      "computed": 13.420025292487342,
-      "paper": 13.420025292487342,
+      "computed": 13.513172559109805,
+      "paper": 13.513172559109806,
       "tolerance": 0.01
     },
     {
       "claim": "T4 2021-09 upper (a) from its formula",
-      "computed": 41.96836171725668,
-      "paper": 41.96836171725668,
+      "computed": 42.592391816946595,
+      "paper": 42.59239181694659,
       "tolerance": 0.01
     },
     {
@@ -6758,14 +6488,14 @@
     },
     {
       "claim": "T4 2026-05 average owner's weight, low",
-      "computed": 7.995383642315433,
-      "paper": 8,
+      "computed": 7.422142480936945,
+      "paper": 7,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2026-05 average owner's weight, high",
-      "computed": 23.271094535684,
-      "paper": 23,
+      "computed": 19.0,
+      "paper": 19,
       "tolerance": 0.5
     },
     {
@@ -6776,14 +6506,14 @@
     },
     {
       "claim": "T4 2026-05 lower edge",
-      "computed": 12.096613225968683,
+      "computed": 11.996689786227238,
       "paper": 12,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2026-05 upper (a)",
-      "computed": 27.360960621115403,
-      "paper": 27,
+      "computed": 25.276339066668076,
+      "paper": 25,
       "tolerance": 0.5
     },
     {
@@ -6794,26 +6524,26 @@
     },
     {
       "claim": "T4 2026-05 upper edge is the larger",
-      "computed": 27.360960621115403,
-      "paper": 27,
+      "computed": 25.276339066668076,
+      "paper": 25,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2026-05 midpoint",
-      "computed": 19.728786923542042,
-      "paper": 20,
+      "computed": 18.636514426447658,
+      "paper": 19,
       "tolerance": 0.5
     },
     {
       "claim": "T4 2026-05 lower edge from its formula",
-      "computed": 12.096613225968683,
-      "paper": 12.096613225968683,
+      "computed": 11.996689786227238,
+      "paper": 11.996689786227238,
       "tolerance": 0.01
     },
     {
       "claim": "T4 2026-05 upper (a) from its formula",
-      "computed": 27.360960621115403,
-      "paper": 27.360960621115403,
+      "computed": 25.276339066668076,
+      "paper": 25.276339066668076,
       "tolerance": 0.01
     },
     {
@@ -6830,15 +6560,15 @@
     },
     {
       "claim": "Reading 1: weight 2026 with fund and treasury investors",
-      "computed": 7.995383642315433,
-      "paper": 8,
+      "computed": 7.422142480936945,
+      "paper": 7,
       "tolerance": 0.5
     },
     {
       "claim": "Reading 1: weight 2026 without",
-      "computed": 23.271094535684,
-      "paper": 23,
-      "tolerance": 0.5
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.001
     },
     {
       "claim": "A.3 correlation 2012-19",
@@ -7064,54 +6794,54 @@
     },
     {
       "claim": "eq 3: band mid-2017 low",
-      "computed": 15.012427051649901,
-      "paper": 15,
+      "computed": 16.752031923880093,
+      "paper": 17,
       "tolerance": 0.5
     },
     {
       "claim": "eq 3: band mid-2019 low",
-      "computed": 20.21314949096035,
-      "paper": 20,
+      "computed": 16.20329325822821,
+      "paper": 16,
       "tolerance": 0.5
     },
     {
       "claim": "eq 3: band mid-2019 high",
-      "computed": 24.759538197912477,
-      "paper": 25,
-      "tolerance": 0.5
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.001
     },
     {
       "claim": "eq 3: band 2021Q3 low",
-      "computed": 12.083175629369137,
+      "computed": 12.240052095908004,
       "paper": 12,
       "tolerance": 0.5
     },
     {
       "claim": "eq 3: band 2021Q3 high",
-      "computed": 18.62465106291604,
+      "computed": 19.0,
       "paper": 19,
       "tolerance": 0.5
     },
     {
-      "claim": "eq 3: weight 2013",
-      "computed": 3.3933358988246525,
-      "paper": 3,
-      "tolerance": 0.5
+      "claim": "eq 3: weight 2013, both ends",
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.001
     },
     {
       "claim": "eq 3: weight 2017",
-      "computed": 16.792947138492416,
-      "paper": 17,
-      "tolerance": 0.5
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.001
     },
     {
-      "claim": "eq 3: k 2012",
+      "claim": "D.4 wealth per owner 2012",
       "computed": 0.25,
       "paper": 0.25,
       "tolerance": 0.005
     },
     {
-      "claim": "eq 3: k 2026",
+      "claim": "D.4 wealth per owner 2026",
       "computed": 1.3934282584884992,
       "paper": 1.4,
       "tolerance": 0.01
@@ -7400,8 +7130,8 @@
     },
     {
       "claim": "E.4 btc: average = 3.4 + premium",
-      "computed": 16.7,
-      "paper": 16.7,
+      "computed": 16.5,
+      "paper": 16.5,
       "tolerance": 0.051
     },
     {
@@ -7418,26 +7148,26 @@
     },
     {
       "claim": "E.4 btc: compound",
-      "computed": 7.879999999999999,
-      "paper": 7.9,
+      "computed": 7.68,
+      "paper": 7.7,
       "tolerance": 0.051
     },
     {
       "claim": "E.4 btc: Sharpe",
-      "computed": 0.31666666666666665,
-      "paper": 0.32,
+      "computed": 0.3119047619047619,
+      "paper": 0.31,
       "tolerance": 0.0051
     },
     {
       "claim": "E.4 btc: Sharpe on the compound return",
-      "computed": 0.10666666666666663,
-      "paper": 0.11,
+      "computed": 0.10190476190476189,
+      "paper": 0.1,
       "tolerance": 0.0051
     },
     {
       "claim": "E.4 eth: average = 3.4 + premium",
-      "computed": 21.799999999999997,
-      "paper": 21.8,
+      "computed": 21.4,
+      "paper": 21.4,
       "tolerance": 0.051
     },
     {
@@ -7454,20 +7184,20 @@
     },
     {
       "claim": "E.4 eth: compound",
-      "computed": 1.3200000000000003,
-      "paper": 1.3,
+      "computed": 0.9199999999999982,
+      "paper": 0.9,
       "tolerance": 0.051
     },
     {
       "claim": "E.4 eth: Sharpe",
-      "computed": 0.28750000000000003,
-      "paper": 0.29,
+      "computed": 0.28125,
+      "paper": 0.28,
       "tolerance": 0.0051
     },
     {
       "claim": "E.4 eth: Sharpe on the compound return",
-      "computed": -0.032499999999999994,
-      "paper": -0.03,
+      "computed": -0.03875000000000003,
+      "paper": -0.04,
       "tolerance": 0.0051
     },
     {
@@ -7526,14 +7256,14 @@
     },
     {
       "claim": "E.4 Bitcoin over global equities, compound, euros",
-      "computed": 1.5,
-      "paper": 1.5,
+      "computed": 1.2999999999999998,
+      "paper": 1.3,
       "tolerance": 0.001
     },
     {
       "claim": "E.4 Bitcoin over global equities, compound, dollars",
-      "computed": 1.7000000000000002,
-      "paper": 1.7,
+      "computed": 1.5000000000000009,
+      "paper": 1.5,
       "tolerance": 0.001
     },
     {
@@ -7573,90 +7303,6 @@
       "tolerance": 0
     },
     {
-      "claim": "D.4 table, US wealth: weight 2026 low",
-      "computed": 8.55149729446522,
-      "paper": 9,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, US wealth: weight 2026 high",
-      "computed": 28.70414150515514,
-      "paper": 29,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, US wealth: gap 2012-26",
-      "computed": 54.32987263984977,
-      "paper": 54,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 table, US wealth: gap 2018-26",
-      "computed": 13.584378157728715,
-      "paper": 14,
-      "tolerance": 0.6
-    },
-    {
-      "claim": "D.4 table, whole class: weight 2026 low",
-      "computed": 7.857465112299157,
-      "paper": 8,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, whole class: weight 2026 high",
-      "computed": 15.097517920563899,
-      "paper": 15,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, whole class: band 2013 low",
-      "computed": 16.90829301911373,
-      "paper": 17,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, whole class: band 2013 high",
-      "computed": 231.30641951065792,
-      "paper": 231,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, whole class: band 2026 low",
-      "computed": 12.072572220451615,
-      "paper": 12,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, whole class: band 2026 high",
-      "computed": 23.371628648607963,
-      "paper": 23,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, ownership 3%: band 2013 low",
-      "computed": 15.0,
-      "paper": 15,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, ownership 3%: gap since 2018",
-      "computed": 21.0,
-      "paper": 21,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, baseline band 2013 low",
-      "computed": 20.74291690596823,
-      "paper": 21,
-      "tolerance": 0.5
-    },
-    {
-      "claim": "D.4 table, baseline band 2026 high",
-      "computed": 27.360960621115403,
-      "paper": 27,
-      "tolerance": 0.5
-    },
-    {
       "claim": "B table: total 2019",
       "computed": 0.281192,
       "paper": 0.281,
@@ -7685,6 +7331,690 @@
       "computed": 0.900676,
       "paper": 0.901,
       "tolerance": 0.001
+    },
+    {
+      "claim": "B.2 UK wave 1: mean holding",
+      "computed": 1575.0,
+      "paper": 1575,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 UK wave 1: median holding",
+      "computed": 260.0,
+      "paper": 260,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 1: owners, million",
+      "computed": 1.9,
+      "paper": 1.9,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 2: mean holding",
+      "computed": 1775.0,
+      "paper": 1775,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 UK wave 2: median holding",
+      "computed": 300.0,
+      "paper": 300,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 2: owners, million",
+      "computed": 2.3,
+      "paper": 2.3,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 3: mean holding",
+      "computed": 1595.0,
+      "paper": 1595,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 UK wave 3: median holding",
+      "computed": 175.5,
+      "paper": 175.5,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 3: owners, million",
+      "computed": 4.97,
+      "paper": 5.0,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 4: mean holding",
+      "computed": 1845.0,
+      "paper": 1845,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 UK wave 4: median holding",
+      "computed": 375.5,
+      "paper": 375.5,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 4: owners, million",
+      "computed": 7.0,
+      "paper": 7.0,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 2: Bitcoin's price over its December 2019 level",
+      "computed": 4.796033709804019,
+      "paper": 4.8,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 3: Bitcoin's price over its December 2019 level",
+      "computed": 3.0861031989618066,
+      "paper": 3.1,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 UK wave 4: Bitcoin's price over its December 2019 level",
+      "computed": 8.275135175023138,
+      "paper": 8.3,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "S4 UK: price rose eightfold between the first and the last wave",
+      "computed": 8.275135175023138,
+      "paper": 8,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 UK: elasticity of the mean holding to the price",
+      "computed": 0.07743073495129173,
+      "paper": 0.08,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "B.2 UK: elasticity of the median holding to the price",
+      "computed": 0.17262115922777757,
+      "paper": 0.17,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "B.2 UK: share of the growth that is more owners, %",
+      "computed": 89.1796389059727,
+      "paper": 89,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 UK: share that is more per owner, %",
+      "computed": 10.820361094027309,
+      "paper": 11,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada wave 1: median holding",
+      "computed": 500.0,
+      "paper": 500,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada wave 2: median holding",
+      "computed": 250.0,
+      "paper": 250,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada wave 3: median holding",
+      "computed": 503.0,
+      "paper": 503,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada wave 4: median holding",
+      "computed": 500.0,
+      "paper": 500,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada wave 5: median holding",
+      "computed": 500.0,
+      "paper": 500,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S4 Canada: about 500 in four of five waves",
+      "computed": 4.0,
+      "paper": 4,
+      "tolerance": 0
+    },
+    {
+      "claim": "S4 Canada: the price varied fifteenfold",
+      "computed": 14.984120783846173,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada: highest price over its 2018 level",
+      "computed": 14.984120783846173,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 Canada: lowest price is that of 2018",
+      "computed": 1.0,
+      "paper": 1,
+      "tolerance": 0
+    },
+    {
+      "claim": "B.2 Canada: elasticity of the median holding to the price",
+      "computed": 0.10545591529438614,
+      "paper": 0.11,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "holder_surveys.txt: UK elasticity of the mean",
+      "computed": 0.08,
+      "paper": 0.08,
+      "tolerance": 0.001
+    },
+    {
+      "claim": "holder_surveys.txt: Canada elasticity of the median",
+      "computed": 0.11,
+      "paper": 0.11,
+      "tolerance": 0.001
+    },
+    {
+      "claim": "B.2 price, September 2021 to June 2025: times",
+      "computed": 2.303778531183021,
+      "paper": 2.3,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "B.2 a 19% share held without trading becomes, %",
+      "computed": 35.08148064430697,
+      "paper": 35,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S4 median owner's share, interpolated between 5% (40% below) and 15% (70% below)",
+      "computed": 8.333333333333334,
+      "paper": 8,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.2 owners' wealth is capitalization over 0.19 at every date",
+      "computed": 8.881784197001252e-16,
+      "paper": 0,
+      "tolerance": 1e-09
+    },
+    {
+      "claim": "S5 the weight with fund and treasury investors, 2021Q3",
+      "computed": 12.240052095908004,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "B.3 the same, mid-2019",
+      "computed": 16.20329325822821,
+      "paper": 16,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 early era to 2014: upper edge 2015-17",
+      "computed": 74.57609803904099,
+      "paper": 75,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 early era to 2014: upper edge 2018-20",
+      "computed": 49.27204274486709,
+      "paper": 49,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 baseline upper edge 2015-17",
+      "computed": 97.80217078957298,
+      "paper": 98,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 baseline upper edge 2018-20",
+      "computed": 57.021828164419645,
+      "paper": 57,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 early era to 2014: delivered over the upper edge 2015-17",
+      "computed": 85.02747226891066,
+      "paper": 85,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 early era to 2014: its t",
+      "computed": 1.823364189688935,
+      "paper": 1.8,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "S5 baseline: delivered over the upper edge 2015-17",
+      "computed": 61.80139951837866,
+      "paper": 62,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "S5 early era to 2014: nothing changes from 2021",
+      "computed": 0.0,
+      "paper": 0,
+      "tolerance": 1e-12
+    },
+    {
+      "claim": "D.2 early era to 2014: full-sample gap to the upper edge",
+      "computed": 16.10559022059194,
+      "paper": 16,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.2 baseline full-sample gap to the upper edge",
+      "computed": 8.928453196737578,
+      "paper": 9,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.3 coefficient on sigma^2 w",
+      "computed": 0.4805095384201921,
+      "paper": 0.5,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.3 its t",
+      "computed": 3.1251952204869924,
+      "paper": 3.1,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.3 coefficient with the weight that follows the market value",
+      "computed": -0.8320029177674283,
+      "paper": -0.8,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.3 its t, market-value weight",
+      "computed": -6.92762517303521,
+      "paper": -6.9,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.4 table, 19%: w low",
+      "computed": 7.0,
+      "paper": 7,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: w high",
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: band 2013 low",
+      "computed": 56.5,
+      "paper": 56,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: band 2013 high",
+      "computed": 231.3,
+      "paper": 231,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: band 2026 low",
+      "computed": 12.0,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: band 2026 high",
+      "computed": 25.3,
+      "paper": 25,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: gap 2012-17",
+      "computed": 101.0,
+      "paper": 101,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: gap 2018-26",
+      "computed": 15.0,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: se 2018-26",
+      "computed": 23.0,
+      "paper": 23,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 19%: five-year correlation",
+      "computed": 0.43,
+      "paper": 0.43,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 table, 19%: required return 2026",
+      "computed": 18.1,
+      "paper": 18.1,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.4 table, 12%: w low",
+      "computed": 6.0,
+      "paper": 6,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: w high",
+      "computed": 12.0,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: band 2013 low",
+      "computed": 40.4,
+      "paper": 40,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: band 2013 high",
+      "computed": 231.3,
+      "paper": 231,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: band 2026 low",
+      "computed": 11.8,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: band 2026 high",
+      "computed": 21.9,
+      "paper": 22,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: gap 2012-17",
+      "computed": 107.0,
+      "paper": 107,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: gap 2018-26",
+      "computed": 21.0,
+      "paper": 21,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: se 2018-26",
+      "computed": 23.0,
+      "paper": 23,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 12%: five-year correlation",
+      "computed": 0.44,
+      "paper": 0.44,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 table, 12%: required return 2026",
+      "computed": 16.9,
+      "paper": 16.9,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.4 table, 8%: w low",
+      "computed": 5.0,
+      "paper": 5,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: w high",
+      "computed": 8.0,
+      "paper": 8,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: band 2013 low",
+      "computed": 31.3,
+      "paper": 31,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: band 2013 high",
+      "computed": 231.3,
+      "paper": 231,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: band 2026 low",
+      "computed": 11.5,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: band 2026 high",
+      "computed": 19.9,
+      "paper": 20,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: gap 2012-17",
+      "computed": 111.0,
+      "paper": 111,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: gap 2018-26",
+      "computed": 23.0,
+      "paper": 23,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: se 2018-26",
+      "computed": 24.0,
+      "paper": 24,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, 8%: five-year correlation",
+      "computed": 0.44,
+      "paper": 0.44,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 table, 8%: required return 2026",
+      "computed": 16.1,
+      "paper": 16.1,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.4 table, market value: w low",
+      "computed": 8.0,
+      "paper": 8,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: w high",
+      "computed": 23.0,
+      "paper": 23,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: band 2013 low",
+      "computed": 20.7,
+      "paper": 21,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: band 2013 high",
+      "computed": 231.3,
+      "paper": 231,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: band 2026 low",
+      "computed": 12.1,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: band 2026 high",
+      "computed": 27.4,
+      "paper": 27,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: gap 2012-17",
+      "computed": 109.0,
+      "paper": 109,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: gap 2018-26",
+      "computed": 15.0,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: se 2018-26",
+      "computed": 24.0,
+      "paper": 24,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, market value: five-year correlation",
+      "computed": 0.28,
+      "paper": 0.28,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 table, market value: required return 2026",
+      "computed": 18.3,
+      "paper": 18.3,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.4 table, ownership 3%: w low",
+      "computed": 7.0,
+      "paper": 7,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: w high",
+      "computed": 19.0,
+      "paper": 19,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: band 2013 low",
+      "computed": 56.5,
+      "paper": 56,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: band 2013 high",
+      "computed": 231.3,
+      "paper": 231,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: band 2026 low",
+      "computed": 12.0,
+      "paper": 12,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: band 2026 high",
+      "computed": 25.3,
+      "paper": 25,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: gap 2012-17",
+      "computed": 101.0,
+      "paper": 101,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: gap 2018-26",
+      "computed": 15.0,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: se 2018-26",
+      "computed": 23.0,
+      "paper": 23,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, ownership 3%: five-year correlation",
+      "computed": 0.43,
+      "paper": 0.43,
+      "tolerance": 0.005
+    },
+    {
+      "claim": "D.4 table, ownership 3%: required return 2026",
+      "computed": 18.1,
+      "paper": 18.1,
+      "tolerance": 0.05
+    },
+    {
+      "claim": "D.4 lower edge 2012-17 at a weight of 19%",
+      "computed": 44.0,
+      "paper": 44,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 lower edge 2012-17 at a weight of 8%",
+      "computed": 25.0,
+      "paper": 25,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 standard error of the gap 2012-17",
+      "computed": 87.05985138275462,
+      "paper": 87,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "D.4 table, baseline row equals the paper's Table 5 gap since 2018",
+      "computed": 15.0,
+      "paper": 15,
+      "tolerance": 0.5
+    },
+    {
+      "claim": "C.3 migrations flagged in the census",
+      "computed": 50.0,
+      "paper": 50,
+      "tolerance": 0
+    },
+    {
+      "claim": "C.3 migrations named in the paper",
+      "computed": 50.0,
+      "paper": 50,
+      "tolerance": 0
+    },
+    {
+      "claim": "C.3 the names in the paper are the flagged assets",
+      "computed": 1.0,
+      "paper": 1,
+      "tolerance": 0
     }
   ]
 }
